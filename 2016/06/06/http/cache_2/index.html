@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>缓存（二） | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
+
+Cache-Control: no-store
+Cache-Control: no-cache
+Cache-Control: must-revalidate
+Cache-Control: max-age
+Expires
+不附加任何过期信息，让缓存确定自己的过期日期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="缓存（二）">
+<meta property="og:url" content="http://yoursite.com/2016/06/06/http/cache_2/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
+
+Cache-Control: no-store
+Cache-Control: no-cache
+Cache-Control: must-revalidate
+Cache-Control: max-age
+Expires
+不附加任何过期信息，让缓存确定自己的过期日期">
+<meta property="og:updated_time" content="2016-06-07T13:45:50.887Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="缓存（二）">
+<meta name="twitter:description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
+
+Cache-Control: no-store
+Cache-Control: no-cache
+Cache-Control: must-revalidate
+Cache-Control: max-age
+Expires
+不附加任何过期信息，让缓存确定自己的过期日期">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-http/cache_2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/06/http/cache_2/" class="article-date">
+  <time datetime="2016-06-06T14:20:22.439Z" itemprop="datePublished">2016-06-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      缓存（二）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>控制缓存的能力</strong><br>服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递<br>减的顺序，服务器可以:</p>
+<ol>
+<li>Cache-Control: no-store</li>
+<li>Cache-Control: no-cache</li>
+<li>Cache-Control: must-revalidate</li>
+<li>Cache-Control: max-age</li>
+<li>Expires</li>
+<li>不附加任何过期信息，让缓存确定自己的过期日期</li>
+</ol>
+<blockquote>
+<p>no-Stroe与no-cache首部可以防止缓存提供未经证实的已缓存对象，表示为no-store的响应会<br>精致缓存对响应进行复制。缓存通常会向非缓存代理服务器一样，向客户端转发一条no-store响应，<br>然后删除对象。标示为no-cache的响应实际上是可以存储在本地缓冲区中的</p>
+<p>Cache-Contro:max-age首部表示从服务器将文档传过来之时起，可以认为此文档处于新鲜状态的<br>秒数，还有一个s-maxage首部，其行为与max-age类似，但仅用于共享缓存，服务器可以请求缓存<br>不要缓存文档，或者将最大使用期设置为0，从而每次访问的时候进行刷新</p>
+<p>不推荐使用Expires首部，它指定的是实际的过期日期而不是秒数，由于很多服务器的时钟不同，或<br>者不正确，所以最好用剩余秒数，而不是绝对日期。</p>
+<p>must-revalidate响应首部告诉缓存，在事先没有跟原始服务器进行再验证的情况下，不能提供这<br>个对象的陈旧副本。缓存仍然可以随意提供新鲜的副本。如果在缓存进行must-revalidate新鲜度<br>检查时，原始服务器不可用，缓存就必须返回一条504Gateway Timeout错误</p>
+<p>如果响应中没有Cache-Control: max-age首部，也没有Expires首部，缓存可以计算出一个试探<br>性最大使用期</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="cip43ud2a00040so0x1b7izi6" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/06/http/integration/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          网关、隧道及中继
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/03/http/cache_1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">缓存（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/15/front_end/js/closureAndScope/">作用域和闭包</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/14/front_end/js/functionAndBlockScope/">函数作用域和块级作用域</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/11/http/digestAuthenticate/">摘要认证</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/11/http/baseauthentication/">基本认证机制</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/07/http/cookie/">客户端识别与cookie技术</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
