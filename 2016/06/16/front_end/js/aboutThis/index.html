@@ -3,18 +3,57 @@
 <head>
   <meta charset="utf-8">
   
-  <title>常见问题 | zhuxin_blog</title>
+  <title>对this的理解 | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="this是调用时被绑定的，完全取决于函数的调用位置
+调用位置
+
+调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。
+
+
+this的绑定规则
+
+
+
+默认绑定
+隐式绑定
+显示绑定
+new绑定">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见问题">
-<meta property="og:url" content="http://yoursite.com/2016/05/25/python/get_started/index.html">
+<meta property="og:title" content="对this的理解">
+<meta property="og:url" content="http://yoursite.com/2016/06/16/front_end/js/aboutThis/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-05-25T15:33:28.091Z">
+<meta property="og:description" content="this是调用时被绑定的，完全取决于函数的调用位置
+调用位置
+
+调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。
+
+
+this的绑定规则
+
+
+
+默认绑定
+隐式绑定
+显示绑定
+new绑定">
+<meta property="og:updated_time" content="2016-06-16T14:29:58.716Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常见问题">
-<meta name="twitter:description">
+<meta name="twitter:title" content="对this的理解">
+<meta name="twitter:description" content="this是调用时被绑定的，完全取决于函数的调用位置
+调用位置
+
+调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。
+
+
+this的绑定规则
+
+
+
+默认绑定
+隐式绑定
+显示绑定
+new绑定">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -62,14 +101,14 @@
   </div>
 </div>
       <div class="outer">
-        <section id="main"><article id="post-python/get_started" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-front_end/js/aboutThis" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/05/25/python/get_started/" class="article-date">
-  <time datetime="2016-05-25T15:33:16.606Z" itemprop="datePublished">2016-05-25</time>
+    <a href="/2016/06/16/front_end/js/aboutThis/" class="article-date">
+  <time datetime="2016-06-16T13:52:57.317Z" itemprop="datePublished">2016-06-16</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
   </div>
 
   </div>
@@ -80,7 +119,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      常见问题
+      对this的理解
     </h1>
   
 
@@ -88,11 +127,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <ul>
+<li><strong>this是调用时被绑定的，完全取决于函数的调用位置</strong></li>
+<li><p><strong>调用位置</strong></p>
+<blockquote>
+<p>调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所<br>调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。</p>
+</blockquote>
+</li>
+<li><p><strong>this的绑定规则</strong></p>
+</li>
+</ul>
+<ol>
+<li>默认绑定</li>
+<li>隐式绑定</li>
+<li>显示绑定</li>
+<li>new绑定</li>
+</ol>
+
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/python/get_started/" data-id="ciph2ebma000j40o0gplynkr1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="cipid9eqt0003yso0z0d35vqv" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -101,19 +156,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/05/25/front_end/react/get_started/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          react+webpack的入门
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/05/25/nginx/get_started/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/06/16/git/commonsComond/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">常见问题</div>
+      <div class="article-nav-title">git的常用指令(一)</div>
     </a>
   
 </nav>
