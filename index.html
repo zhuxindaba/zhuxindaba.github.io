@@ -105,11 +105,20 @@
 <li>显示绑定</li>
 <li>new绑定</li>
 </ol>
+<ul>
+<li><strong>判断this（优先级）</strong></li>
+</ul>
+<ol>
+<li>函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象</li>
+<li>函数是否通过call、apply（显示绑定）调用？如果是的话，this绑定的是指定的对象</li>
+<li>函数是否在某个上下文对象中调用（隐式绑定）？如果是的话，this绑定的是那个上下文对象</li>
+<li>如果都不是的话，使用默认绑定。如果在严格模式下，就绑定到undefined，否则绑定到全局对象。</li>
+</ol>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="cipid9eqt0003yso0z0d35vqv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="cipschs8j000sa0o06lbqvolk" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -150,12 +159,14 @@
 </li>
 <li><p><strong>git rm</strong><br>git rm –cached会删除索引中的文件并把它保留到工作目录中,而git rm则会将文件从索引和工作目录中都删除。</p>
 </li>
+<li><p><strong>gitk命令查看提交图</strong></p>
+</li>
 </ul>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="cipid7jae0000yso0ihhic8hj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="cipschs5l0001a0o0wvwtkasx" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -195,7 +206,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciph2ebmp000z40o0d95ue559" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="cipschs9g0018a0o0nis2efzl" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -243,7 +254,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciph2ebmp000x40o0nu8xu1uu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="cipschs9l001aa0o0m1sj6o6y" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -283,7 +294,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="ciph2eble000640o0yxnpsyrz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="cipschs7a0007a0o0b1leh136" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -341,7 +352,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciph2eble000440o0m4j4akn1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="cipschs83000la0o0rccobl1j" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -426,7 +437,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciph2eblu000a40o0636ccqe2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="cipschs7o000da0o0s2m7ppmo" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -474,7 +485,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciph2ebmp000v40o06hot3dvs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="cipschsa0001pa0o0s7yl51xb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -548,7 +559,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciph2eble000840o0vzc3fn1f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="cipschs8g000ra0o0i6terx3w" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -604,7 +615,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciph2eble000540o0ln69xat2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="cipschs7i000ba0o05mnj7jt7" class="article-share-link">Share</a>
       
       
     </footer>-->

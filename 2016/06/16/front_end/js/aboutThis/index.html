@@ -18,7 +18,13 @@ this的绑定规则
 默认绑定
 隐式绑定
 显示绑定
-new绑定">
+new绑定
+
+
+判断this（优先级）
+
+
+函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对this的理解">
 <meta property="og:url" content="http://yoursite.com/2016/06/16/front_end/js/aboutThis/index.html">
@@ -36,8 +42,14 @@ this的绑定规则
 默认绑定
 隐式绑定
 显示绑定
-new绑定">
-<meta property="og:updated_time" content="2016-06-16T14:29:58.716Z">
+new绑定
+
+
+判断this（优先级）
+
+
+函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象">
+<meta property="og:updated_time" content="2016-06-23T13:51:52.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对this的理解">
 <meta name="twitter:description" content="this是调用时被绑定的，完全取决于函数的调用位置
@@ -53,7 +65,13 @@ this的绑定规则
 默认绑定
 隐式绑定
 显示绑定
-new绑定">
+new绑定
+
+
+判断this（优先级）
+
+
+函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -143,11 +161,20 @@ new绑定">
 <li>显示绑定</li>
 <li>new绑定</li>
 </ol>
+<ul>
+<li><strong>判断this（优先级）</strong></li>
+</ul>
+<ol>
+<li>函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象</li>
+<li>函数是否通过call、apply（显示绑定）调用？如果是的话，this绑定的是指定的对象</li>
+<li>函数是否在某个上下文对象中调用（隐式绑定）？如果是的话，this绑定的是那个上下文对象</li>
+<li>如果都不是的话，使用默认绑定。如果在严格模式下，就绑定到undefined，否则绑定到全局对象。</li>
+</ol>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="cipid9eqt0003yso0z0d35vqv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="cipschs8j000sa0o06lbqvolk" class="article-share-link">Share</a>
       
       
     </footer>-->
