@@ -3,18 +3,54 @@
 <head>
   <meta charset="utf-8">
   
-  <title>react+webpack的入门 | zhuxin_blog</title>
+  <title>前端模块化系统的几种方式 | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
+  <meta name="description" content="&amp;lt;script&amp;gt;-tag的形式，主要问题有:    
+
+
+全局的变量冲突
+按序加载的重要性
+解决不同模块、包之间的依赖性
+项目庞大的时候，需要写很多很多&amp;lt;script&amp;gt;标签
+
+
+
+CommonJS: 同步请求(synchronous):
+
+这种方式使用同步的require方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以通过增加属性到export的对象中或者设置">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react+webpack的入门">
-<meta property="og:url" content="http://yoursite.com/2016/05/25/front_end/CSS/get_started/index.html">
+<meta property="og:title" content="前端模块化系统的几种方式">
+<meta property="og:url" content="http://yoursite.com/2016/06/27/front_end/Webpack/module_system_styles/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-05-25T15:41:06.219Z">
+<meta property="og:description" content="&amp;lt;script&amp;gt;-tag的形式，主要问题有:    
+
+
+全局的变量冲突
+按序加载的重要性
+解决不同模块、包之间的依赖性
+项目庞大的时候，需要写很多很多&amp;lt;script&amp;gt;标签
+
+
+
+CommonJS: 同步请求(synchronous):
+
+这种方式使用同步的require方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以通过增加属性到export的对象中或者设置">
+<meta property="og:updated_time" content="2016-06-27T16:53:35.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react+webpack的入门">
-<meta name="twitter:description">
+<meta name="twitter:title" content="前端模块化系统的几种方式">
+<meta name="twitter:description" content="&amp;lt;script&amp;gt;-tag的形式，主要问题有:    
+
+
+全局的变量冲突
+按序加载的重要性
+解决不同模块、包之间的依赖性
+项目庞大的时候，需要写很多很多&amp;lt;script&amp;gt;标签
+
+
+
+CommonJS: 同步请求(synchronous):
+
+这种方式使用同步的require方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以通过增加属性到export的对象中或者设置">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -62,14 +98,14 @@
   </div>
 </div>
       <div class="outer">
-        <section id="main"><article id="post-front_end/CSS/get_started" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-front_end/Webpack/module_system_styles" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/05/25/front_end/CSS/get_started/" class="article-date">
-  <time datetime="2016-05-25T15:41:00.612Z" itemprop="datePublished">2016-05-25</time>
+    <a href="/2016/06/27/front_end/Webpack/module_system_styles/" class="article-date">
+  <time datetime="2016-06-27T14:52:05.725Z" itemprop="datePublished">2016-06-27</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/CSS/">CSS</a>
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
   </div>
 
   </div>
@@ -80,7 +116,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      react+webpack的入门
+      前端模块化系统的几种方式
     </h1>
   
 
@@ -88,11 +124,89 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <ol>
+<li><p><code>&lt;script&gt;</code>-tag的形式，主要问题有:    </p>
+<blockquote>
+<ul>
+<li>全局的变量冲突</li>
+<li>按序加载的重要性</li>
+<li>解决不同模块、包之间的依赖性</li>
+<li>项目庞大的时候，需要写很多很多<code>&lt;script&gt;</code>标签</li>
+</ul>
+</blockquote>
+</li>
+<li><p>CommonJS: 同步请求(synchronous):</p>
+<blockquote>
+<p>这种方式使用同步的<code>require</code>方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以<br>通过增加属性到<code>export</code>的对象中或者设置<code>module.exports</code>的值来明确的指定暴露的接口。<br>优点:</p>
+<ol>
+<li>服务端模块可以使用</li>
+<li>npm上已经有好多使用这种方式的写法</li>
+<li>使用简单<br>缺点:</li>
+<li>阻塞式的请求不适用于网络请求，网络请求是异步的</li>
+<li>不能并发的请求多个模块<br>实现者:</li>
+</ol>
+<ul>
+<li>node.js- server-side</li>
+<li>browserify</li>
+<li>modules-webmake   - compile to one bundle</li>
+<li>wreq - client-side<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;../file.js&quot;);</span><br><span class="line">exports.doStuff = function() &#123;&#125;;//方式一</span><br><span class="line">module.exports = someValue;//方式二</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>3.AMD: 异步(asynchronous)请求</p>
+<blockquote>
+<p>对于浏览器来说同步请求有很多问题(CommonJS)所以引入了一个异步版本(一种定义模块与导出模块的方式)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module&quot;, &quot;../file&quot;], function(module, file) &#123; /* ... */ &#125;);</span><br><span class="line">define(&quot;mymodule&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) &#123;</span><br><span class="line">  return someExportedValue;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>优点:</p>
+<ol>
+<li>适用于异步的网络请求</li>
+<li>并发加载模块<br>缺点:</li>
+<li>代码不易于维护<br>实现者:</li>
+</ol>
+<ul>
+<li>require.js - client-side</li>
+<li>curl - client-side</li>
+</ul>
+</blockquote>
+<p>4.ES6 Modules</p>
+<blockquote>
+<p>ES6给javascript增加了一些语言特性，实现了另外的模块化系统<br>优点:</p>
+<ol>
+<li>易于静态分析</li>
+<li>未来的ES标准<br>缺点:</li>
+<li>浏览器原生支持需要时间</li>
+<li>目前这种风格还很少<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;jquery&quot;;</span><br><span class="line">export function doStuff() &#123;&#125;</span><br><span class="line">module &quot;localModule&quot; &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p><strong>模块加载</strong></p>
+<blockquote>
+<p>模块可以执行在浏览器端，所以它必须从服务端加载到浏览器中去，有两种极端的加载方式:</p>
+<ol>
+<li>一个模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有需要的才会被加载<br>缺点:</li>
+<li>过多的模块会造成网络负载，程序响应过慢</li>
+</ul>
+<ol>
+<li>所有的模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有一个请求<br>缺点:</li>
+<li>不需要的模块也加载了</li>
+</ul>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>编译模块时，将模块拆分成多个小块，拆分点由开发者定义<br>同样适用于img css webfont html模板等</p>
+</blockquote>
+
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="cipwpinmx0016i8o0c98vmxun" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/27/front_end/Webpack/module_system_styles/" data-id="cipy58paq00007go0zzpn1n55" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -101,19 +215,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          react-native-vector-icons如何使用自己的iconfont
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/05/25/front_end/html/summary/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/06/25/front_end/BootStrap/getstarted/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">一些名词解释</div>
+      <div class="article-nav-title">快速开始</div>
     </a>
   
 </nav>
