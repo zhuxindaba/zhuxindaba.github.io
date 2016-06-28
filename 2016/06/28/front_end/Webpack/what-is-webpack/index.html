@@ -3,17 +3,45 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Category: Webpack | zhuxin_blog</title>
+  <title>webpack是什么 | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zhuxin_blog">
-<meta property="og:url" content="http://yoursite.com/categories/前端/Webpack/index.html">
+  <meta name="description" content="webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源
+为什么有webpack打包系统
+
+现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标
+
+拆分依赖树，使之成为按需加载
+让初始化加载时间更短
+每一个静态资源都是一个模块
+让第三方库成为模块
+尽可能的去定义模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack是什么">
+<meta property="og:url" content="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description">
+<meta property="og:description" content="webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源
+为什么有webpack打包系统
+
+现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标
+
+拆分依赖树，使之成为按需加载
+让初始化加载时间更短
+每一个静态资源都是一个模块
+让第三方库成为模块
+尽可能的去定义模">
+<meta property="og:updated_time" content="2016-06-28T15:23:03.765Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zhuxin_blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="webpack是什么">
+<meta name="twitter:description" content="webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源
+为什么有webpack打包系统
+
+现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标
+
+拆分依赖树，使之成为按需加载
+让初始化加载时间更短
+每一个静态资源都是一个模块
+让第三方库成为模块
+尽可能的去定义模">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -61,96 +89,86 @@
   </div>
 </div>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/28/front_end/Webpack/usage/" class="archive-article-date">
-  <time datetime="2016-06-28T15:53:23.622Z" itemprop="datePublished">Jun 28</time>
+        <section id="main"><article id="post-front_end/Webpack/what-is-webpack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/28/front_end/Webpack/what-is-webpack/" class="article-date">
+  <time datetime="2016-06-28T14:30:57.700Z" itemprop="datePublished">2016-06-28</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/28/front_end/Webpack/usage/">使用</a>
+    <h1 class="article-title" itemprop="name">
+      webpack是什么
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/28/front_end/Webpack/installation/" class="archive-article-date">
-  <time datetime="2016-06-28T15:28:59.931Z" itemprop="datePublished">Jun 28</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/28/front_end/Webpack/installation/">安装webpack</a>
-    </h1>
-  
+        <p>webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源</p>
+<p><strong>为什么有webpack打包系统</strong></p>
+<blockquote>
+<p>现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源<br>更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标</p>
+<ul>
+<li>拆分依赖树，使之成为按需加载</li>
+<li>让初始化加载时间更短</li>
+<li>每一个静态资源都是一个模块</li>
+<li>让第三方库成为模块</li>
+<li>尽可能的去定义模块的每一部分</li>
+<li>适用于大型项目</li>
+</ul>
+</blockquote>
+<p><strong>webpack有什么不同</strong></p>
+<blockquote>
+<p>webpack有同步与异步两种依赖方式，异步依赖在代码优化之后将会行程一个新的块。<br><strong>加载器</strong><br>webpack本身只支持处理javascript，但是加载器可以将其它的资源加载到javascript中去，这样做<br>每一个资源都是一个模块<br><strong>智能解析</strong><br>webpack有一个聪明的解析器可以处理几乎所有的第三方库，它甚至允许带有表达式的依赖，<br><code>require(&quot;./templates/&quot; + name + &quot;.jade&quot;)</code>支持最常用的模块化方式CommonJS和AMD</p>
+</blockquote>
+<p><strong>插件系统</strong></p>
+<blockquote>
+<p>webpack以丰富的插件系统为特色，大多数的特色都是基于这个插件系统的，这允许你根据需要定义webpack<br>并且以开源的方式来发布通用插件。</p>
+</blockquote>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/28/front_end/Webpack/what-is-webpack/" class="archive-article-date">
-  <time datetime="2016-06-28T14:30:57.700Z" itemprop="datePublished">Jun 28</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/28/front_end/Webpack/what-is-webpack/">webpack是什么</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/27/front_end/Webpack/module_system_styles/" class="archive-article-date">
-  <time datetime="2016-06-27T14:52:05.725Z" itemprop="datePublished">Jun 27</time>
-</a>
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/" data-id="cipzkho4t000yd0o0g7u0grsf" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
-    </h1>
-  
-
-    </header>
+      
+    </footer>-->
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/28/front_end/Webpack/installation/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          安装webpack
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/27/front_end/Webpack/module_system_styles/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">前端模块化系统的几种方式</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 </section>
         
           

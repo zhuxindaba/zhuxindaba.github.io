@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过npm安装webpacknpm install webpack -g
+
+注意:官网的全局安装webpack只是示范的目的，当你在做真实项目的情况下，安装webpack作为一个项目依赖是个明智的选择
+
+快速开始
+首先我们要了解使用webpack基本命令行的API
+创建一个模块化的javascript项目
+
+让我们在javascript通过使用CommonJS语法中创建一些模块。
+
+cat.js1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用">
+<meta property="og:url" content="http://yoursite.com/2016/06/28/front_end/Webpack/usage/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="通过npm安装webpacknpm install webpack -g
+
+注意:官网的全局安装webpack只是示范的目的，当你在做真实项目的情况下，安装webpack作为一个项目依赖是个明智的选择
+
+快速开始
+首先我们要了解使用webpack基本命令行的API
+创建一个模块化的javascript项目
+
+让我们在javascript通过使用CommonJS语法中创建一些模块。
+
+cat.js1">
+<meta property="og:updated_time" content="2016-06-28T16:44:55.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用">
+<meta name="twitter:description" content="通过npm安装webpacknpm install webpack -g
+
+注意:官网的全局安装webpack只是示范的目的，当你在做真实项目的情况下，安装webpack作为一个项目依赖是个明智的选择
+
+快速开始
+首先我们要了解使用webpack基本命令行的API
+创建一个模块化的javascript项目
+
+让我们在javascript通过使用CommonJS语法中创建一些模块。
+
+cat.js1">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Webpack/usage" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/28/front_end/Webpack/usage/" class="article-date">
+  <time datetime="2016-06-28T15:53:23.622Z" itemprop="datePublished">2016-06-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过npm安装webpack<code>npm install webpack -g</code></p>
+<blockquote>
+<p><strong>注意:</strong>官网的全局安装webpack只是示范的目的，当你在做真实项目的情况下，安装webpack<br>作为一个项目依赖是个明智的选择</p>
+</blockquote>
+<p><strong>快速开始</strong></p>
+<p>首先我们要了解使用webpack基本命令行的API</p>
+<p><strong>创建一个模块化的javascript项目</strong></p>
+<blockquote>
+<p>让我们在javascript通过使用CommonJS语法中创建一些模块。</p>
+</blockquote>
+<p><strong>cat.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var cats = [&apos;dave&apos;, &apos;henry&apos;, &apos;martha&apos;];</span><br><span class="line">module.exports = cats;</span><br></pre></td></tr></table></figure></p>
+<p><strong>app.js (入口)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cats = require(&apos;./cats.js&apos;);</span><br><span class="line">console.log(cats);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>entry point(入口)就是你的程序将会在哪启动，并且webpack将会在哪里跟踪模块之间的依赖关系。</p>
+</blockquote>
+<p><strong>webpack5s</strong><br>指定webpack的入口并指定输出文件名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack ./app.js app.bundle.js</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>webpack将会读取并分析入口文件以及它的依赖关系（包括传递依赖），之后会打包他们到app.bundle.js中。<br>现在通过<code>node app.bundle.js</code>就可以看到所打印的内容，当然在浏览器中也是可以运行的。</p>
+</blockquote>
+<p><strong>了解严格模式</strong></p>
+<blockquote>
+<p>webpack是个灵活的打包器，它提供了许多高级的特性，但不是所有的特性都可以通过命令行的这种方式运行，<br>为了全面的了解webpack的灵活性，需要创建一个配置文件。</p>
+</blockquote>
+<p><strong>项目结构</strong></p>
+<blockquote>
+<p>在真实的项目中，我们会分开不同的源文件到不同的目录，在这个实例中，将源文件放在<strong>src</strong>,打包出来的<br>文件放在<strong>bin</strong>中。</p>
+<ol>
+<li>创建bin和src目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir bin</span><br><span class="line">mkdir src</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li><p>将原文件移到src目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv app.js cats.js src</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化一个npm项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装webpack作为本项目的一个依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>移步配置文件</strong></p>
+<blockquote>
+<p>随着你的项目的成长，你的配置文件将会变的复杂，以命令行的方式定义webpack将会变的不灵便，通过<br>创建配置文件来代替命令行的这种方式。</p>
+<ol>
+<li>创建webpack.config.js<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>webpack的配置文件是node形式的模块，所以你可以运行各种形式的代码在这里，只要你最后暴露出<br>一个定义webpack的对象就行。</p>
+</blockquote>
+<ol>
+<li>运行webpack<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>webpack将会读取配置文件，打包响应的东西，你可以检查该项目就会发现项目多出bin目录，并且<br>包含了输出文件</p>
+</blockquote>
+<ol>
+<li>运行<code>bin/app.bundle.j</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node bin/app.bundle.js</span><br><span class="line">[&quot;dave&quot;, &quot;henry&quot;, &quot;martha&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>也可以<code>require()</code>通过npm安装的模块而不需要额外的配置文件。</p>
+</blockquote>
+<p><strong>使用加载器</strong></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="cipzmuily002dd0o07m5w3v86" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/28/front_end/Webpack/installation/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">安装webpack</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">4</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/28/front_end/Webpack/usage/">使用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/28/front_end/Webpack/installation/">安装webpack</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/28/front_end/Webpack/what-is-webpack/">webpack是什么</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/25/front_end/BootStrap/getstarted/">快速开始</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

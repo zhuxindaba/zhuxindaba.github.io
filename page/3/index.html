@@ -63,6 +63,153 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/html/summary" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/25/front_end/html/summary/" class="article-date">
+  <time datetime="2016-05-25T15:40:45.819Z" itemprop="datePublished">2016-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Html/">Html</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/25/front_end/html/summary/">一些名词解释</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>怪异模式</strong></p>
+<blockquote>
+<p>一些网页浏览器为了维持对旧的网页设计的向后兼容而使用的一种技术。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/25/front_end/html/summary/" data-id="cipzkho570010d0o0sunkr4g4" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/js/actionScope" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/25/front_end/js/actionScope/" class="article-date">
+  <time datetime="2016-05-25T15:40:19.174Z" itemprop="datePublished">2016-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/25/front_end/js/actionScope/">作用域</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>变量的赋值会执行两个动作，首先编译器会在当前作用域中声明一个变量（如果之前没有声明过），<br>然后运行时引擎会在作用域中查找该变量，如果能够找到就会对它赋值。</p>
+</blockquote>
+<p><strong>LHS和RHS</strong></p>
+<blockquote>
+<p>LHS和RHS的含义是”赋值操作的左侧或右侧”并不一定意味着”=赋值操作的左侧和右侧”。赋值操作<br>还有其他几种形式，因此在概念上最好理解为”赋值操作的目标是谁(LHS)”以及”谁是赋值操作的源<br>头(RHS)”。</p>
+</blockquote>
+<p><strong>作用域嵌套</strong></p>
+<blockquote>
+<p>当一个块或函数嵌套在另一个块或函数中时，就发生了作用域嵌套。因此，在当前作用域中无法找<br>到某个变量时，引擎就会在外层嵌套的作用域中继续查找，直到找到该变量，或抵达最外层的作用域<br>（也就是全局作用域）为止。</p>
+</blockquote>
+<p><strong>RHS和LHS</strong></p>
+<blockquote>
+<p>如果RHS查询在所有嵌套的作用域中遍寻不到所需的变量，引擎就会抛出ReferenceError异常。<br>当引擎执行LHS查询时，如果在顶层中也无法找到目标变量，全局作用域就会创建一个具有该名称的<br>变量，并将其返回给引擎，前提是程序运行在”非严格模式”下。ES5引入了严格模式，严格模式禁止<br>自动或隐士地创建全局变量。因此，在严格模式中LHS查询失败时，并不会创建并返回一个全局变量，<br>引擎会抛出同RHS查询失败时类似的ReferenceError异常。ReferenceError同作用域判别失败相关，<br>而TypeError则代表作用域判别成功了，但是对结果的操作是非法或不合理的。</p>
+</blockquote>
+<p><strong>总结</strong></p>
+<blockquote>
+<p>作用域是一套规则，用于确定在何处以及如何查找变量。如果查找的目的是对变量进行赋值，那么<br>会使用LHS查询；如果目的是获取该变量的值，就会使用RHS查询。<br>JavaScript引擎首先会在代码执行前对其进行编译，在这个过程中，像<code>var a = 2</code>这样的声明会<br>被分解成两个独立的步骤：</p>
+<ol>
+<li>首先，<code>var a</code>在其作用域中声明新变量。这会在最开始的阶段，也就是代码执行前进行。</li>
+<li>接下来， <code>a = 2</code>会查询(LHS查询)变量a对其进行赋值。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/25/front_end/js/actionScope/" data-id="cipzkho600018d0o0phxl36e0" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/react/get_started" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/25/front_end/react/get_started/" class="article-date">
+  <time datetime="2016-05-25T15:37:39.918Z" itemprop="datePublished">2016-05-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/React-Webpack/">React Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/25/front_end/react/get_started/">react+webpack的入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/25/front_end/react/get_started/" data-id="cipzkho5q0016d0o0cijy8fsx" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python/get_started" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/25/python/get_started/" class="article-date">
@@ -93,7 +240,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/python/get_started/" data-id="cipwpinl7000gi8o0mf2mtzv4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/python/get_started/" data-id="cipzkho3v000md0o0wy8czhpb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -133,7 +280,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/nginx/get_started/" data-id="cipwpinj40002i8o0pwlcb89b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/nginx/get_started/" data-id="cipzkho3s000jd0o0j77kbtx1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -209,7 +356,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/http/leanr_tcp_ip/" data-id="cipwpinle000ji8o06qgayjz5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/http/leanr_tcp_ip/" data-id="cipzkho3k000dd0o08b1e2zbb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -233,7 +380,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">1</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">4</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -245,23 +392,23 @@
       <ul>
         
           <li>
+            <a href="/2016/06/28/front_end/Webpack/usage/">使用</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/28/front_end/Webpack/installation/">安装webpack</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/28/front_end/Webpack/what-is-webpack/">webpack是什么</a>
+          </li>
+        
+          <li>
             <a href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
           </li>
         
           <li>
             <a href="/2016/06/25/front_end/BootStrap/getstarted/">快速开始</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/16/front_end/js/aboutThis/">对this的理解</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/16/git/commonsComond/">git的常用指令(一)</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/15/front_end/js/closureAndScope/">作用域和闭包</a>
           </li>
         
       </ul>
@@ -275,7 +422,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
