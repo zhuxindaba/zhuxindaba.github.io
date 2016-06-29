@@ -31,7 +31,7 @@ cat.js1">
 让我们在javascript通过使用CommonJS语法中创建一些模块。
 
 cat.js1">
-<meta property="og:updated_time" content="2016-06-28T16:44:55.641Z">
+<meta property="og:updated_time" content="2016-06-29T15:08:36.639Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用">
 <meta name="twitter:description" content="通过npm安装webpacknpm install webpack -g
@@ -184,11 +184,41 @@ cat.js1">
 <p>也可以<code>require()</code>通过npm安装的模块而不需要额外的配置文件。</p>
 </blockquote>
 <p><strong>使用加载器</strong></p>
+<blockquote>
+<p>webpack本身只支持javascript模块，但是很多人会使用转换器去转换ES6、CoffeScript、TypeScript、<br>等等，这些可以通过wenbpack的loaders实现。<br>loaders是一些特殊的模块，webpack使用他们来加载其余的模块到javascript中，比如babel-loader使用<br>Babel去加载ES2015（ES6）的文件。<br>loaders可以链式化（loaders链），有时你需要加载器链一起工作，比如<code>yaml-loader</code>只能转换YAML到json<br>中,所以需要<code>json-loader</code>继续转化才能被使用</p>
+</blockquote>
+<p><strong>用babel-loader转换ES2015</strong></p>
+<blockquote>
+<p>在这个例子中，我们告诉webpack通过使用Babel我们可以使用ES2015的特性</p>
+<ol>
+<li><p>安装babel以及babel的预装配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-core babel-preset-es2015</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装babel-loader</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-loader</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过添加.babelrc文件配置Babel使用这些预装配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;presets&quot;: [ &quot;es2015&quot; ] &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改webpack.config.js通过<code>babel-loader</code>处理所有以<code>.js</code>结尾的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.js$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel-loader&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>我们排除了<code>node_modules</code>文件夹，否则所有的外部库都会经过 Babel,会减慢编译速度**<br>(5). 安装你想要使用的外部库（jQuery）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save jquery babel-polyfill</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用<code>--save</code>代替<code>--save-dev</code>,因为这些库是在运行的时候被使用的，使用<code>babel-polyfill</code>可以是在老的浏览器中使用ES2015</strong><br>(6). 修改<code>src/app.js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &apos;babel-polyfill&apos;;</span><br><span class="line">import cats from &apos;./cats&apos;;</span><br><span class="line">import $ from &apos;jquery&apos;;</span><br><span class="line"></span><br><span class="line">$(&apos;&lt;h1&gt;Cats&lt;/h1&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">const ul = $(&apos;&lt;ul&gt;&lt;/ul&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">for (const cat of cats) &#123;</span><br><span class="line">    $(&apos;&lt;li&gt;&lt;/li&gt;&apos;).text(cat).appendTo(ul);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>(7). 使用webpack打包这些模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure></p>
+<p>(8). 添加<code>index.html</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;script src=&quot;bin/app.bundle.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>使用插件</strong></p>
+<blockquote>
+<p>通常你需要在工作流中做一些额外的处理，很简单的一个例子就是压缩代码这样可以在浏览器中加<br>载速度变快,这可以通过插件完成，在配置文件中加入压缩插件(uglify plugin)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&apos;webpack&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.jsx?$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">            compress: &#123;</span><br><span class="line">                warnings: false,</span><br><span class="line">            &#125;,</span><br><span class="line">            output: &#123;</span><br><span class="line">                comments: false,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>压缩插件已经包含在webpack的配置文件中，所以你不需要添加额外的模块，你可以写自己的插件，<br>在这个案例中将文件大小由1618bytes压缩到了308bytes。</p>
+</blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="cipzmuily002dd0o07m5w3v86" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="ciq0yzmf20010wco07pr642th" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -196,6 +226,15 @@ cat.js1">
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/06/29/front_end/Webpack/using_loaders/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用加载器
+        
+      </div>
+    </a>
   
   
     <a href="/2016/06/28/front_end/Webpack/installation/" id="article-nav-older" class="article-nav-link-wrap">
@@ -217,7 +256,7 @@ cat.js1">
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">4</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">5</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -227,6 +266,10 @@ cat.js1">
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/06/29/front_end/Webpack/using_loaders/">使用加载器</a>
+          </li>
         
           <li>
             <a href="/2016/06/28/front_end/Webpack/usage/">使用</a>
@@ -244,10 +287,6 @@ cat.js1">
             <a href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
           </li>
         
-          <li>
-            <a href="/2016/06/25/front_end/BootStrap/getstarted/">快速开始</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -259,7 +298,7 @@ cat.js1">
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 

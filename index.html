@@ -63,6 +63,84 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/Webpack/using_loaders" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/29/front_end/Webpack/using_loaders/" class="article-date">
+  <time datetime="2016-06-29T15:10:30.255Z" itemprop="datePublished">2016-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/29/front_end/Webpack/using_loaders/">使用加载器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>什么是加载器</strong></p>
+<blockquote>
+<p>加载器是应用于你程序中的资源文件的转换器,它们是将源文件作为参数并返回新的资源的nodejs函数。<br>例如可以使用加载器让webpack加载CoffeScript或者JSX文件。</p>
+</blockquote>
+<p><strong>加载器特性</strong></p>
+<blockquote>
+<ul>
+<li>加载器可以链式，通过管道来处理资源文件，最后的加载器返回JavaScript文件,其余的加载器可以<br>返回任意格式的资源到下一个加载器</li>
+<li>加载器可以是同步的也可以是异步的</li>
+<li>加载器运行在nodejs中，可以做任何可能做的事。</li>
+<li>加载器接受查询参数，可以用于传递配置文件给加载器。</li>
+<li>可以在加载器定义中使用表达式或者正则。</li>
+<li>加载器可以通过npm下载或发布。</li>
+<li>Normal modules can export a loader in addition to the normal main via package.json loader.</li>
+<li>加载器可以访问配置文件</li>
+<li>插件可以提供加载器更多特性</li>
+<li>加载器可以产出任意格式的文件</li>
+<li>更多</li>
+</ul>
+</blockquote>
+<p><strong>解析加载器</strong></p>
+<blockquote>
+<p>解析加载器和解析模块类似，一个加载器模块即一个导出函数的 node.js模块，通常情况下通过npm<br>管理加载器，但是也可以将加载器存在程序中。<br><strong>引用加载器</strong><br>按照管理，虽然不是要求的，加载器通常命名为<code>xxx-loader</code>,其中xxx就是加载器的名字，比如json-loader<br>你可以通过全程引用加载器，也可以通过它的简称来引用。<br>加载器的命名惯例和搜索优先级是在webpack的配置api的<code>resolveLoader.moduleTemplates</code>定义的.<br>加载器的命名惯例是很有用的，尤其是在<code>require()</code>语句中引用加载器时。<br><strong>安装加载器</strong><br>如果加载器在npm中是可获得的，你可以通过以下命令来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xxx-loader --save</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xxx-loader --save-dev</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用</strong><br>在项目中有多种方式使用加载器</p>
+<ul>
+<li>通过<code>require</code>声明中明确指定</li>
+<li>通过配置文件配置</li>
+<li>通过命令行指定<br><strong>注意:</strong>尽可能避免使用这种方式，如果你希望你的脚本可以同时在nodejs和浏览器中运行，使用<br>在配置文件中明确配置加载器的惯例。<br>可以通过<code>require</code>语句使用加载器(或者<code>define</code>,<code>require.ensure</code>,等等)。只需要用<code>!</code>将加载器<br>和资源分开即可，每一部分都是相对于当前目录。<br>可以在配置中写很多个任意加载器通过前缀<code>!</code>的规则<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;./loader!./dir/file.txt&quot;);</span><br><span class="line">// =&gt; uses the file &quot;loader.js&quot; in the current directory to transform</span><br><span class="line">//    &quot;file.txt&quot; in the folder &quot;dir&quot;.</span><br><span class="line"></span><br><span class="line">require(&quot;jade!./template.jade&quot;);</span><br><span class="line">// =&gt; uses the &quot;jade-loader&quot; (that is installed from npm to &quot;node_modules&quot;)</span><br><span class="line">//    to transform the file &quot;template.jade&quot;</span><br><span class="line">//    If configuration has some transforms bound to the file, they will still be applied.</span><br><span class="line"></span><br><span class="line">require(&quot;!style!css!less!bootstrap/less/bootstrap.less&quot;);</span><br><span class="line">// =&gt; the file &quot;bootstrap.less&quot; in the folder &quot;less&quot; in the &quot;bootstrap&quot;</span><br><span class="line">//    module (that is installed from github to &quot;node_modules&quot;) is</span><br><span class="line">//    transformed by the &quot;less-loader&quot;. The result is transformed by the</span><br><span class="line">//    &quot;css-loader&quot; and then by the &quot;style-loader&quot;.</span><br><span class="line">//    If configuration has some transforms bound to the file, they will not be applied.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>通过配置文件</strong><br>可以通过正则来在配置文件中绑定加载器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123; test: /\.jade$/, loader: &quot;jade&quot; &#125;,</span><br><span class="line">            // =&gt; &quot;jade&quot; loader is used for &quot;.jade&quot; files</span><br><span class="line"></span><br><span class="line">            &#123; test: /\.css$/, loader: &quot;style!css&quot; &#125;,</span><br><span class="line">            // =&gt; &quot;style&quot; and &quot;css&quot; loader is used for &quot;.css&quot; files</span><br><span class="line">            // Alternative syntax:</span><br><span class="line">            &#123; test: /\.css$/, loaders: [&quot;style&quot;, &quot;css&quot;] &#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>命令行</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack --module-bind jade --module-bind &apos;css=style!css&apos;</span><br></pre></td></tr></table></figure></p>
+<p>上述命令给<code>.jade</code>文件绑定了 <code>jade</code> 加载器，给 <code>.css</code> 文件班定了 <code>style</code> 和 <code>css</code> 加载器。<br><strong>查询参数</strong><br>加载器可以通过查询<code>web</code>风格的字符串来指定查询参数，如：<code>url-loader?mimetype=image/png</code><br><strong>注：查询字符串的格式要看加载器，具体格式参考加载器文档。大多数的加载器支持普通的查询格式<br>（<code>?key=value&amp;key2=value2</code>）和 JSON 对象（<code>?{&quot;key&quot;:&quot;value&quot;,&quot;key2&quot;:&quot;value2&quot;}</code>）。</strong><br><strong>require</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;url-loader?mimetype=image/png!./file.png&quot;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置文件中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; test: /\.png$/, loader: &quot;url-loader?mimetype=image/png&quot; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.png$/,</span><br><span class="line">    loader: &quot;url-loader&quot;,</span><br><span class="line">    query: &#123; mimetype: &quot;image/png&quot; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>命令行中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack --module-bind &quot;png=url-loader?mimetype=image/png&quot;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/29/front_end/Webpack/using_loaders/" data-id="ciq10r7nh002iwco0w6fyc98v" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-front_end/Webpack/usage" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/28/front_end/Webpack/usage/" class="article-date">
@@ -155,11 +233,41 @@
 <p>也可以<code>require()</code>通过npm安装的模块而不需要额外的配置文件。</p>
 </blockquote>
 <p><strong>使用加载器</strong></p>
+<blockquote>
+<p>webpack本身只支持javascript模块，但是很多人会使用转换器去转换ES6、CoffeScript、TypeScript、<br>等等，这些可以通过wenbpack的loaders实现。<br>loaders是一些特殊的模块，webpack使用他们来加载其余的模块到javascript中，比如babel-loader使用<br>Babel去加载ES2015（ES6）的文件。<br>loaders可以链式化（loaders链），有时你需要加载器链一起工作，比如<code>yaml-loader</code>只能转换YAML到json<br>中,所以需要<code>json-loader</code>继续转化才能被使用</p>
+</blockquote>
+<p><strong>用babel-loader转换ES2015</strong></p>
+<blockquote>
+<p>在这个例子中，我们告诉webpack通过使用Babel我们可以使用ES2015的特性</p>
+<ol>
+<li><p>安装babel以及babel的预装配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-core babel-preset-es2015</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装babel-loader</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-loader</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过添加.babelrc文件配置Babel使用这些预装配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;presets&quot;: [ &quot;es2015&quot; ] &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改webpack.config.js通过<code>babel-loader</code>处理所有以<code>.js</code>结尾的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.js$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel-loader&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>我们排除了<code>node_modules</code>文件夹，否则所有的外部库都会经过 Babel,会减慢编译速度**<br>(5). 安装你想要使用的外部库（jQuery）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save jquery babel-polyfill</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用<code>--save</code>代替<code>--save-dev</code>,因为这些库是在运行的时候被使用的，使用<code>babel-polyfill</code>可以是在老的浏览器中使用ES2015</strong><br>(6). 修改<code>src/app.js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &apos;babel-polyfill&apos;;</span><br><span class="line">import cats from &apos;./cats&apos;;</span><br><span class="line">import $ from &apos;jquery&apos;;</span><br><span class="line"></span><br><span class="line">$(&apos;&lt;h1&gt;Cats&lt;/h1&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">const ul = $(&apos;&lt;ul&gt;&lt;/ul&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">for (const cat of cats) &#123;</span><br><span class="line">    $(&apos;&lt;li&gt;&lt;/li&gt;&apos;).text(cat).appendTo(ul);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>(7). 使用webpack打包这些模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure></p>
+<p>(8). 添加<code>index.html</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;script src=&quot;bin/app.bundle.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>使用插件</strong></p>
+<blockquote>
+<p>通常你需要在工作流中做一些额外的处理，很简单的一个例子就是压缩代码这样可以在浏览器中加<br>载速度变快,这可以通过插件完成，在配置文件中加入压缩插件(uglify plugin)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&apos;webpack&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.jsx?$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">            compress: &#123;</span><br><span class="line">                warnings: false,</span><br><span class="line">            &#125;,</span><br><span class="line">            output: &#123;</span><br><span class="line">                comments: false,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>压缩插件已经包含在webpack的配置文件中，所以你不需要添加额外的模块，你可以写自己的插件，<br>在这个案例中将文件大小由1618bytes压缩到了308bytes。</p>
+</blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="cipzmuily002dd0o07m5w3v86" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="ciq0yzmf20010wco07pr642th" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -213,7 +321,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/installation/" data-id="cipzlz57u002ad0o04sa0lw9i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/installation/" data-id="ciq0yzmgm002fwco064lf0zbm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -274,7 +382,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/" data-id="cipzkho4t000yd0o0g7u0grsf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/" data-id="ciq0yzmf70011wco0ipses5z4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -392,7 +500,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/27/front_end/Webpack/module_system_styles/" data-id="cipzkho53000zd0o0yq63eqj4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/27/front_end/Webpack/module_system_styles/" data-id="ciq0yzmes000xwco0abz71aaz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -432,7 +540,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/25/front_end/BootStrap/getstarted/" data-id="cipzkho4o000vd0o0zgpll8vd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/25/front_end/BootStrap/getstarted/" data-id="ciq0yzmeq000wwco0x5oadnr3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -497,7 +605,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="cipzkho5i0013d0o0297qqklf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="ciq0yzmff0016wco0tqm3hcup" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -545,7 +653,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="cipzkho3q000hd0o0ra9zinwp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="ciq0yzmck0001wco0p94fp5bu" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -585,7 +693,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="cipzkho5n0015d0o0hzxgyzdi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciq0yzmfn001awco0llwu9dtt" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -633,47 +741,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="cipzkho620019d0o0grfgwv48" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/digestAuthenticate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/11/http/digestAuthenticate/" class="article-date">
-  <time datetime="2016-06-11T03:35:28.866Z" itemprop="datePublished">2016-06-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/11/http/digestAuthenticate/">摘要认证</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="cipzkho2v0008d0o0lhe08uwi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciq0yzmfm0019wco0owuv34j8" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -697,7 +765,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">14</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">4</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">15</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">5</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -707,6 +775,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/06/29/front_end/Webpack/using_loaders/">使用加载器</a>
+          </li>
         
           <li>
             <a href="/2016/06/28/front_end/Webpack/usage/">使用</a>
@@ -724,10 +796,6 @@
             <a href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
           </li>
         
-          <li>
-            <a href="/2016/06/25/front_end/BootStrap/getstarted/">快速开始</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -739,7 +807,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
