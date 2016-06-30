@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>疑难解析 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="解析
+常见解析问题
+
+--display-error-details提供更多的详细信息
+
+npm link找不到他们的依赖
+
+node.js模块的解析算法很简单，从模块所在目录递归向上找寻node_modules目录。
+
+Windows路径
+
+webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是\，所以__dirname + &amp;quot;/app/folder&amp;quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="疑难解析">
+<meta property="og:url" content="http://yoursite.com/2016/06/30/front_end/Webpack/troubleshooting/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="解析
+常见解析问题
+
+--display-error-details提供更多的详细信息
+
+npm link找不到他们的依赖
+
+node.js模块的解析算法很简单，从模块所在目录递归向上找寻node_modules目录。
+
+Windows路径
+
+webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是\，所以__dirname + &amp;quot;/app/folder&amp;quot;">
+<meta property="og:updated_time" content="2016-06-30T15:01:01.479Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="疑难解析">
+<meta name="twitter:description" content="解析
+常见解析问题
+
+--display-error-details提供更多的详细信息
+
+npm link找不到他们的依赖
+
+node.js模块的解析算法很简单，从模块所在目录递归向上找寻node_modules目录。
+
+Windows路径
+
+webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是\，所以__dirname + &amp;quot;/app/folder&amp;quot;">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Webpack/troubleshooting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/30/front_end/Webpack/troubleshooting/" class="article-date">
+  <time datetime="2016-06-30T14:42:31.699Z" itemprop="datePublished">2016-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      疑难解析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>解析</strong></p>
+<p><strong>常见解析问题</strong></p>
+<ul>
+<li><code>--display-error-details</code>提供更多的详细信息</li>
+</ul>
+<p><strong><code>npm link</code>找不到他们的依赖</strong></p>
+<blockquote>
+<p>node.js模块的解析算法很简单，从模块所在目录递归向上找寻<code>node_modules</code>目录。</p>
+</blockquote>
+<p><strong>Windows路径</strong></p>
+<blockquote>
+<p>webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是<code>\</code>，所以<code>__dirname + &quot;/app/folder&quot;</code><br>这样的代码将会出错，从而会导致问题。<br>需要使用正确的分隔符，如：<code>path.resolve(__dirname, &quot;app/folder&quot;)</code>或者<code>path.join(__dirname, &quot;app&quot;, &quot;folder&quot;)</code></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/troubleshooting/" data-id="ciq2f734r002sjso0giga2ah2" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/30/front_end/Webpack/commonjs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CommonJs
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/30/front_end/Webpack/devtools/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">开发工具</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">10</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/commonjs/">CommonJs</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/troubleshooting/">疑难解析</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/devtools/">开发工具</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/using_plugin/">使用插件</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

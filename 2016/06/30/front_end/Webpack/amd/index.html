@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AMD | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="AMD(Asynchronous Module Definition异步模块定义)，因为CommonJs模块系统不适用于浏览器，因为CommonJs是同步的
+
+规范
+
+使用ddefine定义模块
+
+define
+
+AMD定义模块通过define函数，它是一个有参数的函数1define(id?: String, dependencies?: String[], factory: Function|">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AMD">
+<meta property="og:url" content="http://yoursite.com/2016/06/30/front_end/Webpack/amd/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="AMD(Asynchronous Module Definition异步模块定义)，因为CommonJs模块系统不适用于浏览器，因为CommonJs是同步的
+
+规范
+
+使用ddefine定义模块
+
+define
+
+AMD定义模块通过define函数，它是一个有参数的函数1define(id?: String, dependencies?: String[], factory: Function|">
+<meta property="og:updated_time" content="2016-06-30T16:03:46.389Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AMD">
+<meta name="twitter:description" content="AMD(Asynchronous Module Definition异步模块定义)，因为CommonJs模块系统不适用于浏览器，因为CommonJs是同步的
+
+规范
+
+使用ddefine定义模块
+
+define
+
+AMD定义模块通过define函数，它是一个有参数的函数1define(id?: String, dependencies?: String[], factory: Function|">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Webpack/amd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/30/front_end/Webpack/amd/" class="article-date">
+  <time datetime="2016-06-30T15:42:10.286Z" itemprop="datePublished">2016-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AMD
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>AMD(Asynchronous Module Definition异步模块定义)，因为CommonJs模块系统不适用于浏览器，<br>因为CommonJs是同步的</p>
+</blockquote>
+<p><strong>规范</strong></p>
+<blockquote>
+<p>使用<code>ddefine</code>定义模块</p>
+</blockquote>
+<p><strong>define</strong></p>
+<blockquote>
+<p>AMD定义模块通过<code>define</code>函数，它是一个有参数的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(id?: String, dependencies?: String[], factory: Function|Object);</span><br></pre></td></tr></table></figure></p>
+<p><code>id</code><br>定义模块的名称，可选择的<br><code>dependencies</code><br>指定定义该模块需要依赖其余的哪些模块，是一个模块标识的数组，缺省时默认值是 [“require”, “exports”, “module”].<br><code>factory</code><br>最后的这个参数就是谁定义了这个模块，它可以是一个对象也可以是一个函数（只调用一次），如果是函数<br>的话，函数的返回值就是模块暴露出去的值。</p>
+</blockquote>
+<p><strong>例子</strong></p>
+<blockquote>
+<p>定义一个叫<code>myModule</code>并且依赖jQuery的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;myModule&apos;, [&apos;jquery&apos;], function($) &#123;</span><br><span class="line">    // $ is the export of the jquery module.</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">// and use it</span><br><span class="line">require([&apos;myModule&apos;], function(myModule) &#123;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>在webpack中一个命名模块仅局部可用，而在require.js中则全局可用</strong></p>
+</blockquote>
+<p><strong>匿名模块</strong></p>
+<blockquote>
+<p>定义一个没有明确id的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;], function($) &#123;</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>多个依赖</strong></p>
+<blockquote>
+<p>注意每个模块的输出值将会传到factory函数中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;, &apos;./math.js&apos;], function($, math) &#123;</span><br><span class="line">    // $ and math are the exports of the jquery module.</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>输出值</strong></p>
+<blockquote>
+<p>定义一个输出本身的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;], function($) &#123;</span><br><span class="line"></span><br><span class="line">    var HelloWorldize = function(selector)&#123;</span><br><span class="line">        $(selector).text(&apos;hello world&apos;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    return HelloWorldize;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>使用require加载模块</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define(function(require) &#123;</span><br><span class="line">    var $ = require(&apos;jquery&apos;);</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/amd/" data-id="ciq2hbse1002yjso0sktty7vb" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/30/front_end/Webpack/commonjs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CommonJs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">20</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">10</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/commonjs/">CommonJs</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/troubleshooting/">疑难解析</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/devtools/">开发工具</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/using_plugin/">使用插件</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
