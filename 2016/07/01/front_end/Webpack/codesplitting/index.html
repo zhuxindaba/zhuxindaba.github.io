@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>代码拆分 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之为”层”,”片段”,webpack将其称为”代码拆分”.这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件以及运行时文件。为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码拆分">
+<meta property="og:url" content="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之为”层”,”片段”,webpack将其称为”代码拆分”.这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件以及运行时文件。为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码">
+<meta property="og:updated_time" content="2016-07-01T16:07:51.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码拆分">
+<meta name="twitter:description" content="对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之为”层”,”片段”,webpack将其称为”代码拆分”.这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件以及运行时文件。为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Webpack/codesplitting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/01/front_end/Webpack/codesplitting/" class="article-date">
+  <time datetime="2016-07-01T14:07:09.821Z" itemprop="datePublished">2016-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      代码拆分
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会<br>用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之<br>为”层”,”片段”,webpack将其称为”代码拆分”.<br>这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件<br>以及运行时文件。<br>为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码提取出来到一个公共的模块，更重要的特性<br>是可以将拆出来的代码块按需加载，这可以保证首次加载的代码更少，请求会按需加载所需要的代码。</p>
+</blockquote>
+<p><strong>定义分离点</strong></p>
+<blockquote>
+<p>AMD和CommonJs指定不同的方法实现按需加载，webpack都支持并且并且都是定义为分离点的形式。<br><strong>CommonJs: require.ensure</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require.ensure(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
+<p><code>require.ensure</code>方法保证 每个依赖都会在回调函数被同步的请求进来，回调函数被执行时，<br><code>require</code>是回调函数的参数.例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require.ensure([&quot;module-a&quot;, &quot;module-b&quot;], function(require) &#123;</span><br><span class="line">    var a = require(&quot;module-a&quot;);</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>注意：<code>require.ensure</code>仅仅是加载模块，但是并不会去执行他们</p>
+</blockquote>
+<p><strong>AMD:<code>require</code></strong></p>
+<blockquote>
+<p>AMD规范以下面的方式定义了一个异步的<code>require</code>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
+<p>当调用时，所有的依赖都会被加载，并且将他们作为参数给回调函数,例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module-a&quot;, &quot;module-b&quot;], function(a, b) &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>注意：AMD<code>require</code>加载并执行响应的模块，在webpack中模块是从左向右执行的，并且可以省略<br>回调函数。</p>
+</blockquote>
+<p><strong>ES6模块</strong></p>
+<blockquote>
+<p>Webpack不支持ES6模块，直接使用<code>require.ensure</code>或者<code>require</code>取决于设计哪个模块组成你的<br>编译.<br>Webpack1.x.x(2.0即将来临)原生的不支持ES6模块，但是你可以通过转换器解决他，比如使用Babel<br>转换ES6的<code>import</code>语法为CommonJs或者AMD模块，这种途径是有效的，但是当动态加载时会有警告。<br>这种模块添加方式<code>import x from &#39;foo&#39;</code>是故意设计为静态分析的，意味着你不能用于动态导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// INVALID!!!!!!!!!</span><br><span class="line">[&apos;lodash&apos;, &apos;backbone&apos;].forEach(name =&gt; import name )</span><br></pre></td></tr></table></figure></p>
+<p>幸运的是，JavaScript有<code>loader</code>规范去处理动态导入:<code>System.load</code>或者<code>System.import</code>)<br>原生的API和<code>require</code>的定义是等价的，但是大多数编译器不支持转化<code>System.load</code>为’require.ensure’<br>所以如果想使用动态代码拆分的话直接使用<code>require.ensure</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//static imports</span><br><span class="line">import _ from &apos;lodash&apos;</span><br><span class="line"></span><br><span class="line">// dynamic imports</span><br><span class="line">require.ensure([], function(require) &#123;</span><br><span class="line">  let contacts = require(&apos;./contacts&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>分块内容</strong></p>
+<blockquote>
+<p>分离点处的所有依赖都会被独立成一个块，依赖会递归的被添加。<br>如果在分离点处的回调函数是一个函数，webpack 会把该函数里的依赖都提取到按需加载的代码块中。</p>
+</blockquote>
+<p><strong>分块优化</strong></p>
+<blockquote>
+<p>如果两个分块包含相同的模块，它们会被合并成一个，这会造成分块有多个父模块，如果一个模块<br>在一个分块中的所有父模块都可用,那么它将会从该分块中移除。<br>如果一个分块包含了另一个分块中的所有模块，它会被储存起来，满足多个分块.</p>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>根据配置文件的<code>target</code>选项的值，打包时执行不同的逻辑去加载分块，比如<code>web</code>target,分块通<br>过jsonp被加载，一个分块只会被加载一次，并发的请求将会被合并成一个，运行时检查加载的分块是<br>否满足多个分块</p>
+</blockquote>
+<p><strong>分块类型</strong></p>
+<blockquote>
+<p><strong>入口块</strong></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/" data-id="ciq3vn5mx0012mgo04zglgx1r" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/30/front_end/Webpack/amd/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AMD</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">11</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/01/front_end/Webpack/codesplitting/">代码拆分</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/commonjs/">CommonJs</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/troubleshooting/">疑难解析</a>
+          </li>
+        
+          <li>
+            <a href="/2016/06/30/front_end/Webpack/devtools/">开发工具</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
