@@ -63,6 +63,224 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/Webpack/style-sheets" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/03/front_end/Webpack/style-sheets/" class="article-date">
+  <time datetime="2016-07-03T14:54:44.422Z" itemprop="datePublished">2016-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>嵌入的样式脚本</strong></p>
+<blockquote>
+<p>通过使用<code>style-loader</code>和<code>css-loader</code>，可以webpack打包的javascript文件中嵌入样式脚本.<br>通过这种方式可以是css模块化，这种方式使用很简单<code>require(&quot;./stylesheet.css&quot;)</code>。</p>
+</blockquote>
+<p><strong>通过npm安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install style-loader css-loader --save-dev</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置</strong></p>
+<blockquote>
+<p>通过一下的方式支持<code>require(xxx.css)</code>这种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // ...</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123; test: /\.css$/, loader: &quot;style-loader!css-loader&quot; &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于css预处理语言，可以参照加载器的配置示例，你可以链式的使用它。<br>记住，掌握加载器的执行顺序很难，所以设计好样式让其与顺序无关（但是css文件内的样式顺序<br>还是得依靠的）。<br><strong>使用css</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// in your modules just require the stylesheet</span><br><span class="line">// This has the side effect that a &lt;style&gt;-tag is added to the DOM.</span><br><span class="line">require(&quot;./stylesheet.css&quot;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>分离css打包文件</strong></p>
+<blockquote>
+<p>与<code>extract-text-webpack-plugin</code>结合使用，可以生成一个原生的css文件。<br>使用两种方式实现代码分离</p>
+<ul>
+<li>每个初始块创建一个css文件，然后在其余块中引入（推荐）</li>
+<li>每个初始块创建一个 css 文件，其中同时包含了依赖块中的样式<br>推荐第一种方式是因为可以减少页面初始化时间，在小型多入口项目中第二种方式可以利用缓存来减少<br>http消耗</li>
+</ul>
+</blockquote>
+<p><strong>安装<code>extract-text-webpack-plugin</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install extract-text-webpack-plugin --save</span><br></pre></td></tr></table></figure></p>
+<p><strong>通用</strong></p>
+<blockquote>
+<p>使用这个插件需要标记加载器<br><strong>把css从初始化块中分离到css文件中</strong><br>这个例子适用于多入口以及单页面应用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// webpack.config.js</span><br><span class="line">var ExtractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // The standard entry point and output config</span><br><span class="line">    entry: &#123;</span><br><span class="line">        posts: &quot;./posts&quot;,</span><br><span class="line">        post: &quot;./post&quot;,</span><br><span class="line">        about: &quot;./about&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            // Extract css files</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader&quot;)</span><br><span class="line">            &#125;,</span><br><span class="line">            // Optionally extract less files</span><br><span class="line">            // or any other compile-to-css language</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader!less-loader&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">            // You could also use other loaders the same way. I. e. the autoprefixer-loader</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    // Use the plugin to specify the resulting filename (and add needed behavior to the compiler)</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你将获得以下文件</p>
+<ul>
+<li>posts.js posts.css</li>
+<li>post.js post.css</li>
+<li>about.js about.css</li>
+</ul>
+</blockquote>
+<p><strong>把所有的样式分离到css文件中</strong></p>
+<blockquote>
+<p>使用第二种方式只需要设置<code>allChunks</code>为<code>true</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;style.css&quot;, &#123;</span><br><span class="line">            allChunks: true</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你将会得到以下输出文件</p>
+<ul>
+<li>posts.js</li>
+<li>post.js</li>
+<li>about.js</li>
+<li>style.css</li>
+</ul>
+</blockquote>
+<p><strong>公共块的样式</strong></p>
+<blockquote>
+<p>你可以与<code>CommonsChunkPlugin</code>结合使用分离出一个css文件，在这个示例中公共快也会生成一个<br>css文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&quot;commons&quot;, &quot;commons.js&quot;),</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你会获得以下输出文件</p>
+<ul>
+<li>commons.js commons.css</li>
+<li>posts.js posts.css</li>
+<li>post.js post.css</li>
+<li>about.js about.css</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Webpack/style-sheets/" data-id="ciq6pycie003gego0imk5tymj" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/Electron/supported-platfroms" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/03/front_end/Electron/supported-platfroms/" class="article-date">
+  <time datetime="2016-07-03T14:50:43.334Z" itemprop="datePublished">2016-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/03/front_end/Electron/supported-platfroms/">支持的平台</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>支持的平台</strong></p>
+<blockquote>
+<p>以下的平台是Electron支持的</p>
+<ul>
+<li><strong>macOS</strong><br>只支持macOS64进制的系统，支持的最低版本是macOS 10.9</li>
+</ul>
+</blockquote>
+<ul>
+<li><p><strong>Windows</strong></p>
+<blockquote>
+<p>支持windows7以后的系统，老系统暂不支持，并且不会运行，32位和64位都支持，<code>ARM</code>版本的windows<br>暂不支持</p>
+</blockquote>
+</li>
+<li><p><strong>Linux</strong></p>
+<blockquote>
+<p>预编译的<code>Electron</code>的<code>ia32(i686)</code>和<code>x64(amd64)</code>二进制文件都是在<code>Ubuntu12.04</code>上编译的。<br>一下的linux系统证实了可以运行预编译版本的<code>Electron</code></p>
+<ul>
+<li>Ubuntu 12.04 and later</li>
+<li>Fedora 21</li>
+<li>Debian 8</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/supported-platfroms/" data-id="ciq6pt6i3003dego0dnhnouq7" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/Electron/what-is-electron" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/03/front_end/Electron/what-is-electron/" class="article-date">
+  <time datetime="2016-07-03T12:11:01.376Z" itemprop="datePublished">2016-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/03/front_end/Electron/what-is-electron/">Electron-常见问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Electron框架让你通过CSS、JS、HTML写跨平台的桌面应用，它基于Node.js以及Chrom内核，Atom<br>编辑器就是通过它完成的。</p>
+</blockquote>
+<p><strong>FAQ(Frequently Asked Questions)常见问题</strong></p>
+<blockquote>
+<p><strong>什么时候=会升级到最新版本的Chrome</strong><br>通常会在稳定版本的Chrom发布1-2周内，更新Electron内的Chrome版本，Electron只会使用稳定<br>版本的Chrome,但如果在beta或dev有重要的更新的话，会使用补丁的方式应用到现版本的Chrome上<br><strong>什么时候会升级到最新版本的nodejs</strong><br>当一个新版本的nodejs发布之后，通常会在1月之后更新Electron，这样可以避免引入新版本的nodejs<br>所带来的bug，这太常见了.<br>Nodejs的新特性通常是在V8带来的，由于Electron使用的是Chrome装配的V8,所以Electron内已经<br>有了新版本Nodejs的新特性.<br><strong>如何在不同的页面共享数据</strong><br>在不同的网页之间共享数据最简单的方法就是使用浏览器中以实现的HTML5Api，比较好的方案就是<br><code>Storage API</code>, <code>localStorage</code>, <code>sessionStorage</code>, 还有<code>IndexDB</code>。或者使用Electron的<br>IPC系统，将对象储存在主进程中的一个全局变量中，然后在所有的渲染进程中通过<code>Electron</code>的<br><code>remote</code>属性访问它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// In the main process.</span><br><span class="line">global.sharedObject = &#123;</span><br><span class="line">  someProperty: &apos;default value&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// In page 1.</span><br><span class="line">require(&apos;electron&apos;).remote.getGlobal(&apos;sharedObject&apos;).someProperty = &apos;new value&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// In page 2.</span><br><span class="line">console.log(require(&apos;electron&apos;).remote.getGlobal(&apos;sharedObject&apos;).someProperty);</span><br></pre></td></tr></table></figure>
+<p><strong>应用的窗口/托盘在一段时间之后不见了</strong><br>这通常是因为储存窗口/托盘的变量被垃圾收集器收集了。<br>如果遇到这个问题，下面的文章会有所帮助</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management" target="_blank" rel="external">Memory Management(内存管理)</a></li>
+<li><a href="https://msdn.microsoft.com/library/bzt2dkta" target="_blank" rel="external">Variable Scope(变量作用域)</a><br>如果想要一个快速的解决方案，让这些变量变成全局的<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  const tray = new Tray(&apos;/path/to/icon.png&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>改变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let tray = null;</span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  tray = new Tray(&apos;/path/to/icon.png&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>为什么不能在Electron中使用jQuery、RequireJs、Meteor、AngularJs</strong><br>由于nodejs集成了Electron，一些特殊的符号（标识）比如<code>require</code>,<code>exports</code>,’module’会被<br>插入到DOM中，这会导致一些类库插入相同命名的标识失败。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// In the main process.</span><br><span class="line">let win = new BrowserWindow(&#123;</span><br><span class="line">  webPreferences: &#123;</span><br><span class="line">    nodeIntegration: false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>如果想继续使用Nodejs和Electron提供的API，你需要在页面中重命名这些符号（标识）在引入其<br>它类库时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">window.nodeRequire = require;</span><br><span class="line">delete window.require;</span><br><span class="line">delete window.exports;</span><br><span class="line">delete window.module;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>require(<code>electron</code>).xxx未定义</strong><br>在使用electron的内置模块时，可能会遇到这样的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require(&apos;electron&apos;).webFrame.setZoomFactor(1.0);</span><br><span class="line">Uncaught TypeError: Cannot read property &apos;setZoomLevel&apos; of undefined</span><br></pre></td></tr></table></figure></p>
+<p>这是因为你通过<code>npm</code>安装了全局的或本地的<code>electron</code>模块,它覆写了<code>Electron</code>的内置模块<br>你可以打印出<code>electron</code>的路径来核实你是否使用了正确的内置模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(require.resolve(&apos;electron&apos;));</span><br></pre></td></tr></table></figure></p>
+<p>检查一下是否符合下面的形式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;/path/to/Electron.app/Contents/Resources/atom.asar/renderer/api/lib/exports/electron.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>如果是<code>node_modules/electron/index.js</code>这种格式的话，你需要删除或者重命名npm安装的electron模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall electron</span><br><span class="line">npm uninstall -g electron</span><br></pre></td></tr></table></figure></p>
+<p>如果依然遇到同样的问题，很可能是因为你在错误的进程中使用了此模块，比如<code>electron.app</code>只能<br>在主进程中使用，而<code>electron.webFrame</code>只能在渲染进程中使用.</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/what-is-electron/" data-id="ciq6k5cy0000wego0bzks28gh" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-front_end/Webpack/codesplitting" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/01/front_end/Webpack/codesplitting/" class="article-date">
@@ -129,7 +347,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/" data-id="ciq3xt7wu000zo8o0m7ccnu59" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/" data-id="ciq6k5cy3000yego0jewjahe4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -199,7 +417,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/amd/" data-id="ciq3xt7w3000vo8o0nuz6zdd2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/amd/" data-id="ciq6k5cyk0010ego0ldtuqf9d" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -268,7 +486,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/commonjs/" data-id="ciq3xt7x20010o8o0jvbiodab" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/commonjs/" data-id="ciq6k5cym0012ego09bmb80i2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -321,7 +539,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/troubleshooting/" data-id="ciq3xt7xh0016o8o0nbhbrq3l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/troubleshooting/" data-id="ciq6k5cz20018ego09jsq53dm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -367,7 +585,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/devtools/" data-id="ciq3xt7x50012o8o0ewb85nh4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/devtools/" data-id="ciq6k5cyn0013ego0go0scrss" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -417,7 +635,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/using_plugin/" data-id="ciq3xt7xm0019o8o0utfjgr1y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/using_plugin/" data-id="ciq6k5czf001bego0vcuwg2jl" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -495,258 +713,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/29/front_end/Webpack/using_loaders/" data-id="ciq3xt7xp001bo8o077hnx2wc" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/usage" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/28/front_end/Webpack/usage/" class="article-date">
-  <time datetime="2016-06-28T15:53:23.622Z" itemprop="datePublished">2016-06-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/28/front_end/Webpack/usage/">使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>通过npm安装webpack<code>npm install webpack -g</code></p>
-<blockquote>
-<p><strong>注意:</strong>官网的全局安装webpack只是示范的目的，当你在做真实项目的情况下，安装webpack<br>作为一个项目依赖是个明智的选择</p>
-</blockquote>
-<p><strong>快速开始</strong></p>
-<p>首先我们要了解使用webpack基本命令行的API</p>
-<p><strong>创建一个模块化的javascript项目</strong></p>
-<blockquote>
-<p>让我们在javascript通过使用CommonJS语法中创建一些模块。</p>
-</blockquote>
-<p><strong>cat.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var cats = [&apos;dave&apos;, &apos;henry&apos;, &apos;martha&apos;];</span><br><span class="line">module.exports = cats;</span><br></pre></td></tr></table></figure></p>
-<p><strong>app.js (入口)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cats = require(&apos;./cats.js&apos;);</span><br><span class="line">console.log(cats);</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>entry point(入口)就是你的程序将会在哪启动，并且webpack将会在哪里跟踪模块之间的依赖关系。</p>
-</blockquote>
-<p><strong>webpack5s</strong><br>指定webpack的入口并指定输出文件名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack ./app.js app.bundle.js</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>webpack将会读取并分析入口文件以及它的依赖关系（包括传递依赖），之后会打包他们到app.bundle.js中。<br>现在通过<code>node app.bundle.js</code>就可以看到所打印的内容，当然在浏览器中也是可以运行的。</p>
-</blockquote>
-<p><strong>了解严格模式</strong></p>
-<blockquote>
-<p>webpack是个灵活的打包器，它提供了许多高级的特性，但不是所有的特性都可以通过命令行的这种方式运行，<br>为了全面的了解webpack的灵活性，需要创建一个配置文件。</p>
-</blockquote>
-<p><strong>项目结构</strong></p>
-<blockquote>
-<p>在真实的项目中，我们会分开不同的源文件到不同的目录，在这个实例中，将源文件放在<strong>src</strong>,打包出来的<br>文件放在<strong>bin</strong>中。</p>
-<ol>
-<li>创建bin和src目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir bin</span><br><span class="line">mkdir src</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<ol>
-<li><p>将原文件移到src目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv app.js cats.js src</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化一个npm项目</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装webpack作为本项目的一个依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong>移步配置文件</strong></p>
-<blockquote>
-<p>随着你的项目的成长，你的配置文件将会变的复杂，以命令行的方式定义webpack将会变的不灵便，通过<br>创建配置文件来代替命令行的这种方式。</p>
-<ol>
-<li>创建webpack.config.js<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>webpack的配置文件是node形式的模块，所以你可以运行各种形式的代码在这里，只要你最后暴露出<br>一个定义webpack的对象就行。</p>
-</blockquote>
-<ol>
-<li>运行webpack<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>webpack将会读取配置文件，打包响应的东西，你可以检查该项目就会发现项目多出bin目录，并且<br>包含了输出文件</p>
-</blockquote>
-<ol>
-<li>运行<code>bin/app.bundle.j</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node bin/app.bundle.js</span><br><span class="line">[&quot;dave&quot;, &quot;henry&quot;, &quot;martha&quot;]</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<blockquote>
-<p>也可以<code>require()</code>通过npm安装的模块而不需要额外的配置文件。</p>
-</blockquote>
-<p><strong>使用加载器</strong></p>
-<blockquote>
-<p>webpack本身只支持javascript模块，但是很多人会使用转换器去转换ES6、CoffeScript、TypeScript、<br>等等，这些可以通过wenbpack的loaders实现。<br>loaders是一些特殊的模块，webpack使用他们来加载其余的模块到javascript中，比如babel-loader使用<br>Babel去加载ES2015（ES6）的文件。<br>loaders可以链式化（loaders链），有时你需要加载器链一起工作，比如<code>yaml-loader</code>只能转换YAML到json<br>中,所以需要<code>json-loader</code>继续转化才能被使用</p>
-</blockquote>
-<p><strong>用babel-loader转换ES2015</strong></p>
-<blockquote>
-<p>在这个例子中，我们告诉webpack通过使用Babel我们可以使用ES2015的特性</p>
-<ol>
-<li><p>安装babel以及babel的预装配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-core babel-preset-es2015</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装babel-loader</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-loader</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过添加.babelrc文件配置Babel使用这些预装配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;presets&quot;: [ &quot;es2015&quot; ] &#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改webpack.config.js通过<code>babel-loader</code>处理所有以<code>.js</code>结尾的文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.js$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel-loader&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>我们排除了<code>node_modules</code>文件夹，否则所有的外部库都会经过 Babel,会减慢编译速度**<br>(5). 安装你想要使用的外部库（jQuery）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save jquery babel-polyfill</span><br></pre></td></tr></table></figure></p>
-<p><strong>使用<code>--save</code>代替<code>--save-dev</code>,因为这些库是在运行的时候被使用的，使用<code>babel-polyfill</code>可以是在老的浏览器中使用ES2015</strong><br>(6). 修改<code>src/app.js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &apos;babel-polyfill&apos;;</span><br><span class="line">import cats from &apos;./cats&apos;;</span><br><span class="line">import $ from &apos;jquery&apos;;</span><br><span class="line"></span><br><span class="line">$(&apos;&lt;h1&gt;Cats&lt;/h1&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">const ul = $(&apos;&lt;ul&gt;&lt;/ul&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">for (const cat of cats) &#123;</span><br><span class="line">    $(&apos;&lt;li&gt;&lt;/li&gt;&apos;).text(cat).appendTo(ul);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>(7). 使用webpack打包这些模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure></p>
-<p>(8). 添加<code>index.html</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;script src=&quot;bin/app.bundle.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>使用插件</strong></p>
-<blockquote>
-<p>通常你需要在工作流中做一些额外的处理，很简单的一个例子就是压缩代码这样可以在浏览器中加<br>载速度变快,这可以通过插件完成，在配置文件中加入压缩插件(uglify plugin)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&apos;webpack&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.jsx?$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">            compress: &#123;</span><br><span class="line">                warnings: false,</span><br><span class="line">            &#125;,</span><br><span class="line">            output: &#123;</span><br><span class="line">                comments: false,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>压缩插件已经包含在webpack的配置文件中，所以你不需要添加额外的模块，你可以写自己的插件，<br>在这个案例中将文件大小由1618bytes压缩到了308bytes。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="ciq3xt7xk0018o8o0kxp9o50d" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/installation" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/28/front_end/Webpack/installation/" class="article-date">
-  <time datetime="2016-06-28T15:28:59.931Z" itemprop="datePublished">2016-06-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/28/front_end/Webpack/installation/">安装webpack</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li>安装nodejs</li>
-<li>通过npm安装webpack,全局安装webpack <code>npm install webpack -g</code></li>
-<li>在项目中使用webpack<blockquote>
-<p>最好的做法是在项目中使用webpack，这样的话你可以选择基于本项目的webpack版本，不用被强制<br>的去使用全局webpack。如果你不想发布你的项目到npm上，那么<code>npm init</code>之后的问题不重要。<br>安装并且将webpack加入到package.json中去<code>npm install webpack --save</code></p>
-</blockquote>
-</li>
-</ul>
-<p><strong>版本</strong></p>
-<blockquote>
-<p>webpack有稳定版和测试（beta）版本（公测），beta版本在版本号中添加了<code>-beta</code>的标识,beta版本<br>包含了许多不稳定的变更或实验性的特性在里面并且测试的较少，正式项目中应该用稳定版本。</p>
-</blockquote>
-<p><strong>Dev Tools(开发工具)</strong></p>
-<p><code>npm install webpack-dev-server --save-dev</code></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/installation/" data-id="ciq3xt7x80013o8o0s5it0f17" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/what-is-webpack" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/28/front_end/Webpack/what-is-webpack/" class="article-date">
-  <time datetime="2016-06-28T14:30:57.700Z" itemprop="datePublished">2016-06-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/28/front_end/Webpack/what-is-webpack/">webpack是什么</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源</p>
-<p><strong>为什么有webpack打包系统</strong></p>
-<blockquote>
-<p>现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源<br>更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标</p>
-<ul>
-<li>拆分依赖树，使之成为按需加载</li>
-<li>让初始化加载时间更短</li>
-<li>每一个静态资源都是一个模块</li>
-<li>让第三方库成为模块</li>
-<li>尽可能的去定义模块的每一部分</li>
-<li>适用于大型项目</li>
-</ul>
-</blockquote>
-<p><strong>webpack有什么不同</strong></p>
-<blockquote>
-<p>webpack有同步与异步两种依赖方式，异步依赖在代码优化之后将会行程一个新的块。<br><strong>加载器</strong><br>webpack本身只支持处理javascript，但是加载器可以将其它的资源加载到javascript中去，这样做<br>每一个资源都是一个模块<br><strong>智能解析</strong><br>webpack有一个聪明的解析器可以处理几乎所有的第三方库，它甚至允许带有表达式的依赖，<br><code>require(&quot;./templates/&quot; + name + &quot;.jade&quot;)</code>支持最常用的模块化方式CommonJS和AMD</p>
-</blockquote>
-<p><strong>插件系统</strong></p>
-<blockquote>
-<p>webpack以丰富的插件系统为特色，大多数的特色都是基于这个插件系统的，这允许你根据需要定义webpack<br>并且以开源的方式来发布通用插件。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/" data-id="ciq3xt7zg001wo8o05mdkg259" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/29/front_end/Webpack/using_loaders/" data-id="ciq6k5d18001yego0ktl5dl73" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -770,7 +737,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">11</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">12</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -782,23 +749,23 @@
       <ul>
         
           <li>
+            <a href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Electron/supported-platfroms/">支持的平台</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Electron/what-is-electron/">Electron-常见问题</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/01/front_end/Webpack/codesplitting/">代码拆分</a>
           </li>
         
           <li>
             <a href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/commonjs/">CommonJs</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/troubleshooting/">疑难解析</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/devtools/">开发工具</a>
           </li>
         
       </ul>
@@ -812,7 +779,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 

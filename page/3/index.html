@@ -63,6 +63,197 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-http/baseauthentication" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/11/http/baseauthentication/" class="article-date">
+  <time datetime="2016-06-11T02:59:57.863Z" itemprop="datePublished">2016-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/11/http/baseauthentication/">基本认证机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>认证</strong></p>
+<blockquote>
+<p><strong>HTTP的质询/响应认证框架</strong><br>Web应用程序收到一个HTTP请求报文时，服务器没有按照请求执行动作，而是以一个”认证质询”进行<br>响应，要求用户提供一些保密信息来说明他是谁，从而对其进行质询。用户再次发送请求时，要附上<br>保密证书（用户名和密码）。如果证书不匹配，服务器可以再次质询客户端，或产生一条错误信息。<br>如果证书匹配，就可以完成正常请求了。<br><strong>认证协议与首部</strong><br>HTTP通过一组可定制的控制首部，为不同的认证协议提供了一个可扩展框架，首部格式和内容会随<br>认证协议的不同而发生变化。认证协议也是在HTTP认证首部中指定的。HTTP定义了两个官方的认证<br>协议：基本认证和摘要认证。<br>认证的4个步骤：<br>首部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法状态</p>
+<ul>
+<li>请求 第一条请求没有认证信息</li>
+<li>质询 WWW-Authenticate 服务器用401状态拒绝请求，说明需要用户提供用户名和密码，服务器<br>可能分为不同的区域，每个区域都有自己的密码，所以服务器会在WWW-Authenticate首部对保护区域<br>进行描述，同样，认证算法也是在WWW-Authenticate首部中指定的。</li>
+<li>授权 Authorization 客户端重新发出请求，但这一次会附加一个Authorization首部，用来<br>说明认证算法，用户名，密码。</li>
+<li>成功 Authentication-Info 如果授权证书是正确的，服务器就将文档返回。有些授权算法会<br>在可选的Authentication-Info首部返回一些与授权会话相关的附加信息。</li>
+</ul>
+</blockquote>
+<p><strong>基本认证的安全缺陷</strong></p>
+<blockquote>
+<ol>
+<li>基本认证会通过网络发送用户名和密码，这些用户名和密码以一种很容易解码的形式表示，不安全</li>
+<li>即使密码是一更难解码的方式加密的，第三方用户仍然可以捕获修改过的用户名和密码，并将<br>修改过的用户名和密码一次一次的重放给原始服务器。</li>
+<li>基本认证没有提供任何针对代理和作为中间人的中间节点防护措施，他们没有修改认证首部，但<br>却修改了报文的其余部分，这样就严重的改变了事务的本质。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciq6k5cv20002ego0fv7cjpbl" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/07/http/cookie/" class="article-date">
+  <time datetime="2016-06-07T14:23:54.663Z" itemprop="datePublished">2016-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/07/http/cookie/">客户端识别与cookie技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>常见的用来承载用户相关信息的HTTP首部</strong></p>
+<blockquote>
+<p>From: 用户的E-mail地址<br>User-Agent: 用户的浏览器软件<br>Refer: 用户是从这个页面上依照连接跳转过来的<br>Authorization: 用户名和密码<br>Client-IP(扩展请求):客户端的ip地址<br>X-Forwarded-For(扩展请求): 客户端的IP地址<br>Cookie(扩展请求): 服务器产生的ID标签</p>
+</blockquote>
+<p><strong>使用客户端IP地址识别用户存在的缺点</strong></p>
+<blockquote>
+<ul>
+<li>客户端IP地址描述的是机器，而不是用户，多个用用户共享一台电脑，就无法区分了。</li>
+<li>很多因特网服务提供商都会在用户登录时为其动态分配IP地址。用户每次登录，都会得到一个不<br>同地址。</li>
+<li>为提供安全性，并对稀缺的地址资源进行管理，很多用户都是通过网络地址转换防火墙来浏览网<br>络内容。</li>
+<li>HTTP代理和网关通常会打开一些新的、到原始服务器的TCP连接，Web服务器看到的将是代理服务<br>器的IP地址而不是客户端的，有的代理会添加特殊的Client-IP或X-Forward-For扩展首部来保存原始<br>的IP地址，但并不是所有的代理都支持这种行为。</li>
+</ul>
+</blockquote>
+<p><strong>胖URL的缺点</strong></p>
+<blockquote>
+<ul>
+<li>URL比较丑陋</li>
+<li>无法共享URL，胖URL中包含了与特定用户和会话有关的状态信息，如果将这个URL发送给其他人<br>可能会在无意之间中将你的个人信息共享出去</li>
+<li>破坏缓存 为每个URL生成特有的版本就意味着不在有可供访问的URL需要缓存了</li>
+<li>额外的服务器负荷 服务器需要重写HTML页面使URL变胖</li>
+<li>逃逸口 用户转到其他站点或者请求一个特定的URL时，就很容易在无意中”逃离胖URL会话”</li>
+<li>在会话间是非持久的 除非用户收藏了特定的胖URL，否则用户退出登录时，所有的信息都会丢失</li>
+</ul>
+</blockquote>
+<p><strong>cookie</strong></p>
+<blockquote>
+<p>可以笼统的将cookie分为两类: 会话cookie和持久cookie。会话cookie是一种临时cookie,它记<br>录了用户访问站点时的设置和偏好。用户退出浏览器时，会话cookie就被删除了。持久cookie的生存<br>时间更长一些；它们存储在硬盘上，浏览器退出，计算机重启它们仍然存在。会话cookie和持久cookie<br>之间唯一的区别就是它们的过期时间。如果设置了Discard参数，或者没有设置Expires或Max-Age参数<br>来说明扩展的过期时间，这个cookie就是一个会话cookie。</p>
+</blockquote>
+<p><strong>cookie是如何工作的</strong></p>
+<blockquote>
+<p>用户首次访问Web站点时，Web服务器对用户一无所知。Web服务器希望这个用户会再次回来，所以在<br>响应报文中添加Set-Cookie首部。cookie中可以包含任何信息，但它们通常都只包含一个服务器为了<br>进行追踪而产生的独特的标识码。浏览器会记住从服务器返回的Set-Cookie或Set-Cookie2首部中的<br>cookie内容存储在浏览器的cookie数据库中。将来用户返回同一站点时，浏览器会挑中那个服务器<br>贴到用户上的那些cookie，并在一个cookie请求首部中将其传回去。</p>
+</blockquote>
+<p><strong>cookie罐:客户端的状态</strong></p>
+<blockquote>
+<p>cookie的基本思想就是让浏览器积累一组服务器特有的信息，每次访问服务器时都将这些信息提供<br>给他，因为浏览器要负责存储cookie信息，所以此系统被称为客户端侧状态，cookie内容的字段们:</p>
+<ul>
+<li>domain（域）cookie的域，控制哪些站点可以看到那个cookie</li>
+<li>allh 是域中所有的主机都获取cookie，还是只有指定了名字的主机获取。</li>
+<li>path（路径）域中与cookie相关的路径前缀。这个属性列出的URL路径前缀下所有cookie都是有<br>效的</li>
+<li>secure（安全）是否只有在使用SSL连接时才发送这个cookie</li>
+<li>expiration cookie的过期秒数</li>
+<li>name cookie变量的名字</li>
+<li>value cookie变量的值</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciq6k5cve0005ego0juvcepmt" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/canvas/get_started" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/07/front_end/canvas/get_started/" class="article-date">
+  <time datetime="2016-06-06T16:02:53.813Z" itemprop="datePublished">2016-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Canvas/">Canvas</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/07/front_end/canvas/get_started/">画布学习的总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>canvas元素的大小与绘图表面积的大小</strong></p>
+<blockquote>
+<p>canvas元素实际上有两套尺寸，一个是元素本身的大小，还有一个是元素绘图表面的大小。当设置<br>元素的width和height属性时，实际上同时修改了该元素本身的大小与元素绘图表面的大小。然而如<br>果通过CSS来设定canvas元素的大小，那么只会改变元素本身的大小，而不会影响到绘图表面。当元<br>素的大小不符合绘图表面的大小时，浏览器就会对绘图表面进行缩放</p>
+</blockquote>
+<p><strong>Canvas状态的保存与恢复</strong></p>
+<blockquote>
+<p>Canvas的API提供了两个名叫save()和restore()的方法，用于保存及恢复当前canvas绘图环境的<br>所有属性。绘图环境的save()方法将当前的绘图环境压入栈顶顶部。对应的restore()方法则会从堆<br>栈顶部弹出一组状态信息，并据此恢复当前绘图环境的各个状态。<br>save():将当前的canvas状态推送到一个保存canvas状态的堆栈顶部。canvas状态包括了当前的坐<br>标变换信息，剪辑区域以及所有canvas绘图环境对象的属性，包括strokeStyle、fillStyle、与<br>globalCompositeOperation等，canvas状态并不包括当前的路径或位图。只能通过beginPath()<br>来重置路径<br>restore():将canvas状态堆栈顶部的条目弹出。原来保存于栈顶的那一组状态，在弹出之后，就被<br>设置成canvas当前的状态了，因此，在调用save()和restore()方法之间，对canvas状态所进行的<br>修改，其效果只会持续至restore()方法调用之前</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciq6k5czv001fego0qnamt5h2" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/06/http/integration/" class="article-date">
@@ -127,7 +318,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciq3xt7u2000ao8o0vx4pxsdu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciq6k5cvt000aego0uxe3hy28" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -183,7 +374,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciq3xt7tl0005o8o0vqx2aq5k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciq6k5cvf0006ego0b2mnmhyp" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -283,7 +474,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciq3xt7th0004o8o0fbtvw5u4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciq6k5cvc0004ego0na8svm1w" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -383,7 +574,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciq3xt7uq000fo8o0q0jzfgt7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciq6k5cwc000fego0rtfvzauj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -438,7 +629,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciq3xt7si0001o8o0879yweqv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciq6k5cui0001ego0242dcsd2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -483,7 +674,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" data-id="ciq3xt7ze001uo8o09j6a4dt3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" data-id="ciq6k5d0s001tego0g7th1dfq" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -523,154 +714,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="ciq3xt7wc000yo8o0d9peq4jb" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/html/summary" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/html/summary/" class="article-date">
-  <time datetime="2016-05-25T15:40:45.819Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Html/">Html</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/html/summary/">一些名词解释</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>怪异模式</strong></p>
-<blockquote>
-<p>一些网页浏览器为了维持对旧的网页设计的向后兼容而使用的一种技术。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/html/summary/" data-id="ciq3xt7ye001fo8o06c2l2847" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/js/actionScope" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/js/actionScope/" class="article-date">
-  <time datetime="2016-05-25T15:40:19.174Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/js/actionScope/">作用域</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>变量的赋值会执行两个动作，首先编译器会在当前作用域中声明一个变量（如果之前没有声明过），<br>然后运行时引擎会在作用域中查找该变量，如果能够找到就会对它赋值。</p>
-</blockquote>
-<p><strong>LHS和RHS</strong></p>
-<blockquote>
-<p>LHS和RHS的含义是”赋值操作的左侧或右侧”并不一定意味着”=赋值操作的左侧和右侧”。赋值操作<br>还有其他几种形式，因此在概念上最好理解为”赋值操作的目标是谁(LHS)”以及”谁是赋值操作的源<br>头(RHS)”。</p>
-</blockquote>
-<p><strong>作用域嵌套</strong></p>
-<blockquote>
-<p>当一个块或函数嵌套在另一个块或函数中时，就发生了作用域嵌套。因此，在当前作用域中无法找<br>到某个变量时，引擎就会在外层嵌套的作用域中继续查找，直到找到该变量，或抵达最外层的作用域<br>（也就是全局作用域）为止。</p>
-</blockquote>
-<p><strong>RHS和LHS</strong></p>
-<blockquote>
-<p>如果RHS查询在所有嵌套的作用域中遍寻不到所需的变量，引擎就会抛出ReferenceError异常。<br>当引擎执行LHS查询时，如果在顶层中也无法找到目标变量，全局作用域就会创建一个具有该名称的<br>变量，并将其返回给引擎，前提是程序运行在”非严格模式”下。ES5引入了严格模式，严格模式禁止<br>自动或隐士地创建全局变量。因此，在严格模式中LHS查询失败时，并不会创建并返回一个全局变量，<br>引擎会抛出同RHS查询失败时类似的ReferenceError异常。ReferenceError同作用域判别失败相关，<br>而TypeError则代表作用域判别成功了，但是对结果的操作是非法或不合理的。</p>
-</blockquote>
-<p><strong>总结</strong></p>
-<blockquote>
-<p>作用域是一套规则，用于确定在何处以及如何查找变量。如果查找的目的是对变量进行赋值，那么<br>会使用LHS查询；如果目的是获取该变量的值，就会使用RHS查询。<br>JavaScript引擎首先会在代码执行前对其进行编译，在这个过程中，像<code>var a = 2</code>这样的声明会<br>被分解成两个独立的步骤：</p>
-<ol>
-<li>首先，<code>var a</code>在其作用域中声明新变量。这会在最开始的阶段，也就是代码执行前进行。</li>
-<li>接下来， <code>a = 2</code>会查询(LHS查询)变量a对其进行赋值。</li>
-</ol>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/js/actionScope/" data-id="ciq3xt7yh001ho8o0nw64yien" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/react/get_started" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/react/get_started/" class="article-date">
-  <time datetime="2016-05-25T15:37:39.918Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/React-Webpack/">React Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/react/get_started/">react+webpack的入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/react/get_started/" data-id="ciq3xt7z0001ro8o07zg6tg1w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="ciq6k5cyc000zego06pj12kk2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -694,7 +738,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">21</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">11</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">12</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -706,23 +750,23 @@
       <ul>
         
           <li>
+            <a href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Electron/supported-platfroms/">支持的平台</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Electron/what-is-electron/">Electron-常见问题</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/01/front_end/Webpack/codesplitting/">代码拆分</a>
           </li>
         
           <li>
             <a href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/commonjs/">CommonJs</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/troubleshooting/">疑难解析</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/devtools/">开发工具</a>
           </li>
         
       </ul>
@@ -736,7 +780,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
