@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>快速开始 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="快速开始
+
+Electron可以使用纯粹的javaScript通过调用原生的API创建桌面应用，可以把它当做是nodejs运行时多变多样的专注于桌面应用而不是web服务器。这并不意味着Electron是绑定了GUI库的javaScript，Electron使用Web页面作为它的UI，你可以把它当作是简易版的Chrom浏览器，由javascript控制。
+
+主线程
+
+在Electron中，运行pac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快速开始">
+<meta property="og:url" content="http://yoursite.com/2016/07/04/front_end/Electron/quik-start/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="快速开始
+
+Electron可以使用纯粹的javaScript通过调用原生的API创建桌面应用，可以把它当做是nodejs运行时多变多样的专注于桌面应用而不是web服务器。这并不意味着Electron是绑定了GUI库的javaScript，Electron使用Web页面作为它的UI，你可以把它当作是简易版的Chrom浏览器，由javascript控制。
+
+主线程
+
+在Electron中，运行pac">
+<meta property="og:updated_time" content="2016-07-04T15:16:44.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="快速开始">
+<meta name="twitter:description" content="快速开始
+
+Electron可以使用纯粹的javaScript通过调用原生的API创建桌面应用，可以把它当做是nodejs运行时多变多样的专注于桌面应用而不是web服务器。这并不意味着Electron是绑定了GUI库的javaScript，Electron使用Web页面作为它的UI，你可以把它当作是简易版的Chrom浏览器，由javascript控制。
+
+主线程
+
+在Electron中，运行pac">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Electron/quik-start" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/04/front_end/Electron/quik-start/" class="article-date">
+  <time datetime="2016-07-04T14:11:04.268Z" itemprop="datePublished">2016-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      快速开始
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>快速开始</strong></p>
+<blockquote>
+<p>Electron可以使用纯粹的javaScript通过调用原生的API创建桌面应用，可以把它当做是nodejs<br>运行时多变多样的专注于桌面应用而不是web服务器。<br>这并不意味着Electron是绑定了GUI库的javaScript，Electron使用Web页面作为它的UI，你可以<br>把它当作是简易版的Chrom浏览器，由javascript控制。</p>
+</blockquote>
+<p><strong>主线程</strong></p>
+<blockquote>
+<p>在Electron中，运行<code>package.json</code>中<code>main</code>脚本的进程是主进程，在主进程运行的脚本通过创<br>建Web页面来展示GUI.</p>
+</blockquote>
+<p><strong>渲染进程</strong></p>
+<blockquote>
+<p>由于Electron使用Chromium来展示web页面，所以Chromium的多进程架构也被利用上了，每一个<br>在Electron的web页面都运行着自己的进程，这样的进程称之为渲染进程。<br>在一般的浏览器中，web页面通常运行在沙河环境下，这样是不能访问原生资源的，然而，Electron<br>用户，有权利在web页面中调用nodejs API，可以与底层操作系统交互.</p>
+</blockquote>
+<p><strong>主进程与渲染进程的不同</strong></p>
+<blockquote>
+<p>主进程通过创建<code>BrowserWindow</code>实例来创建web页面，每个<code>BrowserWindow</code>实例在它自己的渲染<br>进程中运行web页面，当一个<code>BrowserWindow</code>实例被销毁后，相应的渲染进程也终止了。<br>主进程管理所有的web页面以及他们相应的渲染进程，每个渲染进程是相互隔离的并且只关心运行在<br>自己上的web页面。<br>在web页面中，调用原生GUI相关的API是不允许的，因为在页面中管理原生的GUI资源是非常危险的<br>并且容易泄露资源，如果你想在web页面中执行GUI的的操作，页面的渲染进程必须与主进程通讯去<br>请求主进程执行这些操作.<br>在Electron中，渲染进程与主进程的通讯有多种方式，比如<code>ipcRender</code>和<code>ipcMain</code>模块去发送<br>消息，并且<code>remote</code>模块用于RPC方式通讯，这是一个常见的问题，<a href="https://github.com/zhuxindaba/electron/blob/master/docs/faq/electron-faq.md#how-to-share-data-between-web-pages" target="_blank" rel="external">如何在web页面中共享数据</a></p>
+</blockquote>
+<p><strong>完成第一个Electron应用</strong></p>
+<blockquote>
+<p>通常，一个Electron应用的结构类似下面的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">your-app/</span><br><span class="line">├── package.json</span><br><span class="line">├── main.js</span><br><span class="line">└── index.html</span><br></pre></td></tr></table></figure></p>
+<p><code>package.json</code>的格式和node的模式是一样的，通过<code>main</code>字段指定的脚本文件就是你的应用<br>程序的启动脚本，它将会运行在主进程中，<code>package.json</code>通常是下面的格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;    : &quot;your-app&quot;,</span><br><span class="line">  &quot;version&quot; : &quot;0.1.0&quot;,</span><br><span class="line">  &quot;main&quot;    : &quot;main.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong>如果在<code>package.json</code>中没有声明<code>main</code>字段，Electron会尝试加载<code>index.js</code><br><code>main.js</code>应该用于创建窗口并且处理系统事件，典型的例子如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">// Module to control application life.</span><br><span class="line">const &#123;app&#125; = electron;</span><br><span class="line">// Module to create native browser window.</span><br><span class="line">const &#123;BrowserWindow&#125; = electron;</span><br><span class="line"></span><br><span class="line">// Keep a global reference of the window object, if you don&apos;t, the window will</span><br><span class="line">// be closed automatically when the JavaScript object is garbage collected.</span><br><span class="line">let win;</span><br><span class="line"></span><br><span class="line">function createWindow() &#123;</span><br><span class="line">  // Create the browser window.</span><br><span class="line">  win = new BrowserWindow(&#123;width: 800, height: 600&#125;);</span><br><span class="line"></span><br><span class="line">  // and load the index.html of the app.</span><br><span class="line">  win.loadURL(`file://$&#123;__dirname&#125;/index.html`);</span><br><span class="line"></span><br><span class="line">  // Open the DevTools.</span><br><span class="line">  win.webContents.openDevTools();</span><br><span class="line"></span><br><span class="line">  // Emitted when the window is closed.</span><br><span class="line">  win.on(&apos;closed&apos;, () =&gt; &#123;</span><br><span class="line">    // Dereference the window object, usually you would store windows</span><br><span class="line">    // in an array if your app supports multi windows, this is the time</span><br><span class="line">    // when you should delete the corresponding element.</span><br><span class="line">    win = null;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// This method will be called when Electron has finished</span><br><span class="line">// initialization and is ready to create browser windows.</span><br><span class="line">// Some APIs can only be used after this event occurs.</span><br><span class="line">app.on(&apos;ready&apos;, createWindow);</span><br><span class="line"></span><br><span class="line">// Quit when all windows are closed.</span><br><span class="line">app.on(&apos;window-all-closed&apos;, () =&gt; &#123;</span><br><span class="line">  // On macOS it is common for applications and their menu bar</span><br><span class="line">  // to stay active until the user quits explicitly with Cmd + Q</span><br><span class="line">  if (process.platform !== &apos;darwin&apos;) &#123;</span><br><span class="line">    app.quit();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.on(&apos;activate&apos;, () =&gt; &#123;</span><br><span class="line">  // On macOS it&apos;s common to re-create a window in the app when the</span><br><span class="line">  // dock icon is clicked and there are no other windows open.</span><br><span class="line">  if (win === null) &#123;</span><br><span class="line">    createWindow();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// In this file you can include the rest of your app&apos;s specific main process</span><br><span class="line">// code. You can also put them in separate files and require them here.</span><br></pre></td></tr></table></figure></p>
+<p>最后，你想展示的<code>index.html</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Hello World!&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Hello World!&lt;/h1&gt;</span><br><span class="line">    We are using node &lt;script&gt;document.write(process.versions.node)&lt;/script&gt;,</span><br><span class="line">    Chrome &lt;script&gt;document.write(process.versions.chrome)&lt;/script&gt;,</span><br><span class="line">    and Electron &lt;script&gt;document.write(process.versions.electron)&lt;/script&gt;.</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>运行你的应用</strong></p>
+<blockquote>
+<p>一旦你已经创建了最初的<code>main.js</code>，<code>index.html</code>,<code>package.json</code>，你可能会想尝试在本地<br>运行并测试，看看是不是和期望的那样正常运行。<br><strong>electron-prebuilt</strong><br><code>electron-prebuilt</code>是一个<code>npm</code>模块它包含了所使用的Electron预编译版本，如果你已经全局<br>安装了它，你只需要在你的应用程序目录下执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">electron .</span><br></pre></td></tr></table></figure></p>
+<p>如果你是局部安装的，运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/electron .</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/04/front_end/Electron/quik-start/" data-id="ciq83u1g7003jy8o0pjdnf6vz" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/07/04/front_end/Webpack/optimization/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/03/front_end/Webpack/style-sheets/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">样式脚本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">13</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/04/front_end/Webpack/optimization/">优化</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/04/front_end/Electron/quik-start/">快速开始</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Electron/supported-platfroms/">支持的平台</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/03/front_end/Electron/what-is-electron/">Electron-常见问题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

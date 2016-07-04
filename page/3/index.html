@@ -63,6 +63,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/js/functionAndBlockScope" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/14/front_end/js/functionAndBlockScope/" class="article-date">
+  <time datetime="2016-06-14T13:40:25.543Z" itemprop="datePublished">2016-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/14/front_end/js/functionAndBlockScope/">函数作用域和块级作用域</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>IIFE</strong></p>
+<blockquote>
+<p>IIFE代表立即执行函数表达式，他可以导致代码的运行顺序，将需要运行的函数放在第二位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var a = 2;</span><br><span class="line">(function(def) &#123;</span><br><span class="line">  def(window)</span><br><span class="line">&#125;)(function def(global) &#123;</span><br><span class="line">  var a = 3;</span><br><span class="line">  console.log(a);</span><br><span class="line">  console.log(global.a);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>变量提升</strong></p>
+<blockquote>
+<p>只有声明本身会被提升，而赋值或其他运行逻辑会留在原地。如果提升改变了代码执行的顺序，会<br>造成非常严重的破坏。<br>函数声明和变量声明都会被提升。但是一个值得注意的细节是函数会首先被提升，然后才是变量。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciq83jxfe001wy8o0iy1pkk7m" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/digestAuthenticate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/11/http/digestAuthenticate/" class="article-date">
+  <time datetime="2016-06-11T03:35:28.866Z" itemprop="datePublished">2016-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/11/http/digestAuthenticate/">摘要认证</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="ciq83jxcc0006y8o0hubt644l" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/baseauthentication" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/11/http/baseauthentication/" class="article-date">
@@ -111,7 +199,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciq6k5cv20002ego0fv7cjpbl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciq83jxcj000ay8o0z4c1csm3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -196,7 +284,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciq6k5cve0005ego0juvcepmt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciq83jxca0004y8o0el47g218" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -244,7 +332,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciq6k5czv001fego0qnamt5h2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciq83jxev001ky8o0kbwuiyuu" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -318,7 +406,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciq6k5cvt000aego0uxe3hy28" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciq83jxcf0008y8o07gpli6i2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -374,7 +462,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciq6k5cvf0006ego0b2mnmhyp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciq83jxcb0005y8o0h4zigrm7" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -474,7 +562,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciq6k5cvc0004ego0na8svm1w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciq83jxc30002y8o0jc2encu1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -574,7 +662,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciq6k5cwc000fego0rtfvzauj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciq83jxcx000fy8o0nskbh9e7" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -629,92 +717,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciq6k5cui0001ego0242dcsd2" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/react_native/react_native_vector_icons_learn_1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" class="article-date">
-  <time datetime="2016-05-30T16:15:02.515Z" itemprop="datePublished">2016-05-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/React-Native/">React Native</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/">react-native-vector-icons如何使用自己的iconfont</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://github.com/oblador/react-native-vector-icons" target="_blank" rel="external">react-native-vector-icons的git地址</a></p>
-<p><strong>如何使用自己的iconfont呢?</strong>    </p>
-<p>首先将你的定义的iconfont.css放到你的RN项目根目录下，然后在根目录下执行<br><code>./node_modules/.bin/generate-icon ./iconfont.css --componentName=MyIcon --fontFamily=myicon &gt; MyIcon.js</code></p>
-<p>执行完成之后你会发现在根目录多了一个MyIcon.js，生成的MyIcon.js内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import createIconSet from &apos;./lib/create-icon-set&apos;;</span><br><span class="line">const glyphMap = &#123;</span><br><span class="line">  &quot;icabout&quot;: 58881,</span><br><span class="line">  &quot;btnclose&quot;: 58882,</span><br><span class="line">&#125;;</span><br><span class="line">let MyIcon = createIconSet(glyphMap, &apos;myicon&apos;, &apos;MyIcon.ttf&apos;);</span><br><span class="line">module.exports = MyIcon;</span><br><span class="line">module.exports.glyphMap = glyphMap;</span><br></pre></td></tr></table></figure></p>
-<p>将生成的MyIcon.js放到node_modules/react-native-vector-icons,并且将你的.ttf文件放入node_modules/react-native-vector-icons/Fonts文件夹中</p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" data-id="ciq6k5d0s001tego0g7th1dfq" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/CSS/get_started" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/CSS/get_started/" class="article-date">
-  <time datetime="2016-05-25T15:41:00.612Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/CSS/">CSS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/CSS/get_started/">react+webpack的入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="ciq6k5cyc000zego06pj12kk2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciq83jxbt0001y8o077j0fb5j" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -738,7 +741,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">12</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">26</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">13</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -748,6 +751,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/07/04/front_end/Webpack/optimization/">优化</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/04/front_end/Electron/quik-start/">快速开始</a>
+          </li>
         
           <li>
             <a href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
@@ -761,14 +772,6 @@
             <a href="/2016/07/03/front_end/Electron/what-is-electron/">Electron-常见问题</a>
           </li>
         
-          <li>
-            <a href="/2016/07/01/front_end/Webpack/codesplitting/">代码拆分</a>
-          </li>
-        
-          <li>
-            <a href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -780,7 +783,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
