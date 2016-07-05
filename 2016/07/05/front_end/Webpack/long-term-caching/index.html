@@ -3,17 +3,27 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2016 | zhuxin_blog</title>
+  <title>长期缓存 | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zhuxin_blog">
-<meta property="og:url" content="http://yoursite.com/archives/2016/page/3/index.html">
+  <meta name="description" content="为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经做了这项工作，需要你允许块文件使用它，这里有两个级别
+
+计算所有块文件的hash并且添加它
+计算每个块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="长期缓存">
+<meta property="og:url" content="http://yoursite.com/2016/07/05/front_end/Webpack/long-term-caching/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description">
+<meta property="og:description" content="为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经做了这项工作，需要你允许块文件使用它，这里有两个级别
+
+计算所有块文件的hash并且添加它
+计算每个块">
+<meta property="og:updated_time" content="2016-07-05T15:35:54.143Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zhuxin_blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="长期缓存">
+<meta name="twitter:description" content="为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经做了这项工作，需要你允许块文件使用它，这里有两个级别
+
+计算所有块文件的hash并且添加它
+计算每个块">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -61,210 +71,64 @@
   </div>
 </div>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/16/git/commonsComond/" class="archive-article-date">
-  <time datetime="2016-06-15T16:01:42.945Z" itemprop="datePublished">Jun 16</time>
+        <section id="main"><article id="post-front_end/Webpack/long-term-caching" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/05/front_end/Webpack/long-term-caching/" class="article-date">
+  <time datetime="2016-07-05T14:59:23.538Z" itemprop="datePublished">2016-07-05</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/16/git/commonsComond/">git的常用指令(一)</a>
+    <h1 class="article-title" itemprop="name">
+      长期缓存
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/15/front_end/js/closureAndScope/" class="archive-article-date">
-  <time datetime="2016-06-15T13:14:06.338Z" itemprop="datePublished">Jun 15</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/15/front_end/js/closureAndScope/">作用域和闭包</a>
-    </h1>
-  
+        <blockquote>
+<p>为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹<br>但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.<br>Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经<br>做了这项工作，需要你允许块文件使用它，这里有两个级别</p>
+<ul>
+<li>计算所有块文件的hash并且添加它</li>
+<li>计算每个块文件的hash并且添加它</li>
+</ul>
+</blockquote>
+<p><strong>方式一对打包文件增加一个hash串</strong></p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/14/front_end/js/functionAndBlockScope/" class="archive-article-date">
-  <time datetime="2016-06-14T13:40:25.543Z" itemprop="datePublished">Jun 14</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/14/front_end/js/functionAndBlockScope/">函数作用域和块级作用域</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/11/http/digestAuthenticate/" class="archive-article-date">
-  <time datetime="2016-06-11T03:35:28.866Z" itemprop="datePublished">Jun 11</time>
-</a>
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/05/front_end/Webpack/long-term-caching/" data-id="ciq9l017q003nhko0q8q0wvgt" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/11/http/digestAuthenticate/">摘要认证</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/11/http/baseauthentication/" class="archive-article-date">
-  <time datetime="2016-06-11T02:59:57.863Z" itemprop="datePublished">Jun 11</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/11/http/baseauthentication/">基本认证机制</a>
-    </h1>
-  
-
-    </header>
+    </footer>-->
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/07/http/cookie/" class="archive-article-date">
-  <time datetime="2016-06-07T14:23:54.663Z" itemprop="datePublished">Jun 7</time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/07/http/cookie/">客户端识别与cookie技术</a>
-    </h1>
   
+    <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">桌面环境集成</div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/07/front_end/canvas/get_started/" class="archive-article-date">
-  <time datetime="2016-06-06T16:02:53.813Z" itemprop="datePublished">Jun 7</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/07/front_end/canvas/get_started/">画布学习的总结</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/06/http/integration/" class="archive-article-date">
-  <time datetime="2016-06-06T14:46:43.228Z" itemprop="datePublished">Jun 6</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/06/http/integration/">网关、隧道及中继</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/06/http/cache_2/" class="archive-article-date">
-  <time datetime="2016-06-06T14:20:22.439Z" itemprop="datePublished">Jun 6</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/06/http/cache_2/">缓存（二）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/06/03/http/cache_1/" class="archive-article-date">
-  <time datetime="2016-06-03T13:53:31.590Z" itemprop="datePublished">Jun 3</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/06/03/http/cache_1/">缓存（一）</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 </section>
         
           
