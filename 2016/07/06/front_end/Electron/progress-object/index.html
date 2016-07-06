@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>进程对象 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="progress(进程)
+
+进程对象的扩展progress对象扩展了以下的API
+
+事件
+
+‘loaded’事件当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域1234567// preload.jsconst _setImmediate = setImmediate;const _">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程对象">
+<meta property="og:url" content="http://yoursite.com/2016/07/06/front_end/Electron/progress-object/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="progress(进程)
+
+进程对象的扩展progress对象扩展了以下的API
+
+事件
+
+‘loaded’事件当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域1234567// preload.jsconst _setImmediate = setImmediate;const _">
+<meta property="og:updated_time" content="2016-07-06T16:00:57.831Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="进程对象">
+<meta name="twitter:description" content="progress(进程)
+
+进程对象的扩展progress对象扩展了以下的API
+
+事件
+
+‘loaded’事件当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域1234567// preload.jsconst _setImmediate = setImmediate;const _">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Electron/progress-object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/front_end/Electron/progress-object/" class="article-date">
+  <time datetime="2016-07-06T15:12:15.481Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      进程对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>progress(进程)</strong></p>
+<blockquote>
+<p>进程对象的扩展<br><code>progress</code>对象扩展了以下的API</p>
+</blockquote>
+<p><strong>事件</strong></p>
+<blockquote>
+<p><strong>‘loaded’事件</strong><br>当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.<br>当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// preload.js</span><br><span class="line">const _setImmediate = setImmediate;</span><br><span class="line">const _clearImmediate = clearImmediate;</span><br><span class="line">process.once(&apos;loaded&apos;, () =&gt; &#123;</span><br><span class="line">  global.setImmediate = _setImmediate;</span><br><span class="line">  global.clearImmediate = _clearImmediate;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>属性</strong></p>
+<blockquote>
+<p><strong><code>process.noAsar</code></strong><br>设置为<code>true</code>可以使nodejs的<code>asar</code>内置文件无效。<br><strong><code>process.type</code></strong><br>当前的进程类型，可以是<code>&quot;browser&quot;</code>(主进程)或者<code>&quot;render&quot;</code><br><strong><code>process.versions.electron</code></strong><br>Electron的字符串版本号<br><strong><code>process.versions.chrome</code></strong><br>Chrome的字符串版本号<br><strong><code>process.resourcesPath</code></strong><br>资源目录的路劲<br><strong><code>process.mas</code></strong><br>对于Mac App Store，这个属性是<code>true</code>,其余的构建是<code>undefined</code><br><strong><code>process.windowsStore</code></strong><br>对于Windows的app这个属性是<code>true</code>,其他的则是<code>undefined</code><br><strong><code>process.defaultApp</code></strong><br>应用启动时，这个值作为参数默认传入，在主进程中这个属性是<code>true</code>，其他方面是<code>undefined</code></p>
+</blockquote>
+<p><strong>方法</strong></p>
+<blockquote>
+<p>进程有以下的方法:<br><strong><code>process.crash()</code></strong><br>销毁当前进程的主线程<br><strong><code>process.hang()</code></strong><br>挂起当前进程的主线程<br><strong><code>process.setFdLimit(maxDescriptors) macOS Linux</code></strong></p>
+<ul>
+<li><code>maxDescriptors</code> 整数<br>设置文件描述符软限制于 maxDescriptors 或硬限制与os, 无论它是否低于当前进程.<br><strong><code>process.getProcessMemoryInfo()</code></strong><br>返回当前进程的内存使用总计计的一个对象，注意所有的统计以千字节报告:</li>
+<li><code>workingSetSize</code>- 被压入到真实RAM物理机的内存总计</li>
+<li><code>peakWorkingSetSize</code>- 被压入到真实RAM物理机的的最大内存</li>
+<li><code>privateBytes</code>- 不被其他进程共享的内存总计，比如JS堆，HTML内容</li>
+<li><code>sharedBytes</code>- 进程间共享的内存总计，通常情况下是Electron自己的代码消耗的内存</li>
+</ul>
+<p><strong><code>process.getSystemMemoryInfo()</code></strong><br>返回系统内存使用总计的对象，注意所有的统计以千字节报告:</p>
+<ul>
+<li><code>total</code>- 系统可用物理内存的总计</li>
+<li><code>free</code>- 还有多少空闲内存可用</li>
+</ul>
+<p>在Windows或Linux</p>
+<ul>
+<li>swapTotal</li>
+<li>swapFree</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/front_end/Electron/progress-object/" data-id="ciqb0wfie00404go0fx7qk03c" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/06/front_end/Electron/api-references-synopsis/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">API概要</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

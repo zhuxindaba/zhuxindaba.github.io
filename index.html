@@ -63,6 +63,179 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/Electron/progress-object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/front_end/Electron/progress-object/" class="article-date">
+  <time datetime="2016-07-06T15:12:15.481Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>progress(进程)</strong></p>
+<blockquote>
+<p>进程对象的扩展<br><code>progress</code>对象扩展了以下的API</p>
+</blockquote>
+<p><strong>事件</strong></p>
+<blockquote>
+<p><strong>‘loaded’事件</strong><br>当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.<br>当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// preload.js</span><br><span class="line">const _setImmediate = setImmediate;</span><br><span class="line">const _clearImmediate = clearImmediate;</span><br><span class="line">process.once(&apos;loaded&apos;, () =&gt; &#123;</span><br><span class="line">  global.setImmediate = _setImmediate;</span><br><span class="line">  global.clearImmediate = _clearImmediate;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>属性</strong></p>
+<blockquote>
+<p><strong><code>process.noAsar</code></strong><br>设置为<code>true</code>可以使nodejs的<code>asar</code>内置文件无效。<br><strong><code>process.type</code></strong><br>当前的进程类型，可以是<code>&quot;browser&quot;</code>(主进程)或者<code>&quot;render&quot;</code><br><strong><code>process.versions.electron</code></strong><br>Electron的字符串版本号<br><strong><code>process.versions.chrome</code></strong><br>Chrome的字符串版本号<br><strong><code>process.resourcesPath</code></strong><br>资源目录的路劲<br><strong><code>process.mas</code></strong><br>对于Mac App Store，这个属性是<code>true</code>,其余的构建是<code>undefined</code><br><strong><code>process.windowsStore</code></strong><br>对于Windows的app这个属性是<code>true</code>,其他的则是<code>undefined</code><br><strong><code>process.defaultApp</code></strong><br>应用启动时，这个值作为参数默认传入，在主进程中这个属性是<code>true</code>，其他方面是<code>undefined</code></p>
+</blockquote>
+<p><strong>方法</strong></p>
+<blockquote>
+<p>进程有以下的方法:<br><strong><code>process.crash()</code></strong><br>销毁当前进程的主线程<br><strong><code>process.hang()</code></strong><br>挂起当前进程的主线程<br><strong><code>process.setFdLimit(maxDescriptors) macOS Linux</code></strong></p>
+<ul>
+<li><code>maxDescriptors</code> 整数<br>设置文件描述符软限制于 maxDescriptors 或硬限制与os, 无论它是否低于当前进程.<br><strong><code>process.getProcessMemoryInfo()</code></strong><br>返回当前进程的内存使用总计计的一个对象，注意所有的统计以千字节报告:</li>
+<li><code>workingSetSize</code>- 被压入到真实RAM物理机的内存总计</li>
+<li><code>peakWorkingSetSize</code>- 被压入到真实RAM物理机的的最大内存</li>
+<li><code>privateBytes</code>- 不被其他进程共享的内存总计，比如JS堆，HTML内容</li>
+<li><code>sharedBytes</code>- 进程间共享的内存总计，通常情况下是Electron自己的代码消耗的内存</li>
+</ul>
+<p><strong><code>process.getSystemMemoryInfo()</code></strong><br>返回系统内存使用总计的对象，注意所有的统计以千字节报告:</p>
+<ul>
+<li><code>total</code>- 系统可用物理内存的总计</li>
+<li><code>free</code>- 还有多少空闲内存可用</li>
+</ul>
+<p>在Windows或Linux</p>
+<ul>
+<li>swapTotal</li>
+<li>swapFree</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/front_end/Electron/progress-object/" data-id="ciqb0wfie00404go0fx7qk03c" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/Electron/api-references-synopsis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/front_end/Electron/api-references-synopsis/" class="article-date">
+  <time datetime="2016-07-06T14:45:21.826Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>如何使用Nodejs和Electron的API</strong></p>
+<blockquote>
+<p>nodejs所有的内置模块在Electron都是可用的并且第三方模块也支持。<br>Electron也提供了一些额外的内置模块用来开发传统的桌面应用，一些模块只能在主进程中使用，<br>一些只能在渲染进程中使用，也有一些可以同时在主进程和渲染进程中使用。<br>基本规则就是: GUI或者系统底层的模块只能在主进程中使用，要使用这些模块，你应当很熟悉主进<br>程vs渲染进程脚本的概念。<br>主进程中的脚本就像普通的nodejs脚本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app, BrowserWindow&#125; = require(&apos;electron&apos;);</span><br><span class="line"></span><br><span class="line">let win = null;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  win = new BrowserWindow(&#123;width: 800, height: 600&#125;);</span><br><span class="line">  win.loadURL(&apos;https://github.com&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>渲染进程和web页面没有什么不同，除了它有使用node模块的能力:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const &#123;app&#125; = require(&apos;electron&apos;).remote;</span><br><span class="line">  console.log(app.getVersion());</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果想运行应用，阅读<code>quik start</code>的<code>run your app</code></p>
+</blockquote>
+<p><strong>解构赋值</strong></p>
+<blockquote>
+<p>自0.37起，你可以使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="external">destructuring assignment </a><br>更便捷的使用内置模块.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app, BrowserWindow&#125; = require(&apos;electron&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>如果你需要Electron全部的模块，你可以引用<code>electron</code>并且使用解构来访问个别的模块:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const &#123;app, BrowserWindow&#125; = electron;</span><br></pre></td></tr></table></figure></p>
+<p>这和下面的语法是一样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/front_end/Electron/api-references-synopsis/" data-id="ciqazxues003x4go0xvnd1p2t" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/Electron/online-offline-event-detection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/" class="article-date">
+  <time datetime="2016-07-06T14:28:51.541Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示</p>
+<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const alertOnlineStatus = () =&gt; &#123;</span><br><span class="line">    window.alert(navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  alertOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  alertOnlineStatus);</span><br><span class="line"></span><br><span class="line">  alertOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>主进程是没有<code>navigator</code>这个对象的，所以不能直接的探测这些事件，使用Electron的进程间通信<br>的工具，这些事件将会被传递到主进程，并且根据需要去处理，下面的就是个例子:</p>
+<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const ipcMain = electron.ipcMain;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ipcMain.on(&apos;online-status-changed&apos;, (event, status) =&gt; &#123;</span><br><span class="line">  console.log(status);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const &#123;ipcRenderer&#125; = require(&apos;electron&apos;);</span><br><span class="line">  const updateOnlineStatus = () =&gt; &#123;</span><br><span class="line">    ipcRenderer.send(&apos;online-status-changed&apos;, navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  updateOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  updateOnlineStatus);</span><br><span class="line"></span><br><span class="line">  updateOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/front_end/Electron/online-offline-event-detection/" data-id="ciqazcmao003u4go0o00m8huq" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-front_end/Webpack/long-term-caching" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/05/front_end/Webpack/long-term-caching/" class="article-date">
@@ -101,7 +274,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/front_end/Webpack/long-term-caching/" data-id="ciq9l017q003nhko0q8q0wvgt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/front_end/Webpack/long-term-caching/" data-id="ciqayz1ks00184go0vbvh5pfl" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -191,7 +364,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/front_end/Electron/desktop-environment-integration/" data-id="ciq9i6483003khko0fvzgq30d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/front_end/Electron/desktop-environment-integration/" data-id="ciqayz1kc000v4go032ph4s62" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -268,7 +441,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/front_end/Webpack/optimization/" data-id="ciq9i0tyr0017hko03wq4xnvw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/front_end/Webpack/optimization/" data-id="ciqayz1my003l4go0ah3xc54h" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -336,7 +509,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/front_end/Electron/quik-start/" data-id="ciq9i0u0m003ehko02kulq5wk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/front_end/Electron/quik-start/" data-id="ciqayz1my003m4go08rfj6xfn" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -427,7 +600,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/front_end/Webpack/style-sheets/" data-id="ciq9i0tyt0018hko0oprsjsq9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Webpack/style-sheets/" data-id="ciqayz1l8001a4go09hntfz0t" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -491,7 +664,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/supported-platfroms/" data-id="ciq9i0ty4000vhko0ke5qf31a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/supported-platfroms/" data-id="ciqayz1kc000x4go0j1yc2co3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -554,222 +727,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/what-is-electron/" data-id="ciq9i0u0p003hhko0p5wd1gmx" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/codesplitting" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/01/front_end/Webpack/codesplitting/" class="article-date">
-  <time datetime="2016-07-01T14:07:09.821Z" itemprop="datePublished">2016-07-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/01/front_end/Webpack/codesplitting/">代码拆分</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会<br>用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之<br>为”层”,”片段”,webpack将其称为”代码拆分”.<br>这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件<br>以及运行时文件。<br>为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码提取出来到一个公共的模块，更重要的特性<br>是可以将拆出来的代码块按需加载，这可以保证首次加载的代码更少，请求会按需加载所需要的代码。</p>
-</blockquote>
-<p><strong>定义分离点</strong></p>
-<blockquote>
-<p>AMD和CommonJs指定不同的方法实现按需加载，webpack都支持并且并且都是定义为分离点的形式。<br><strong>CommonJs: require.ensure</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require.ensure(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
-<p><code>require.ensure</code>方法保证 每个依赖都会在回调函数被同步的请求进来，回调函数被执行时，<br><code>require</code>是回调函数的参数.例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require.ensure([&quot;module-a&quot;, &quot;module-b&quot;], function(require) &#123;</span><br><span class="line">    var a = require(&quot;module-a&quot;);</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>注意：<code>require.ensure</code>仅仅是加载模块，但是并不会去执行他们</p>
-</blockquote>
-<p><strong>AMD:<code>require</code></strong></p>
-<blockquote>
-<p>AMD规范以下面的方式定义了一个异步的<code>require</code>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
-<p>当调用时，所有的依赖都会被加载，并且将他们作为参数给回调函数,例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module-a&quot;, &quot;module-b&quot;], function(a, b) &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>注意：AMD<code>require</code>加载并执行响应的模块，在webpack中模块是从左向右执行的，并且可以省略<br>回调函数。</p>
-</blockquote>
-<p><strong>ES6模块</strong></p>
-<blockquote>
-<p>Webpack不支持ES6模块，直接使用<code>require.ensure</code>或者<code>require</code>取决于设计哪个模块组成你的<br>编译.<br>Webpack1.x.x(2.0即将来临)原生的不支持ES6模块，但是你可以通过转换器解决他，比如使用Babel<br>转换ES6的<code>import</code>语法为CommonJs或者AMD模块，这种途径是有效的，但是当动态加载时会有警告。<br>这种模块添加方式<code>import x from &#39;foo&#39;</code>是故意设计为静态分析的，意味着你不能用于动态导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// INVALID!!!!!!!!!</span><br><span class="line">[&apos;lodash&apos;, &apos;backbone&apos;].forEach(name =&gt; import name )</span><br></pre></td></tr></table></figure></p>
-<p>幸运的是，JavaScript有<code>loader</code>规范去处理动态导入:<code>System.load</code>或者<code>System.import</code>)<br>原生的API和<code>require</code>的定义是等价的，但是大多数编译器不支持转化<code>System.load</code>为’require.ensure’<br>所以如果想使用动态代码拆分的话直接使用<code>require.ensure</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//static imports</span><br><span class="line">import _ from &apos;lodash&apos;</span><br><span class="line"></span><br><span class="line">// dynamic imports</span><br><span class="line">require.ensure([], function(require) &#123;</span><br><span class="line">  let contacts = require(&apos;./contacts&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>分块内容</strong></p>
-<blockquote>
-<p>分离点处的所有依赖都会被独立成一个块，依赖会递归的被添加。<br>如果在分离点处的回调函数是一个函数，webpack 会把该函数里的依赖都提取到按需加载的代码块中。</p>
-</blockquote>
-<p><strong>分块优化</strong></p>
-<blockquote>
-<p>如果两个分块包含相同的模块，它们会被合并成一个，这会造成分块有多个父模块，如果一个模块<br>在一个分块中的所有父模块都可用,那么它将会从该分块中移除。<br>如果一个分块包含了另一个分块中的所有模块，它会被储存起来，满足多个分块.</p>
-</blockquote>
-<p><strong>分块加载</strong></p>
-<blockquote>
-<p>根据配置文件的<code>target</code>选项的值，打包时执行不同的逻辑去加载分块，比如<code>web</code>target,分块通<br>过jsonp被加载，一个分块只会被加载一次，并发的请求将会被合并成一个，运行时检查加载的分块是<br>否满足多个分块</p>
-</blockquote>
-<p><strong>分块类型</strong></p>
-<blockquote>
-<p><strong>入口块</strong></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/" data-id="ciq9i0tyf000zhko08zcd7s4d" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/amd" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/30/front_end/Webpack/amd/" class="article-date">
-  <time datetime="2016-06-30T15:42:10.286Z" itemprop="datePublished">2016-06-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/front_end/Webpack/amd/">AMD</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>AMD(Asynchronous Module Definition异步模块定义)，因为CommonJs模块系统不适用于浏览器，<br>因为CommonJs是同步的</p>
-</blockquote>
-<p><strong>规范</strong></p>
-<blockquote>
-<p>使用<code>ddefine</code>定义模块</p>
-</blockquote>
-<p><strong>define</strong></p>
-<blockquote>
-<p>AMD定义模块通过<code>define</code>函数，它是一个有参数的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(id?: String, dependencies?: String[], factory: Function|Object);</span><br></pre></td></tr></table></figure></p>
-<p><code>id</code><br>定义模块的名称，可选择的<br><code>dependencies</code><br>指定定义该模块需要依赖其余的哪些模块，是一个模块标识的数组，缺省时默认值是 [“require”, “exports”, “module”].<br><code>factory</code><br>最后的这个参数就是谁定义了这个模块，它可以是一个对象也可以是一个函数（只调用一次），如果是函数<br>的话，函数的返回值就是模块暴露出去的值。</p>
-</blockquote>
-<p><strong>例子</strong></p>
-<blockquote>
-<p>定义一个叫<code>myModule</code>并且依赖jQuery的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;myModule&apos;, [&apos;jquery&apos;], function($) &#123;</span><br><span class="line">    // $ is the export of the jquery module.</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">// and use it</span><br><span class="line">require([&apos;myModule&apos;], function(myModule) &#123;&#125;);</span><br></pre></td></tr></table></figure></p>
-<p><strong>在webpack中一个命名模块仅局部可用，而在require.js中则全局可用</strong></p>
-</blockquote>
-<p><strong>匿名模块</strong></p>
-<blockquote>
-<p>定义一个没有明确id的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;], function($) &#123;</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>多个依赖</strong></p>
-<blockquote>
-<p>注意每个模块的输出值将会传到factory函数中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;, &apos;./math.js&apos;], function($, math) &#123;</span><br><span class="line">    // $ and math are the exports of the jquery module.</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>输出值</strong></p>
-<blockquote>
-<p>定义一个输出本身的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;], function($) &#123;</span><br><span class="line"></span><br><span class="line">    var HelloWorldize = function(selector)&#123;</span><br><span class="line">        $(selector).text(&apos;hello world&apos;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    return HelloWorldize;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>使用require加载模块</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define(function(require) &#123;</span><br><span class="line">    var $ = require(&apos;jquery&apos;);</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/amd/" data-id="ciq9i0tyd000yhko0onkw965x" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/commonjs" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/30/front_end/Webpack/commonjs/" class="article-date">
-  <time datetime="2016-06-30T15:01:10.467Z" itemprop="datePublished">2016-06-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/front_end/Webpack/commonjs/">CommonJs</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>CommonJs组织定义了一种模块格式，通过确保每一个模块都运行在它自己的命名空间中来解决<br>JavaScript的作用域问题。<br>通过强制模块明确的输出它想暴露出去的变量，并且引用其它模块的方式来完成。<br>为了实现CommonJs，它给了两个工具.</p>
-<ol>
-<li><code>require()</code>函数,在当前作用域引用别的模块.</li>
-<li><code>module</code>对象,允许从当前作用域输出变量。</li>
-</ol>
-</blockquote>
-<p><strong>简单的JavaScript</strong></p>
-<blockquote>
-<p>下面是一个未使用CommonJs的例子,定义一个<code>status.js</code>脚本文件，该文件只包含一个值，它将会<br>在别的脚本文件中使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br></pre></td></tr></table></figure></p>
-<p>在第二个名叫<code>world.js</code>的脚本文件中使用在<code>status.js</code>中定义的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot; world!&quot;;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>模块定义</strong></p>
-<blockquote>
-<p>当然<code>world.js</code>无法工作，因为<code>MySalute</code>未定义，我们需要定义每一个文件为一个模块。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在这里使用特殊的对象<code>module</code>并且将变量的引用赋值给<code>module.exports</code>,CommonJs模块系统将<br>会知道这个对象是想暴露给全局。<code>salute.js</code>暴露<code>MySalute</code>, <code>world.js</code>暴露<code>Result</code>。</p>
-</blockquote>
-<p><strong>模块依赖</strong></p>
-<blockquote>
-<p>缺省异步定义依赖，我们定义了每个javascript文件为一个单独的模块，但是<code>world.js</code>依旧需要<br>知道谁定义了<code>MySalute</code></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var MySalute = require(&quot;./salute&quot;);</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
-<p><strong>函数例子</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// moduleA.js</span><br><span class="line">module.exports = function( value )&#123;</span><br><span class="line">    return value*2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// moduleB.js</span><br><span class="line">var multiplyBy2 = require(&apos;./moduleA&apos;);</span><br><span class="line">var result = multiplyBy2( 4 );</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/commonjs/" data-id="ciq9i0tyi0011hko06bjtikt1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/what-is-electron/" data-id="ciqayz1my003n4go03rmpsqjd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -781,7 +739,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -793,7 +751,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">28</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -805,23 +763,23 @@
       <ul>
         
           <li>
+            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
           </li>
         
           <li>
             <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/04/front_end/Webpack/optimization/">优化</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/04/front_end/Electron/quik-start/">快速开始</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
           </li>
         
       </ul>
@@ -835,7 +793,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 

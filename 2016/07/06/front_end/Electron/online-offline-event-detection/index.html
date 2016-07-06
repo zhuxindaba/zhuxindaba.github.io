@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>在线离线事件探测 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示
+main.js12345678910const electron = require(&amp;apos;electron&amp;apos;);const app = electron.app;const BrowserWindow = electron.BrowserWindow;let onlineStatusWindow;ap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在线离线事件探测">
+<meta property="og:url" content="http://yoursite.com/2016/07/06/front_end/Electron/online-offline-event-detection/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示
+main.js12345678910const electron = require(&amp;apos;electron&amp;apos;);const app = electron.app;const BrowserWindow = electron.BrowserWindow;let onlineStatusWindow;ap">
+<meta property="og:updated_time" content="2016-07-06T14:43:30.875Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在线离线事件探测">
+<meta name="twitter:description" content="使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示
+main.js12345678910const electron = require(&amp;apos;electron&amp;apos;);const app = electron.app;const BrowserWindow = electron.BrowserWindow;let onlineStatusWindow;ap">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Electron/online-offline-event-detection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/" class="article-date">
+  <time datetime="2016-07-06T14:28:51.541Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      在线离线事件探测
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示</p>
+<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const alertOnlineStatus = () =&gt; &#123;</span><br><span class="line">    window.alert(navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  alertOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  alertOnlineStatus);</span><br><span class="line"></span><br><span class="line">  alertOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>主进程是没有<code>navigator</code>这个对象的，所以不能直接的探测这些事件，使用Electron的进程间通信<br>的工具，这些事件将会被传递到主进程，并且根据需要去处理，下面的就是个例子:</p>
+<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const ipcMain = electron.ipcMain;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ipcMain.on(&apos;online-status-changed&apos;, (event, status) =&gt; &#123;</span><br><span class="line">  console.log(status);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const &#123;ipcRenderer&#125; = require(&apos;electron&apos;);</span><br><span class="line">  const updateOnlineStatus = () =&gt; &#123;</span><br><span class="line">    ipcRenderer.send(&apos;online-status-changed&apos;, navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  updateOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  updateOnlineStatus);</span><br><span class="line"></span><br><span class="line">  updateOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/front_end/Electron/online-offline-event-detection/" data-id="ciqazcmao003u4go0o00m8huq" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/07/06/front_end/Electron/api-references-synopsis/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          API概要
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/05/front_end/Webpack/long-term-caching/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">长期缓存</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

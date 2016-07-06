@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>API概要 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如何使用Nodejs和Electron的API
+
+nodejs所有的内置模块在Electron都是可用的并且第三方模块也支持。Electron也提供了一些额外的内置模块用来开发传统的桌面应用，一些模块只能在主进程中使用，一些只能在渲染进程中使用，也有一些可以同时在主进程和渲染进程中使用。基本规则就是: GUI或者系统底层的模块只能在主进程中使用，要使用这些模块，你应当很熟悉主进程vs渲染进程脚本的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="API概要">
+<meta property="og:url" content="http://yoursite.com/2016/07/06/front_end/Electron/api-references-synopsis/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="如何使用Nodejs和Electron的API
+
+nodejs所有的内置模块在Electron都是可用的并且第三方模块也支持。Electron也提供了一些额外的内置模块用来开发传统的桌面应用，一些模块只能在主进程中使用，一些只能在渲染进程中使用，也有一些可以同时在主进程和渲染进程中使用。基本规则就是: GUI或者系统底层的模块只能在主进程中使用，要使用这些模块，你应当很熟悉主进程vs渲染进程脚本的">
+<meta property="og:updated_time" content="2016-07-06T15:10:36.570Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="API概要">
+<meta name="twitter:description" content="如何使用Nodejs和Electron的API
+
+nodejs所有的内置模块在Electron都是可用的并且第三方模块也支持。Electron也提供了一些额外的内置模块用来开发传统的桌面应用，一些模块只能在主进程中使用，一些只能在渲染进程中使用，也有一些可以同时在主进程和渲染进程中使用。基本规则就是: GUI或者系统底层的模块只能在主进程中使用，要使用这些模块，你应当很熟悉主进程vs渲染进程脚本的">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Electron/api-references-synopsis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/front_end/Electron/api-references-synopsis/" class="article-date">
+  <time datetime="2016-07-06T14:45:21.826Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      API概要
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>如何使用Nodejs和Electron的API</strong></p>
+<blockquote>
+<p>nodejs所有的内置模块在Electron都是可用的并且第三方模块也支持。<br>Electron也提供了一些额外的内置模块用来开发传统的桌面应用，一些模块只能在主进程中使用，<br>一些只能在渲染进程中使用，也有一些可以同时在主进程和渲染进程中使用。<br>基本规则就是: GUI或者系统底层的模块只能在主进程中使用，要使用这些模块，你应当很熟悉主进<br>程vs渲染进程脚本的概念。<br>主进程中的脚本就像普通的nodejs脚本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app, BrowserWindow&#125; = require(&apos;electron&apos;);</span><br><span class="line"></span><br><span class="line">let win = null;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  win = new BrowserWindow(&#123;width: 800, height: 600&#125;);</span><br><span class="line">  win.loadURL(&apos;https://github.com&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>渲染进程和web页面没有什么不同，除了它有使用node模块的能力:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const &#123;app&#125; = require(&apos;electron&apos;).remote;</span><br><span class="line">  console.log(app.getVersion());</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果想运行应用，阅读<code>quik start</code>的<code>run your app</code></p>
+</blockquote>
+<p><strong>解构赋值</strong></p>
+<blockquote>
+<p>自0.37起，你可以使用<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank" rel="external">destructuring assignment </a><br>更便捷的使用内置模块.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app, BrowserWindow&#125; = require(&apos;electron&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>如果你需要Electron全部的模块，你可以引用<code>electron</code>并且使用解构来访问个别的模块:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const &#123;app, BrowserWindow&#125; = electron;</span><br></pre></td></tr></table></figure></p>
+<p>这和下面的语法是一样的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/front_end/Electron/api-references-synopsis/" data-id="ciqazxues003x4go0xvnd1p2t" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/07/06/front_end/Electron/progress-object/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          进程对象
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">在线离线事件探测</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -63,6 +63,229 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/Webpack/module_system_styles" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/27/front_end/Webpack/module_system_styles/" class="article-date">
+  <time datetime="2016-06-27T14:52:05.725Z" itemprop="datePublished">2016-06-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p><code>&lt;script&gt;</code>-tag的形式，主要问题有:    </p>
+<blockquote>
+<ul>
+<li>全局的变量冲突</li>
+<li>按序加载的重要性</li>
+<li>解决不同模块、包之间的依赖性</li>
+<li>项目庞大的时候，需要写很多很多<code>&lt;script&gt;</code>标签</li>
+</ul>
+</blockquote>
+</li>
+<li><p>CommonJS: 同步请求(synchronous):</p>
+<blockquote>
+<p>这种方式使用同步的<code>require</code>方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以<br>通过增加属性到<code>export</code>的对象中或者设置<code>module.exports</code>的值来明确的指定暴露的接口。<br>优点:</p>
+<ol>
+<li>服务端模块可以使用</li>
+<li>npm上已经有好多使用这种方式的写法</li>
+<li>使用简单<br>缺点:</li>
+<li>阻塞式的请求不适用于网络请求，网络请求是异步的</li>
+<li>不能并发的请求多个模块<br>实现者:</li>
+</ol>
+<ul>
+<li>node.js- server-side</li>
+<li>browserify</li>
+<li>modules-webmake   - compile to one bundle</li>
+<li>wreq - client-side<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;../file.js&quot;);</span><br><span class="line">exports.doStuff = function() &#123;&#125;;//方式一</span><br><span class="line">module.exports = someValue;//方式二</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>3.AMD: 异步(asynchronous)请求</p>
+<blockquote>
+<p>对于浏览器来说同步请求有很多问题(CommonJS)所以引入了一个异步版本(一种定义模块与导出模块的方式)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module&quot;, &quot;../file&quot;], function(module, file) &#123; /* ... */ &#125;);</span><br><span class="line">define(&quot;mymodule&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) &#123;</span><br><span class="line">  return someExportedValue;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>优点:</p>
+<ol>
+<li>适用于异步的网络请求</li>
+<li>并发加载模块<br>缺点:</li>
+<li>代码不易于维护<br>实现者:</li>
+</ol>
+<ul>
+<li>require.js - client-side</li>
+<li>curl - client-side</li>
+</ul>
+</blockquote>
+<p>4.ES6 Modules</p>
+<blockquote>
+<p>ES6给javascript增加了一些语言特性，实现了另外的模块化系统<br>优点:</p>
+<ol>
+<li>易于静态分析</li>
+<li>未来的ES标准<br>缺点:</li>
+<li>浏览器原生支持需要时间</li>
+<li>目前这种风格还很少<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;jquery&quot;;</span><br><span class="line">export function doStuff() &#123;&#125;</span><br><span class="line">module &quot;localModule&quot; &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p><strong>模块加载</strong></p>
+<blockquote>
+<p>模块可以执行在浏览器端，所以它必须从服务端加载到浏览器中去，有两种极端的加载方式:</p>
+<ol>
+<li>一个模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有需要的才会被加载<br>缺点:</li>
+<li>过多的模块会造成网络负载，程序响应过慢</li>
+</ul>
+<ol>
+<li>所有的模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有一个请求<br>缺点:</li>
+<li>不需要的模块也加载了</li>
+</ul>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>编译模块时，将模块拆分成多个小块，拆分点由开发者定义<br>同样适用于img css webfont html模板等等</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/27/front_end/Webpack/module_system_styles/" data-id="ciqayz1ks00174go0g3zfpg3m" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/BootStrap/getstarted" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/25/front_end/BootStrap/getstarted/" class="article-date">
+  <time datetime="2016-06-25T09:55:57.223Z" itemprop="datePublished">2016-06-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Bootstrap/">Bootstrap</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/25/front_end/BootStrap/getstarted/">快速开始</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/25/front_end/BootStrap/getstarted/" data-id="ciqayz1kc000u4go0qwj24eki" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/js/aboutThis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/16/front_end/js/aboutThis/" class="article-date">
+  <time datetime="2016-06-16T13:52:57.317Z" itemprop="datePublished">2016-06-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/16/front_end/js/aboutThis/">对this的理解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><strong>this是调用时被绑定的，完全取决于函数的调用位置</strong></li>
+<li><p><strong>调用位置</strong></p>
+<blockquote>
+<p>调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所<br>调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。</p>
+</blockquote>
+</li>
+<li><p><strong>this的绑定规则</strong></p>
+</li>
+</ul>
+<ol>
+<li>默认绑定</li>
+<li>隐式绑定</li>
+<li>显示绑定</li>
+<li>new绑定</li>
+</ol>
+<ul>
+<li><strong>判断this（优先级）</strong></li>
+</ul>
+<ol>
+<li>函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象</li>
+<li>函数是否通过call、apply（显示绑定）调用？如果是的话，this绑定的是指定的对象</li>
+<li>函数是否在某个上下文对象中调用（隐式绑定）？如果是的话，this绑定的是那个上下文对象</li>
+<li>如果都不是的话，使用默认绑定。如果在严格模式下，就绑定到undefined，否则绑定到全局对象。</li>
+</ol>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="ciqayz1m3001v4go0kzsdk28q" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-git/commonsComond" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/16/git/commonsComond/" class="article-date">
@@ -101,7 +324,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="ciq9i0twg0002hko0ngtwfwbl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="ciqayz1i600024go06nzgrk2m" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -141,7 +364,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciq9i0tzu001vhko02n7xwc3j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciqayz1m3001x4go0uvzbvmg5" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -189,7 +412,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciq9i0tzw001yhko0ncgqmdon" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciqayz1m300204go00akf0ptf" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -229,7 +452,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="ciq9i0tww000ahko0gqdi4mfo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="ciqayz1im00084go0acrw6fsn" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -287,7 +510,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciq9i0twn0004hko0u2979u7s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciqayz1im00044go00iqvomhm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -372,7 +595,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciq9i0tws0008hko09du7uhsl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciqayz1j2000d4go0hw6v5hdv" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -420,237 +643,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciq9i0tzd001lhko0d804b7kd" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/06/http/integration/" class="article-date">
-  <time datetime="2016-06-06T14:46:43.228Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/http/integration/">网关、隧道及中继</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器</strong></p>
-<p><strong>HTTP/*: 服务端Web网关</strong></p>
-<blockquote>
-<p>请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议</p>
-</blockquote>
-<p><strong>HTTP/HTTPS：服务器端安全网关</strong></p>
-<blockquote>
-<p>一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用<br>普通的HTTP浏览web内容，单网关会自动加密用户的对话</p>
-</blockquote>
-<p><strong>HTTPS/HTTP客户端安全加速器网关</strong></p>
-<blockquote>
-<p>HTTPS/HTTP网关位于Web服务器之前，通常可以作为不可见的拦截网关或者反向代理使用，他们接<br>收安全的HTTPS流量，对安全流量进行解密，并向Web服务器发送普通的HTTP请求。</p>
-</blockquote>
-<p><strong>隧道</strong></p>
-<blockquote>
-<p>Web隧道，这种方式可以通过HTTP应用程序访问使用非HTTP协议的应用程序。Web隧道允许用户通过<br>非HTTP连接发送非HTTP流量，这样就可以在HTTP上捎带其他协议数据了。使用Web隧道最常见的原因<br>就是要在HTTP连接中嵌入非HTTP流量，这样，这类流量就可以穿过只允许Web流量通过的防火墙了。</p>
-</blockquote>
-<p><strong>用CONNECT建立HTTP隧道</strong></p>
-<blockquote>
-<p>Web隧道是用HTTP的CONNECT方法建立起来的。CONNECT并不是HTTP/1.1核心规范的一部分，但却是<br>一种得到广泛应用的扩展。CONNECT方法请求隧道网关创建一条到达任意目的服务器和端口的TCP连接，<br>并对客户端和服务器之间的后继数据进行盲转发。通过CONNECT方法可以与使用任意协议的任意服务器<br>建立TCP连接。</p>
-</blockquote>
-<p><strong>CONNECT请求</strong></p>
-<blockquote>
-<p>除了起始行之外语法与其余HTTP方法类似<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONNECT host.netspace.com:443 http/1.0</span><br><span class="line">User-agent: Mozilla/4.0</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>CONNECT响应</strong></p>
-<blockquote>
-<p>发送了请求之后，客户端会等待来自网关的响应，和普通HTTP报文一样，响应码200表示成功，按照<br>惯例，响应中的响应短语通常被设置为”Connection Established”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 Connection Established</span><br><span class="line">Proxy-agent: Netscape-Proxy/1.1</span><br></pre></td></tr></table></figure></p>
-<p>与普通HTTP响应不同，这个响应并不需要包含Content-Type首部。此时连接只是对原始字节进行<br>转接，不再是报文的承载者，所以不需要使用内容类型了。</p>
-</blockquote>
-<p><strong>中继</strong></p>
-<blockquote>
-<p>HTTP中继是没有完全遵循HTTP规范的简单HTTP代理。中继负责处理HTTP中建立连接的部分，然后<br>对字节进行盲转发。某些简单中继实现中存在一个更常见的问题是，由于它们无法正确处理Connection<br>首部，所以有潜在的挂起keep-alive连接的可能。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciq9i0tx6000dhko0r92tuhqa" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/cache_2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/06/http/cache_2/" class="article-date">
-  <time datetime="2016-06-06T14:20:22.439Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/http/cache_2/">缓存（二）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>控制缓存的能力</strong><br>服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递<br>减的顺序，服务器可以:</p>
-<ol>
-<li>Cache-Control: no-store</li>
-<li>Cache-Control: no-cache</li>
-<li>Cache-Control: must-revalidate</li>
-<li>Cache-Control: max-age</li>
-<li>Expires</li>
-<li>不附加任何过期信息，让缓存确定自己的过期日期</li>
-</ol>
-<blockquote>
-<p>no-Stroe与no-cache首部可以防止缓存提供未经证实的已缓存对象，表示为no-store的响应会<br>精致缓存对响应进行复制。缓存通常会向非缓存代理服务器一样，向客户端转发一条no-store响应，<br>然后删除对象。标示为no-cache的响应实际上是可以存储在本地缓冲区中的</p>
-<p>Cache-Contro:max-age首部表示从服务器将文档传过来之时起，可以认为此文档处于新鲜状态的<br>秒数，还有一个s-maxage首部，其行为与max-age类似，但仅用于共享缓存，服务器可以请求缓存<br>不要缓存文档，或者将最大使用期设置为0，从而每次访问的时候进行刷新</p>
-<p>不推荐使用Expires首部，它指定的是实际的过期日期而不是秒数，由于很多服务器的时钟不同，或<br>者不正确，所以最好用剩余秒数，而不是绝对日期。</p>
-<p>must-revalidate响应首部告诉缓存，在事先没有跟原始服务器进行再验证的情况下，不能提供这<br>个对象的陈旧副本。缓存仍然可以随意提供新鲜的副本。如果在缓存进行must-revalidate新鲜度<br>检查时，原始服务器不可用，缓存就必须返回一条504Gateway Timeout错误</p>
-<p>如果响应中没有Cache-Control: max-age首部，也没有Expires首部，缓存可以计算出一个试探<br>性最大使用期</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciq9i0twq0006hko0j46eyrzs" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/cache_1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/03/http/cache_1/" class="article-date">
-  <time datetime="2016-06-03T13:53:31.590Z" itemprop="datePublished">2016-06-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/03/http/cache_1/">缓存（一）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>再验证</strong><br>缓存的新鲜度检测被称为HTTP再验证，通过If-Modified-Since首部，将这个首部添加到GET请求<br>中去，就可以告诉服务器，只有在缓存了对象的副本之后，又对其进行修改的情况下，才发送此对象<br>服务器收到GET If-Modified-Since请求时会发生的情况:</p>
-<ul>
-<li><p>再验证命中</p>
-<blockquote>
-<p>如果服务器对象未被修改，服务器会向客户端发送一个小的Http 304Not Modified响应</p>
-</blockquote>
-</li>
-<li><p>再验证未命中</p>
-<blockquote>
-<p>如果服务器对象与已缓存副本不同，服务器向客户端发送一条普通的、带有完整内容的HTTp 200 OK响应</p>
-</blockquote>
-</li>
-<li><p>对象被删除</p>
-<blockquote>
-<p>如果服务器对象已被删除了，服务器就返回一个404缓存也会将其副本删除</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>区分命中和未命中的情况</strong></p>
-<blockquote>
-<p>客户端有一种方法可以判断响应是否来自缓存，就是使用Date首部，将响应中Date首部的值与当前<br>时间进行比较，如果响应中的日期比较早，客户端通常就可以认为这是一条缓存响应。客户端也可以<br>通过Age首部来检测缓存的响应，通过这个首部可以分辨出这条响应的使用期。</p>
-</blockquote>
-<p><strong>缓存的处理步骤</strong></p>
-<ol>
-<li><p>接收</p>
-<blockquote>
-<p>缓存从网络中读取抵达的报文</p>
-</blockquote>
-</li>
-<li><p>解析</p>
-<blockquote>
-<p>缓存对报文进行解析，提取出URL和各种首部</p>
-</blockquote>
-</li>
-<li><p>查询</p>
-<blockquote>
-<p>缓存查看是否有本地副本可用，如果没有，就获取一份副本（并将其保存在本地）</p>
-</blockquote>
-</li>
-<li><p>新鲜度检测</p>
-<blockquote>
-<p>缓存查看已缓存副本是否足够新鲜，如果不是，就询问服务器是否有任何更新</p>
-</blockquote>
-</li>
-<li><p>创建响应</p>
-<blockquote>
-<p>缓存会用新的首部和已缓存的主题来构建一条响应报文</p>
-</blockquote>
-</li>
-<li><p>发送</p>
-<blockquote>
-<p>缓存通过网络将响应发回给客户端</p>
-</blockquote>
-</li>
-<li><p>日志</p>
-<blockquote>
-<p>缓存可选地创建一个日志文件条目来描述这个事务</p>
-</blockquote>
-</li>
-</ol>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciq9i0twp0005hko0ty1jqw45" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciqayz1ln001o4go0sxontf6s" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -662,7 +655,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -674,7 +667,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">28</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -686,23 +679,23 @@
       <ul>
         
           <li>
+            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+          </li>
+        
+          <li>
             <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
           </li>
         
           <li>
             <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/04/front_end/Webpack/optimization/">优化</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/04/front_end/Electron/quik-start/">快速开始</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/03/front_end/Webpack/style-sheets/">样式脚本</a>
           </li>
         
       </ul>
@@ -716,7 +709,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
