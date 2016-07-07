@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何写加载器 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="加载器是一个返回函数的node模块。当加载器转换资源时，这个函数将被调用。一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件内容是字符串.加载器通过这个函数的this上下文访问loader API同步加载器可以通过return仅返回一个值，在其他情况下，可以通过this.callback(err, values...)返回任意数量的值,错误将传给回调函数，或">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何写加载器">
+<meta property="og:url" content="http://yoursite.com/2016/07/07/front_end/Webpack/how-to-write-loader/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="加载器是一个返回函数的node模块。当加载器转换资源时，这个函数将被调用。一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件内容是字符串.加载器通过这个函数的this上下文访问loader API同步加载器可以通过return仅返回一个值，在其他情况下，可以通过this.callback(err, values...)返回任意数量的值,错误将传给回调函数，或">
+<meta property="og:updated_time" content="2016-07-07T16:13:32.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何写加载器">
+<meta name="twitter:description" content="加载器是一个返回函数的node模块。当加载器转换资源时，这个函数将被调用。一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件内容是字符串.加载器通过这个函数的this上下文访问loader API同步加载器可以通过return仅返回一个值，在其他情况下，可以通过this.callback(err, values...)返回任意数量的值,错误将传给回调函数，或">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-front_end/Webpack/how-to-write-loader" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/07/front_end/Webpack/how-to-write-loader/" class="article-date">
+  <time datetime="2016-07-07T14:36:40.166Z" itemprop="datePublished">2016-07-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何写加载器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>加载器是一个返回函数的node模块。<br>当加载器转换资源时，这个函数将被调用。<br>一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件<br>内容是字符串.<br>加载器通过这个函数的<code>this</code>上下文访问<a href="http://webpack.github.io/docs/loaders.html" target="_blank" rel="external">loader API</a><br>同步加载器可以通过<code>return</code>仅返回一个值，在其他情况下，可以通过<code>this.callback(err, values...)</code><br>返回任意数量的值,错误将传给回调函数，或者抛给一个同步加载器。<br>加载器被期望返回两个值，第一个值是返回JavaScript的字符串代码，第二个值是返回一个资源图的<br>JavaScript对象。<br>在复杂的情况下，当有多个加载器链式调用，只有最后一个加载器获得资源文件，仅第一个加载器会<br>输出两个值(JavaScript和SourceMap)，其余的加载器传递值给前一个加载器。</p>
+</blockquote>
+<p><strong>Examples</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">  return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader with SourceMap support</span><br><span class="line">module.exports = function(source, map) &#123;</span><br><span class="line">  this.callback(null, source, map);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>指导方针（参考）</strong></p>
+<blockquote>
+<p>优先级顺序，第一个应该给最高的优先级，加载器应该：<br><strong>只做一个简单的任务</strong><br>加载器可以链式化，为每一步创建加载器，替代一个加载器立刻做任何事。同样的意思就是，如果<br>没有必要的话不必转换为JavaScript.<br>例如：通过应用查询参数从模板文件渲染HTML。<br>写一个加载器从源文件里编译模板，执行然后返回一个组件，它是一个返回了包含HTML代码的字符串<br>这太糟糕了。<br>替代方案是，为每一个任务写一个加载器然后全部调用（管道的形式）。</p>
+<ul>
+<li>jade-loader: 转换模板为一个模块输出一个函数</li>
+<li>apply-loader: 拿到输出函数并且返回通过应用查询参数返回行结果</li>
+<li>html-loader: 拿到HTML并输出一个字符串形式的模块<br><strong>生产标准的模块</strong><br>加载器生成的模块需要像标准的模块遵守同样的管道设计方式。<br>例如：这是一个糟糕的设计方式（非标准，通用场景）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;any-template-language-loader!./xyz.atl&quot;);</span><br><span class="line"></span><br><span class="line">var html = anyTemplateLanguage.render(&quot;xyz&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><strong>尽可能的标记自己为可缓存</strong></p>
+<blockquote>
+<p>大多数加载器可缓存，所以他们得标记自己为可缓存。<br>只需在加载器中调用<code>cacheable</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Cacheable identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>不要在模块和流之间保持状态</strong><br>一个加载器需要在其它加载器编译时保持独立。<br>一个模块先前的编译结果，和当前加载器应该保持独立.<br><strong>标记依赖</strong><br>如果一个加载器使用了外部资源（从文件系统读），他们<strong>必须</strong>被告知，被用来使缓存加载器无效<br>并且在监听方法中重新编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Loader adding a header</span><br><span class="line">var path = require(&quot;path&quot;);</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    var callback = this.async();</span><br><span class="line">    var headerPath = path.resolve(&quot;header.js&quot;);</span><br><span class="line">    this.addDependency(headerPath);</span><br><span class="line">    fs.readFile(headerPath, &quot;utf-8&quot;, function(err, header) &#123;</span><br><span class="line">        if(err) return callback(err);</span><br><span class="line">        callback(null, header + &quot;\n&quot; + source);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/07/front_end/Webpack/how-to-write-loader/" data-id="ciqcf2ik4004cvko0509y3cl8" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/06/front_end/Electron/progress-object/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">进程对象</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">32</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">15</span></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/07/front_end/Webpack/how-to-write-loader/">如何写加载器</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+          </li>
+        
+          <li>
+            <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

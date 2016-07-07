@@ -63,6 +63,69 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/Electron/what-is-electron" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/03/front_end/Electron/what-is-electron/" class="article-date">
+  <time datetime="2016-07-03T12:11:01.376Z" itemprop="datePublished">2016-07-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/03/front_end/Electron/what-is-electron/">Electron-常见问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>Electron框架让你通过CSS、JS、HTML写跨平台的桌面应用，它基于Node.js以及Chrom内核，Atom<br>编辑器就是通过它完成的。</p>
+</blockquote>
+<p><strong>FAQ(Frequently Asked Questions)常见问题</strong></p>
+<blockquote>
+<p><strong>什么时候=会升级到最新版本的Chrome</strong><br>通常会在稳定版本的Chrom发布1-2周内，更新Electron内的Chrome版本，Electron只会使用稳定<br>版本的Chrome,但如果在beta或dev有重要的更新的话，会使用补丁的方式应用到现版本的Chrome上<br><strong>什么时候会升级到最新版本的nodejs</strong><br>当一个新版本的nodejs发布之后，通常会在1月之后更新Electron，这样可以避免引入新版本的nodejs<br>所带来的bug，这太常见了.<br>Nodejs的新特性通常是在V8带来的，由于Electron使用的是Chrome装配的V8,所以Electron内已经<br>有了新版本Nodejs的新特性.<br><strong>如何在不同的页面共享数据</strong><br>在不同的网页之间共享数据最简单的方法就是使用浏览器中以实现的HTML5Api，比较好的方案就是<br><code>Storage API</code>, <code>localStorage</code>, <code>sessionStorage</code>, 还有<code>IndexDB</code>。或者使用Electron的<br>IPC系统，将对象储存在主进程中的一个全局变量中，然后在所有的渲染进程中通过<code>Electron</code>的<br><code>remote</code>属性访问它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// In the main process.</span><br><span class="line">global.sharedObject = &#123;</span><br><span class="line">  someProperty: &apos;default value&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// In page 1.</span><br><span class="line">require(&apos;electron&apos;).remote.getGlobal(&apos;sharedObject&apos;).someProperty = &apos;new value&apos;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// In page 2.</span><br><span class="line">console.log(require(&apos;electron&apos;).remote.getGlobal(&apos;sharedObject&apos;).someProperty);</span><br></pre></td></tr></table></figure>
+<p><strong>应用的窗口/托盘在一段时间之后不见了</strong><br>这通常是因为储存窗口/托盘的变量被垃圾收集器收集了。<br>如果遇到这个问题，下面的文章会有所帮助</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management" target="_blank" rel="external">Memory Management(内存管理)</a></li>
+<li><a href="https://msdn.microsoft.com/library/bzt2dkta" target="_blank" rel="external">Variable Scope(变量作用域)</a><br>如果想要一个快速的解决方案，让这些变量变成全局的<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  const tray = new Tray(&apos;/path/to/icon.png&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>改变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let tray = null;</span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  tray = new Tray(&apos;/path/to/icon.png&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>为什么不能在Electron中使用jQuery、RequireJs、Meteor、AngularJs</strong><br>由于nodejs集成了Electron，一些特殊的符号（标识）比如<code>require</code>,<code>exports</code>,’module’会被<br>插入到DOM中，这会导致一些类库插入相同命名的标识失败。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// In the main process.</span><br><span class="line">let win = new BrowserWindow(&#123;</span><br><span class="line">  webPreferences: &#123;</span><br><span class="line">    nodeIntegration: false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>如果想继续使用Nodejs和Electron提供的API，你需要在页面中重命名这些符号（标识）在引入其<br>它类库时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">window.nodeRequire = require;</span><br><span class="line">delete window.require;</span><br><span class="line">delete window.exports;</span><br><span class="line">delete window.module;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>require(<code>electron</code>).xxx未定义</strong><br>在使用electron的内置模块时，可能会遇到这样的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require(&apos;electron&apos;).webFrame.setZoomFactor(1.0);</span><br><span class="line">Uncaught TypeError: Cannot read property &apos;setZoomLevel&apos; of undefined</span><br></pre></td></tr></table></figure></p>
+<p>这是因为你通过<code>npm</code>安装了全局的或本地的<code>electron</code>模块,它覆写了<code>Electron</code>的内置模块<br>你可以打印出<code>electron</code>的路径来核实你是否使用了正确的内置模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(require.resolve(&apos;electron&apos;));</span><br></pre></td></tr></table></figure></p>
+<p>检查一下是否符合下面的形式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;/path/to/Electron.app/Contents/Resources/atom.asar/renderer/api/lib/exports/electron.js&quot;</span><br></pre></td></tr></table></figure></p>
+<p>如果是<code>node_modules/electron/index.js</code>这种格式的话，你需要删除或者重命名npm安装的electron模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall electron</span><br><span class="line">npm uninstall -g electron</span><br></pre></td></tr></table></figure></p>
+<p>如果依然遇到同样的问题，很可能是因为你在错误的进程中使用了此模块，比如<code>electron.app</code>只能<br>在主进程中使用，而<code>electron.webFrame</code>只能在渲染进程中使用.</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/03/front_end/Electron/what-is-electron/" data-id="ciqcdwvy80015vko0e6b2j7sy" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-front_end/Webpack/codesplitting" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/01/front_end/Webpack/codesplitting/" class="article-date">
@@ -129,7 +192,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/" data-id="ciqayz1ks000z4go0dg9e8zis" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/01/front_end/Webpack/codesplitting/" data-id="ciqcdwvyo0018vko07qcbhu63" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -199,7 +262,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/amd/" data-id="ciqayz1ks00124go0zjy4r3jb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/amd/" data-id="ciqcdwvy80016vko0hnax8whb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -268,7 +331,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/commonjs/" data-id="ciqayz1ks00114go0gz13j7zf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/commonjs/" data-id="ciqcdwvyo001bvko08ha252z4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -321,7 +384,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/troubleshooting/" data-id="ciqayz1l8001b4go0mav7jzj1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/troubleshooting/" data-id="ciqcdwvz4001mvko02vp7namd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -367,7 +430,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/devtools/" data-id="ciqayz1ks00144go0oi1cvxop" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/devtools/" data-id="ciqcdwvyo0019vko0we8qtpmt" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -417,7 +480,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/using_plugin/" data-id="ciqayz1ln001j4go0rxlt73cw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/using_plugin/" data-id="ciqcdwvzj001uvko0si4vnh67" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -495,7 +558,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/29/front_end/Webpack/using_loaders/" data-id="ciqayz1l8001g4go0w9o2d1si" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/29/front_end/Webpack/using_loaders/" data-id="ciqcdwvzj001rvko0so8yibrs" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -631,7 +694,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="ciqayz1l8001e4go0ej876dc6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="ciqcdwvz4001pvko0tyrhtvel" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -685,68 +748,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/installation/" data-id="ciqayz1ks00154go0lr16qhpa" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/Webpack/what-is-webpack" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/28/front_end/Webpack/what-is-webpack/" class="article-date">
-  <time datetime="2016-06-28T14:30:57.700Z" itemprop="datePublished">2016-06-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/28/front_end/Webpack/what-is-webpack/">webpack是什么</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源</p>
-<p><strong>为什么有webpack打包系统</strong></p>
-<blockquote>
-<p>现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源<br>更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标</p>
-<ul>
-<li>拆分依赖树，使之成为按需加载</li>
-<li>让初始化加载时间更短</li>
-<li>每一个静态资源都是一个模块</li>
-<li>让第三方库成为模块</li>
-<li>尽可能的去定义模块的每一部分</li>
-<li>适用于大型项目</li>
-</ul>
-</blockquote>
-<p><strong>webpack有什么不同</strong></p>
-<blockquote>
-<p>webpack有同步与异步两种依赖方式，异步依赖在代码优化之后将会行程一个新的块。<br><strong>加载器</strong><br>webpack本身只支持处理javascript，但是加载器可以将其它的资源加载到javascript中去，这样做<br>每一个资源都是一个模块<br><strong>智能解析</strong><br>webpack有一个聪明的解析器可以处理几乎所有的第三方库，它甚至允许带有表达式的依赖，<br><code>require(&quot;./templates/&quot; + name + &quot;.jade&quot;)</code>支持最常用的模块化方式CommonJS和AMD</p>
-</blockquote>
-<p><strong>插件系统</strong></p>
-<blockquote>
-<p>webpack以丰富的插件系统为特色，大多数的特色都是基于这个插件系统的，这允许你根据需要定义webpack<br>并且以开源的方式来发布通用插件。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/" data-id="ciqayz1ln001l4go0dm5r4pdz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/installation/" data-id="ciqcdwvyo001cvko0frb0aglh" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -770,7 +772,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">32</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">15</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -780,6 +782,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/07/07/front_end/Webpack/how-to-write-loader/">如何写加载器</a>
+          </li>
         
           <li>
             <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
@@ -797,10 +803,6 @@
             <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
           </li>
         
-          <li>
-            <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -812,7 +814,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 

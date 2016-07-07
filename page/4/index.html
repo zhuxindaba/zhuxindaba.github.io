@@ -63,6 +63,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/canvas/get_started" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/07/front_end/canvas/get_started/" class="article-date">
+  <time datetime="2016-06-06T16:02:53.813Z" itemprop="datePublished">2016-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Canvas/">Canvas</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/07/front_end/canvas/get_started/">画布学习的总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>canvas元素的大小与绘图表面积的大小</strong></p>
+<blockquote>
+<p>canvas元素实际上有两套尺寸，一个是元素本身的大小，还有一个是元素绘图表面的大小。当设置<br>元素的width和height属性时，实际上同时修改了该元素本身的大小与元素绘图表面的大小。然而如<br>果通过CSS来设定canvas元素的大小，那么只会改变元素本身的大小，而不会影响到绘图表面。当元<br>素的大小不符合绘图表面的大小时，浏览器就会对绘图表面进行缩放</p>
+</blockquote>
+<p><strong>Canvas状态的保存与恢复</strong></p>
+<blockquote>
+<p>Canvas的API提供了两个名叫save()和restore()的方法，用于保存及恢复当前canvas绘图环境的<br>所有属性。绘图环境的save()方法将当前的绘图环境压入栈顶顶部。对应的restore()方法则会从堆<br>栈顶部弹出一组状态信息，并据此恢复当前绘图环境的各个状态。<br>save():将当前的canvas状态推送到一个保存canvas状态的堆栈顶部。canvas状态包括了当前的坐<br>标变换信息，剪辑区域以及所有canvas绘图环境对象的属性，包括strokeStyle、fillStyle、与<br>globalCompositeOperation等，canvas状态并不包括当前的路径或位图。只能通过beginPath()<br>来重置路径<br>restore():将canvas状态堆栈顶部的条目弹出。原来保存于栈顶的那一组状态，在弹出之后，就被<br>设置成canvas当前的状态了，因此，在调用save()和restore()方法之间，对canvas状态所进行的<br>修改，其效果只会持续至restore()方法调用之前</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciqcdwvzz001zvko0yjxzt63o" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/06/http/integration/" class="article-date">
@@ -127,7 +175,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciqayz1j2000a4go01z62xwjf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciqcdwvw2000evko00un189zz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -183,7 +231,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciqayz1im00064go09fihawdn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciqcdwvvn000cvko0ik7lds3x" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -283,7 +331,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciqayz1im00054go0ml4wemu1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciqcdwvv70005vko0q1iqraqj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -383,7 +431,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciqayz1jh000h4go0v50kla8e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciqcdwvw2000jvko0axd9f8b3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -438,7 +486,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciqayz1i600014go028xjuipi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciqcdwvur0002vko0la55r37z" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -483,7 +531,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" data-id="ciqayz1m300254go0zqbof3lz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" data-id="ciqcdww0e002dvko07lj35hpq" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -523,7 +571,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="ciqayz1kc000y4go0x0iyrgg7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="ciqcdwvxd000vvko09y3svlba" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -567,7 +615,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/html/summary/" data-id="ciqayz1ln001q4go0gmyxuy4o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/front_end/html/summary/" data-id="ciqcdwvzz0021vko0cbt37x3b" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -630,47 +678,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/js/actionScope/" data-id="ciqayz1ln001s4go0c5mj5m46" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/react/get_started" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/react/get_started/" class="article-date">
-  <time datetime="2016-05-25T15:37:39.918Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/React-Webpack/">React Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/react/get_started/">react+webpack的入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/react/get_started/" data-id="ciqayz1m300224go08tva0r0g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/front_end/js/actionScope/" data-id="ciqcdww0e0029vko09g9ivz28" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -694,7 +702,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">14</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">32</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">15</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -704,6 +712,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/07/07/front_end/Webpack/how-to-write-loader/">如何写加载器</a>
+          </li>
         
           <li>
             <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
@@ -721,10 +733,6 @@
             <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
           </li>
         
-          <li>
-            <a href="/2016/07/05/front_end/Electron/desktop-environment-integration/">桌面环境集成</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -736,7 +744,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
