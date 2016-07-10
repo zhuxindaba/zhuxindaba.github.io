@@ -63,6 +63,277 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-front_end/js/closureAndScope" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/15/front_end/js/closureAndScope/" class="article-date">
+  <time datetime="2016-06-15T13:14:06.338Z" itemprop="datePublished">2016-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/15/front_end/js/closureAndScope/">作用域和闭包</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciqgk4q0z002ay0o0iedhul50" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-front_end/js/functionAndBlockScope" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/14/front_end/js/functionAndBlockScope/" class="article-date">
+  <time datetime="2016-06-14T13:40:25.543Z" itemprop="datePublished">2016-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/14/front_end/js/functionAndBlockScope/">函数作用域和块级作用域</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>IIFE</strong></p>
+<blockquote>
+<p>IIFE代表立即执行函数表达式，他可以导致代码的运行顺序，将需要运行的函数放在第二位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var a = 2;</span><br><span class="line">(function(def) &#123;</span><br><span class="line">  def(window)</span><br><span class="line">&#125;)(function def(global) &#123;</span><br><span class="line">  var a = 3;</span><br><span class="line">  console.log(a);</span><br><span class="line">  console.log(global.a);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>变量提升</strong></p>
+<blockquote>
+<p>只有声明本身会被提升，而赋值或其他运行逻辑会留在原地。如果提升改变了代码执行的顺序，会<br>造成非常严重的破坏。<br>函数声明和变量声明都会被提升。但是一个值得注意的细节是函数会首先被提升，然后才是变量。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciqgk4q17002fy0o0pum6qdns" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/digestAuthenticate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/11/http/digestAuthenticate/" class="article-date">
+  <time datetime="2016-06-11T03:35:28.866Z" itemprop="datePublished">2016-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/11/http/digestAuthenticate/">摘要认证</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="ciqgk4pxx000dy0o0w39i4wrn" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/baseauthentication" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/11/http/baseauthentication/" class="article-date">
+  <time datetime="2016-06-11T02:59:57.863Z" itemprop="datePublished">2016-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/11/http/baseauthentication/">基本认证机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>认证</strong></p>
+<blockquote>
+<p><strong>HTTP的质询/响应认证框架</strong><br>Web应用程序收到一个HTTP请求报文时，服务器没有按照请求执行动作，而是以一个”认证质询”进行<br>响应，要求用户提供一些保密信息来说明他是谁，从而对其进行质询。用户再次发送请求时，要附上<br>保密证书（用户名和密码）。如果证书不匹配，服务器可以再次质询客户端，或产生一条错误信息。<br>如果证书匹配，就可以完成正常请求了。<br><strong>认证协议与首部</strong><br>HTTP通过一组可定制的控制首部，为不同的认证协议提供了一个可扩展框架，首部格式和内容会随<br>认证协议的不同而发生变化。认证协议也是在HTTP认证首部中指定的。HTTP定义了两个官方的认证<br>协议：基本认证和摘要认证。<br>认证的4个步骤：<br>首部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法状态</p>
+<ul>
+<li>请求 第一条请求没有认证信息</li>
+<li>质询 WWW-Authenticate 服务器用401状态拒绝请求，说明需要用户提供用户名和密码，服务器<br>可能分为不同的区域，每个区域都有自己的密码，所以服务器会在WWW-Authenticate首部对保护区域<br>进行描述，同样，认证算法也是在WWW-Authenticate首部中指定的。</li>
+<li>授权 Authorization 客户端重新发出请求，但这一次会附加一个Authorization首部，用来<br>说明认证算法，用户名，密码。</li>
+<li>成功 Authentication-Info 如果授权证书是正确的，服务器就将文档返回。有些授权算法会<br>在可选的Authentication-Info首部返回一些与授权会话相关的附加信息。</li>
+</ul>
+</blockquote>
+<p><strong>基本认证的安全缺陷</strong></p>
+<blockquote>
+<ol>
+<li>基本认证会通过网络发送用户名和密码，这些用户名和密码以一种很容易解码的形式表示，不安全</li>
+<li>即使密码是一更难解码的方式加密的，第三方用户仍然可以捕获修改过的用户名和密码，并将<br>修改过的用户名和密码一次一次的重放给原始服务器。</li>
+<li>基本认证没有提供任何针对代理和作为中间人的中间节点防护措施，他们没有修改认证首部，但<br>却修改了报文的其余部分，这样就严重的改变了事务的本质。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciqgk4pwu0001y0o0jy96akpw" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/07/http/cookie/" class="article-date">
+  <time datetime="2016-06-07T14:23:54.663Z" itemprop="datePublished">2016-06-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/07/http/cookie/">客户端识别与cookie技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>常见的用来承载用户相关信息的HTTP首部</strong></p>
+<blockquote>
+<p>From: 用户的E-mail地址<br>User-Agent: 用户的浏览器软件<br>Refer: 用户是从这个页面上依照连接跳转过来的<br>Authorization: 用户名和密码<br>Client-IP(扩展请求):客户端的ip地址<br>X-Forwarded-For(扩展请求): 客户端的IP地址<br>Cookie(扩展请求): 服务器产生的ID标签</p>
+</blockquote>
+<p><strong>使用客户端IP地址识别用户存在的缺点</strong></p>
+<blockquote>
+<ul>
+<li>客户端IP地址描述的是机器，而不是用户，多个用用户共享一台电脑，就无法区分了。</li>
+<li>很多因特网服务提供商都会在用户登录时为其动态分配IP地址。用户每次登录，都会得到一个不<br>同地址。</li>
+<li>为提供安全性，并对稀缺的地址资源进行管理，很多用户都是通过网络地址转换防火墙来浏览网<br>络内容。</li>
+<li>HTTP代理和网关通常会打开一些新的、到原始服务器的TCP连接，Web服务器看到的将是代理服务<br>器的IP地址而不是客户端的，有的代理会添加特殊的Client-IP或X-Forward-For扩展首部来保存原始<br>的IP地址，但并不是所有的代理都支持这种行为。</li>
+</ul>
+</blockquote>
+<p><strong>胖URL的缺点</strong></p>
+<blockquote>
+<ul>
+<li>URL比较丑陋</li>
+<li>无法共享URL，胖URL中包含了与特定用户和会话有关的状态信息，如果将这个URL发送给其他人<br>可能会在无意之间中将你的个人信息共享出去</li>
+<li>破坏缓存 为每个URL生成特有的版本就意味着不在有可供访问的URL需要缓存了</li>
+<li>额外的服务器负荷 服务器需要重写HTML页面使URL变胖</li>
+<li>逃逸口 用户转到其他站点或者请求一个特定的URL时，就很容易在无意中”逃离胖URL会话”</li>
+<li>在会话间是非持久的 除非用户收藏了特定的胖URL，否则用户退出登录时，所有的信息都会丢失</li>
+</ul>
+</blockquote>
+<p><strong>cookie</strong></p>
+<blockquote>
+<p>可以笼统的将cookie分为两类: 会话cookie和持久cookie。会话cookie是一种临时cookie,它记<br>录了用户访问站点时的设置和偏好。用户退出浏览器时，会话cookie就被删除了。持久cookie的生存<br>时间更长一些；它们存储在硬盘上，浏览器退出，计算机重启它们仍然存在。会话cookie和持久cookie<br>之间唯一的区别就是它们的过期时间。如果设置了Discard参数，或者没有设置Expires或Max-Age参数<br>来说明扩展的过期时间，这个cookie就是一个会话cookie。</p>
+</blockquote>
+<p><strong>cookie是如何工作的</strong></p>
+<blockquote>
+<p>用户首次访问Web站点时，Web服务器对用户一无所知。Web服务器希望这个用户会再次回来，所以在<br>响应报文中添加Set-Cookie首部。cookie中可以包含任何信息，但它们通常都只包含一个服务器为了<br>进行追踪而产生的独特的标识码。浏览器会记住从服务器返回的Set-Cookie或Set-Cookie2首部中的<br>cookie内容存储在浏览器的cookie数据库中。将来用户返回同一站点时，浏览器会挑中那个服务器<br>贴到用户上的那些cookie，并在一个cookie请求首部中将其传回去。</p>
+</blockquote>
+<p><strong>cookie罐:客户端的状态</strong></p>
+<blockquote>
+<p>cookie的基本思想就是让浏览器积累一组服务器特有的信息，每次访问服务器时都将这些信息提供<br>给他，因为浏览器要负责存储cookie信息，所以此系统被称为客户端侧状态，cookie内容的字段们:</p>
+<ul>
+<li>domain（域）cookie的域，控制哪些站点可以看到那个cookie</li>
+<li>allh 是域中所有的主机都获取cookie，还是只有指定了名字的主机获取。</li>
+<li>path（路径）域中与cookie相关的路径前缀。这个属性列出的URL路径前缀下所有cookie都是有<br>效的</li>
+<li>secure（安全）是否只有在使用SSL连接时才发送这个cookie</li>
+<li>expiration cookie的过期秒数</li>
+<li>name cookie变量的名字</li>
+<li>value cookie变量的值</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciqgk4pxi0008y0o0aay8uj2f" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-front_end/canvas/get_started" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/07/front_end/canvas/get_started/" class="article-date">
@@ -101,7 +372,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciqcdwvzz001zvko0yjxzt63o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciqgk4q0u0023y0o0iwtqo0cd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -175,7 +446,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciqcdwvw2000evko00un189zz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciqgk4pxm000ay0o09f9n5vdb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -231,7 +502,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciqcdwvvn000cvko0ik7lds3x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciqgk4pxe0005y0o0fu53ndd8" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -331,7 +602,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciqcdwvv70005vko0q1iqraqj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciqgk4pxf0006y0o07dm19ego" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -431,254 +702,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciqcdwvw2000jvko0axd9f8b3" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/baowen" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/01/http/baowen/" class="article-date">
-  <time datetime="2016-06-01T14:08:51.679Z" itemprop="datePublished">2016-06-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/01/http/baowen/">HTTP报文</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>Connection首部</strong></p>
-<blockquote>
-<p>HTTP的Connection首部字段中有一个由逗号分隔的连接标签列表，这些标签为此连接指定了一些<br>不会传输到其他连接中的选项，比如，可以用Connection:close来说明发送完下一条报文之后必须<br>关闭连接.</p>
-</blockquote>
-<p><strong>提升HTTP的连接性能的几种方法</strong></p>
-<ul>
-<li>并行连接，通过多条TCP连接发起并发的HTTP请求</li>
-<li>持久连接，重用TCP连接，以消除连接及关闭时延</li>
-<li>管道化连接， 通过共享的TCP连接发起并发的HTTP请求</li>
-<li>复用连接， 交替传送请求和响应报文（未实现）</li>
-</ul>
-<p><strong>并行连接可能会提升速度：</strong><br>在客户端带宽的限制下，每个事务会去竞争资源（竞争带宽），而且打开大量的连接会消耗内存资源</p>
-<p><strong>持久连接：</strong><br>HTTP1.1允许HTTP设备在事务处理结束后将TCP连接保持在打开状态，以便未来的HTTP请求重用现在<br>的连接，在事务结束之后仍然保持在打开状态的TCP连接被称为持久连接。重用已对目标服务器打开的<br>空闲持久连接，可以避免缓慢的连接建立阶段，而且，已经打开的连接还可以避免慢启动的拥塞适应<br>阶段，以便更快的进行数据的传输</p>
-<p><strong>持久以及并行连接：</strong><br>持久连接有两种类型：keep-alive以及persistent。 实现HTTP/1.0连接的客户端可以通过包含<br>Connection：Keep-Alive首部请求将一个连接保持在打开状态，如果服务器愿意为下一条请求将<br>连接保持在打开状态，就在相应中包含相同的首部，如果响应中没有Connection：Keep-Alive首部<br>客户端就认为服务器不支持keep-alive，会在发回响应报文后关闭连接。</p>
-<p><strong>管道化连接：</strong><br>HTTP/1.1允许在持久连接上可选的使用请求管道，在响应到达之前，可以将多条请求放入队列，当<br>第一条请求通过网络流向服务端时，第二条和第三条请求也可以开始发送了</p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/01/http/baowen/" data-id="ciqcdwvur0002vko0la55r37z" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/react_native/react_native_vector_icons_learn_1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" class="article-date">
-  <time datetime="2016-05-30T16:15:02.515Z" itemprop="datePublished">2016-05-31</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/React-Native/">React Native</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/">react-native-vector-icons如何使用自己的iconfont</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="https://github.com/oblador/react-native-vector-icons" target="_blank" rel="external">react-native-vector-icons的git地址</a></p>
-<p><strong>如何使用自己的iconfont呢?</strong>    </p>
-<p>首先将你的定义的iconfont.css放到你的RN项目根目录下，然后在根目录下执行<br><code>./node_modules/.bin/generate-icon ./iconfont.css --componentName=MyIcon --fontFamily=myicon &gt; MyIcon.js</code></p>
-<p>执行完成之后你会发现在根目录多了一个MyIcon.js，生成的MyIcon.js内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import createIconSet from &apos;./lib/create-icon-set&apos;;</span><br><span class="line">const glyphMap = &#123;</span><br><span class="line">  &quot;icabout&quot;: 58881,</span><br><span class="line">  &quot;btnclose&quot;: 58882,</span><br><span class="line">&#125;;</span><br><span class="line">let MyIcon = createIconSet(glyphMap, &apos;myicon&apos;, &apos;MyIcon.ttf&apos;);</span><br><span class="line">module.exports = MyIcon;</span><br><span class="line">module.exports.glyphMap = glyphMap;</span><br></pre></td></tr></table></figure></p>
-<p>将生成的MyIcon.js放到node_modules/react-native-vector-icons,并且将你的.ttf文件放入node_modules/react-native-vector-icons/Fonts文件夹中</p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/31/front_end/react_native/react_native_vector_icons_learn_1/" data-id="ciqcdww0e002dvko07lj35hpq" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/CSS/get_started" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/CSS/get_started/" class="article-date">
-  <time datetime="2016-05-25T15:41:00.612Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/CSS/">CSS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/CSS/get_started/">react+webpack的入门</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/CSS/get_started/" data-id="ciqcdwvxd000vvko09y3svlba" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/html/summary" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/html/summary/" class="article-date">
-  <time datetime="2016-05-25T15:40:45.819Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Html/">Html</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/html/summary/">一些名词解释</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>怪异模式</strong></p>
-<blockquote>
-<p>一些网页浏览器为了维持对旧的网页设计的向后兼容而使用的一种技术。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/html/summary/" data-id="ciqcdwvzz0021vko0cbt37x3b" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/js/actionScope" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/25/front_end/js/actionScope/" class="article-date">
-  <time datetime="2016-05-25T15:40:19.174Z" itemprop="datePublished">2016-05-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/25/front_end/js/actionScope/">作用域</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>变量的赋值会执行两个动作，首先编译器会在当前作用域中声明一个变量（如果之前没有声明过），<br>然后运行时引擎会在作用域中查找该变量，如果能够找到就会对它赋值。</p>
-</blockquote>
-<p><strong>LHS和RHS</strong></p>
-<blockquote>
-<p>LHS和RHS的含义是”赋值操作的左侧或右侧”并不一定意味着”=赋值操作的左侧和右侧”。赋值操作<br>还有其他几种形式，因此在概念上最好理解为”赋值操作的目标是谁(LHS)”以及”谁是赋值操作的源<br>头(RHS)”。</p>
-</blockquote>
-<p><strong>作用域嵌套</strong></p>
-<blockquote>
-<p>当一个块或函数嵌套在另一个块或函数中时，就发生了作用域嵌套。因此，在当前作用域中无法找<br>到某个变量时，引擎就会在外层嵌套的作用域中继续查找，直到找到该变量，或抵达最外层的作用域<br>（也就是全局作用域）为止。</p>
-</blockquote>
-<p><strong>RHS和LHS</strong></p>
-<blockquote>
-<p>如果RHS查询在所有嵌套的作用域中遍寻不到所需的变量，引擎就会抛出ReferenceError异常。<br>当引擎执行LHS查询时，如果在顶层中也无法找到目标变量，全局作用域就会创建一个具有该名称的<br>变量，并将其返回给引擎，前提是程序运行在”非严格模式”下。ES5引入了严格模式，严格模式禁止<br>自动或隐士地创建全局变量。因此，在严格模式中LHS查询失败时，并不会创建并返回一个全局变量，<br>引擎会抛出同RHS查询失败时类似的ReferenceError异常。ReferenceError同作用域判别失败相关，<br>而TypeError则代表作用域判别成功了，但是对结果的操作是非法或不合理的。</p>
-</blockquote>
-<p><strong>总结</strong></p>
-<blockquote>
-<p>作用域是一套规则，用于确定在何处以及如何查找变量。如果查找的目的是对变量进行赋值，那么<br>会使用LHS查询；如果目的是获取该变量的值，就会使用RHS查询。<br>JavaScript引擎首先会在代码执行前对其进行编译，在这个过程中，像<code>var a = 2</code>这样的声明会<br>被分解成两个独立的步骤：</p>
-<ol>
-<li>首先，<code>var a</code>在其作用域中声明新变量。这会在最开始的阶段，也就是代码执行前进行。</li>
-<li>接下来， <code>a = 2</code>会查询(LHS查询)变量a对其进行赋值。</li>
-</ol>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/front_end/js/actionScope/" data-id="ciqcdww0e0029vko09g9ivz28" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciqgk4py1000hy0o015u7zvzp" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -702,7 +726,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">32</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">15</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">37</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -714,23 +738,23 @@
       <ul>
         
           <li>
-            <a href="/2016/07/07/front_end/Webpack/how-to-write-loader/">如何写加载器</a>
+            <a href="/2016/07/10/front_end/Electron/window.openction/">window.open函数</a>
           </li>
         
           <li>
-            <a href="/2016/07/06/front_end/Electron/progress-object/">进程对象</a>
+            <a href="/2016/07/10/front_end/Electron/environments-variables/">环境变量</a>
           </li>
         
           <li>
-            <a href="/2016/07/06/front_end/Electron/api-references-synopsis/">API概要</a>
+            <a href="/2016/07/10/front_end/Electron/supported-chrome-line-switches/">支持的Chrom命令行开关</a>
           </li>
         
           <li>
-            <a href="/2016/07/06/front_end/Electron/online-offline-event-detection/">在线离线事件探测</a>
+            <a href="/2016/07/10/front_end/Webpack/multiple-entry-points/">多入口配置</a>
           </li>
         
           <li>
-            <a href="/2016/07/05/front_end/Webpack/long-term-caching/">长期缓存</a>
+            <a href="/2016/07/10/front_end/Webpack/how-to-write-plugin/">如何写插件</a>
           </li>
         
       </ul>
@@ -744,7 +768,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
