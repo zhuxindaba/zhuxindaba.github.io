@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>客户端识别与cookie技术 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="常见的用来承载用户相关信息的HTTP首部
+
+From: 用户的E-mail地址User-Agent: 用户的浏览器软件Refer: 用户是从这个页面上依照连接跳转过来的Authorization: 用户名和密码Client-IP(扩展请求):客户端的ip地址X-Forwarded-For(扩展请求): 客户端的IP地址Cookie(扩展请求): 服务器产生的ID标签
+
+使用客户端IP地址识别用户存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="客户端识别与cookie技术">
+<meta property="og:url" content="http://yoursite.com/2016/10/21/front_end/http/cookie/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="常见的用来承载用户相关信息的HTTP首部
+
+From: 用户的E-mail地址User-Agent: 用户的浏览器软件Refer: 用户是从这个页面上依照连接跳转过来的Authorization: 用户名和密码Client-IP(扩展请求):客户端的ip地址X-Forwarded-For(扩展请求): 客户端的IP地址Cookie(扩展请求): 服务器产生的ID标签
+
+使用客户端IP地址识别用户存">
+<meta property="og:updated_time" content="2016-10-20T16:36:41.543Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="客户端识别与cookie技术">
+<meta name="twitter:description" content="常见的用来承载用户相关信息的HTTP首部
+
+From: 用户的E-mail地址User-Agent: 用户的浏览器软件Refer: 用户是从这个页面上依照连接跳转过来的Authorization: 用户名和密码Client-IP(扩展请求):客户端的ip地址X-Forwarded-For(扩展请求): 客户端的IP地址Cookie(扩展请求): 服务器产生的ID标签
+
+使用客户端IP地址识别用户存">
+  
+    <link rel="alternate" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">zhuxin_blog</h1>
+  
+    <p class="lead blog-description">每天进步一点点</p>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-front_end/http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      客户端识别与cookie技术
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/10/21/front_end/http/cookie/" class="article-date"><time datetime="2016-10-20T16:36:41.542Z" itemprop="datePublished">2016-10-21</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>常见的用来承载用户相关信息的HTTP首部</strong></p>
+<blockquote>
+<p>From: 用户的E-mail地址<br>User-Agent: 用户的浏览器软件<br>Refer: 用户是从这个页面上依照连接跳转过来的<br>Authorization: 用户名和密码<br>Client-IP(扩展请求):客户端的ip地址<br>X-Forwarded-For(扩展请求): 客户端的IP地址<br>Cookie(扩展请求): 服务器产生的ID标签</p>
+</blockquote>
+<p><strong>使用客户端IP地址识别用户存在的缺点</strong></p>
+<blockquote>
+<ul>
+<li>客户端IP地址描述的是机器，而不是用户，多个用用户共享一台电脑，就无法区分了。</li>
+<li>很多因特网服务提供商都会在用户登录时为其动态分配IP地址。用户每次登录，都会得到一个不<br>同地址。</li>
+<li>为提供安全性，并对稀缺的地址资源进行管理，很多用户都是通过网络地址转换防火墙来浏览网<br>络内容。</li>
+<li>HTTP代理和网关通常会打开一些新的、到原始服务器的TCP连接，Web服务器看到的将是代理服务<br>器的IP地址而不是客户端的，有的代理会添加特殊的Client-IP或X-Forward-For扩展首部来保存原始<br>的IP地址，但并不是所有的代理都支持这种行为。</li>
+</ul>
+</blockquote>
+<p><strong>胖URL的缺点</strong></p>
+<blockquote>
+<ul>
+<li>URL比较丑陋</li>
+<li>无法共享URL，胖URL中包含了与特定用户和会话有关的状态信息，如果将这个URL发送给其他人<br>可能会在无意之间中将你的个人信息共享出去</li>
+<li>破坏缓存 为每个URL生成特有的版本就意味着不在有可供访问的URL需要缓存了</li>
+<li>额外的服务器负荷 服务器需要重写HTML页面使URL变胖</li>
+<li>逃逸口 用户转到其他站点或者请求一个特定的URL时，就很容易在无意中”逃离胖URL会话”</li>
+<li>在会话间是非持久的 除非用户收藏了特定的胖URL，否则用户退出登录时，所有的信息都会丢失</li>
+</ul>
+</blockquote>
+<p><strong>cookie</strong></p>
+<blockquote>
+<p>可以笼统的将cookie分为两类: 会话cookie和持久cookie。会话cookie是一种临时cookie,它记<br>录了用户访问站点时的设置和偏好。用户退出浏览器时，会话cookie就被删除了。持久cookie的生存<br>时间更长一些；它们存储在硬盘上，浏览器退出，计算机重启它们仍然存在。会话cookie和持久cookie<br>之间唯一的区别就是它们的过期时间。如果设置了Discard参数，或者没有设置Expires或Max-Age参数<br>来说明扩展的过期时间，这个cookie就是一个会话cookie。</p>
+</blockquote>
+<p><strong>cookie是如何工作的</strong></p>
+<blockquote>
+<p>用户首次访问Web站点时，Web服务器对用户一无所知。Web服务器希望这个用户会再次回来，所以在<br>响应报文中添加Set-Cookie首部。cookie中可以包含任何信息，但它们通常都只包含一个服务器为了<br>进行追踪而产生的独特的标识码。浏览器会记住从服务器返回的Set-Cookie或Set-Cookie2首部中的<br>cookie内容存储在浏览器的cookie数据库中。将来用户返回同一站点时，浏览器会挑中那个服务器<br>贴到用户上的那些cookie，并在一个cookie请求首部中将其传回去。</p>
+</blockquote>
+<p><strong>cookie罐:客户端的状态</strong></p>
+<blockquote>
+<p>cookie的基本思想就是让浏览器积累一组服务器特有的信息，每次访问服务器时都将这些信息提供<br>给他，因为浏览器要负责存储cookie信息，所以此系统被称为客户端侧状态，cookie内容的字段们:</p>
+<ul>
+<li>domain（域）cookie的域，控制哪些站点可以看到那个cookie</li>
+<li>allh 是域中所有的主机都获取cookie，还是只有指定了名字的主机获取。</li>
+<li>path（路径）域中与cookie相关的路径前缀。这个属性列出的URL路径前缀下所有cookie都是有<br>效的</li>
+<li>secure（安全）是否只有在使用SSL连接时才发送这个cookie</li>
+<li>expiration cookie的过期秒数</li>
+<li>name cookie变量的名字</li>
+<li>value cookie变量的值</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/front_end/http/cookie/" data-id="ciuiklb8c0021uoo00brajy58" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/2016/10/21/front_end/http/cache_2/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">缓存（二）</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/2016/10/21/front_end/http/digestAuthenticate/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">摘要认证</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  <div class="sidebar-module sidebar-module-inset">
+  <h4>About</h4>
+  <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+
+</div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Categories</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Bootstrap/">Bootstrap</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/CSS/">CSS</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Canvas/">Canvas</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Electron/">Electron</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Git/">Git</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Html/">Html</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Http/">Http</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/JS/">JS</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/React-Native/">React Native</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/React-Webpack/">React Webpack</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Webpack/">Webpack</a><span class="sidebar-module-list-count">18</span></li></ul>
+  </div>
+
+
+
+  
+
+
+  
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">18</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">5</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/server/">WEB服务器、代理</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/integration/">网关、隧道及中继</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/digestAuthenticate/">摘要认证</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/cookie/">客户端识别与cookie技术</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

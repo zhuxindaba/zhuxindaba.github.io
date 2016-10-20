@@ -15,797 +15,991 @@
 <meta name="twitter:title" content="zhuxin_blog">
 <meta name="twitter:description">
   
-    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   
-  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css">
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
   
 
 </head>
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <div id="header">
-  <div id="header-outer" class="outer">
-    <div id="header-inner" class="inner">
-      <div id="header-title">
-        <h1 id="logo-wrap">
-          <a href="/" id="logo">
-          
-              <span id="subtitle">每天进步一点点</span>
-          
-          </a>
-        </h1>
-      </div>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">首页</a>
-        
-          <a class="main-nav-link" href="/archives">我的文章</a>
-        
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
     </div>
-  </div>
-</div>
-      <div class="outer">
-        <section id="main">
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">zhuxin_blog</h1>
   
-    <article id="post-front_end/js/closureAndScope" class="article article-type-post" itemscope itemprop="blogPost">
+    <p class="lead blog-description">每天进步一点点</p>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-front_end/Webpack/using_plugin" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/30/front_end/Webpack/using_plugin/">使用插件</a>
+    </h1>
+  
+
+
+  </header>
+
   <div class="article-meta">
-    <a href="/2016/06/15/front_end/js/closureAndScope/" class="article-date">
-  <time datetime="2016-06-15T13:14:06.338Z" itemprop="datePublished">2016-06-15</time>
-</a>
+    <div class="article-datetime">
+  <a href="/2016/06/30/front_end/Webpack/using_plugin/" class="article-date"><time datetime="2016-06-30T14:06:38.398Z" itemprop="datePublished">2016-06-30</time></a>
+</div>
+
+    
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
   </div>
+
 
   </div>
   <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>内置插件</strong></p>
+<blockquote>
+<p>通过在webpack配置文件中添加<code>plugins</code>字段来使用插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.ResolverPlugin([</span><br><span class="line">            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(&quot;bower.json&quot;, [&quot;main&quot;])</span><br><span class="line">        ], [&quot;normal&quot;, &quot;loader&quot;])</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>其余插件</strong></p>
+<blockquote>
+<p>其他非内置插件通过<code>npm</code>或者其它方式来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install component-webpack-plugin</span><br></pre></td></tr></table></figure></p>
+<p>通过下面的方式来使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var ComponentPlugin = require(&quot;component-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new ComponentPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当通过npm安装第三方插件时，建议使用这种方式<a href="https://www.npmjs.com/package/webpack-load-plugins" target="_blank" rel="external">https://www.npmjs.com/package/webpack-load-plugins</a>,<br>它会检查所有安装的第三方依赖插件并且在你需要用的时候去加载</p>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/30/front_end/Webpack/using_plugin/" data-id="ciqqs8s87003acko09f9s0zxi" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/Webpack/using_loaders" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/29/front_end/Webpack/using_loaders/">使用加载器</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/29/front_end/Webpack/using_loaders/" class="article-date"><time datetime="2016-06-29T15:10:30.255Z" itemprop="datePublished">2016-06-29</time></a>
+</div>
+
     
     
-      <header class="article-header">
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>什么是加载器</strong></p>
+<blockquote>
+<p>加载器是应用于你程序中的资源文件的转换器,它们是将源文件作为参数并返回新的资源的nodejs函数。<br>例如可以使用加载器让webpack加载CoffeScript或者JSX文件。</p>
+</blockquote>
+<p><strong>加载器特性</strong></p>
+<blockquote>
+<ul>
+<li>加载器可以链式，通过管道来处理资源文件，最后的加载器返回JavaScript文件,其余的加载器可以<br>返回任意格式的资源到下一个加载器</li>
+<li>加载器可以是同步的也可以是异步的</li>
+<li>加载器运行在nodejs中，可以做任何可能做的事。</li>
+<li>加载器接受查询参数，可以用于传递配置文件给加载器。</li>
+<li>可以在加载器定义中使用表达式或者正则。</li>
+<li>加载器可以通过npm下载或发布。</li>
+<li>Normal modules can export a loader in addition to the normal main via package.json loader.</li>
+<li>加载器可以访问配置文件</li>
+<li>插件可以提供加载器更多特性</li>
+<li>加载器可以产出任意格式的文件</li>
+<li>更多</li>
+</ul>
+</blockquote>
+<p><strong>解析加载器</strong></p>
+<blockquote>
+<p>解析加载器和解析模块类似，一个加载器模块即一个导出函数的 node.js模块，通常情况下通过npm<br>管理加载器，但是也可以将加载器存在程序中。<br><strong>引用加载器</strong><br>按照管理，虽然不是要求的，加载器通常命名为<code>xxx-loader</code>,其中xxx就是加载器的名字，比如json-loader<br>你可以通过全程引用加载器，也可以通过它的简称来引用。<br>加载器的命名惯例和搜索优先级是在webpack的配置api的<code>resolveLoader.moduleTemplates</code>定义的.<br>加载器的命名惯例是很有用的，尤其是在<code>require()</code>语句中引用加载器时。<br><strong>安装加载器</strong><br>如果加载器在npm中是可获得的，你可以通过以下命令来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xxx-loader --save</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xxx-loader --save-dev</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用</strong><br>在项目中有多种方式使用加载器</p>
+<ul>
+<li>通过<code>require</code>声明中明确指定</li>
+<li>通过配置文件配置</li>
+<li>通过命令行指定<br><strong>注意:</strong>尽可能避免使用这种方式，如果你希望你的脚本可以同时在nodejs和浏览器中运行，使用<br>在配置文件中明确配置加载器的惯例。<br>可以通过<code>require</code>语句使用加载器(或者<code>define</code>,<code>require.ensure</code>,等等)。只需要用<code>!</code>将加载器<br>和资源分开即可，每一部分都是相对于当前目录。<br>可以在配置中写很多个任意加载器通过前缀<code>!</code>的规则<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;./loader!./dir/file.txt&quot;);</span><br><span class="line">// =&gt; uses the file &quot;loader.js&quot; in the current directory to transform</span><br><span class="line">//    &quot;file.txt&quot; in the folder &quot;dir&quot;.</span><br><span class="line"></span><br><span class="line">require(&quot;jade!./template.jade&quot;);</span><br><span class="line">// =&gt; uses the &quot;jade-loader&quot; (that is installed from npm to &quot;node_modules&quot;)</span><br><span class="line">//    to transform the file &quot;template.jade&quot;</span><br><span class="line">//    If configuration has some transforms bound to the file, they will still be applied.</span><br><span class="line"></span><br><span class="line">require(&quot;!style!css!less!bootstrap/less/bootstrap.less&quot;);</span><br><span class="line">// =&gt; the file &quot;bootstrap.less&quot; in the folder &quot;less&quot; in the &quot;bootstrap&quot;</span><br><span class="line">//    module (that is installed from github to &quot;node_modules&quot;) is</span><br><span class="line">//    transformed by the &quot;less-loader&quot;. The result is transformed by the</span><br><span class="line">//    &quot;css-loader&quot; and then by the &quot;style-loader&quot;.</span><br><span class="line">//    If configuration has some transforms bound to the file, they will not be applied.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>通过配置文件</strong><br>可以通过正则来在配置文件中绑定加载器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123; test: /\.jade$/, loader: &quot;jade&quot; &#125;,</span><br><span class="line">            // =&gt; &quot;jade&quot; loader is used for &quot;.jade&quot; files</span><br><span class="line"></span><br><span class="line">            &#123; test: /\.css$/, loader: &quot;style!css&quot; &#125;,</span><br><span class="line">            // =&gt; &quot;style&quot; and &quot;css&quot; loader is used for &quot;.css&quot; files</span><br><span class="line">            // Alternative syntax:</span><br><span class="line">            &#123; test: /\.css$/, loaders: [&quot;style&quot;, &quot;css&quot;] &#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>命令行</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack --module-bind jade --module-bind &apos;css=style!css&apos;</span><br></pre></td></tr></table></figure></p>
+<p>上述命令给<code>.jade</code>文件绑定了 <code>jade</code> 加载器，给 <code>.css</code> 文件班定了 <code>style</code> 和 <code>css</code> 加载器。<br><strong>查询参数</strong><br>加载器可以通过查询<code>web</code>风格的字符串来指定查询参数，如：<code>url-loader?mimetype=image/png</code><br><strong>注：查询字符串的格式要看加载器，具体格式参考加载器文档。大多数的加载器支持普通的查询格式<br>（<code>?key=value&amp;key2=value2</code>）和 JSON 对象（<code>?{&quot;key&quot;:&quot;value&quot;,&quot;key2&quot;:&quot;value2&quot;}</code>）。</strong><br><strong>require</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;url-loader?mimetype=image/png!./file.png&quot;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置文件中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; test: /\.png$/, loader: &quot;url-loader?mimetype=image/png&quot; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /\.png$/,</span><br><span class="line">    loader: &quot;url-loader&quot;,</span><br><span class="line">    query: &#123; mimetype: &quot;image/png&quot; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>命令行中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack --module-bind &quot;png=url-loader?mimetype=image/png&quot;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/29/front_end/Webpack/using_loaders/" data-id="ciqqs8s6q002icko0yhxowwhl" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/Webpack/usage" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/28/front_end/Webpack/usage/">使用</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/28/front_end/Webpack/usage/" class="article-date"><time datetime="2016-06-28T15:53:23.622Z" itemprop="datePublished">2016-06-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>通过npm安装webpack<code>npm install webpack -g</code></p>
+<blockquote>
+<p><strong>注意:</strong>官网的全局安装webpack只是示范的目的，当你在做真实项目的情况下，安装webpack<br>作为一个项目依赖是个明智的选择</p>
+</blockquote>
+<p><strong>快速开始</strong></p>
+<p>首先我们要了解使用webpack基本命令行的API</p>
+<p><strong>创建一个模块化的javascript项目</strong></p>
+<blockquote>
+<p>让我们在javascript通过使用CommonJS语法中创建一些模块。</p>
+</blockquote>
+<p><strong>cat.js</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var cats = [&apos;dave&apos;, &apos;henry&apos;, &apos;martha&apos;];</span><br><span class="line">module.exports = cats;</span><br></pre></td></tr></table></figure></p>
+<p><strong>app.js (入口)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cats = require(&apos;./cats.js&apos;);</span><br><span class="line">console.log(cats);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>entry point(入口)就是你的程序将会在哪启动，并且webpack将会在哪里跟踪模块之间的依赖关系。</p>
+</blockquote>
+<p><strong>webpack5s</strong><br>指定webpack的入口并指定输出文件名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack ./app.js app.bundle.js</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>webpack将会读取并分析入口文件以及它的依赖关系（包括传递依赖），之后会打包他们到app.bundle.js中。<br>现在通过<code>node app.bundle.js</code>就可以看到所打印的内容，当然在浏览器中也是可以运行的。</p>
+</blockquote>
+<p><strong>了解严格模式</strong></p>
+<blockquote>
+<p>webpack是个灵活的打包器，它提供了许多高级的特性，但不是所有的特性都可以通过命令行的这种方式运行，<br>为了全面的了解webpack的灵活性，需要创建一个配置文件。</p>
+</blockquote>
+<p><strong>项目结构</strong></p>
+<blockquote>
+<p>在真实的项目中，我们会分开不同的源文件到不同的目录，在这个实例中，将源文件放在<strong>src</strong>,打包出来的<br>文件放在<strong>bin</strong>中。</p>
+<ol>
+<li>创建bin和src目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir bin</span><br><span class="line">mkdir src</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<ol>
+<li><p>将原文件移到src目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv app.js cats.js src</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化一个npm项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装webpack作为本项目的一个依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev webpack</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>移步配置文件</strong></p>
+<blockquote>
+<p>随着你的项目的成长，你的配置文件将会变的复杂，以命令行的方式定义webpack将会变的不灵便，通过<br>创建配置文件来代替命令行的这种方式。</p>
+<ol>
+<li>创建webpack.config.js<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>webpack的配置文件是node形式的模块，所以你可以运行各种形式的代码在这里，只要你最后暴露出<br>一个定义webpack的对象就行。</p>
+</blockquote>
+<ol>
+<li>运行webpack<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>webpack将会读取配置文件，打包响应的东西，你可以检查该项目就会发现项目多出bin目录，并且<br>包含了输出文件</p>
+</blockquote>
+<ol>
+<li>运行<code>bin/app.bundle.j</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node bin/app.bundle.js</span><br><span class="line">[&quot;dave&quot;, &quot;henry&quot;, &quot;martha&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>也可以<code>require()</code>通过npm安装的模块而不需要额外的配置文件。</p>
+</blockquote>
+<p><strong>使用加载器</strong></p>
+<blockquote>
+<p>webpack本身只支持javascript模块，但是很多人会使用转换器去转换ES6、CoffeScript、TypeScript、<br>等等，这些可以通过wenbpack的loaders实现。<br>loaders是一些特殊的模块，webpack使用他们来加载其余的模块到javascript中，比如babel-loader使用<br>Babel去加载ES2015（ES6）的文件。<br>loaders可以链式化（loaders链），有时你需要加载器链一起工作，比如<code>yaml-loader</code>只能转换YAML到json<br>中,所以需要<code>json-loader</code>继续转化才能被使用</p>
+</blockquote>
+<p><strong>用babel-loader转换ES2015</strong></p>
+<blockquote>
+<p>在这个例子中，我们告诉webpack通过使用Babel我们可以使用ES2015的特性</p>
+<ol>
+<li><p>安装babel以及babel的预装配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-core babel-preset-es2015</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装babel-loader</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev babel-loader</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过添加.babelrc文件配置Babel使用这些预装配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;presets&quot;: [ &quot;es2015&quot; ] &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改webpack.config.js通过<code>babel-loader</code>处理所有以<code>.js</code>结尾的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.js$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel-loader&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>我们排除了<code>node_modules</code>文件夹，否则所有的外部库都会经过 Babel,会减慢编译速度**<br>(5). 安装你想要使用的外部库（jQuery）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save jquery babel-polyfill</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用<code>--save</code>代替<code>--save-dev</code>,因为这些库是在运行的时候被使用的，使用<code>babel-polyfill</code>可以是在老的浏览器中使用ES2015</strong><br>(6). 修改<code>src/app.js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &apos;babel-polyfill&apos;;</span><br><span class="line">import cats from &apos;./cats&apos;;</span><br><span class="line">import $ from &apos;jquery&apos;;</span><br><span class="line"></span><br><span class="line">$(&apos;&lt;h1&gt;Cats&lt;/h1&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">const ul = $(&apos;&lt;ul&gt;&lt;/ul&gt;&apos;).appendTo(&apos;body&apos;);</span><br><span class="line">for (const cat of cats) &#123;</span><br><span class="line">    $(&apos;&lt;li&gt;&lt;/li&gt;&apos;).text(cat).appendTo(ul);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>(7). 使用webpack打包这些模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webpack</span><br></pre></td></tr></table></figure></p>
+<p>(8). 添加<code>index.html</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;script src=&quot;bin/app.bundle.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>使用插件</strong></p>
+<blockquote>
+<p>通常你需要在工作流中做一些额外的处理，很简单的一个例子就是压缩代码这样可以在浏览器中加<br>载速度变快,这可以通过插件完成，在配置文件中加入压缩插件(uglify plugin)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">const webpack = require(&apos;webpack&apos;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &apos;./src/app.js&apos;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: &apos;./bin&apos;,</span><br><span class="line">        filename: &apos;app.bundle.js&apos;,</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [&#123;</span><br><span class="line">            test: /\.jsx?$/,</span><br><span class="line">            exclude: /node_modules/,</span><br><span class="line">            loader: &apos;babel&apos;,</span><br><span class="line">        &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.UglifyJsPlugin(&#123;</span><br><span class="line">            compress: &#123;</span><br><span class="line">                warnings: false,</span><br><span class="line">            &#125;,</span><br><span class="line">            output: &#123;</span><br><span class="line">                comments: false,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;),</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>压缩插件已经包含在webpack的配置文件中，所以你不需要添加额外的模块，你可以写自己的插件，<br>在这个案例中将文件大小由1618bytes压缩到了308bytes。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/usage/" data-id="ciqqs8s6l002gcko0hocy51ml" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/Webpack/installation" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/28/front_end/Webpack/installation/">安装webpack</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/28/front_end/Webpack/installation/" class="article-date"><time datetime="2016-06-28T15:28:59.931Z" itemprop="datePublished">2016-06-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>安装nodejs</li>
+<li>通过npm安装webpack,全局安装webpack <code>npm install webpack -g</code></li>
+<li>在项目中使用webpack<blockquote>
+<p>最好的做法是在项目中使用webpack，这样的话你可以选择基于本项目的webpack版本，不用被强制<br>的去使用全局webpack。如果你不想发布你的项目到npm上，那么<code>npm init</code>之后的问题不重要。<br>安装并且将webpack加入到package.json中去<code>npm install webpack --save</code></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>版本</strong></p>
+<blockquote>
+<p>webpack有稳定版和测试（beta）版本（公测），beta版本在版本号中添加了<code>-beta</code>的标识,beta版本<br>包含了许多不稳定的变更或实验性的特性在里面并且测试的较少，正式项目中应该用稳定版本。</p>
+</blockquote>
+<p><strong>Dev Tools(开发工具)</strong></p>
+<p><code>npm install webpack-dev-server --save-dev</code></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/installation/" data-id="ciqqs8s5u0020cko0iemysy1t" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/Webpack/what-is-webpack" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/28/front_end/Webpack/what-is-webpack/">webpack是什么</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/28/front_end/Webpack/what-is-webpack/" class="article-date"><time datetime="2016-06-28T14:30:57.700Z" itemprop="datePublished">2016-06-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>webpack是个模块打包工具，它获取有依赖关系的模块并生成表示这些模块的静态资源</p>
+<p><strong>为什么有webpack打包系统</strong></p>
+<blockquote>
+<p>现有的模块打包系统不适合大型的项目（单页面应用），最迫切的原因是因为代码拆分和静态资源<br>更好的接入模块化,对现有的模块化系统进行扩展，但是无法同时完成以下的所有目标</p>
+<ul>
+<li>拆分依赖树，使之成为按需加载</li>
+<li>让初始化加载时间更短</li>
+<li>每一个静态资源都是一个模块</li>
+<li>让第三方库成为模块</li>
+<li>尽可能的去定义模块的每一部分</li>
+<li>适用于大型项目</li>
+</ul>
+</blockquote>
+<p><strong>webpack有什么不同</strong></p>
+<blockquote>
+<p>webpack有同步与异步两种依赖方式，异步依赖在代码优化之后将会行程一个新的块。<br><strong>加载器</strong><br>webpack本身只支持处理javascript，但是加载器可以将其它的资源加载到javascript中去，这样做<br>每一个资源都是一个模块<br><strong>智能解析</strong><br>webpack有一个聪明的解析器可以处理几乎所有的第三方库，它甚至允许带有表达式的依赖，<br><code>require(&quot;./templates/&quot; + name + &quot;.jade&quot;)</code>支持最常用的模块化方式CommonJS和AMD</p>
+</blockquote>
+<p><strong>插件系统</strong></p>
+<blockquote>
+<p>webpack以丰富的插件系统为特色，大多数的特色都是基于这个插件系统的，这允许你根据需要定义webpack<br>并且以开源的方式来发布通用插件。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/28/front_end/Webpack/what-is-webpack/" data-id="ciqqs8s6w002mcko0ew668m06" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/Webpack/module_system_styles" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/27/front_end/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/27/front_end/Webpack/module_system_styles/" class="article-date"><time datetime="2016-06-27T14:52:05.725Z" itemprop="datePublished">2016-06-27</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p><code>&lt;script&gt;</code>-tag的形式，主要问题有:    </p>
+<blockquote>
+<ul>
+<li>全局的变量冲突</li>
+<li>按序加载的重要性</li>
+<li>解决不同模块、包之间的依赖性</li>
+<li>项目庞大的时候，需要写很多很多<code>&lt;script&gt;</code>标签</li>
+</ul>
+</blockquote>
+</li>
+<li><p>CommonJS: 同步请求(synchronous):</p>
+<blockquote>
+<p>这种方式使用同步的<code>require</code>方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以<br>通过增加属性到<code>export</code>的对象中或者设置<code>module.exports</code>的值来明确的指定暴露的接口。<br>优点:</p>
+<ol>
+<li>服务端模块可以使用</li>
+<li>npm上已经有好多使用这种方式的写法</li>
+<li>使用简单<br>缺点:</li>
+<li>阻塞式的请求不适用于网络请求，网络请求是异步的</li>
+<li>不能并发的请求多个模块<br>实现者:</li>
+</ol>
+<ul>
+<li>node.js- server-side</li>
+<li>browserify</li>
+<li>modules-webmake   - compile to one bundle</li>
+<li>wreq - client-side<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;../file.js&quot;);</span><br><span class="line">exports.doStuff = function() &#123;&#125;;//方式一</span><br><span class="line">module.exports = someValue;//方式二</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>3.AMD: 异步(asynchronous)请求</p>
+<blockquote>
+<p>对于浏览器来说同步请求有很多问题(CommonJS)所以引入了一个异步版本(一种定义模块与导出模块的方式)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module&quot;, &quot;../file&quot;], function(module, file) &#123; /* ... */ &#125;);</span><br><span class="line">define(&quot;mymodule&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) &#123;</span><br><span class="line">  return someExportedValue;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>优点:</p>
+<ol>
+<li>适用于异步的网络请求</li>
+<li>并发加载模块<br>缺点:</li>
+<li>代码不易于维护<br>实现者:</li>
+</ol>
+<ul>
+<li>require.js - client-side</li>
+<li>curl - client-side</li>
+</ul>
+</blockquote>
+<p>4.ES6 Modules</p>
+<blockquote>
+<p>ES6给javascript增加了一些语言特性，实现了另外的模块化系统<br>优点:</p>
+<ol>
+<li>易于静态分析</li>
+<li>未来的ES标准<br>缺点:</li>
+<li>浏览器原生支持需要时间</li>
+<li>目前这种风格还很少<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;jquery&quot;;</span><br><span class="line">export function doStuff() &#123;&#125;</span><br><span class="line">module &quot;localModule&quot; &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p><strong>模块加载</strong></p>
+<blockquote>
+<p>模块可以执行在浏览器端，所以它必须从服务端加载到浏览器中去，有两种极端的加载方式:</p>
+<ol>
+<li>一个模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有需要的才会被加载<br>缺点:</li>
+<li>过多的模块会造成网络负载，程序响应过慢</li>
+</ul>
+<ol>
+<li>所有的模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有一个请求<br>缺点:</li>
+<li>不需要的模块也加载了</li>
+</ul>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>编译模块时，将模块拆分成多个小块，拆分点由开发者定义<br>同样适用于img css webfont html模板等等</p>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/27/front_end/Webpack/module_system_styles/" data-id="ciqqs8s6f002acko0923rp7jd" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/BootStrap/getstarted" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/25/front_end/BootStrap/getstarted/">快速开始</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/25/front_end/BootStrap/getstarted/" class="article-date"><time datetime="2016-06-25T09:55:57.223Z" itemprop="datePublished">2016-06-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Bootstrap/">Bootstrap</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
         
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/25/front_end/BootStrap/getstarted/" data-id="ciqqs8s40000vcko0p20ozr8x" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/js/aboutThis" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/16/front_end/js/aboutThis/">对this的理解</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/16/front_end/js/aboutThis/" class="article-date"><time datetime="2016-06-16T13:52:57.317Z" itemprop="datePublished">2016-06-16</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JS/">JS</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><strong>this是调用时被绑定的，完全取决于函数的调用位置</strong></li>
+<li><p><strong>调用位置</strong></p>
+<blockquote>
+<p>调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所<br>调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。</p>
+</blockquote>
+</li>
+<li><p><strong>this的绑定规则</strong></p>
+</li>
+</ul>
+<ol>
+<li>默认绑定</li>
+<li>隐式绑定</li>
+<li>显示绑定</li>
+<li>new绑定</li>
+</ol>
+<ul>
+<li><strong>判断this（优先级）</strong></li>
+</ul>
+<ol>
+<li>函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象</li>
+<li>函数是否通过call、apply（显示绑定）调用？如果是的话，this绑定的是指定的对象</li>
+<li>函数是否在某个上下文对象中调用（隐式绑定）？如果是的话，this绑定的是那个上下文对象</li>
+<li>如果都不是的话，使用默认绑定。如果在严格模式下，就绑定到undefined，否则绑定到全局对象。</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/16/front_end/js/aboutThis/" data-id="ciqqs8s800037cko0rhfx8slc" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/git/commonsComond" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/16/front_end/git/commonsComond/">git的常用指令(一)</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/06/16/front_end/git/commonsComond/" class="article-date"><time datetime="2016-06-15T16:01:42.945Z" itemprop="datePublished">2016-06-16</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Git/">Git</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><p><strong>配置别名</strong><br><code>git config alias.st &#39;status&#39;</code><br>git st 的作用等于 git status,只对当前仓库有效，如果想配置全局则<code>git config -g alias.st &#39;status&#39;</code></p>
+</li>
+<li><p><strong>git rm</strong><br>git rm –cached会删除索引中的文件并把它保留到工作目录中,而git rm则会将文件从索引和工作目录中都删除。</p>
+</li>
+<li><p><strong>gitk命令查看提交图</strong></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/16/front_end/git/commonsComond/" data-id="ciuikmggt0028uoo07g3ekyut" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-front_end/js/closureAndScope" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
   
     <h1 itemprop="name">
       <a class="article-title" href="/2016/06/15/front_end/js/closureAndScope/">作用域和闭包</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciqgk4q0z002ay0o0iedhul50" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
 
+  </header>
 
-  
-    <article id="post-front_end/js/functionAndBlockScope" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/06/14/front_end/js/functionAndBlockScope/" class="article-date">
-  <time datetime="2016-06-14T13:40:25.543Z" itemprop="datePublished">2016-06-14</time>
-</a>
+    <div class="article-datetime">
+  <a href="/2016/06/15/front_end/js/closureAndScope/" class="article-date"><time datetime="2016-06-15T13:14:06.338Z" itemprop="datePublished">2016-06-15</time></a>
+</div>
+
+    
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/JS/">JS</a>
+    <a class="article-category-link" href="/categories/JS/">JS</a>
   </div>
+
 
   </div>
   <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/14/front_end/js/functionAndBlockScope/">函数作用域和块级作用域</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>IIFE</strong></p>
-<blockquote>
-<p>IIFE代表立即执行函数表达式，他可以导致代码的运行顺序，将需要运行的函数放在第二位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var a = 2;</span><br><span class="line">(function(def) &#123;</span><br><span class="line">  def(window)</span><br><span class="line">&#125;)(function def(global) &#123;</span><br><span class="line">  var a = 3;</span><br><span class="line">  console.log(a);</span><br><span class="line">  console.log(global.a);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>变量提升</strong></p>
-<blockquote>
-<p>只有声明本身会被提升，而赋值或其他运行逻辑会留在原地。如果提升改变了代码执行的顺序，会<br>造成非常严重的破坏。<br>函数声明和变量声明都会被提升。但是一个值得注意的细节是函数会首先被提升，然后才是变量。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/14/front_end/js/functionAndBlockScope/" data-id="ciqgk4q17002fy0o0pum6qdns" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/digestAuthenticate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/11/http/digestAuthenticate/" class="article-date">
-  <time datetime="2016-06-11T03:35:28.866Z" itemprop="datePublished">2016-06-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/11/http/digestAuthenticate/">摘要认证</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
         
       
     </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/digestAuthenticate/" data-id="ciqgk4pxx000dy0o0w39i4wrn" class="article-share-link">Share</a>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/15/front_end/js/closureAndScope/" data-id="ciqqs8s7b002vcko02tt0ex84" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
       
       
-    </footer>-->
+
+    </footer>
   </div>
   
 </article>
 
 
+
   
-    <article id="post-http/baseauthentication" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/11/http/baseauthentication/" class="article-date">
-  <time datetime="2016-06-11T02:59:57.863Z" itemprop="datePublished">2016-06-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/3/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li><a class="page-number" href="/page/2/">2</a></li><li><a class="page-number" href="/page/3/">3</a></li><li class="active"><span class="page-number">4</span></li><li><a class="page-number" href="/page/5/">5</a></li><li><a class="page-next" rel="next" href="/page/5/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
   </div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/11/http/baseauthentication/">基本认证机制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>认证</strong></p>
-<blockquote>
-<p><strong>HTTP的质询/响应认证框架</strong><br>Web应用程序收到一个HTTP请求报文时，服务器没有按照请求执行动作，而是以一个”认证质询”进行<br>响应，要求用户提供一些保密信息来说明他是谁，从而对其进行质询。用户再次发送请求时，要附上<br>保密证书（用户名和密码）。如果证书不匹配，服务器可以再次质询客户端，或产生一条错误信息。<br>如果证书匹配，就可以完成正常请求了。<br><strong>认证协议与首部</strong><br>HTTP通过一组可定制的控制首部，为不同的认证协议提供了一个可扩展框架，首部格式和内容会随<br>认证协议的不同而发生变化。认证协议也是在HTTP认证首部中指定的。HTTP定义了两个官方的认证<br>协议：基本认证和摘要认证。<br>认证的4个步骤：<br>首部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法状态</p>
-<ul>
-<li>请求 第一条请求没有认证信息</li>
-<li>质询 WWW-Authenticate 服务器用401状态拒绝请求，说明需要用户提供用户名和密码，服务器<br>可能分为不同的区域，每个区域都有自己的密码，所以服务器会在WWW-Authenticate首部对保护区域<br>进行描述，同样，认证算法也是在WWW-Authenticate首部中指定的。</li>
-<li>授权 Authorization 客户端重新发出请求，但这一次会附加一个Authorization首部，用来<br>说明认证算法，用户名，密码。</li>
-<li>成功 Authentication-Info 如果授权证书是正确的，服务器就将文档返回。有些授权算法会<br>在可选的Authentication-Info首部返回一些与授权会话相关的附加信息。</li>
-</ul>
-</blockquote>
-<p><strong>基本认证的安全缺陷</strong></p>
-<blockquote>
-<ol>
-<li>基本认证会通过网络发送用户名和密码，这些用户名和密码以一种很容易解码的形式表示，不安全</li>
-<li>即使密码是一更难解码的方式加密的，第三方用户仍然可以捕获修改过的用户名和密码，并将<br>修改过的用户名和密码一次一次的重放给原始服务器。</li>
-<li>基本认证没有提供任何针对代理和作为中间人的中间节点防护措施，他们没有修改认证首部，但<br>却修改了报文的其余部分，这样就严重的改变了事务的本质。</li>
-</ol>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/11/http/baseauthentication/" data-id="ciqgk4pwu0001y0o0jy96akpw" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
 
 
-  
-    <article id="post-http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/07/http/cookie/" class="article-date">
-  <time datetime="2016-06-07T14:23:54.663Z" itemprop="datePublished">2016-06-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/07/http/cookie/">客户端识别与cookie技术</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>常见的用来承载用户相关信息的HTTP首部</strong></p>
-<blockquote>
-<p>From: 用户的E-mail地址<br>User-Agent: 用户的浏览器软件<br>Refer: 用户是从这个页面上依照连接跳转过来的<br>Authorization: 用户名和密码<br>Client-IP(扩展请求):客户端的ip地址<br>X-Forwarded-For(扩展请求): 客户端的IP地址<br>Cookie(扩展请求): 服务器产生的ID标签</p>
-</blockquote>
-<p><strong>使用客户端IP地址识别用户存在的缺点</strong></p>
-<blockquote>
-<ul>
-<li>客户端IP地址描述的是机器，而不是用户，多个用用户共享一台电脑，就无法区分了。</li>
-<li>很多因特网服务提供商都会在用户登录时为其动态分配IP地址。用户每次登录，都会得到一个不<br>同地址。</li>
-<li>为提供安全性，并对稀缺的地址资源进行管理，很多用户都是通过网络地址转换防火墙来浏览网<br>络内容。</li>
-<li>HTTP代理和网关通常会打开一些新的、到原始服务器的TCP连接，Web服务器看到的将是代理服务<br>器的IP地址而不是客户端的，有的代理会添加特殊的Client-IP或X-Forward-For扩展首部来保存原始<br>的IP地址，但并不是所有的代理都支持这种行为。</li>
-</ul>
-</blockquote>
-<p><strong>胖URL的缺点</strong></p>
-<blockquote>
-<ul>
-<li>URL比较丑陋</li>
-<li>无法共享URL，胖URL中包含了与特定用户和会话有关的状态信息，如果将这个URL发送给其他人<br>可能会在无意之间中将你的个人信息共享出去</li>
-<li>破坏缓存 为每个URL生成特有的版本就意味着不在有可供访问的URL需要缓存了</li>
-<li>额外的服务器负荷 服务器需要重写HTML页面使URL变胖</li>
-<li>逃逸口 用户转到其他站点或者请求一个特定的URL时，就很容易在无意中”逃离胖URL会话”</li>
-<li>在会话间是非持久的 除非用户收藏了特定的胖URL，否则用户退出登录时，所有的信息都会丢失</li>
-</ul>
-</blockquote>
-<p><strong>cookie</strong></p>
-<blockquote>
-<p>可以笼统的将cookie分为两类: 会话cookie和持久cookie。会话cookie是一种临时cookie,它记<br>录了用户访问站点时的设置和偏好。用户退出浏览器时，会话cookie就被删除了。持久cookie的生存<br>时间更长一些；它们存储在硬盘上，浏览器退出，计算机重启它们仍然存在。会话cookie和持久cookie<br>之间唯一的区别就是它们的过期时间。如果设置了Discard参数，或者没有设置Expires或Max-Age参数<br>来说明扩展的过期时间，这个cookie就是一个会话cookie。</p>
-</blockquote>
-<p><strong>cookie是如何工作的</strong></p>
-<blockquote>
-<p>用户首次访问Web站点时，Web服务器对用户一无所知。Web服务器希望这个用户会再次回来，所以在<br>响应报文中添加Set-Cookie首部。cookie中可以包含任何信息，但它们通常都只包含一个服务器为了<br>进行追踪而产生的独特的标识码。浏览器会记住从服务器返回的Set-Cookie或Set-Cookie2首部中的<br>cookie内容存储在浏览器的cookie数据库中。将来用户返回同一站点时，浏览器会挑中那个服务器<br>贴到用户上的那些cookie，并在一个cookie请求首部中将其传回去。</p>
-</blockquote>
-<p><strong>cookie罐:客户端的状态</strong></p>
-<blockquote>
-<p>cookie的基本思想就是让浏览器积累一组服务器特有的信息，每次访问服务器时都将这些信息提供<br>给他，因为浏览器要负责存储cookie信息，所以此系统被称为客户端侧状态，cookie内容的字段们:</p>
-<ul>
-<li>domain（域）cookie的域，控制哪些站点可以看到那个cookie</li>
-<li>allh 是域中所有的主机都获取cookie，还是只有指定了名字的主机获取。</li>
-<li>path（路径）域中与cookie相关的路径前缀。这个属性列出的URL路径前缀下所有cookie都是有<br>效的</li>
-<li>secure（安全）是否只有在使用SSL连接时才发送这个cookie</li>
-<li>expiration cookie的过期秒数</li>
-<li>name cookie变量的名字</li>
-<li>value cookie变量的值</li>
-</ul>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/http/cookie/" data-id="ciqgk4pxi0008y0o0aay8uj2f" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-front_end/canvas/get_started" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/07/front_end/canvas/get_started/" class="article-date">
-  <time datetime="2016-06-06T16:02:53.813Z" itemprop="datePublished">2016-06-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/前端/">前端</a>►<a class="article-category-link" href="/categories/前端/Canvas/">Canvas</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/07/front_end/canvas/get_started/">画布学习的总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>canvas元素的大小与绘图表面积的大小</strong></p>
-<blockquote>
-<p>canvas元素实际上有两套尺寸，一个是元素本身的大小，还有一个是元素绘图表面的大小。当设置<br>元素的width和height属性时，实际上同时修改了该元素本身的大小与元素绘图表面的大小。然而如<br>果通过CSS来设定canvas元素的大小，那么只会改变元素本身的大小，而不会影响到绘图表面。当元<br>素的大小不符合绘图表面的大小时，浏览器就会对绘图表面进行缩放</p>
-</blockquote>
-<p><strong>Canvas状态的保存与恢复</strong></p>
-<blockquote>
-<p>Canvas的API提供了两个名叫save()和restore()的方法，用于保存及恢复当前canvas绘图环境的<br>所有属性。绘图环境的save()方法将当前的绘图环境压入栈顶顶部。对应的restore()方法则会从堆<br>栈顶部弹出一组状态信息，并据此恢复当前绘图环境的各个状态。<br>save():将当前的canvas状态推送到一个保存canvas状态的堆栈顶部。canvas状态包括了当前的坐<br>标变换信息，剪辑区域以及所有canvas绘图环境对象的属性，包括strokeStyle、fillStyle、与<br>globalCompositeOperation等，canvas状态并不包括当前的路径或位图。只能通过beginPath()<br>来重置路径<br>restore():将canvas状态堆栈顶部的条目弹出。原来保存于栈顶的那一组状态，在弹出之后，就被<br>设置成canvas当前的状态了，因此，在调用save()和restore()方法之间，对canvas状态所进行的<br>修改，其效果只会持续至restore()方法调用之前</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/front_end/canvas/get_started/" data-id="ciqgk4q0u0023y0o0iwtqo0cd" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/06/http/integration/" class="article-date">
-  <time datetime="2016-06-06T14:46:43.228Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/http/integration/">网关、隧道及中继</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器</strong></p>
-<p><strong>HTTP/*: 服务端Web网关</strong></p>
-<blockquote>
-<p>请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议</p>
-</blockquote>
-<p><strong>HTTP/HTTPS：服务器端安全网关</strong></p>
-<blockquote>
-<p>一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用<br>普通的HTTP浏览web内容，单网关会自动加密用户的对话</p>
-</blockquote>
-<p><strong>HTTPS/HTTP客户端安全加速器网关</strong></p>
-<blockquote>
-<p>HTTPS/HTTP网关位于Web服务器之前，通常可以作为不可见的拦截网关或者反向代理使用，他们接<br>收安全的HTTPS流量，对安全流量进行解密，并向Web服务器发送普通的HTTP请求。</p>
-</blockquote>
-<p><strong>隧道</strong></p>
-<blockquote>
-<p>Web隧道，这种方式可以通过HTTP应用程序访问使用非HTTP协议的应用程序。Web隧道允许用户通过<br>非HTTP连接发送非HTTP流量，这样就可以在HTTP上捎带其他协议数据了。使用Web隧道最常见的原因<br>就是要在HTTP连接中嵌入非HTTP流量，这样，这类流量就可以穿过只允许Web流量通过的防火墙了。</p>
-</blockquote>
-<p><strong>用CONNECT建立HTTP隧道</strong></p>
-<blockquote>
-<p>Web隧道是用HTTP的CONNECT方法建立起来的。CONNECT并不是HTTP/1.1核心规范的一部分，但却是<br>一种得到广泛应用的扩展。CONNECT方法请求隧道网关创建一条到达任意目的服务器和端口的TCP连接，<br>并对客户端和服务器之间的后继数据进行盲转发。通过CONNECT方法可以与使用任意协议的任意服务器<br>建立TCP连接。</p>
-</blockquote>
-<p><strong>CONNECT请求</strong></p>
-<blockquote>
-<p>除了起始行之外语法与其余HTTP方法类似<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONNECT host.netspace.com:443 http/1.0</span><br><span class="line">User-agent: Mozilla/4.0</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>CONNECT响应</strong></p>
-<blockquote>
-<p>发送了请求之后，客户端会等待来自网关的响应，和普通HTTP报文一样，响应码200表示成功，按照<br>惯例，响应中的响应短语通常被设置为”Connection Established”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 Connection Established</span><br><span class="line">Proxy-agent: Netscape-Proxy/1.1</span><br></pre></td></tr></table></figure></p>
-<p>与普通HTTP响应不同，这个响应并不需要包含Content-Type首部。此时连接只是对原始字节进行<br>转接，不再是报文的承载者，所以不需要使用内容类型了。</p>
-</blockquote>
-<p><strong>中继</strong></p>
-<blockquote>
-<p>HTTP中继是没有完全遵循HTTP规范的简单HTTP代理。中继负责处理HTTP中建立连接的部分，然后<br>对字节进行盲转发。某些简单中继实现中存在一个更常见的问题是，由于它们无法正确处理Connection<br>首部，所以有潜在的挂起keep-alive连接的可能。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/integration/" data-id="ciqgk4pxm000ay0o09f9n5vdb" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/cache_2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/06/http/cache_2/" class="article-date">
-  <time datetime="2016-06-06T14:20:22.439Z" itemprop="datePublished">2016-06-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/06/http/cache_2/">缓存（二）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>控制缓存的能力</strong><br>服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递<br>减的顺序，服务器可以:</p>
-<ol>
-<li>Cache-Control: no-store</li>
-<li>Cache-Control: no-cache</li>
-<li>Cache-Control: must-revalidate</li>
-<li>Cache-Control: max-age</li>
-<li>Expires</li>
-<li>不附加任何过期信息，让缓存确定自己的过期日期</li>
-</ol>
-<blockquote>
-<p>no-Stroe与no-cache首部可以防止缓存提供未经证实的已缓存对象，表示为no-store的响应会<br>精致缓存对响应进行复制。缓存通常会向非缓存代理服务器一样，向客户端转发一条no-store响应，<br>然后删除对象。标示为no-cache的响应实际上是可以存储在本地缓冲区中的</p>
-<p>Cache-Contro:max-age首部表示从服务器将文档传过来之时起，可以认为此文档处于新鲜状态的<br>秒数，还有一个s-maxage首部，其行为与max-age类似，但仅用于共享缓存，服务器可以请求缓存<br>不要缓存文档，或者将最大使用期设置为0，从而每次访问的时候进行刷新</p>
-<p>不推荐使用Expires首部，它指定的是实际的过期日期而不是秒数，由于很多服务器的时钟不同，或<br>者不正确，所以最好用剩余秒数，而不是绝对日期。</p>
-<p>must-revalidate响应首部告诉缓存，在事先没有跟原始服务器进行再验证的情况下，不能提供这<br>个对象的陈旧副本。缓存仍然可以随意提供新鲜的副本。如果在缓存进行must-revalidate新鲜度<br>检查时，原始服务器不可用，缓存就必须返回一条504Gateway Timeout错误</p>
-<p>如果响应中没有Cache-Control: max-age首部，也没有Expires首部，缓存可以计算出一个试探<br>性最大使用期</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/06/http/cache_2/" data-id="ciqgk4pxe0005y0o0fu53ndd8" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/cache_1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/03/http/cache_1/" class="article-date">
-  <time datetime="2016-06-03T13:53:31.590Z" itemprop="datePublished">2016-06-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/03/http/cache_1/">缓存（一）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>再验证</strong><br>缓存的新鲜度检测被称为HTTP再验证，通过If-Modified-Since首部，将这个首部添加到GET请求<br>中去，就可以告诉服务器，只有在缓存了对象的副本之后，又对其进行修改的情况下，才发送此对象<br>服务器收到GET If-Modified-Since请求时会发生的情况:</p>
-<ul>
-<li><p>再验证命中</p>
-<blockquote>
-<p>如果服务器对象未被修改，服务器会向客户端发送一个小的Http 304Not Modified响应</p>
-</blockquote>
-</li>
-<li><p>再验证未命中</p>
-<blockquote>
-<p>如果服务器对象与已缓存副本不同，服务器向客户端发送一条普通的、带有完整内容的HTTp 200 OK响应</p>
-</blockquote>
-</li>
-<li><p>对象被删除</p>
-<blockquote>
-<p>如果服务器对象已被删除了，服务器就返回一个404缓存也会将其副本删除</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>区分命中和未命中的情况</strong></p>
-<blockquote>
-<p>客户端有一种方法可以判断响应是否来自缓存，就是使用Date首部，将响应中Date首部的值与当前<br>时间进行比较，如果响应中的日期比较早，客户端通常就可以认为这是一条缓存响应。客户端也可以<br>通过Age首部来检测缓存的响应，通过这个首部可以分辨出这条响应的使用期。</p>
-</blockquote>
-<p><strong>缓存的处理步骤</strong></p>
-<ol>
-<li><p>接收</p>
-<blockquote>
-<p>缓存从网络中读取抵达的报文</p>
-</blockquote>
-</li>
-<li><p>解析</p>
-<blockquote>
-<p>缓存对报文进行解析，提取出URL和各种首部</p>
-</blockquote>
-</li>
-<li><p>查询</p>
-<blockquote>
-<p>缓存查看是否有本地副本可用，如果没有，就获取一份副本（并将其保存在本地）</p>
-</blockquote>
-</li>
-<li><p>新鲜度检测</p>
-<blockquote>
-<p>缓存查看已缓存副本是否足够新鲜，如果不是，就询问服务器是否有任何更新</p>
-</blockquote>
-</li>
-<li><p>创建响应</p>
-<blockquote>
-<p>缓存会用新的首部和已缓存的主题来构建一条响应报文</p>
-</blockquote>
-</li>
-<li><p>发送</p>
-<blockquote>
-<p>缓存通过网络将响应发回给客户端</p>
-</blockquote>
-</li>
-<li><p>日志</p>
-<blockquote>
-<p>缓存可选地创建一个日志文件条目来描述这个事务</p>
-</blockquote>
-</li>
-</ol>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/http/cache_1/" data-id="ciqgk4pxf0006y0o07dm19ego" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/server" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/02/http/server/" class="article-date">
-  <time datetime="2016-06-02T14:20:52.413Z" itemprop="datePublished">2016-06-02</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/02/http/server/">WEB服务器、代理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>代理和网关的对比</strong><br>代理连接的是两个或多个使用相同协议的应用程序，二网关连接的则是两个或多个使用不同协议的<br>端点。网关扮演的是“协议转换器”的角色，即使客户端和服务器使用不同的协议，客户端也可以通过<br>它完成与服务器之间的事务处理</p>
-<p><strong>为什么使用代理</strong></p>
-<ul>
-<li>安全防火墙</li>
-<li>Web缓存</li>
-<li><p>反向代理</p>
-<blockquote>
-<p>代理可以假扮web服务器。这些被称为替代物或者反向代理的代理接受发送给Web服务器的真是请求<br>，但与Web服务器不同的是，他们可以发起与其他服务器的通信，以便按需定位所请求的内容。<br>可以用这些反向代理来提高访问慢速Web服务器上公共内容时的性能。在这种配置中，通常将这些<br>反向代理称为服务器加速器</p>
-</blockquote>
-</li>
-<li><p>内容路由器</p>
-<blockquote>
-<p>代理服务器可以作为“内容路由器”使用，根据因特网流量状况以及内容类型将请求导向特定的Web<br>服务器。<br>内容路由器也可以用来实现各种服务级的请求。</p>
-</blockquote>
-</li>
-<li><p>转码器</p>
-<blockquote>
-<p>代理服务器在将内容发送给客户端之前，可以修改内容的主体格式。在这些数据表示法之间进行的<br>透明转换被称为转码<br>转码代理可以在传输GIF图片时，将其转换成JPEG图片，以减小尺寸，也可以对图片进行压缩，同样<br>也可以对文本文件进行压缩，代理甚至可以在传输文档的过程中将其转换成外语。</p>
-</blockquote>
-</li>
-<li><p>匿名者</p>
-<blockquote>
-<p>匿名者代理会主动从HTTP报文中删除身份特性（比如客户端IP地址、From首部、Referer首部、<br>cookie、URI的会话ID）从而提供高度的私密性和匿名性</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>代理会何去何从</strong></p>
-<ol>
-<li>怎样将代理部署到网络中去</li>
-<li>怎样将代理以层级方式连接在一起</li>
-<li>怎样先将网络流量导入到代理服务器中</li>
-</ol>
-<p><strong>代理服务器的部署</strong></p>
-<ul>
-<li>出口代理</li>
-<li>访问（入口）代理</li>
-<li><p>反向代理</p>
-<blockquote>
-<p>代理通常会被部署在网络边缘,在Web服务器之前，作为代替物（反向代理），在那里他们可以处理<br>所有传送给Web服务器的请求，并只在必要时向Web服务器请求资源，反向代理通常会直接冒用Web<br>服务器的名字和ip地址，这样所有的请求就会被发送给代理而不是服务器了</p>
-</blockquote>
-</li>
-<li><p>网络交换代理</p>
-</li>
-</ul>
-<p><strong>代理的层次结构</strong><br>可以通过代理的层次结构将代理级联起来，在代理的层次结构中，会将报文从一个代理传给另一个代<br>理，直到最终抵达原始服务器为止（然后通过代理传回给客户端）<br><strong>代理层次结构中的路由</strong><br>代理服务器可以根据众多因素，将报文转发给一个不断变化的代理服务器和原始服务器集。比如：</p>
-<ul>
-<li>负载均衡</li>
-<li>地理位置附近的路由</li>
-<li>协议/类型路由<blockquote>
-<p>子代理可能会根据不同的URI将报文转发到不同的父代理和原始服务器上去，某些特定类型的URI<br>可能会通过一些特殊的代理服务器转发请求，一遍进行特殊的协议处理。</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>代理如何获取流量</strong><br>有四种方式可以使客户端流量流向代理</p>
-<ol>
-<li>修改客户端</li>
-<li>修改网络</li>
-<li>修改DNS的命名空间</li>
-<li>修改Web服务器</li>
-</ol>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/02/http/server/" data-id="ciqgk4py1000hy0o015u7zvzp" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
-    </nav>
-  
-</section>
-        
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           
-            <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/">前端</a><span class="category-list-count">37</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Bootstrap/">Bootstrap</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/CSS/">CSS</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Html/">Html</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/React-Webpack/">React Webpack</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/前端/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul></li></ul>
-    </div>
-  </div>
+  <div class="sidebar-module sidebar-module-inset">
+  <h4>About</h4>
+  <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+
+</div>
+
 
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">近期文章</h3>
-    <div class="widget recents">
-      <ul>
-        
-          <li>
-            <a href="/2016/07/10/front_end/Electron/window.openction/">window.open函数</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/10/front_end/Electron/environments-variables/">环境变量</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/10/front_end/Electron/supported-chrome-line-switches/">支持的Chrom命令行开关</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/10/front_end/Webpack/multiple-entry-points/">多入口配置</a>
-          </li>
-        
-          <li>
-            <a href="/2016/07/10/front_end/Webpack/how-to-write-plugin/">如何写插件</a>
-          </li>
-        
-      </ul>
-    </div>
+  <div class="sidebar-module">
+    <h4>Categories</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Bootstrap/">Bootstrap</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/CSS/">CSS</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Canvas/">Canvas</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Electron/">Electron</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Git/">Git</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Html/">Html</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Http/">Http</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/JS/">JS</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/React-Native/">React Native</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/React-Webpack/">React Webpack</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Webpack/">Webpack</a><span class="sidebar-module-list-count">18</span></li></ul>
   </div>
 
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">我的文章</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">24</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">8</span></li></ul>
-    </div>
-  </div>
+
 
   
-</aside>
-          
-        
-      </div>
-      <!--<div id="footer">
+
+
   
-  <div class="outer">
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">18</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">5</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/server/">WEB服务器、代理</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/integration/">网关、隧道及中继</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/digestAuthenticate/">摘要认证</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/cookie/">客户端识别与cookie技术</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
     <div id="footer-info" class="inner">
-      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
       &copy; 2016 zhuxin<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
-</div>-->
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">首页</a>
-  
-    <a href="/archives" class="mobile-nav-link">我的文章</a>
-  
-</nav>
-    
+</footer>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 
 
 <script src="/js/script.js"></script>
 
-  </div>
 </body>
 </html>

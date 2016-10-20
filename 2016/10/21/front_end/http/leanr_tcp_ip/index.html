@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>在浏览器输入URL后，发生了什么? | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="浏览器解析主机名
+浏览器查询这个主机名的IP地址（DNS）
+浏览器获得端口号
+浏览器发起IP:port的连接
+浏览器想服务器发送一条HTTP GET报文
+浏览器从服务器读取HTTP响应报文
+浏览器关闭连接
+
+
+HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的分组交换网络分层协议集.TCP的数据是通过名为IP分组（或IP数据报）的小数据块来发送的。HTTP（应用层）-&amp;gt;TCP(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在浏览器输入URL后，发生了什么?">
+<meta property="og:url" content="http://yoursite.com/2016/10/21/front_end/http/leanr_tcp_ip/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="浏览器解析主机名
+浏览器查询这个主机名的IP地址（DNS）
+浏览器获得端口号
+浏览器发起IP:port的连接
+浏览器想服务器发送一条HTTP GET报文
+浏览器从服务器读取HTTP响应报文
+浏览器关闭连接
+
+
+HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的分组交换网络分层协议集.TCP的数据是通过名为IP分组（或IP数据报）的小数据块来发送的。HTTP（应用层）-&amp;gt;TCP(">
+<meta property="og:updated_time" content="2016-10-20T16:36:41.555Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在浏览器输入URL后，发生了什么?">
+<meta name="twitter:description" content="浏览器解析主机名
+浏览器查询这个主机名的IP地址（DNS）
+浏览器获得端口号
+浏览器发起IP:port的连接
+浏览器想服务器发送一条HTTP GET报文
+浏览器从服务器读取HTTP响应报文
+浏览器关闭连接
+
+
+HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的分组交换网络分层协议集.TCP的数据是通过名为IP分组（或IP数据报）的小数据块来发送的。HTTP（应用层）-&amp;gt;TCP(">
+  
+    <link rel="alternate" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">zhuxin_blog</h1>
+  
+    <p class="lead blog-description">每天进步一点点</p>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-front_end/http/leanr_tcp_ip" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      在浏览器输入URL后，发生了什么?
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/2016/10/21/front_end/http/leanr_tcp_ip/" class="article-date"><time datetime="2016-10-20T16:36:41.555Z" itemprop="datePublished">2016-10-21</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>浏览器解析主机名</li>
+<li>浏览器查询这个主机名的IP地址（DNS）</li>
+<li>浏览器获得端口号</li>
+<li>浏览器发起IP:port的连接</li>
+<li>浏览器想服务器发送一条HTTP GET报文</li>
+<li>浏览器从服务器读取HTTP响应报文</li>
+<li>浏览器关闭连接</li>
+</ol>
+<blockquote>
+<p>HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的<strong>分组交换网络分层协议集</strong>.TCP的数据是通过名为IP分组<br>（或IP数据报）的小数据块来发送的。HTTP（应用层）-&gt;TCP(传输层)-&gt;IP（网络层）-&gt;网络接口(数据链路层)，<br>HTTP要传送一条报文时，会以流的形式将报文数据的内容通过一条打开的TCP连接按序传输。TCP收到数据之后<br>会将数据流砍成被称作段的小数据块，并将段封装在IP分组中，通过因特网传输，这些工作都是通过TCP/IP软件<br>处理的。<br>每个TCP段都是由IP分组承载，从一个IP地址发送到另一个IP地址，每个IP分组中都包括:</p>
+<ol>
+<li>一个IP分组首部（通常为20字节），包含了源和目的地的IP地址，长度和其他标记</li>
+<li>一个TCP段首部（通常为20字节），包含了TCP的端口号、TCP的控制标记，以及数据排序和完成性的数字值</li>
+<li>一个TCP数据块（0个或多个字节）</li>
+</ol>
+</blockquote>
+<p>TCP连接通过4个值识别: <strong>&lt;源IP地址， 源端口号， 目的地IP地址， 目的地端口号&gt;</strong></p>
+<p>TCP客户端和服务器是如何通过TCP套接字接口进行通信的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">客户端                                                        服务器</span><br><span class="line">                                                          S1  创建新的套接字(socket)</span><br><span class="line">                                                          S2  将套接字绑定到端口上去(bind)</span><br><span class="line">                                                          S3  允许套接字进行连接(listen)</span><br><span class="line">                                                          S4  等待连接(accept)</span><br><span class="line">C1 获取IP地址和端口号</span><br><span class="line">C2 创建新的套接字(socket)</span><br><span class="line">C3 连接到服务器的IP:port上去(connect)</span><br><span class="line">                                                          S5 通知应用程序有连接到来</span><br><span class="line">                                                          S6开始读取请求</span><br><span class="line">C4 连接成功</span><br><span class="line">C5 发送HTTP请求（write）</span><br><span class="line">C6 等待HTTP响应（read）</span><br><span class="line">                                                          S7 处理HTTP请求报文</span><br><span class="line">C7 处理HTTP响应                                            S8 回送HTTP响应（write）</span><br><span class="line">C8关闭连接（close）                                         S9 关闭连接（close）</span><br></pre></td></tr></table></figure></p>
+<p><strong>对TCP性能的考虑</strong>    </p>
+<p>HTTP紧挨着TCP，位于其上层，所以HTTP事务的性能取决于底层TCP通道的性能。TCP网络的时延取决于<br>硬件速度、网络和服务器的负载、请求和响应报文的尺寸、以及客户端和服务器之间的距离。</p>
+<p>最常见的TCP相关时延，包括:</p>
+<ol>
+<li>TCP连接建立握手</li>
+<li>TCP慢启动拥塞控制</li>
+<li>数据聚集的Nagle算法</li>
+<li>用于捎带的TCP延迟确认算法</li>
+<li>TIME_WRIT时延和端口耗尽</li>
+</ol>
+<p><strong>TCP连接的握手时延</strong><br>建立一条新的TCP连接时，甚至是在发生任意数据之前，TCP软件之间会交换一系列的IP分组，对连接<br>的有关参数进行沟通，如果连接只是用来传送少量数据，这些交换过程就会严重降低HTTP的性能。</p>
+<p><strong>TCP连接握手的步骤</strong></p>
+<ol>
+<li>请求新的TCP连接时，客户端要向服务器发送一个小的TCP分组，这个分组设置了一个特殊的SYN标记，说明这是一个连接请求。</li>
+<li>如果服务器接受了连接，就会对一些连接参数进行计算，并向客户端回送一个TCP分组，这个分组中的SYN和ACK标记都被置位，说明请求已被接受。</li>
+<li>最后，客户端向服务器回送一个确认信息，通知它连接已成功建立，现代的TCP栈都允许客户端在这个确认分组中发送数据。</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/front_end/http/leanr_tcp_ip/" data-id="ciuiknbmd0000uoo031ofyteu" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/2016/10/21/front_end/http/integration/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">网关、隧道及中继</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/2016/10/21/front_end/http/server/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">WEB服务器、代理</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  <div class="sidebar-module sidebar-module-inset">
+  <h4>About</h4>
+  <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+
+</div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Categories</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Bootstrap/">Bootstrap</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/CSS/">CSS</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Canvas/">Canvas</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Electron/">Electron</a><span class="sidebar-module-list-count">10</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Git/">Git</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Html/">Html</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Http/">Http</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/JS/">JS</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/React-Native/">React Native</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/React-Webpack/">React Webpack</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/categories/Webpack/">Webpack</a><span class="sidebar-module-list-count">18</span></li></ul>
+  </div>
+
+
+
+  
+
+
+  
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">18</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">16</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">5</span></li></ul>
+  </div>
+
+
+
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/server/">WEB服务器、代理</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/integration/">网关、隧道及中继</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/digestAuthenticate/">摘要认证</a>
+        </li>
+      
+        <li>
+          <a href="/2016/10/21/front_end/http/cookie/">客户端识别与cookie技术</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
