@@ -123,6 +123,244 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/06/30/front_end/Webpack/amd/">
+                AMD
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-30</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <blockquote>
+<p>AMD(Asynchronous Module Definition异步模块定义)，因为CommonJs模块系统不适用于浏览器，<br>因为CommonJs是同步的</p>
+</blockquote>
+<p><strong>规范</strong></p>
+<blockquote>
+<p>使用<code>ddefine</code>定义模块</p>
+</blockquote>
+<p><strong>define</strong></p>
+<blockquote>
+<p>AMD定义模块通过<code>define</code>函数，它是一个有参数的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define(id?: String, dependencies?: String[], factory: Function|Object);</span><br></pre></td></tr></table></figure></p>
+<p><code>id</code><br>定义模块的名称，可选择的<br><code>dependencies</code><br>指定定义该模块需要依赖其余的哪些模块，是一个模块标识的数组，缺省时默认值是 [“require”, “exports”, “module”].<br><code>factory</code><br>最后的这个参数就是谁定义了这个模块，它可以是一个对象也可以是一个函数（只调用一次），如果是函数<br>的话，函数的返回值就是模块暴露出去的值。</p>
+</blockquote>
+<p><strong>例子</strong></p>
+<blockquote>
+<p>定义一个叫<code>myModule</code>并且依赖jQuery的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;myModule&apos;, [&apos;jquery&apos;], function($) &#123;</span><br><span class="line">    // $ is the export of the jquery module.</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">// and use it</span><br><span class="line">require([&apos;myModule&apos;], function(myModule) &#123;&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>在webpack中一个命名模块仅局部可用，而在require.js中则全局可用</strong></p>
+</blockquote>
+<p><strong>匿名模块</strong></p>
+<blockquote>
+<p>定义一个没有明确id的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;], function($) &#123;</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>多个依赖</strong></p>
+<blockquote>
+<p>注意每个模块的输出值将会传到factory函数中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;, &apos;./math.js&apos;], function($, math) &#123;</span><br><span class="line">    // $ and math are the exports of the jquery module.</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>输出值</strong></p>
+<blockquote>
+<p>定义一个输出本身的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;jquery&apos;], function($) &#123;</span><br><span class="line"></span><br><span class="line">    var HelloWorldize = function(selector)&#123;</span><br><span class="line">        $(selector).text(&apos;hello world&apos;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    return HelloWorldize;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>使用require加载模块</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">define(function(require) &#123;</span><br><span class="line">    var $ = require(&apos;jquery&apos;);</span><br><span class="line">    $(&apos;body&apos;).text(&apos;hello world&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2016/06/30/front_end/Webpack/commonjs/">
+                CommonJs
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-30</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <blockquote>
+<p>CommonJs组织定义了一种模块格式，通过确保每一个模块都运行在它自己的命名空间中来解决<br>JavaScript的作用域问题。<br>通过强制模块明确的输出它想暴露出去的变量，并且引用其它模块的方式来完成。<br>为了实现CommonJs，它给了两个工具.</p>
+<ol>
+<li><code>require()</code>函数,在当前作用域引用别的模块.</li>
+<li><code>module</code>对象,允许从当前作用域输出变量。</li>
+</ol>
+</blockquote>
+<p><strong>简单的JavaScript</strong></p>
+<blockquote>
+<p>下面是一个未使用CommonJs的例子,定义一个<code>status.js</code>脚本文件，该文件只包含一个值，它将会<br>在别的脚本文件中使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>在第二个名叫<code>world.js</code>的脚本文件中使用在<code>status.js</code>中定义的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot; world!&quot;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>模块定义</strong></p>
+<blockquote>
+<p>当然<code>world.js</code>无法工作，因为<code>MySalute</code>未定义，我们需要定义每一个文件为一个模块。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这里使用特殊的对象<code>module</code>并且将变量的引用赋值给<code>module.exports</code>,CommonJs模块系统将<br>会知道这个对象是想暴露给全局。<code>salute.js</code>暴露<code>MySalute</code>, <code>world.js</code>暴露<code>Result</code>。</p>
+</blockquote>
+<p><strong>模块依赖</strong></p>
+<blockquote>
+<p>缺省异步定义依赖，我们定义了每个javascript文件为一个单独的模块，但是<code>world.js</code>依旧需要<br>知道谁定义了<code>MySalute</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var MySalute = require(&quot;./salute&quot;);</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
+<p><strong>函数例子</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// moduleA.js</span><br><span class="line">module.exports = function( value )&#123;</span><br><span class="line">    return value*2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// moduleB.js</span><br><span class="line">var multiplyBy2 = require(&apos;./moduleA&apos;);</span><br><span class="line">var result = multiplyBy2( 4 );</span><br></pre></td></tr></table></figure>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2016/06/30/front_end/Webpack/troubleshooting/">
+                疑难解析
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-30</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <p><strong>解析</strong></p>
+<p><strong>常见解析问题</strong></p>
+<ul>
+<li><code>--display-error-details</code>提供更多的详细信息</li>
+</ul>
+<p><strong><code>npm link</code>找不到他们的依赖</strong></p>
+<blockquote>
+<p>node.js模块的解析算法很简单，从模块所在目录递归向上找寻<code>node_modules</code>目录。</p>
+</blockquote>
+<p><strong>Windows路径</strong></p>
+<blockquote>
+<p>webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是<code>\</code>，所以<code>__dirname + &quot;/app/folder&quot;</code><br>这样的代码将会出错，从而会导致问题。<br>需要使用正确的分隔符，如：<code>path.resolve(__dirname, &quot;app/folder&quot;)</code>或者<code>path.join(__dirname, &quot;app&quot;, &quot;folder&quot;)</code></p>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2016/06/30/front_end/Webpack/devtools/">
+                开发工具
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-30</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <p><strong>半成品</strong></p>
+<ul>
+<li>webpack-dev-server</li>
+<li>webpack-dev-middleware</li>
+<li>koa-webpack-dev:在<code>Koa.js</code>服务器开发环境热部署</li>
+</ul>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
+            <a href="/2016/06/30/front_end/Webpack/using_plugin/">
+                使用插件
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-30</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <p><strong>内置插件</strong></p>
+<blockquote>
+<p>通过在webpack配置文件中添加<code>plugins</code>字段来使用插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.ResolverPlugin([</span><br><span class="line">            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(&quot;bower.json&quot;, [&quot;main&quot;])</span><br><span class="line">        ], [&quot;normal&quot;, &quot;loader&quot;])</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>其余插件</strong></p>
+<blockquote>
+<p>其他非内置插件通过<code>npm</code>或者其它方式来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install component-webpack-plugin</span><br></pre></td></tr></table></figure></p>
+<p>通过下面的方式来使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var ComponentPlugin = require(&quot;component-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new ComponentPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当通过npm安装第三方插件时，建议使用这种方式<a href="https://www.npmjs.com/package/webpack-load-plugins" target="_blank" rel="external">https://www.npmjs.com/package/webpack-load-plugins</a>,<br>它会检查所有安装的第三方依赖插件并且在你需要用的时候去加载</p>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/06/29/front_end/Webpack/using_loaders/">
                 使用加载器
             </a>
@@ -515,197 +753,6 @@
 
 </div>
             
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/06/25/front_end/BootStrap/getstarted/">
-                快速开始
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-06-25</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Bootstrap/">Bootstrap</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            
-        </div>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/06/16/front_end/js/aboutThis/">
-                对this的理解
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-06-16</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/JS/">JS</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <ul>
-<li><strong>this是调用时被绑定的，完全取决于函数的调用位置</strong></li>
-<li><p><strong>调用位置</strong></p>
-<blockquote>
-<p>调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所<br>调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。</p>
-</blockquote>
-</li>
-<li><p><strong>this的绑定规则</strong></p>
-</li>
-</ul>
-<ol>
-<li>默认绑定</li>
-<li>隐式绑定</li>
-<li>显示绑定</li>
-<li>new绑定</li>
-</ol>
-<ul>
-<li><strong>判断this（优先级）</strong></li>
-</ul>
-<ol>
-<li>函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象</li>
-<li>函数是否通过call、apply（显示绑定）调用？如果是的话，this绑定的是指定的对象</li>
-<li>函数是否在某个上下文对象中调用（隐式绑定）？如果是的话，this绑定的是那个上下文对象</li>
-<li>如果都不是的话，使用默认绑定。如果在严格模式下，就绑定到undefined，否则绑定到全局对象。</li>
-</ol>
-
-        </div>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/06/16/front_end/git/commonsComond/">
-                git的常用指令(一)
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-06-16</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Git/">Git</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <ul>
-<li><p><strong>配置别名</strong><br><code>git config alias.st &#39;status&#39;</code><br>git st 的作用等于 git status,只对当前仓库有效，如果想配置全局则<code>git config -g alias.st &#39;status&#39;</code></p>
-</li>
-<li><p><strong>git rm</strong><br>git rm –cached会删除索引中的文件并把它保留到工作目录中,而git rm则会将文件从索引和工作目录中都删除。</p>
-</li>
-<li><p><strong>gitk命令查看提交图</strong></p>
-</li>
-</ul>
-
-        </div>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/06/15/front_end/js/closureAndScope/">
-                作用域和闭包
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-06-15</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/JS/">JS</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            
-        </div>
-    
-
-</div>
-            
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/06/14/front_end/js/functionAndBlockScope/">
-                函数作用域和块级作用域
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-06-14</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/JS/">JS</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <p><strong>IIFE</strong></p>
-<blockquote>
-<p>IIFE代表立即执行函数表达式，他可以导致代码的运行顺序，将需要运行的函数放在第二位<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var a = 2;</span><br><span class="line">(function(def) &#123;</span><br><span class="line">  def(window)</span><br><span class="line">&#125;)(function def(global) &#123;</span><br><span class="line">  var a = 3;</span><br><span class="line">  console.log(a);</span><br><span class="line">  console.log(global.a);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>变量提升</strong></p>
-<blockquote>
-<p>只有声明本身会被提升，而赋值或其他运行逻辑会留在原地。如果提升改变了代码执行的顺序，会<br>造成非常严重的破坏。<br>函数声明和变量声明都会被提升。但是一个值得注意的细节是函数会首先被提升，然后才是变量。</p>
-</blockquote>
-
-        </div>
-    
-
-</div>
-            
         </section>
     </div>
 </div>
@@ -748,19 +795,19 @@
         <ul>
             
             <li>
-                <a class="footer-post" href="/2016/10/21/front_end/http/server/">WEB服务器、代理</a>
+                <a class="footer-post" href="/2016/11/01/front_end/react/react-redux/">redux</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2016/10/21/front_end/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
+                <a class="footer-post" href="/2016/11/01/front_end/react/explain-bindActionCreators/">bindActionCreators</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2016/10/21/front_end/http/integration/">网关、隧道及中继</a>
+                <a class="footer-post" href="/2016/11/01/front_end/react/explain-applyMiddleware/">applyMiddleware</a>
             </li>
             
             <li>
-                <a class="footer-post" href="/2016/10/21/front_end/http/digestAuthenticate/">摘要认证</a>
+                <a class="footer-post" href="/2016/11/01/front_end/react/API-Explain/">Redux API和词汇解释</a>
             </li>
             
         </ul>
@@ -774,19 +821,19 @@
     <ul>
         
         <li>
+            <a class="footer-post" href="/categories/React-Redux-React-Router/">React Redux React-Router</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React/">React</a>
+        </li>
+        
+        <li>
             <a class="footer-post" href="/categories/Git/">Git</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/CSS/">CSS</a>
-        </li>
-        
-        <li>
             <a class="footer-post" href="/categories/Bootstrap/">Bootstrap</a>
-        </li>
-        
-        <li>
-            <a class="footer-post" href="/categories/React-Webpack/">React Webpack</a>
         </li>
         
     </ul>
