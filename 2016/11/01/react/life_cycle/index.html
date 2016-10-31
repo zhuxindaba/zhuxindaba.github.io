@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="组件的生命周期说明
+constructor的说明组建初始化时运行，仅一次
+componentWillMount(组件即将镶嵌)在初始化渲染之前立刻调用,如果在这个方法内调用setState()方法,render()将会感知到更新后的state,将会执行仅一次,尽管state改变了。  
+compon">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="react生命周期"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>react生命周期 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/11/01/react/life_cycle/">
+                react生命周期
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-11-01</span>
+            
+            <a href="#disqus_thread" class="comments">Comentarios</a>
+            
+                <span class="category">
+                    <a href="/categories/React-Redux/">React Redux</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="组件的生命周期说明"><a href="#组件的生命周期说明" class="headerlink" title="组件的生命周期说明"></a>组件的生命周期说明</h2><hr>
+<h3 id="constructor的说明"><a href="#constructor的说明" class="headerlink" title="constructor的说明"></a>constructor的说明</h3><p>组建初始化时运行，仅一次</p>
+<h3 id="componentWillMount-组件即将镶嵌"><a href="#componentWillMount-组件即将镶嵌" class="headerlink" title="componentWillMount(组件即将镶嵌)"></a>componentWillMount(组件即将镶嵌)</h3><p>在初始化渲染之前立刻调用,如果在这个方法内调用setState()方法,render()将会感知到更新后的state,将会执行仅一次,尽管state改变了。  </p>
+<h3 id="componentDidMount-组件已经镶嵌"><a href="#componentDidMount-组件已经镶嵌" class="headerlink" title="componentDidMount(组件已经镶嵌)"></a>componentDidMount(组件已经镶嵌)</h3><p>仅调用一次<br>在组件初始化渲染之后立刻调用一次,在生命周期的这个时间点,组件拥有一个DOM展现,你可以通过ReactDOM.findDOMNode(this)获取整个dom节点<br>也可以访问dom组件中的ref属性代表的组件,可以在该方法中发送ajax请求<br>原先的this.getDOMNode()已经被弃用了，</p>
+<h3 id="componentWillReceiveProps-组件即将接收props"><a href="#componentWillReceiveProps-组件即将接收props" class="headerlink" title="componentWillReceiveProps(组件即将接收props)"></a>componentWillReceiveProps(组件即将接收props)</h3><p>在组件接收到新的props的时候调用,在初始化渲染的时候,改方法不会调用,用此函数可以作为react在prop传入之后,render()渲染之前更新state的机会。<br>老的props可以通过this.props获取到。在该函数中调用this.setState()将不会引起第二次渲染。  </p>
+<h3 id="shouldComponentUpdate-组件应该被更新"><a href="#shouldComponentUpdate-组件应该被更新" class="headerlink" title="shouldComponentUpdate(组件应该被更新)"></a>shouldComponentUpdate(组件应该被更新)</h3><p>在接受到新的props或者state,将要渲染之前调用。该方法在初始化渲染的时候不会调用,在使用forceUpdate方法的时候也不会。如果确定新的props和state<br>不会导致组件更新，则此处应该返回false.    </p>
+<pre><code>shouldComponentUpdate() {
+    return nextProps.id != this.props.id;
+}
+</code></pre><p>如果shouldComponentUpdate返回false,则render()将不会执行,直到下一次state改变(另外componentWillUpdate和componentDidUpdate也不会被调用)<br>默认情况下,shouldComponentUpdate总会返回true,使用shouldComponentUpdate可以提升应用的性能  </p>
+<h3 id="componentWillUpdate-组件即将更新"><a href="#componentWillUpdate-组件即将更新" class="headerlink" title="componentWillUpdate(组件即将更新)"></a>componentWillUpdate(组件即将更新)</h3><p>在接受到新的props和state之前立刻调用，在初始化渲染的时候该方法不会被调用。使用该方法做一些更新之前的准备工作。<br><code>注:不能在该方法中使用this.setState()如果需要更新state来相应某个prop的改变请使用componentWillReceiveProps()</code></p>
+<h3 id="componentDidUpdate-组件已经更新"><a href="#componentDidUpdate-组件已经更新" class="headerlink" title="componentDidUpdate(组件已经更新)"></a>componentDidUpdate(组件已经更新)</h3><p>在组件的更新已经同步到DOM中之后立刻被调用。改方法不会在初始化渲染的时候调用。使用该方法可以在组件更新之后操作DOM元素<br><code>使用该方法，你仍然可以获取DOM节点</code></p>
+<h3 id="componentWillUnmount-组件将要移除"><a href="#componentWillUnmount-组件将要移除" class="headerlink" title="componentWillUnmount(组件将要移除)"></a>componentWillUnmount(组件将要移除)</h3><p>在组件从DOM中移除的时候立刻被调用。<br>在该方法中执行任何必要的清理，比如无效的定时器，或者清除在componentDidMount中创建的DOM元素</p>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

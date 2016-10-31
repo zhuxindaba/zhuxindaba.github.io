@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经做了">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="长期缓存"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>长期缓存 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/07/05/Webpack/long_term_caching/">
+                长期缓存
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-07-05</span>
+            
+            <a href="#disqus_thread" class="comments">Comentarios</a>
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <blockquote>
+<p>为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹<br>但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.<br>Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经<br>做了这项工作，需要你允许块文件使用它，这里有两个级别</p>
+<ul>
+<li>计算所有块文件的hash并且添加它</li>
+<li>计算每个块文件的hash并且添加它</li>
+</ul>
+</blockquote>
+<p><strong>方式一：对打包文件增加一个hash串</strong></p>
+<blockquote>
+<p>命令行方式<code>webpack ./entry output.[hash].bundle.js</code>，配置文件方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;assets&quot;, &quot;[hash]&quot;),</span><br><span class="line">        publicPath: &quot;assets/[hash]/&quot;,</span><br><span class="line">        filename: &quot;output.[hash].bundle.js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].[hash].bundle.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>方式二：每一个块文件一个hash串</strong><br>可以通过添加[<code>chunkhash</code>]到配置文件的filename属性中<br><code>--output-chunk-file [chunkhash].js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output: &#123; chunkFilename: &quot;[chunkhash].bundle.js&quot; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：你需要在HTML中引入带有hash串的入口块，你需要从stats中提取出hash串。<br>为了兼容代码热部署，你需要使用方式一，但是不要在<code>publicPath</code>中使用hash串。</p>
+</blockquote>
+<p><strong>从stats中获取文件名</strong></p>
+<blockquote>
+<p>你可能需要访问最终的文件以便在HTML中嵌入，这段资料可获得webpack的stats，如果你使用命令<br>行,可通过<code>--with</code>获得json的标准输出。<br>可以在配置文件中添加插件比如<code>assets-webpack-plugin</code>来访问stats对象，这是一个将stats<br>写入文件的例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">  function() &#123;</span><br><span class="line">    this.plugin(&quot;done&quot;, function(stats) &#123;</span><br><span class="line">      require(&quot;fs&quot;).writeFileSync(</span><br><span class="line">        path.join(__dirname, &quot;..&quot;, &quot;stats.json&quot;),</span><br><span class="line">        JSON.stringify(stats.toJson()));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>stats的JSON格式包含了一个有用的属性<code>assetsByChunkNam</code>,它是一个对象，以块名字为键，对应<br>的文件名为值。<br>注意：如果一个块文件输出了多个资源文件，那么stats是数组，数组的第一个元素是你的<br>javascript资源。</p>
+</blockquote>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

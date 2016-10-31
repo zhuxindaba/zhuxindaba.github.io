@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="再验证缓存的新鲜度检测被称为HTTP再验证，通过If-Modified-Since首部，将这个首部添加到GET请求中去，就可以告诉服务器，只有在缓存了对象的副本之后，又对其进行修改的情况下，才发送此对象服务器收到GET If-Modified-Since请求时会发生的情况:
+
+再验证命中
+
+如果服务">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="缓存（一）"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>缓存（一） - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/10/21/http/cache_1/">
+                缓存（一）
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-10-21</span>
+            
+            <a href="#disqus_thread" class="comments">Comentarios</a>
+            
+                <span class="category">
+                    <a href="/categories/Http/">Http</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <p><strong>再验证</strong><br>缓存的新鲜度检测被称为HTTP再验证，通过If-Modified-Since首部，将这个首部添加到GET请求<br>中去，就可以告诉服务器，只有在缓存了对象的副本之后，又对其进行修改的情况下，才发送此对象<br>服务器收到GET If-Modified-Since请求时会发生的情况:</p>
+<ul>
+<li><p>再验证命中</p>
+<blockquote>
+<p>如果服务器对象未被修改，服务器会向客户端发送一个小的Http 304Not Modified响应</p>
+</blockquote>
+</li>
+<li><p>再验证未命中</p>
+<blockquote>
+<p>如果服务器对象与已缓存副本不同，服务器向客户端发送一条普通的、带有完整内容的HTTp 200 OK响应</p>
+</blockquote>
+</li>
+<li><p>对象被删除</p>
+<blockquote>
+<p>如果服务器对象已被删除了，服务器就返回一个404缓存也会将其副本删除</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>区分命中和未命中的情况</strong></p>
+<blockquote>
+<p>客户端有一种方法可以判断响应是否来自缓存，就是使用Date首部，将响应中Date首部的值与当前<br>时间进行比较，如果响应中的日期比较早，客户端通常就可以认为这是一条缓存响应。客户端也可以<br>通过Age首部来检测缓存的响应，通过这个首部可以分辨出这条响应的使用期。</p>
+</blockquote>
+<p><strong>缓存的处理步骤</strong></p>
+<ol>
+<li><p>接收</p>
+<blockquote>
+<p>缓存从网络中读取抵达的报文</p>
+</blockquote>
+</li>
+<li><p>解析</p>
+<blockquote>
+<p>缓存对报文进行解析，提取出URL和各种首部</p>
+</blockquote>
+</li>
+<li><p>查询</p>
+<blockquote>
+<p>缓存查看是否有本地副本可用，如果没有，就获取一份副本（并将其保存在本地）</p>
+</blockquote>
+</li>
+<li><p>新鲜度检测</p>
+<blockquote>
+<p>缓存查看已缓存副本是否足够新鲜，如果不是，就询问服务器是否有任何更新</p>
+</blockquote>
+</li>
+<li><p>创建响应</p>
+<blockquote>
+<p>缓存会用新的首部和已缓存的主题来构建一条响应报文</p>
+</blockquote>
+</li>
+<li><p>发送</p>
+<blockquote>
+<p>缓存通过网络将响应发回给客户端</p>
+</blockquote>
+</li>
+<li><p>日志</p>
+<blockquote>
+<p>缓存可选地创建一个日志文件条目来描述这个事务</p>
+</blockquote>
+</li>
+</ol>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

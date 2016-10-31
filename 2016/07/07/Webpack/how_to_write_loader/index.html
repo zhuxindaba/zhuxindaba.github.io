@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="加载器是一个返回函数的node模块。当加载器转换资源时，这个函数将被调用。一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件内容是字符串.加载器通过这个函数的this上下文访问loader API同步加载器可以通过return仅返回一个值，在其他情况下，可以通过">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="如何写加载器"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>如何写加载器 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/07/07/Webpack/how_to_write_loader/">
+                如何写加载器
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-07-07</span>
+            
+            <a href="#disqus_thread" class="comments">Comentarios</a>
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <blockquote>
+<p>加载器是一个返回函数的node模块。<br>当加载器转换资源时，这个函数将被调用。<br>一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件<br>内容是字符串.<br>加载器通过这个函数的<code>this</code>上下文访问<a href="http://webpack.github.io/docs/loaders.html" target="_blank" rel="external">loader API</a><br>同步加载器可以通过<code>return</code>仅返回一个值，在其他情况下，可以通过<code>this.callback(err, values...)</code><br>返回任意数量的值,错误将传给回调函数，或者抛给一个同步加载器。<br>加载器被期望返回两个值，第一个值是返回JavaScript的字符串代码，第二个值是返回一个资源图的<br>JavaScript对象。<br>在复杂的情况下，当有多个加载器链式调用，只有最后一个加载器获得资源文件，仅第一个加载器会<br>输出两个值(JavaScript和SourceMap)，其余的加载器传递值给前一个加载器。</p>
+</blockquote>
+<p><strong>Examples</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">  return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader with SourceMap support</span><br><span class="line">module.exports = function(source, map) &#123;</span><br><span class="line">  this.callback(null, source, map);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>指导方针（参考）</strong></p>
+<blockquote>
+<p>优先级顺序，第一个应该给最高的优先级，加载器应该：<br><strong>只做一个简单的任务</strong><br>加载器可以链式化，为每一步创建加载器，替代一个加载器立刻做任何事。同样的意思就是，如果<br>没有必要的话不必转换为JavaScript.<br>例如：通过应用查询参数从模板文件渲染HTML。<br>写一个加载器从源文件里编译模板，执行然后返回一个组件，它是一个返回了包含HTML代码的字符串<br>这太糟糕了。<br>替代方案是，为每一个任务写一个加载器然后全部调用（管道的形式）。</p>
+<ul>
+<li>jade-loader: 转换模板为一个模块输出一个函数</li>
+<li>apply-loader: 拿到输出函数并且返回通过应用查询参数返回行结果</li>
+<li>html-loader: 拿到HTML并输出一个字符串形式的模块<br><strong>生产标准的模块</strong><br>加载器生成的模块需要像标准的模块遵守同样的管道设计方式。<br>例如：这是一个糟糕的设计方式（非标准，通用场景）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;any-template-language-loader!./xyz.atl&quot;);</span><br><span class="line"></span><br><span class="line">var html = anyTemplateLanguage.render(&quot;xyz&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><strong>尽可能的标记自己为可缓存</strong></p>
+<blockquote>
+<p>大多数加载器可缓存，所以他们得标记自己为可缓存。<br>只需在加载器中调用<code>cacheable</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Cacheable identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>不要在模块和流之间保持状态</strong><br>一个加载器需要在其它加载器编译时保持独立。<br>一个模块先前的编译结果，和当前加载器应该保持独立.<br><strong>标记依赖</strong><br>如果一个加载器使用了外部资源（从文件系统读），他们<strong>必须</strong>被告知，被用来使缓存加载器无效<br>并且在监听方法中重新编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Loader adding a header</span><br><span class="line">var path = require(&quot;path&quot;);</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    var callback = this.async();</span><br><span class="line">    var headerPath = path.resolve(&quot;header.js&quot;);</span><br><span class="line">    this.addDependency(headerPath);</span><br><span class="line">    fs.readFile(headerPath, &quot;utf-8&quot;, function(err, header) &#123;</span><br><span class="line">        if(err) return callback(err);</span><br><span class="line">        callback(null, header + &quot;\n&quot; + source);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>解析依赖</strong><br>在很多种语言中，有多重模式去指定依赖，比如在css中的<code>@import</code>和url(…),这些依赖关系需<br>要模块系统去解析。有两种方式去处理:</p>
+<ul>
+<li>转换他们为<code>require</code>s</li>
+<li>使用<code>this.resolve</code>函数去解析路径<br>实例一 css-loader: css-loader在样式表中替换<code>@import</code>、<code>url(...)</code>为require的方式去编译<br>依赖关系。<br>实例二 less-loader: less-loader不能将<code>@import</code>转换为<code>require</code>因为所有的less文件都会<br>被编译到一个临时变量中，因此，less-loader继承了less编译器的通过定义路径解析的逻辑，这个<br>定义逻辑使用<code>this.resolve</code>通过模块系统的配置去解析文件（或者定义的模块目录等等）<br>如果语言之允许相对路径（比如css中:<code>url(file)</code>意思就是<code>./file</code>）,这儿用<code>~</code>的惯例去引用模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(file) -&gt; require(&quot;./file&quot;)</span><br><span class="line">url(~module) -&gt; require(&quot;module&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>提取公共代码</strong><br>不要在加载器中去处理每个模块中相同的代码，不要生成这些公共代码，在加载器中创建一个运行时<br>文件,通过<code>require</code>来使用这些公共代码<br><strong>不要嵌入绝对路劲</strong><br>不要在模块代码中使用绝对路径，当项目被移动时会破坏hash,在<code>loader-utils</code>中有一个<br><code>stringifyRequest</code>的方法将绝对路径转换为相对路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var loaderUtils = require(&quot;loader-utils&quot;);</span><br><span class="line">return &quot;var runtime = require(&quot; +</span><br><span class="line">  loaderUtils.stringifyRequest(this, &quot;!&quot; + require.resolve(&quot;module/runtime&quot;)) +</span><br><span class="line">  &quot;);&quot;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

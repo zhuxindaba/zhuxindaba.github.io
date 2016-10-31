@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="&amp;lt;script&amp;gt;-tag的形式，主要问题有:    
+
+
+全局的变量冲突
+按序加载的重要性
+解决不同模块、包之间的依赖性
+项目庞大的时候，需要写很多很多&amp;lt;script&amp;gt;标签
+
+
+
+CommonJS: 同步请求(synchronous):
+
+这种方式使用同步的require方法">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="前端模块化系统的几种方式"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>前端模块化系统的几种方式 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/06/27/Webpack/module_system_styles/">
+                前端模块化系统的几种方式
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-27</span>
+            
+            <a href="#disqus_thread" class="comments">Comentarios</a>
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <ol>
+<li><p><code>&lt;script&gt;</code>-tag的形式，主要问题有:    </p>
+<blockquote>
+<ul>
+<li>全局的变量冲突</li>
+<li>按序加载的重要性</li>
+<li>解决不同模块、包之间的依赖性</li>
+<li>项目庞大的时候，需要写很多很多<code>&lt;script&gt;</code>标签</li>
+</ul>
+</blockquote>
+</li>
+<li><p>CommonJS: 同步请求(synchronous):</p>
+<blockquote>
+<p>这种方式使用同步的<code>require</code>方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以<br>通过增加属性到<code>export</code>的对象中或者设置<code>module.exports</code>的值来明确的指定暴露的接口。<br>优点:</p>
+<ol>
+<li>服务端模块可以使用</li>
+<li>npm上已经有好多使用这种方式的写法</li>
+<li>使用简单<br>缺点:</li>
+<li>阻塞式的请求不适用于网络请求，网络请求是异步的</li>
+<li>不能并发的请求多个模块<br>实现者:</li>
+</ol>
+<ul>
+<li>node.js- server-side</li>
+<li>browserify</li>
+<li>modules-webmake   - compile to one bundle</li>
+<li>wreq - client-side<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;../file.js&quot;);</span><br><span class="line">exports.doStuff = function() &#123;&#125;;//方式一</span><br><span class="line">module.exports = someValue;//方式二</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>3.AMD: 异步(asynchronous)请求</p>
+<blockquote>
+<p>对于浏览器来说同步请求有很多问题(CommonJS)所以引入了一个异步版本(一种定义模块与导出模块的方式)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module&quot;, &quot;../file&quot;], function(module, file) &#123; /* ... */ &#125;);</span><br><span class="line">define(&quot;mymodule&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) &#123;</span><br><span class="line">  return someExportedValue;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>优点:</p>
+<ol>
+<li>适用于异步的网络请求</li>
+<li>并发加载模块<br>缺点:</li>
+<li>代码不易于维护<br>实现者:</li>
+</ol>
+<ul>
+<li>require.js - client-side</li>
+<li>curl - client-side</li>
+</ul>
+</blockquote>
+<p>4.ES6 Modules</p>
+<blockquote>
+<p>ES6给javascript增加了一些语言特性，实现了另外的模块化系统<br>优点:</p>
+<ol>
+<li>易于静态分析</li>
+<li>未来的ES标准<br>缺点:</li>
+<li>浏览器原生支持需要时间</li>
+<li>目前这种风格还很少<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;jquery&quot;;</span><br><span class="line">export function doStuff() &#123;&#125;</span><br><span class="line">module &quot;localModule&quot; &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p><strong>模块加载</strong></p>
+<blockquote>
+<p>模块可以执行在浏览器端，所以它必须从服务端加载到浏览器中去，有两种极端的加载方式:</p>
+<ol>
+<li>一个模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有需要的才会被加载<br>缺点:</li>
+<li>过多的模块会造成网络负载，程序响应过慢</li>
+</ul>
+<ol>
+<li>所有的模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有一个请求<br>缺点:</li>
+<li>不需要的模块也加载了</li>
+</ul>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>编译模块时，将模块拆分成多个小块，拆分点由开发者定义<br>同样适用于img css webfont html模板等等</p>
+</blockquote>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

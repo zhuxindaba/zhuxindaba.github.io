@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="嵌入的样式脚本
+
+通过使用style-loader和css-loader，可以webpack打包的javascript文件中嵌入样式脚本.通过这种方式可以是css模块化，这种方式使用很简单require(&amp;quot;./stylesheet.css&amp;quot;)。
+
+通过npm安装1npm inst">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="样式脚本"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>样式脚本 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/07/03/Webpack/style_sheets/">
+                样式脚本
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-07-03</span>
+            
+            <a href="#disqus_thread" class="comments">Comentarios</a>
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <p><strong>嵌入的样式脚本</strong></p>
+<blockquote>
+<p>通过使用<code>style-loader</code>和<code>css-loader</code>，可以webpack打包的javascript文件中嵌入样式脚本.<br>通过这种方式可以是css模块化，这种方式使用很简单<code>require(&quot;./stylesheet.css&quot;)</code>。</p>
+</blockquote>
+<p><strong>通过npm安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install style-loader css-loader --save-dev</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置</strong></p>
+<blockquote>
+<p>通过一下的方式支持<code>require(xxx.css)</code>这种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // ...</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123; test: /\.css$/, loader: &quot;style-loader!css-loader&quot; &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于css预处理语言，可以参照加载器的配置示例，你可以链式的使用它。<br>记住，掌握加载器的执行顺序很难，所以设计好样式让其与顺序无关（但是css文件内的样式顺序<br>还是得依靠的）。<br><strong>使用css</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// in your modules just require the stylesheet</span><br><span class="line">// This has the side effect that a &lt;style&gt;-tag is added to the DOM.</span><br><span class="line">require(&quot;./stylesheet.css&quot;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>分离css打包文件</strong></p>
+<blockquote>
+<p>与<code>extract-text-webpack-plugin</code>结合使用，可以生成一个原生的css文件。<br>使用两种方式实现代码分离</p>
+<ul>
+<li>每个初始块创建一个css文件，然后在其余块中引入（推荐）</li>
+<li>每个初始块创建一个 css 文件，其中同时包含了依赖块中的样式<br>推荐第一种方式是因为可以减少页面初始化时间，在小型多入口项目中第二种方式可以利用缓存来减少<br>http消耗</li>
+</ul>
+</blockquote>
+<p><strong>安装<code>extract-text-webpack-plugin</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install extract-text-webpack-plugin --save</span><br></pre></td></tr></table></figure></p>
+<p><strong>通用</strong></p>
+<blockquote>
+<p>使用这个插件需要标记加载器<br><strong>把css从初始化块中分离到css文件中</strong><br>这个例子适用于多入口以及单页面应用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// webpack.config.js</span><br><span class="line">var ExtractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // The standard entry point and output config</span><br><span class="line">    entry: &#123;</span><br><span class="line">        posts: &quot;./posts&quot;,</span><br><span class="line">        post: &quot;./post&quot;,</span><br><span class="line">        about: &quot;./about&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            // Extract css files</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader&quot;)</span><br><span class="line">            &#125;,</span><br><span class="line">            // Optionally extract less files</span><br><span class="line">            // or any other compile-to-css language</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader!less-loader&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">            // You could also use other loaders the same way. I. e. the autoprefixer-loader</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    // Use the plugin to specify the resulting filename (and add needed behavior to the compiler)</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你将获得以下文件</p>
+<ul>
+<li>posts.js posts.css</li>
+<li>post.js post.css</li>
+<li>about.js about.css</li>
+</ul>
+</blockquote>
+<p><strong>把所有的样式分离到css文件中</strong></p>
+<blockquote>
+<p>使用第二种方式只需要设置<code>allChunks</code>为<code>true</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;style.css&quot;, &#123;</span><br><span class="line">            allChunks: true</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你将会得到以下输出文件</p>
+<ul>
+<li>posts.js</li>
+<li>post.js</li>
+<li>about.js</li>
+<li>style.css</li>
+</ul>
+</blockquote>
+<p><strong>公共块的样式</strong></p>
+<blockquote>
+<p>你可以与<code>CommonsChunkPlugin</code>结合使用分离出一个css文件，在这个示例中公共快也会生成一个<br>css文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&quot;commons&quot;, &quot;commons.js&quot;),</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你会获得以下输出文件</p>
+<ul>
+<li>commons.js commons.css</li>
+<li>posts.js posts.css</li>
+<li>post.js post.css</li>
+<li>about.js about.css</li>
+</ul>
+</blockquote>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
