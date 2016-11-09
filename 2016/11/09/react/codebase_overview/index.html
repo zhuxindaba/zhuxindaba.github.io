@@ -23,7 +23,7 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="React代码库概述"/>
+        <meta property="og:title" content="代码库概述"/>
     
 
     <!--Open Graph Description-->
@@ -45,7 +45,7 @@
 
     <!-- Title -->
     
-    <title>React代码库概述 - zhuxin_blog</title>
+    <title>代码库概述 - zhuxin_blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -126,14 +126,14 @@
     <div class="post-header">
         <h1 class="title">
             <a href="/2016/11/09/react/codebase_overview/">
-                React代码库概述
+                代码库概述
             </a>
         </h1>
         <div class="post-info">
             
                 <span class="date">2016-11-09</span>
             
-            <a href="#disqus_thread" class="comments">Kommentare</a>
+            <a href="#disqus_thread" class="comments">Comments</a>
             
                 <span class="category">
                     <a href="/categories/React/">React</a>
@@ -250,7 +250,21 @@
 <li>React.PropTypes<br>React核心仅仅包含了定义模块的API，不包括reconciliation算法以及具体平台的代码，它被用于React DOM以及React Native，React的核心代码位于<code>src/isomorphic</code><br>它可以在npm的react包中获取，相应的browser中是react.js,它导出的全局变量是React。</li>
 </ul>
 </blockquote>
-<h3 id="Renders"><a href="#Renders" class="headerlink" title="Renders"></a>Renders</h3>
+<h3 id="Renders"><a href="#Renders" class="headerlink" title="Renders"></a>Renders</h3><blockquote>
+<p>React最初是唯DOM创建的但是后来改编用来适应原生平台React Native，在这里介绍React内部构建的概念。<br><strong>Renders管理一个React树如何变成底层平台的调用</strong>，Renders位于<code>src/renders</code>文件夹下:</p>
+<ul>
+<li>React DOM Render渲染React组建为DOM。它实现了顶层的ReactDOM API并且可以在npm的react-dom中获取到，它可以<br>被用来做单独的browser bundle(react-dom.js)它导出了ReactDOM全局变量。</li>
+<li>React Native Render渲染React组建为原生视图，它是在React Native内部使用的，通过react-native-render npm包<br>将来可能会将它copy一份到React Native的仓库中，这样React Native可以在自己的工作空间中修改React了。</li>
+<li>React Test Render渲染React组建为JSON树，它使用了Jest的快照测试功能，在npm的react-test-render包中获取。<br>剩下的官方支持的render是react-art,为了避免我们在修改react时意外的破坏它，我们要在<code>src/renders/art</code>目录中运行测试运例<br>虽然如此，它的github仓库still acts as the source of truth。<br>虽然在技术上，我们可能会自定义render，目前不会官方支持，自定义render没有一个公共的稳定的协议，这就是我们将它放在单独的<br>一个地方的原因。<br><strong>注意：</strong>在技术上,native render是很薄的一层用来让React和React Native相互作用，真正具体管理原生视图的代码是在React<br>Native仓库中</li>
+</ul>
+</blockquote>
+<h3 id="Reconciler-协调器"><a href="#Reconciler-协调器" class="headerlink" title="Reconciler(协调器)"></a>Reconciler(协调器)</h3><blockquote>
+<p>甚至完全不同的render比如React DOM和React Native需要共享相同的逻辑，尤其是<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">reconciliation</a>算法应尽可能相似，声明的渲染，<br>自定义组建，状态，生命周期方法，以及refs始终跨平台工作。<br>为了解决这一问题，不同的renders共享一些代码。我们称这些代码为<code>reconciler</code>(协调器),当一个更新（setUpdate()）被安排时，<br>reconciler（协调器）调用了组建中的render(),mounts,updates,或者unmount.<br>reconciler（协调器）没有被单独的分离出来，因为它们目前没有公共的API，它们会被renders使用，比如React DOM，React Native。</p>
+</blockquote>
+<h3 id="Reconciler栈"><a href="#Reconciler栈" class="headerlink" title="Reconciler栈"></a>Reconciler栈</h3><blockquote>
+<p>‘stack’reconciler供应于所有的线上React代码，它位于<code>src/renducers/shared/stack/reconciler</code>文件夹中，用于React和React Native<br>它是以面向对象的形式书写的(object-oriented)并且维护一个内部实例的树，（该树对应于所有React组件）。这个内部实例存在于自定义组件<br>及平台组件，这个内部实例对应用户来说不能直接访问，并且他们的树不会被暴露出来。当一个组件mounts，updates，unmounts，这个stack &gt;reconciler将会调用内部实例的一个方法，这些方法是<code>mountComponent(element)</code>,<code>receiveComponent(element)</code>,和<code>unmountElement(element)</code>.<br><strong>Host Components</strong><br>平台特定组件，比如<code>&lt;div&gt;</code>,’View’，例如，React Dom通知stack reconciler使用DOM组件的<code>ReactDOMComponent</code>去处理mounting,updates,<br>以及unmounting。不论什么平台，<code>&lt;div&gt;</code>,<code>&lt;View&gt;</code>处理管理多子组件的方式是类似的，为了方便，reconciler提供了一个叫<code>ReactMultiChild</code><br>来供DOM和Native render使用。<br><strong>复杂的组件</strong><br>用户定义的组件和所有的renders表现形式是一样的，这就是为什么reconciler提供了一个叫<code>ReactCompositeComponent</code>的公共实现，<br>它使用于各平台的renderer。复杂的组件也要实现<code>mounting</code>,<code>updating</code>,<code>unmounting</code>,但是不同于平台组件，<code>ReactCompositeComponent</code><br>需要依赖于不同的代码，这就是为什么在用户定义的类中有<code>render()</code>,<code>componentDidMount()</code>方法的原因。<br>在更新期间中，<code>ReactCompositeComponent</code>检查<code>render()</code>在最后一次输出的<code>type</code>,’key’是否不同，如果<code>type</code>和<code>key</code>有改变，他会委派<br>去更新已存在的内部实例，另外，它会卸载老的子组件，并镶嵌新的，这个会在<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">Reconciliation algorithm(协调器算法)</a>中描述。<br><strong>Recursion（递归）</strong><br>在一次更新中，stack reconciler会一直深入复杂的组件，运行他们的render()方法，并决定是否更新以及替换他们的唯一的组件。通过平台组件<br>(div View)执行平台代码，Host组件可能会有很多子组件，通常会递归处理。stack reconciler经常处理同步的单个处理组件树，当个别的树处理完成了<br>stack reconciler不会停止，所以当更新很深以及CPU有限时它不是最优的，</p>
+</blockquote>
+
     </div>
 
     
@@ -286,7 +300,7 @@
         <ul>
             
             <li>
-                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
+                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">代码库概述</a>
             </li>
             
             <li>
@@ -312,11 +326,11 @@
     <ul>
         
         <li>
-            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+            <a class="footer-post" href="/categories/Git/">Git</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/Git/">Git</a>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
         </li>
         
         <li>
