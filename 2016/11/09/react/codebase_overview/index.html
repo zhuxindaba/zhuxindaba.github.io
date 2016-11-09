@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="代码库概述
+这一节主要是给我们一个React代码库的概述，他的一些规范以及实现，如果你想对React有所贡献的话这个指南将会使你更加舒服的更改。我们不一定推荐在React应用程序的任何这些惯例，有些惯例由于一些历时原因而存在但是后期也许会更改.
+
+自定义模块系统(Custom Module Syst">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="React代码库概述"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>React代码库概述 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/11/09/react/codebase_overview/">
+                React代码库概述
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-11-09</span>
+            
+            <a href="#disqus_thread" class="comments">Kommentare</a>
+            
+                <span class="category">
+                    <a href="/categories/React/">React</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <h2 id="代码库概述"><a href="#代码库概述" class="headerlink" title="代码库概述"></a>代码库概述</h2><blockquote>
+<p>这一节主要是给我们一个React代码库的概述，他的一些规范以及实现，如果你想对React有所贡献的话<br>这个指南将会使你更加舒服的更改。我们不一定推荐在React应用程序的任何这些惯例，有些惯例由于一些<br>历时原因而存在但是后期也许会更改.</p>
+</blockquote>
+<h3 id="自定义模块系统-Custom-Module-System"><a href="#自定义模块系统-Custom-Module-System" class="headerlink" title="自定义模块系统(Custom Module System)"></a>自定义模块系统(Custom Module System)</h3><blockquote>
+<p>在Facebook，内部的我们使用的是一个名叫’Haste’的自定义模块，他和commonjs和类似并且也使用<code>require()</code><br>但是有一些重要的不同而正是这些使外部的贡献者很困惑。在Commonjs中，当你导入一个模块时，你需要明确指定<br>它的相对路径：   </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Importing from the same folder:</span><br><span class="line">var setInnerHTML = require(&apos;./setInnerHTML&apos;);</span><br><span class="line"></span><br><span class="line">// Importing from a different folder:</span><br><span class="line">var setInnerHTML = require(&apos;../utils/setInnerHTML&apos;);</span><br><span class="line"></span><br><span class="line">// Importing from a deeply nested folder:</span><br><span class="line">var setInnerHTML = require(&apos;../client/utils/setInnerHTML&apos;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然而，在Haste中所有的文件名都是全局唯一的，在React代码库中，你可以按照文件名导入其他的任何模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var setInnerHTML = require(&apos;setInnerHTML&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>Haste最初是用来开发大型app的比如像Facebook，很容易将文件移动到不同的目录并且无需担心他们的相对路径<br>在任何编辑器的模糊查询会让你得到正确的位置，而这归功于全局唯一的文件名.<br>React是从Facebook的代码库中提取出来的，所以使用Haste是历时原因，在将来，我们有可能会移植Commonjs或ES6<br>的模块化方式同社区更好的对齐，但是这需要Facebook内部基础架构做出很大改变，所以也不是一朝一夕就能完成的.<br><strong>如果你记得一下这些规则，Haste会对你更有意义：</strong></p>
+<ol>
+<li>在React原生代码库中的所有文件名都是全局唯一的，这也是为什么有些文件名繁长啰嗦的原因。</li>
+<li>当你添加了一个新文件时，确认你包含了许可证的标头，你可以从别的地方复制一份，一个许可证标头的格式一般是：   </li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Copyright 2013-present, Facebook, Inc.</span><br><span class="line"> * All rights reserved.</span><br><span class="line"> *</span><br><span class="line"> * This source code is licensed under the BSD-style license found in the</span><br><span class="line"> * LICENSE file in the root directory of this source tree. An additional grant</span><br><span class="line"> * of patent rights can be found in the PATENTS file in the same directory.</span><br><span class="line"> *</span><br><span class="line"> * @providesModule setInnerHTML</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>记得更改@providesModule后面的名字，匹配你新创建的文件.<br>当我们为npm编译React时，一个script脚本将会复制所有的模块到一个单一的没有子目录的目录，命名为lib<br>预制所有的<code>require()</code>路径为<code>./.</code>,在这种方式下，Node，Browserify，Webpack，等工具将会理解React的生成输出而无需<br>关心Haste。<br><strong>如果你正在github上读react源码，并且想跳到某一个文件，请按’t’</strong><br>这是Github用来在当前仓库模糊搜索文件的快捷方式，输入你要搜索的文件名，它将会显示匹配的文件。</p>
+</blockquote>
+<h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><blockquote>
+<p>React几乎没有外部依赖，通常情况下，<code>require()</code>指向的是React自己代码库的文件，但是也有几个比较少见的例外：<br>如果你发现<code>require()</code>的文件在React仓库中没有所对应的文件，那么你可以在<a href="https://github.com/facebook/fbjs" target="_blank" rel="external">fbjs</a><br>这个仓库中找到,例如<code>require(&#39;warning&#39;)</code>将会从fbjs的<code>warning</code>模块中解析。<br>fbjs仓库存在是因为React共享了一些工具类比如<a href="https://github.com/facebook/relay" target="_blank" rel="external">Relay</a>,我们保持了他们之间的同步关系.<br>我们不依赖Node生态系统的等效小模块，因为我们希望Facebook的工程师在有需要的时候都可以做出改变,所有fbjs内部的实用程序不会被<br>作为开放的API，它们的意图仅仅是用来服务于Facebook的项目，比如React。</p>
+</blockquote>
+<h3 id="顶级文件夹"><a href="#顶级文件夹" class="headerlink" title="顶级文件夹"></a>顶级文件夹</h3><blockquote>
+<p>在克隆React仓库之后，你会发现有几个顶级文件夹在里面:</p>
+<ol>
+<li><code>src</code>是React的源码，如果你要修改相关的代码，<code>src</code>文件夹将是你花费时间最长的.</li>
+<li><code>docs</code>是React文档网站，当你修改了API时，请确认修改了相应的markdown文件</li>
+<li><code>examples</code>包含了一些生成不同配置的React例子</li>
+<li><code>packages</code>包含了元数据用来对应React仓库中的所有包（比如package.json），尽管如此，他们的源码还是位于<code>src</code>文件夹中。</li>
+<li><code>build</code>是React的生成输出，他不会再React仓库中出现，但是他会出现在你运行生成命令之后.<br>还有一些顶级目录，但是他们仅仅是工具类，很有可能你在贡献代码时，根本不会碰到他们。</li>
+</ol>
+</blockquote>
+<h3 id="协同定位测试"><a href="#协同定位测试" class="headerlink" title="协同定位测试"></a>协同定位测试</h3><blockquote>
+<p>我们没有一个顶级的测试目录，我们将测试用例放在一个<code>__tests__</code>的目录下代替。<br>例如，<code>setInnerHTML.js</code>的测试用例放在<code>__tests__/setInnerHTML-test.js</code>.</p>
+</blockquote>
+<h3 id="共享的代码"><a href="#共享的代码" class="headerlink" title="共享的代码"></a>共享的代码</h3><blockquote>
+<p>尽管Haste允许我们导入React仓库的任何模块，我们得遵循一个规范用来避免循环依赖以及其他的怪异现象，按照规范，一个文件仅能导入相同<br>目录以及子目录下的文件。<br>例如：在<code>src/renders/dom/client</code>下的文件可以导入相同目录以及该目录的所有子目录中的文件.但是他们不能导入<code>src/renders/dom/server</code><br>下的文件因为它不是<code>src/renders/dom/client</code>的子目录。<br>此规则的例外情况，有时候，我们需要在不同组的模块里共享一些公共的函数，在这种情况下，我们提升共享模块到这些目录最近的父目录里的一个叫<br>shared的模块里.<br>比如：<code>src/renders/dom/client</code>和<code>src/renders/dom/server</code>共享一段代码，那么这段代码应该位于<code>src/renders/shared</code>.<br>按照同样的逻辑，如果<code>src/renders/dom/client</code>和<code>src/renders/native</code>共享一个工具类，那么此工具类应该位于<code>src/renders/shared</code>.<br>这个规范虽然不是强制的，但是当我们遇到<code>pull request</code>时会检查.</p>
+</blockquote>
+<h3 id="警告及不变量"><a href="#警告及不变量" class="headerlink" title="警告及不变量"></a>警告及不变量</h3><blockquote>
+<p>React代码库用<code>warning</code>模块来展示警告：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var warning = require(&apos;warning&apos;);</span><br><span class="line"></span><br><span class="line">warning(</span><br><span class="line">  2 + 2 === 4,</span><br><span class="line">  &apos;Math is not working today.&apos;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>当<code>warning</code>条件为false时，警告将会显示</strong><br>这种思考方式是条件响应的是正常情况而不是异常情况。<br>这是一种避免垃圾邮件以及控制台重复输出的好主意。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var warning = require(&apos;warning&apos;);</span><br><span class="line">var didWarnAboutMath = false;</span><br><span class="line">if(!didWarnAboutMath) &#123;</span><br><span class="line">  warning(</span><br><span class="line">    2 + 2 === 4,</span><br><span class="line">    &apos;Math is not working today&apos;</span><br><span class="line">  );</span><br><span class="line">  didWarnAbout = true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>警告仅会在开发环境下可用，在正是环境下，他们会被完全削去，如果你需要禁止一些代码路径的执行<br>使用<code>invariant</code>模块代替.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var invariant = require(&apos;invariant&apos;);</span><br><span class="line">invariant(</span><br><span class="line">  2 + 2 === 4,</span><br><span class="line">  &apos;You shall not pass!&apos;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当<code>invariant</code>为false的时候，将引发<br>“invariant”是这种情况一直为true的一种说明方式，你可以把它当做断言。<br>保持开发和正是环境行为一直是很重要的，所以<code>invariant</code>可以在正式及开发环境引发，警告信息会自动<br>的被替换为错误码以避免字节数大小的影响。</p>
+</blockquote>
+<h3 id="开发和正式"><a href="#开发和正式" class="headerlink" title="开发和正式"></a>开发和正式</h3><blockquote>
+<p>你可以在代码库使用<code>__DEV__</code>伪全局变量，守卫只针对开发环境的代码块。<br>在编译阶段中，在CommonJS构建时，它将会被转变为<code>process.env.NODE_ENV !== &#39;production&#39;</code>。<br>在独立构建时，在未压缩的构建时它变为true，在压缩构建的时候它将会被剔除。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (__DEV__) &#123;</span><br><span class="line">  // This code will only run in development.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="JSDoc"><a href="#JSDoc" class="headerlink" title="JSDoc"></a>JSDoc</h3><blockquote>
+<p>一些内部的以及公共的方法以<a href="http://usejsdoc.org/" target="_blank" rel="external">JSDoc形式的注释</a>注释：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * Updates this component by updating the text content.</span><br><span class="line">  *</span><br><span class="line">  * @param &#123;ReactText&#125; nextText The next text content</span><br><span class="line">  * @param &#123;ReactReconcileTransaction&#125; transaction</span><br><span class="line">  * @internal</span><br><span class="line">  */</span><br><span class="line">receiveComponent: function(nextText, transaction) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们试图让存在的注释更新但我们不是强制的，我们没有在新写的代码中使用JSDoc,替代方案是<br>我们使用Flow强制类型.</p>
+</blockquote>
+<h3 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h3><blockquote>
+<p>我们最近引入<a href="https://flowtype.org/" target="_blank" rel="external">Flow</a>来检查代码库，在许可证标头用<code>@flow</code>标记的文件<br>将会执行类型检查.<br>我们接受给已存在代码添加<code>@flow</code>的pull请求，Flow注释长这样:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ReactRef.detachRefs = function(</span><br><span class="line">  instance: ReactInstance,</span><br><span class="line">  element: ReactElement | string | number | null | false,</span><br><span class="line">): void &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>只要有可能，新提交的代码应该使用Flow注解，你可以在本地运行<code>npm run flow</code>来检查你的代码.</p>
+</blockquote>
+<h3 id="类和Mixins"><a href="#类和Mixins" class="headerlink" title="类和Mixins"></a>类和Mixins</h3><blockquote>
+<p>React原来是用ES5编写的，我们已经用<a href="http://babeljs.io/" target="_blank" rel="external">babel</a>支持了ES6的特性。包含classes,<br>但是，许多React代码还是用ES5写的。<br>尤其是，你可能经常看到以下的形式：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// Constructor</span><br><span class="line">function ReactDOMComponent(element) &#123;</span><br><span class="line">  this._currentElement = element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Methods</span><br><span class="line">ReactDOMComponent.Mixin = &#123;</span><br><span class="line">  mountComponent: function() &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Put methods on the prototype</span><br><span class="line">Object.assign(</span><br><span class="line">  ReactDOMComponent.prototype,</span><br><span class="line">  ReactDOMComponent.Mixin</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">module.exports = ReactDOMComponent;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这段代码的<code>Mixin</code>和React的<code>mixins</code>特性并无关系，这只是一种分组在一个对象的方法的方式，这些方法有可能<br>在后期获取并附加到别的class上，我们使用了这种方式尽管我们尝试在新代码中避免使用。同等的ES6代码长得是<br>这个样子的：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class ReactDOMComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this._currentElement = element;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mountComponent() &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = ReactDOMComponent;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>有时候我们会转换ES5代码为ES6代码，然而这对我们来说不是非常重要，因为有一个正在进行的努力，React协调器的实现带有<br>少量的面向对象的方法，我们完全不需要使用class。</p>
+</blockquote>
+<h3 id="动态注入"><a href="#动态注入" class="headerlink" title="动态注入"></a>动态注入</h3><blockquote>
+<p>React在有些模块中使用了动态注入，虽然它易于理解，但是不幸的是，它阻碍了我对代码的理解，它存在的主要原因是React起初<br>只支持DOM作为target,React Native是已React的分支开始的，我们不得不添加动态注入让React Native覆盖一些行为.你有可能<br>会看见一些模块声明动态依赖是以下面的这种方式:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// Dynamically injected</span><br><span class="line">var textComponentClass = null;</span><br><span class="line"></span><br><span class="line">// Relies on dynamically injected value</span><br><span class="line">function createInstanceForText(text) &#123;</span><br><span class="line">  return new textComponentClass(text);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var ReactHostComponent = &#123;</span><br><span class="line">  createInstanceForText,</span><br><span class="line"></span><br><span class="line">  // Provides an opportunity for dynamic injection</span><br><span class="line">  injection: &#123;</span><br><span class="line">    injectTextComponentClass: function(componentClass) &#123;</span><br><span class="line">      textComponentClass = componentClass;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = ReactHostComponent;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>injection</code>区域无论如何不会被特殊的处理，但是按照惯例，它意味着此模块在运行的时候想注入一些模块，在React DOM中，<br><a href="https://github.com/facebook/react/blob/4f345e021a6bd9105f09f3aee6d8762eaa9db3ec/src/renderers/dom/shared/ReactDefaultInjection.js" target="_blank" rel="external">ReactDefaultInjection</a>注入了DOM细节的实现<code>ReactHostComponent.injection.injectTextComponentClass(ReactDOMTextComponent);</code>,<br>在React Native中<a href="https://github.com/facebook/react/blob/4f345e021a6bd9105f09f3aee6d8762eaa9db3ec/src/renderers/native/ReactNativeDefaultInjection.js" target="_blank" rel="external">ReactNativeDefaultInjection</a>注入了它自己的实现,在代码库中有多个注射点，在未来，我们打算拜托动态注入的这种机制，在静态构建时串起所有的碎片文件。</p>
+</blockquote>
+<h3 id="大量的包"><a href="#大量的包" class="headerlink" title="大量的包"></a>大量的包</h3><blockquote>
+<p>React是一个<a href="http://danluu.com/monorepo/" target="_blank" rel="external">monorepo</a>,它的仓库包含了大量的独立的包，所以他们的改变可以协调在一起，并且文档以及问题是在一起的，<br><code>npm</code>元数据比如<code>package.json</code>文件在位于顶层目录<code>package</code>文件夹下的，但是，这里面几乎没有代码。<br>比如，<a href="https://github.com/facebook/react/blob/87724bd87506325fcaf2648c70fc1f43411a87be/packages/react/react.js" target="_blank" rel="external">packages/react/react.js</a>再导出<code>src/isomorphic/React.js</code>,真实的npm入口，其余的包大多数重复相同的规则，所有重要的代码都位于<code>src</code>文件夹下。<br>虽然在源码结构里代码都是独立的，确切的包的边界还是和npm的以及browser构建略有不同。</p>
+</blockquote>
+<h3 id="React-Core"><a href="#React-Core" class="headerlink" title="React Core"></a>React Core</h3><blockquote>
+<p>React的核心包含了所有顶级的<a href="https://facebook.github.io/react/docs/react-api.html" target="_blank" rel="external">React API</a>,比如：</p>
+<ul>
+<li>React.createElement()</li>
+<li>React.createClass()</li>
+<li>React.Component</li>
+<li>React.Children</li>
+<li>React.PropTypes<br>React核心仅仅包含了定义模块的API，不包括reconciliation算法以及具体平台的代码，它被用于React DOM以及React Native，React的核心代码位于<code>src/isomorphic</code><br>它可以在npm的react包中获取，相应的browser中是react.js,它导出的全局变量是React。</li>
+</ul>
+</blockquote>
+<h3 id="Renders"><a href="#Renders" class="headerlink" title="Renders"></a>Renders</h3>
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React/">React</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

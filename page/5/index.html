@@ -123,6 +123,114 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/06/27/Webpack/module_system_styles/">
+                前端模块化系统的几种方式
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-06-27</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <ol>
+<li><p><code>&lt;script&gt;</code>-tag的形式，主要问题有:    </p>
+<blockquote>
+<ul>
+<li>全局的变量冲突</li>
+<li>按序加载的重要性</li>
+<li>解决不同模块、包之间的依赖性</li>
+<li>项目庞大的时候，需要写很多很多<code>&lt;script&gt;</code>标签</li>
+</ul>
+</blockquote>
+</li>
+<li><p>CommonJS: 同步请求(synchronous):</p>
+<blockquote>
+<p>这种方式使用同步的<code>require</code>方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以<br>通过增加属性到<code>export</code>的对象中或者设置<code>module.exports</code>的值来明确的指定暴露的接口。<br>优点:</p>
+<ol>
+<li>服务端模块可以使用</li>
+<li>npm上已经有好多使用这种方式的写法</li>
+<li>使用简单<br>缺点:</li>
+<li>阻塞式的请求不适用于网络请求，网络请求是异步的</li>
+<li>不能并发的请求多个模块<br>实现者:</li>
+</ol>
+<ul>
+<li>node.js- server-side</li>
+<li>browserify</li>
+<li>modules-webmake   - compile to one bundle</li>
+<li>wreq - client-side<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;../file.js&quot;);</span><br><span class="line">exports.doStuff = function() &#123;&#125;;//方式一</span><br><span class="line">module.exports = someValue;//方式二</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+</li>
+</ol>
+<p>3.AMD: 异步(asynchronous)请求</p>
+<blockquote>
+<p>对于浏览器来说同步请求有很多问题(CommonJS)所以引入了一个异步版本(一种定义模块与导出模块的方式)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module&quot;, &quot;../file&quot;], function(module, file) &#123; /* ... */ &#125;);</span><br><span class="line">define(&quot;mymodule&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) &#123;</span><br><span class="line">  return someExportedValue;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>优点:</p>
+<ol>
+<li>适用于异步的网络请求</li>
+<li>并发加载模块<br>缺点:</li>
+<li>代码不易于维护<br>实现者:</li>
+</ol>
+<ul>
+<li>require.js - client-side</li>
+<li>curl - client-side</li>
+</ul>
+</blockquote>
+<p>4.ES6 Modules</p>
+<blockquote>
+<p>ES6给javascript增加了一些语言特性，实现了另外的模块化系统<br>优点:</p>
+<ol>
+<li>易于静态分析</li>
+<li>未来的ES标准<br>缺点:</li>
+<li>浏览器原生支持需要时间</li>
+<li>目前这种风格还很少<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;jquery&quot;;</span><br><span class="line">export function doStuff() &#123;&#125;</span><br><span class="line">module &quot;localModule&quot; &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<p><strong>模块加载</strong></p>
+<blockquote>
+<p>模块可以执行在浏览器端，所以它必须从服务端加载到浏览器中去，有两种极端的加载方式:</p>
+<ol>
+<li>一个模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有需要的才会被加载<br>缺点:</li>
+<li>过多的模块会造成网络负载，程序响应过慢</li>
+</ul>
+<ol>
+<li>所有的模块一个请求<br>优点:</li>
+</ol>
+<ul>
+<li>只有一个请求<br>缺点:</li>
+<li>不需要的模块也加载了</li>
+</ul>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>编译模块时，将模块拆分成多个小块，拆分点由开发者定义<br>同样适用于img css webfont html模板等等</p>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/06/16/js/aboutThis/">
                 对this的理解
             </a>
@@ -447,6 +555,10 @@
         <ul>
             
             <li>
+                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
             </li>
             
@@ -456,10 +568,6 @@
             
             <li>
                 <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
             </li>
             
         </ul>
@@ -481,11 +589,11 @@
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+            <a class="footer-post" href="/categories/React/">React</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/JS/">JS</a>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
         </li>
         
     </ul>

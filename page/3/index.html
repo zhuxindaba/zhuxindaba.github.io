@@ -123,6 +123,69 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/07/06/Electron/progress_object/">
+                进程对象
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-07-06</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Electron/">Electron</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <p><strong>progress(进程)</strong></p>
+<blockquote>
+<p>进程对象的扩展<br><code>progress</code>对象扩展了以下的API</p>
+</blockquote>
+<p><strong>事件</strong></p>
+<blockquote>
+<p><strong>‘loaded’事件</strong><br>当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.<br>当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// preload.js</span><br><span class="line">const _setImmediate = setImmediate;</span><br><span class="line">const _clearImmediate = clearImmediate;</span><br><span class="line">process.once(&apos;loaded&apos;, () =&gt; &#123;</span><br><span class="line">  global.setImmediate = _setImmediate;</span><br><span class="line">  global.clearImmediate = _clearImmediate;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>属性</strong></p>
+<blockquote>
+<p><strong><code>process.noAsar</code></strong><br>设置为<code>true</code>可以使nodejs的<code>asar</code>内置文件无效。<br><strong><code>process.type</code></strong><br>当前的进程类型，可以是<code>&quot;browser&quot;</code>(主进程)或者<code>&quot;render&quot;</code><br><strong><code>process.versions.electron</code></strong><br>Electron的字符串版本号<br><strong><code>process.versions.chrome</code></strong><br>Chrome的字符串版本号<br><strong><code>process.resourcesPath</code></strong><br>资源目录的路劲<br><strong><code>process.mas</code></strong><br>对于Mac App Store，这个属性是<code>true</code>,其余的构建是<code>undefined</code><br><strong><code>process.windowsStore</code></strong><br>对于Windows的app这个属性是<code>true</code>,其他的则是<code>undefined</code><br><strong><code>process.defaultApp</code></strong><br>应用启动时，这个值作为参数默认传入，在主进程中这个属性是<code>true</code>，其他方面是<code>undefined</code></p>
+</blockquote>
+<p><strong>方法</strong></p>
+<blockquote>
+<p>进程有以下的方法:<br><strong><code>process.crash()</code></strong><br>销毁当前进程的主线程<br><strong><code>process.hang()</code></strong><br>挂起当前进程的主线程<br><strong><code>process.setFdLimit(maxDescriptors) macOS Linux</code></strong></p>
+<ul>
+<li><code>maxDescriptors</code> 整数<br>设置文件描述符软限制于 maxDescriptors 或硬限制与os, 无论它是否低于当前进程.<br><strong><code>process.getProcessMemoryInfo()</code></strong><br>返回当前进程的内存使用总计计的一个对象，注意所有的统计以千字节报告:</li>
+<li><code>workingSetSize</code>- 被压入到真实RAM物理机的内存总计</li>
+<li><code>peakWorkingSetSize</code>- 被压入到真实RAM物理机的的最大内存</li>
+<li><code>privateBytes</code>- 不被其他进程共享的内存总计，比如JS堆，HTML内容</li>
+<li><code>sharedBytes</code>- 进程间共享的内存总计，通常情况下是Electron自己的代码消耗的内存</li>
+</ul>
+<p><strong><code>process.getSystemMemoryInfo()</code></strong><br>返回系统内存使用总计的对象，注意所有的统计以千字节报告:</p>
+<ul>
+<li><code>total</code>- 系统可用物理内存的总计</li>
+<li><code>free</code>- 还有多少空闲内存可用</li>
+</ul>
+<p>在Windows或Linux</p>
+<ul>
+<li>swapTotal</li>
+<li>swapFree</li>
+</ul>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/07/06/Electron/api_references_synopsis/">
                 API概要
             </a>
@@ -639,72 +702,6 @@
 
 </div>
             
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/07/01/Webpack/codesplitting/">
-                代码拆分
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-07-01</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Webpack/">Webpack</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <blockquote>
-<p>对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会<br>用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之<br>为”层”,”片段”,webpack将其称为”代码拆分”.<br>这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件<br>以及运行时文件。<br>为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码提取出来到一个公共的模块，更重要的特性<br>是可以将拆出来的代码块按需加载，这可以保证首次加载的代码更少，请求会按需加载所需要的代码。</p>
-</blockquote>
-<p><strong>定义分离点</strong></p>
-<blockquote>
-<p>AMD和CommonJs指定不同的方法实现按需加载，webpack都支持并且并且都是定义为分离点的形式。<br><strong>CommonJs: require.ensure</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require.ensure(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
-<p><code>require.ensure</code>方法保证 每个依赖都会在回调函数被同步的请求进来，回调函数被执行时，<br><code>require</code>是回调函数的参数.例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require.ensure([&quot;module-a&quot;, &quot;module-b&quot;], function(require) &#123;</span><br><span class="line">    var a = require(&quot;module-a&quot;);</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>注意：<code>require.ensure</code>仅仅是加载模块，但是并不会去执行他们</p>
-</blockquote>
-<p><strong>AMD:<code>require</code></strong></p>
-<blockquote>
-<p>AMD规范以下面的方式定义了一个异步的<code>require</code>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
-<p>当调用时，所有的依赖都会被加载，并且将他们作为参数给回调函数,例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module-a&quot;, &quot;module-b&quot;], function(a, b) &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>注意：AMD<code>require</code>加载并执行响应的模块，在webpack中模块是从左向右执行的，并且可以省略<br>回调函数。</p>
-</blockquote>
-<p><strong>ES6模块</strong></p>
-<blockquote>
-<p>Webpack不支持ES6模块，直接使用<code>require.ensure</code>或者<code>require</code>取决于设计哪个模块组成你的<br>编译.<br>Webpack1.x.x(2.0即将来临)原生的不支持ES6模块，但是你可以通过转换器解决他，比如使用Babel<br>转换ES6的<code>import</code>语法为CommonJs或者AMD模块，这种途径是有效的，但是当动态加载时会有警告。<br>这种模块添加方式<code>import x from &#39;foo&#39;</code>是故意设计为静态分析的，意味着你不能用于动态导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// INVALID!!!!!!!!!</span><br><span class="line">[&apos;lodash&apos;, &apos;backbone&apos;].forEach(name =&gt; import name )</span><br></pre></td></tr></table></figure></p>
-<p>幸运的是，JavaScript有<code>loader</code>规范去处理动态导入:<code>System.load</code>或者<code>System.import</code>)<br>原生的API和<code>require</code>的定义是等价的，但是大多数编译器不支持转化<code>System.load</code>为’require.ensure’<br>所以如果想使用动态代码拆分的话直接使用<code>require.ensure</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//static imports</span><br><span class="line">import _ from &apos;lodash&apos;</span><br><span class="line"></span><br><span class="line">// dynamic imports</span><br><span class="line">require.ensure([], function(require) &#123;</span><br><span class="line">  let contacts = require(&apos;./contacts&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>分块内容</strong></p>
-<blockquote>
-<p>分离点处的所有依赖都会被独立成一个块，依赖会递归的被添加。<br>如果在分离点处的回调函数是一个函数，webpack 会把该函数里的依赖都提取到按需加载的代码块中。</p>
-</blockquote>
-<p><strong>分块优化</strong></p>
-<blockquote>
-<p>如果两个分块包含相同的模块，它们会被合并成一个，这会造成分块有多个父模块，如果一个模块<br>在一个分块中的所有父模块都可用,那么它将会从该分块中移除。<br>如果一个分块包含了另一个分块中的所有模块，它会被储存起来，满足多个分块.</p>
-</blockquote>
-<p><strong>分块加载</strong></p>
-<blockquote>
-<p>根据配置文件的<code>target</code>选项的值，打包时执行不同的逻辑去加载分块，比如<code>web</code>target,分块通<br>过jsonp被加载，一个分块只会被加载一次，并发的请求将会被合并成一个，运行时检查加载的分块是<br>否满足多个分块</p>
-</blockquote>
-<p><strong>分块类型</strong></p>
-<blockquote>
-<p><strong>入口块</strong></p>
-</blockquote>
-
-        </div>
-    
-
-</div>
-            
         </section>
     </div>
 </div>
@@ -747,6 +744,10 @@
         <ul>
             
             <li>
+                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
             </li>
             
@@ -756,10 +757,6 @@
             
             <li>
                 <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
             </li>
             
         </ul>
@@ -781,11 +778,11 @@
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+            <a class="footer-post" href="/categories/React/">React</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/JS/">JS</a>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
         </li>
         
     </ul>
