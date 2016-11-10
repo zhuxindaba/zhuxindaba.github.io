@@ -123,8 +123,98 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/11/10/react/reconciler_algorithm/">
+                React Reconciler Algorithm
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-11-10</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/React/">React</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <h3 id="Reconciliation-协调器"><a href="#Reconciliation-协调器" class="headerlink" title="Reconciliation(协调器)"></a>Reconciliation(协调器)</h3><blockquote>
+<p>React提供了一个声明式的API，所以你不用担心在每次更新时到底发生了什么变化，这使得写代码变得简单了许多<br>但是React是如何实现的对我们来说是透明的不明显的。这篇文章阐述了React的’diffing’算法所做的选择，因此<br>组件的更新是可预见的并且是高性能的。</p>
+</blockquote>
+<h3 id="Motivation-动机"><a href="#Motivation-动机" class="headerlink" title="Motivation(动机)"></a>Motivation(动机)</h3><blockquote>
+<p>当你使用React时，你可以认为在一个单一的时间点render()函数创建了一个React元素的树，当下一个props或state<br>更新时，render()函数将会得到一个新的不同的React元素的树，React需要解决如何高效的更新UI以匹配最新的树。<br>一些通用方案有性能问题，时间复杂度会为(O(n3))如果在React使用这些通用方案的话，100个元素将会进行一百万次<br>的比较,话费太昂贵了，替代方案是，React实现了一种基于以下两种假设的时间复杂度为O(n)的算法:</p>
+<ol>
+<li>两种不同类型的元素将会产出不同的树。</li>
+<li>开发人员可以暗示在render时维持一个稳定的key属性。<br>在实践中，这些假设在实际使用的情况下都有效。</li>
+</ol>
+</blockquote>
+<h3 id="The-Diffing-Algorithm-Diff算法"><a href="#The-Diffing-Algorithm-Diff算法" class="headerlink" title="The Diffing Algorithm(Diff算法)"></a>The Diffing Algorithm(Diff算法)</h3><blockquote>
+<p>当比较两个树时，React首先会比较两者的根元素，该行为取决于根元素的类型。<br><strong>不同类型的元素</strong><br>每当根元素有不同类型时，React将会销毁该树并且重新构建新的树，从<code>&lt;a&gt;</code>到<code>&lt;img&gt;</code>,<code>&lt;Article&gt;</code>到<code>Coment</code>,<br>从<code>&lt;Button&gt;</code>到<code>&lt;div&gt;</code>都会进行全新的重新构建过程。当拆卸一个树时，旧的DOM节点会被销毁，组件实例收到<code>componentWillUnmount()</code><br>当构建新树的时候，新的DOM节点将会被插入到DOM中，组件实例会收到<code>componentWillMount()</code>接着会<code>componentDidMount()</code><br>任何和旧树相关的状态都会丢失.任何在root节点之下的组件以及他们的state都会被销毁，比如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;Counter /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;span&gt;</span><br><span class="line">  &lt;Counter /&gt;</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这将会销毁<code>&lt;Counter&gt;</code>并重新镶嵌一个新的<code>&lt;Counter&gt;</code>.</p>
+</blockquote>
+<h3 id="相同类型的DOM元素"><a href="#相同类型的DOM元素" class="headerlink" title="相同类型的DOM元素"></a>相同类型的DOM元素</h3><blockquote>
+<p>当比较两个相同类型的DOM元素时，React会查看两个组件的属性，保持相同的DOM节点，只会更新改变的属性，例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;before&quot; title=&quot;stuff&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;after&quot; title=&quot;stuff&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当比较这两个DOM元素时，React知道只修改基础DOM节点的类名。当更新<code>style</code>时，React同样知道只改变的变化了的属性<br>例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&#123;&#123;color: &apos;red&apos;, fontWeight: &apos;bold&apos;&#125;&#125; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div style=&#123;&#123;color: &apos;green&apos;, fontWeight: &apos;bold&apos;&#125;&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当在两个元素之间转换时，React知道仅修改<code>color</code>样式。不会去修改<code>fontWeight</code>样式。处理完DOM节点之后，React会递归操作<br>子节点。</p>
+</blockquote>
+<h3 id="相同类型的组件节点"><a href="#相同类型的组件节点" class="headerlink" title="相同类型的组件节点"></a>相同类型的组件节点</h3><blockquote>
+<p>当一个组件更新时，该实例保持不变，所以在render时state是被维护的，React修改基础组件实例的属性，以匹配新的元素，然后调用<br>基础组件实例的<code>componentWillReceiveProps()</code>和<code>componentWillUpdate()</code>。<br>接下来，<code>render()</code>方法被调用，然后diff算法(diff algorithm)递归上次的结果和最新的结果.</p>
+</blockquote>
+<h3 id="子组件的递归"><a href="#子组件的递归" class="headerlink" title="子组件的递归"></a>子组件的递归</h3><blockquote>
+<p>默认情况下，当递归一个DOM节点的子节点时，React在同一时间仅仅是迭代子组件们的列表并且每当有差异的时候会生成一个突变。<br>例如:当在子组件的最后添加一个新的元素时，这两个树的之间的转变，工作的很好。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;third&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>React将匹配两个<code>&lt;li&gt;first&lt;/li&gt;</code>树，匹配<code>&lt;li&gt;second&lt;/li&gt;</code>树，然后去插入<code>&lt;li&gt;third&lt;/li&gt;</code>树。<br>如果你天真的实现，当插入在最开始的位置，那么会有很糟糕的性能问题。比如，以下的这两课树之间的转换很差：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;Connecticut&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>React将会改变每一个子节点而不是实现它，它可以保持<code>&lt;li&gt;Duke&lt;/li&gt;</code>和<code>&lt;li&gt;Villanova&lt;/li&gt;</code>的子节点的完整性，<br>这种低效性是一个问题.</p>
+</blockquote>
+<h3 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h3><blockquote>
+<p>为了解决这一个问题，React支持了一个key的属性，当子组件有key属性时，React使用这个key，来匹配原始树的子节点与<br>随后的树中的子节点，通过添加key使树的转换更加高效。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li key=&quot;2015&quot;&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li key=&quot;2016&quot;&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li key=&quot;2014&quot;&gt;Connecticut&lt;/li&gt;</span><br><span class="line">  &lt;li key=&quot;2015&quot;&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li key=&quot;2016&quot;&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>现在React知道持有’2014’的key是新的节点，而持有<code>2015</code>和<code>2016</code>的节点仅仅移动就可以了，在实践中，发现一个key并不是<br>很难，你将要陈列的元素也许已经有一个唯一的id了，所以这个key值来源于你的data：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当不是这种场景时，你可以添加一个key或生成一个key，这个key只需要和他相邻的节点不同就可以了，不需要全局唯一。<br>作为最后的手段，你可以传递数组的下标作为key，如果列表不需要排序这工作的很好，但是重新排序会很慢。</p>
+</blockquote>
+<h3 id="Tradeoffs-权衡"><a href="#Tradeoffs-权衡" class="headerlink" title="Tradeoffs(权衡)"></a>Tradeoffs(权衡)</h3><blockquote>
+<p>记住reconciliation算法的实现细节很重要，React可以在每一个动作下重新render整个App，最终结果相同，我们会定期的改善<br>使常见的场景更加快速。<br>在最近的实现中，你可以表达一个事实，一个子组件已经从它的兄弟节点中移除了，但是你不能告诉它被移到哪里了。算法会重新<br>render整个子组件们。<br>因为React依赖于启发式算法，如果不能满足它背后的假设，性能会受影响。</p>
+<ol>
+<li>该算法不会视图去匹配不同类型节点的子树，如果你发现两个类型的组件的输出很相似，你可以让他们变为相同的类型，在实践中<br>我们还没发现这会成为一个问题。</li>
+<li>keys应该是稳定的，可预测的，以及唯一的，不稳定的key（比如:Math.random()）将会引起，组件实例和DOM节点不必要的重新创建，<br>从而导致性能退化和状态丢失.</li>
+</ol>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/11/09/react/codebase_overview/">
-                代码库概述
+                React代码库概述
             </a>
         </h1>
         <div class="post-info">
@@ -256,7 +346,23 @@
 <p>甚至完全不同的render比如React DOM和React Native需要共享相同的逻辑，尤其是<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">reconciliation</a>算法应尽可能相似，声明的渲染，<br>自定义组建，状态，生命周期方法，以及refs始终跨平台工作。<br>为了解决这一问题，不同的renders共享一些代码。我们称这些代码为<code>reconciler</code>(协调器),当一个更新（setUpdate()）被安排时，<br>reconciler（协调器）调用了组建中的render(),mounts,updates,或者unmount.<br>reconciler（协调器）没有被单独的分离出来，因为它们目前没有公共的API，它们会被renders使用，比如React DOM，React Native。</p>
 </blockquote>
 <h3 id="Reconciler栈"><a href="#Reconciler栈" class="headerlink" title="Reconciler栈"></a>Reconciler栈</h3><blockquote>
-<p>‘stack’reconciler供应于所有的线上React代码，它位于<code>src/renducers/shared/stack/reconciler</code>文件夹中，用于React和React Native<br>它是以面向对象的形式书写的(object-oriented)并且维护一个内部实例的树，（该树对应于所有React组件）。这个内部实例存在于自定义组件<br>及平台组件，这个内部实例对应用户来说不能直接访问，并且他们的树不会被暴露出来。当一个组件mounts，updates，unmounts，这个stack &gt;reconciler将会调用内部实例的一个方法，这些方法是<code>mountComponent(element)</code>,<code>receiveComponent(element)</code>,和<code>unmountElement(element)</code>.<br><strong>Host Components</strong><br>平台特定组件，比如<code>&lt;div&gt;</code>,’View’，例如，React Dom通知stack reconciler使用DOM组件的<code>ReactDOMComponent</code>去处理mounting,updates,<br>以及unmounting。不论什么平台，<code>&lt;div&gt;</code>,<code>&lt;View&gt;</code>处理管理多子组件的方式是类似的，为了方便，reconciler提供了一个叫<code>ReactMultiChild</code><br>来供DOM和Native render使用。<br><strong>复杂的组件</strong><br>用户定义的组件和所有的renders表现形式是一样的，这就是为什么reconciler提供了一个叫<code>ReactCompositeComponent</code>的公共实现，<br>它使用于各平台的renderer。复杂的组件也要实现<code>mounting</code>,<code>updating</code>,<code>unmounting</code>,但是不同于平台组件，<code>ReactCompositeComponent</code><br>需要依赖于不同的代码，这就是为什么在用户定义的类中有<code>render()</code>,<code>componentDidMount()</code>方法的原因。<br>在更新期间中，<code>ReactCompositeComponent</code>检查<code>render()</code>在最后一次输出的<code>type</code>,’key’是否不同，如果<code>type</code>和<code>key</code>有改变，他会委派<br>去更新已存在的内部实例，另外，它会卸载老的子组件，并镶嵌新的，这个会在<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">Reconciliation algorithm(协调器算法)</a>中描述。<br><strong>Recursion（递归）</strong><br>在一次更新中，stack reconciler会一直深入复杂的组件，运行他们的render()方法，并决定是否更新以及替换他们的唯一的组件。通过平台组件<br>(div View)执行平台代码，Host组件可能会有很多子组件，通常会递归处理。stack reconciler经常处理同步的单个处理组件树，当个别的树处理完成了<br>stack reconciler不会停止，所以当更新很深以及CPU有限时它不是最优的，</p>
+<p>‘stack’reconciler供应于所有的线上React代码，它位于<code>src/renducers/shared/stack/reconciler</code>文件夹中，用于React和React Native<br>它是以面向对象的形式书写的(object-oriented)并且维护一个内部实例的树，（该树对应于所有React组件）。这个内部实例存在于自定义组件<br>及平台组件，这个内部实例对应用户来说不能直接访问，并且他们的树不会被暴露出来。当一个组件mounts，updates，unmounts，这个stack &gt;reconciler将会调用内部实例的一个方法，这些方法是<code>mountComponent(element)</code>,<code>receiveComponent(element)</code>,和<code>unmountElement(element)</code>.<br><strong>Host Components</strong><br>平台特定组件，比如<code>&lt;div&gt;</code>,’View’，例如，React Dom通知stack reconciler使用DOM组件的<code>ReactDOMComponent</code>去处理mounting,updates,<br>以及unmounting。不论什么平台，<code>&lt;div&gt;</code>,<code>&lt;View&gt;</code>处理管理多子组件的方式是类似的，为了方便，reconciler提供了一个叫<code>ReactMultiChild</code><br>来供DOM和Native render使用。<br><strong>复杂的组件</strong><br>用户定义的组件和所有的renders表现形式是一样的，这就是为什么reconciler提供了一个叫<code>ReactCompositeComponent</code>的公共实现，<br>它使用于各平台的renderer。复杂的组件也要实现<code>mounting</code>,<code>updating</code>,<code>unmounting</code>,但是不同于平台组件，<code>ReactCompositeComponent</code><br>需要依赖于不同的代码，这就是为什么在用户定义的类中有<code>render()</code>,<code>componentDidMount()</code>方法的原因。<br>在更新期间中，<code>ReactCompositeComponent</code>检查<code>render()</code>在最后一次输出的<code>type</code>,’key’是否不同，如果<code>type</code>和<code>key</code>有改变，他会委派<br>去更新已存在的内部实例，另外，它会卸载老的子组件，并镶嵌新的，这个会在<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">Reconciliation algorithm(协调器算法)</a>中描述。<br><strong>Recursion（递归）</strong><br>在一次更新中，stack reconciler会一直深入复杂的组件，运行他们的render()方法，并决定是否更新以及替换他们的唯一的组件。通过平台组件<br>(div View)执行平台代码，Host组件可能会有很多子组件，通常会递归处理。stack reconciler经常处理同步的单个处理组件树，当个别的树处理完成了<br>stack reconciler不会停止，所以当更新很深以及CPU有限时它不是最优的。</p>
+</blockquote>
+<h3 id="Fiber-reconciler"><a href="#Fiber-reconciler" class="headerlink" title="Fiber reconciler"></a>Fiber reconciler</h3><blockquote>
+<p>‘fiber’ reconciler是一个新的努力用来解决stack reconciler里的继承问题以及长期存在的一些问题。<br>它是完全重写的reconciler，<a href="https://github.com/facebook/react/pulls?utf8=%E2%9C%93&amp;q=is%3Apr%20is%3Aopen%20fiber" target="_blank" rel="external">目前正在被开发</a>。<br>它的主要目标是:</p>
+<ul>
+<li>在chunks中可拆分中断的能力。</li>
+<li>在进程中确定优先次序、重订、复用的工作能力。</li>
+<li>Ability to yield back and forth between parents and children to support layout in React。</li>
+<li>render()返回多标签的能力</li>
+<li>更好的支持错误边界<br>你可以阅读来更好的理解<a href="https://github.com/acdlite/react-fiber-architecture" target="_blank" rel="external">React Fiber Architecture</a>,此刻，它处于试验阶段。<br>它的代码位于<code>src/renders/shared/fiber</code></li>
+</ul>
+</blockquote>
+<h3 id="Event-System"><a href="#Event-System" class="headerlink" title="Event System"></a>Event System</h3><blockquote>
+<p>React实现了一个综合型的事件系统，在ReactDOM和React Native都可工作，它的代码位于<code>src/renders/shared/shared/event</code>.</p>
+</blockquote>
+<h3 id="Add-ons-附加组件"><a href="#Add-ons-附加组件" class="headerlink" title="Add-ons(附加组件)"></a>Add-ons(附加组件)</h3><blockquote>
+<p>每个React的附件组件在npm都以react-addons-的前缀的包单独的分离出来。它们的代码位于<code>src/addons</code>.<br>另外，我们提供了一个单独的叫<code>react-with-addons.js</code>的输出文件，它包含了React代码以及所有的addons暴露出的对象。</p>
 </blockquote>
 
         </div>
@@ -848,36 +954,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
 
 </div>
             
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/10/21/http/digestAuthenticate/">
-                摘要认证
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-10-21</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Http/">Http</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            
-        </div>
-    
-
-</div>
-            
         </section>
     </div>
 </div>
@@ -920,7 +996,11 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
         <ul>
             
             <li>
-                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">代码库概述</a>
+                <a class="footer-post" href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorith</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
             </li>
             
             <li>
@@ -929,10 +1009,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             
             <li>
                 <a class="footer-post" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
             </li>
             
         </ul>
@@ -954,11 +1030,11 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React/">React</a>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+            <a class="footer-post" href="/categories/React/">React</a>
         </li>
         
     </ul>
