@@ -276,6 +276,36 @@
 <blockquote>
 <p>这是React内部工作的基本原理。</p>
 </blockquote>
+<h3 id="What-We-Left-Out"><a href="#What-We-Left-Out" class="headerlink" title="What We Left Out"></a>What We Left Out</h3><blockquote>
+<p>这篇文章和真实的代码库进行了一个简单的比较，这儿有几个我们没有解决的问题：</p>
+<ul>
+<li>组件可以返回null，reconciler(协调器)可以处理数组中的”空插槽(empty slots)”并渲染出去。</li>
+<li>协调器会从元素中读取<code>key</code>,并且用它建立内部实例和数组中元素之间的关系，在真实的React实现中，大量的复杂性和它有关。</li>
+<li>除了复杂的以及主机的内部实例，还有一些类对应空元素和文本组件。可以通过null代表文本节点和数组的空插槽。</li>
+<li>renders(渲染器)使用注入来传递主机内部类给reconciler(协调器)，比如，React DOM告诉协调器使用ReactDOMComponent作为主机内部实例来实现.</li>
+<li>更新子机列表的逻辑被提取到一个叫ReactMultiChild 的一个mixin,它被用与ReactDOM和React Native的内部实例类的实现。</li>
+<li>协调器也实现了在复杂组件中对<code>setState()</code>的支持，在事件处理中，大量的更新会成批的放入单个更新。</li>
+<li>协调器会小心处理附加及分离到复杂组件和主机节点的refs</li>
+<li>生命周期的钩子，会在DOM准备好之后调用，像<code>componentDidMount()</code>,<code>componentDidUpdate()</code>,获取’回调队列’并批处理执行。</li>
+<li>React将当前的更新的信息放到一个叫<code>transaction</code>的内部对象中，<code>transactions</code>用于追踪挂起的生命周期钩子队列。当前DOM的<br>内部警告以及其余”global”会给到一个特定的更新，<code>transactions</code>用来确保React更新后清空一切，例如，<code>transactions</code>提供<br>React DOM恢复输入选择后的更新。</li>
+</ul>
+</blockquote>
+<h3 id="Jumping-into-the-Code"><a href="#Jumping-into-the-Code" class="headerlink" title="Jumping into the Code"></a>Jumping into the Code</h3><blockquote>
+<ul>
+<li><code>ReactMount</code>is where the code like mountTree() and unmountTree() from this tutorial lives,它负责装载和卸载顶级组件<br><code>ReactNativeMount</code>是ReactNative的模拟。</li>
+<li>本教程中<code>ReactDOMComponent</code>和<code>DOMComponent</code>是同等的，它实现了ReactDOM渲染器的主机组件类。<code>ReactNativeBaseComponent</code>是<br>React Native的模拟。</li>
+<li><code>ReactCompositeComponent</code>和<code>CompositeComponent</code>是同等的，它处理调用用户自定义组建以及维持state。</li>
+<li><code>instantiateReactComponent</code>包含了一个开关用来选择一个正确的内部实例类用来构造一个元素。在此教程中和<code>instantiateComponent()</code>是同等的。</li>
+<li><code>ReactReconciler</code>是<code>mountComponent</code>和<code>receiveComponent</code>以及<code>unmountComponent</code>方法的包装。它在内部实例上调用底层的实现。当然它也<br>包含所有内部实例实现的共享代码。</li>
+<li><code>ReactChildReconciler</code>实现了通过元素的<code>key</code>,<code>mounting</code>，<code>updating</code>,<code>unmounting</code>children的逻辑。</li>
+<li><code>ReactMultiChild</code>实现了渲染器对操作队列的处理。child的插入，移动，删除。</li>
+<li><code>mount()</code>,<code>receive()</code>,<code>unmount</code>因为一些遗留原因在React代码库中，实际上被称为<code>mountComponent()</code>,<code>receiveComponent</code>,<br><code>unmountComponent()</code></li>
+<li>内部实例的属性以下划线开头，比如,_currentElement,在代码库中自始至终它们被认为是只读的。</li>
+</ul>
+</blockquote>
+<h3 id="Future-Directions-未来方向"><a href="#Future-Directions-未来方向" class="headerlink" title="Future Directions(未来方向)"></a>Future Directions(未来方向)</h3><blockquote>
+<p>stack reconciler具有的局限性，如同步，不能中断工作或chunks的拆分。在新的<code>Fiber reconciler</code>中有一个完全不同的结构，在未来我们打算使用<br>它代替现有的reconciler，但是目前还很遥远。</p>
+</blockquote>
 
         </div>
     
@@ -1122,15 +1152,15 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <ul>
         
         <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
             <a class="footer-post" href="/categories/Git/">Git</a>
         </li>
         
         <li>
             <a class="footer-post" href="/categories/React-Native/">React Native</a>
-        </li>
-        
-        <li>
-            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
         </li>
         
         <li>
