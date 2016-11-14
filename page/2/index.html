@@ -123,6 +123,72 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/10/21/http/leanr_tcp_ip/">
+                在浏览器输入URL后，发生了什么?
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-10-21</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Http/">Http</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <ol>
+<li>浏览器解析主机名</li>
+<li>浏览器查询这个主机名的IP地址（DNS）</li>
+<li>浏览器获得端口号</li>
+<li>浏览器发起IP:port的连接</li>
+<li>浏览器想服务器发送一条HTTP GET报文</li>
+<li>浏览器从服务器读取HTTP响应报文</li>
+<li>浏览器关闭连接</li>
+</ol>
+<blockquote>
+<p>HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的<strong>分组交换网络分层协议集</strong>.TCP的数据是通过名为IP分组<br>（或IP数据报）的小数据块来发送的。HTTP（应用层）-&gt;TCP(传输层)-&gt;IP（网络层）-&gt;网络接口(数据链路层)，<br>HTTP要传送一条报文时，会以流的形式将报文数据的内容通过一条打开的TCP连接按序传输。TCP收到数据之后<br>会将数据流砍成被称作段的小数据块，并将段封装在IP分组中，通过因特网传输，这些工作都是通过TCP/IP软件<br>处理的。<br>每个TCP段都是由IP分组承载，从一个IP地址发送到另一个IP地址，每个IP分组中都包括:</p>
+<ol>
+<li>一个IP分组首部（通常为20字节），包含了源和目的地的IP地址，长度和其他标记</li>
+<li>一个TCP段首部（通常为20字节），包含了TCP的端口号、TCP的控制标记，以及数据排序和完成性的数字值</li>
+<li>一个TCP数据块（0个或多个字节）</li>
+</ol>
+</blockquote>
+<p>TCP连接通过4个值识别: <strong>&lt;源IP地址， 源端口号， 目的地IP地址， 目的地端口号&gt;</strong></p>
+<p>TCP客户端和服务器是如何通过TCP套接字接口进行通信的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">客户端                                                        服务器</span><br><span class="line">                                                          S1  创建新的套接字(socket)</span><br><span class="line">                                                          S2  将套接字绑定到端口上去(bind)</span><br><span class="line">                                                          S3  允许套接字进行连接(listen)</span><br><span class="line">                                                          S4  等待连接(accept)</span><br><span class="line">C1 获取IP地址和端口号</span><br><span class="line">C2 创建新的套接字(socket)</span><br><span class="line">C3 连接到服务器的IP:port上去(connect)</span><br><span class="line">                                                          S5 通知应用程序有连接到来</span><br><span class="line">                                                          S6开始读取请求</span><br><span class="line">C4 连接成功</span><br><span class="line">C5 发送HTTP请求（write）</span><br><span class="line">C6 等待HTTP响应（read）</span><br><span class="line">                                                          S7 处理HTTP请求报文</span><br><span class="line">C7 处理HTTP响应                                            S8 回送HTTP响应（write）</span><br><span class="line">C8关闭连接（close）                                         S9 关闭连接（close）</span><br></pre></td></tr></table></figure></p>
+<p><strong>对TCP性能的考虑</strong>    </p>
+<p>HTTP紧挨着TCP，位于其上层，所以HTTP事务的性能取决于底层TCP通道的性能。TCP网络的时延取决于<br>硬件速度、网络和服务器的负载、请求和响应报文的尺寸、以及客户端和服务器之间的距离。</p>
+<p>最常见的TCP相关时延，包括:</p>
+<ol>
+<li>TCP连接建立握手</li>
+<li>TCP慢启动拥塞控制</li>
+<li>数据聚集的Nagle算法</li>
+<li>用于捎带的TCP延迟确认算法</li>
+<li>TIME_WRIT时延和端口耗尽</li>
+</ol>
+<p><strong>TCP连接的握手时延</strong><br>建立一条新的TCP连接时，甚至是在发生任意数据之前，TCP软件之间会交换一系列的IP分组，对连接<br>的有关参数进行沟通，如果连接只是用来传送少量数据，这些交换过程就会严重降低HTTP的性能。</p>
+<p><strong>TCP连接握手的步骤</strong></p>
+<ol>
+<li>请求新的TCP连接时，客户端要向服务器发送一个小的TCP分组，这个分组设置了一个特殊的SYN标记，说明这是一个连接请求。</li>
+<li>如果服务器接受了连接，就会对一些连接参数进行计算，并向客户端回送一个TCP分组，这个分组中的SYN和ACK标记都被置位，说明请求已被接受。</li>
+<li>最后，客户端向服务器回送一个确认信息，通知它连接已成功建立，现代的TCP栈都允许客户端在这个确认分组中发送数据。</li>
+</ol>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/10/21/http/integration/">
                 网关、隧道及中继
             </a>
@@ -567,44 +633,6 @@
 
 </div>
             
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/07/10/Webpack/multiple_entry_points/">
-                多入口配置
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-07-10</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Webpack/">Webpack</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <p><strong>前提需要: 代码拆分</strong></p>
-<blockquote>
-<p>如果你需要对不同的HTML页面使用不同的打包文件可以使用多入口拆分点的特性。webpack会立即<br>创建多个打包文件，额外的块文件可以被这些打包文件共享。<br>每一个入口块文件都包含webpack执行时间，所以每个页面加载一个入口块文件（提示：使用CommonsChunkPlugin<br>可以将运行时的东西移到一个单独的块中来避免这个限制）</p>
-</blockquote>
-<p><strong>配置</strong></p>
-<blockquote>
-<p>可以在entry这个属性中使用对象来配置多入口，每个值作为一个入口块，并且对应的键代表了入口<br>块的名称。<br>当使用多入口配置的时候，必须重写默认的<code>output.filename</code>否则每个入口块都会被写在相同的<br>文件中,使用<code>[name]</code>来获得每个入口块的名字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        a: &quot;./a&quot;,</span><br><span class="line">        b: &quot;./b&quot;,</span><br><span class="line">        c: [&quot;./c&quot;, &quot;./d&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;dist&quot;),</span><br><span class="line">        filename: &quot;[name].entry.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-        </div>
-    
-
-</div>
-            
         </section>
     </div>
 </div>
@@ -647,6 +675,10 @@
         <ul>
             
             <li>
+                <a class="footer-post" href="/2016/11/15/react/design_principles/">设计原则</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2016/11/12/react/implemention_notes/">实现说明</a>
             </li>
             
@@ -656,10 +688,6 @@
             
             <li>
                 <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
             </li>
             
         </ul>
@@ -673,11 +701,11 @@
     <ul>
         
         <li>
-            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+            <a class="footer-post" href="/categories/Git/">Git</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/Git/">Git</a>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
         </li>
         
         <li>
@@ -685,7 +713,7 @@
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React/">React</a>
+            <a class="footer-post" href="/categories/JS/">JS</a>
         </li>
         
     </ul>

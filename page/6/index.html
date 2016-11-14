@@ -10,10 +10,6 @@
 
     <!--Description-->
     
-        <meta name="description" content="canvas元素的大小与绘图表面积的大小
-
-canvas元素实际上有两套尺寸，一个是元素本身的大小，还有一个是元素绘图表面的大小。当设置元素的width和height属性时，实际上同时修改了该元素本身的大小与元素绘图表面的大小。然而如果通过CSS来设定canvas元素的大小，那么只会改变元素本身的大">
-    
 
     <!--Author-->
     
@@ -22,7 +18,7 @@ canvas元素实际上有两套尺寸，一个是元素本身的大小，还有�
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="画布学习的总结"/>
+        <meta property="og:title" content="zhuxin_blog"/>
     
 
     <!--Open Graph Description-->
@@ -33,7 +29,7 @@ canvas元素实际上有两套尺寸，一个是元素本身的大小，还有�
 
     <!--Type page-->
     
-        <meta property="og:type" content="article" />
+        <meta property="og:type" content="website" />
     
 
     <!--Page Cover-->
@@ -44,7 +40,7 @@ canvas元素实际上有两套尺寸，一个是元素本身的大小，还有�
 
     <!-- Title -->
     
-    <title>画布学习的总结 - zhuxin_blog</title>
+    <title>page - zhuxin_blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
@@ -115,61 +111,87 @@ canvas元素实际上有两套尺寸，一个是元素本身的大小，还有�
     <div class="logo">
         <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
         
+            <h1 id="main-title" class="title">zhuxin_blog</h1>
+        
     </div>
 </header>
 
         <section class="main">
             
+                
 <div class="post">
 
-    <div class="post-header">
+    <div class="post-header index">
         <h1 class="title">
-            <a href="/2016/06/07/canvas/get_started/">
-                画布学习的总结
+            <a href="/2016/05/25/js/actionScope/">
+                作用域
             </a>
         </h1>
         <div class="post-info">
             
-                <span class="date">2016-06-07</span>
+                <span class="date">2016-05-25</span>
             
-            <a href="#disqus_thread" class="comments">Comments</a>
+            
             
                 <span class="category">
-                    <a href="/categories/Canvas/">Canvas</a>
+                    <a href="/categories/JS/">JS</a>
                 </span>
             
         </div>
     </div>
 
-    <div class="content">
-
-        <!-- Gallery -->
-        
-
-        <!-- Post Content -->
-        <p><strong>canvas元素的大小与绘图表面积的大小</strong></p>
-<blockquote>
-<p>canvas元素实际上有两套尺寸，一个是元素本身的大小，还有一个是元素绘图表面的大小。当设置<br>元素的width和height属性时，实际上同时修改了该元素本身的大小与元素绘图表面的大小。然而如<br>果通过CSS来设定canvas元素的大小，那么只会改变元素本身的大小，而不会影响到绘图表面。当元<br>素的大小不符合绘图表面的大小时，浏览器就会对绘图表面进行缩放</p>
-</blockquote>
-<p><strong>Canvas状态的保存与恢复</strong></p>
-<blockquote>
-<p>Canvas的API提供了两个名叫save()和restore()的方法，用于保存及恢复当前canvas绘图环境的<br>所有属性。绘图环境的save()方法将当前的绘图环境压入栈顶顶部。对应的restore()方法则会从堆<br>栈顶部弹出一组状态信息，并据此恢复当前绘图环境的各个状态。<br>save():将当前的canvas状态推送到一个保存canvas状态的堆栈顶部。canvas状态包括了当前的坐<br>标变换信息，剪辑区域以及所有canvas绘图环境对象的属性，包括strokeStyle、fillStyle、与<br>globalCompositeOperation等，canvas状态并不包括当前的路径或位图。只能通过beginPath()<br>来重置路径<br>restore():将canvas状态堆栈顶部的条目弹出。原来保存于栈顶的那一组状态，在弹出之后，就被<br>设置成canvas当前的状态了，因此，在调用save()和restore()方法之间，对canvas状态所进行的<br>修改，其效果只会持续至restore()方法调用之前</p>
-</blockquote>
-
-    </div>
-
     
+        <div class="content">
+            <blockquote>
+<p>变量的赋值会执行两个动作，首先编译器会在当前作用域中声明一个变量（如果之前没有声明过），<br>然后运行时引擎会在作用域中查找该变量，如果能够找到就会对它赋值。</p>
+</blockquote>
+<p><strong>LHS和RHS</strong></p>
+<blockquote>
+<p>LHS和RHS的含义是”赋值操作的左侧或右侧”并不一定意味着”=赋值操作的左侧和右侧”。赋值操作<br>还有其他几种形式，因此在概念上最好理解为”赋值操作的目标是谁(LHS)”以及”谁是赋值操作的源<br>头(RHS)”。</p>
+</blockquote>
+<p><strong>作用域嵌套</strong></p>
+<blockquote>
+<p>当一个块或函数嵌套在另一个块或函数中时，就发生了作用域嵌套。因此，在当前作用域中无法找<br>到某个变量时，引擎就会在外层嵌套的作用域中继续查找，直到找到该变量，或抵达最外层的作用域<br>（也就是全局作用域）为止。</p>
+</blockquote>
+<p><strong>RHS和LHS</strong></p>
+<blockquote>
+<p>如果RHS查询在所有嵌套的作用域中遍寻不到所需的变量，引擎就会抛出ReferenceError异常。<br>当引擎执行LHS查询时，如果在顶层中也无法找到目标变量，全局作用域就会创建一个具有该名称的<br>变量，并将其返回给引擎，前提是程序运行在”非严格模式”下。ES5引入了严格模式，严格模式禁止<br>自动或隐士地创建全局变量。因此，在严格模式中LHS查询失败时，并不会创建并返回一个全局变量，<br>引擎会抛出同RHS查询失败时类似的ReferenceError异常。ReferenceError同作用域判别失败相关，<br>而TypeError则代表作用域判别成功了，但是对结果的操作是非法或不合理的。</p>
+</blockquote>
+<p><strong>总结</strong></p>
+<blockquote>
+<p>作用域是一套规则，用于确定在何处以及如何查找变量。如果查找的目的是对变量进行赋值，那么<br>会使用LHS查询；如果目的是获取该变量的值，就会使用RHS查询。<br>JavaScript引擎首先会在代码执行前对其进行编译，在这个过程中，像<code>var a = 2</code>这样的声明会<br>被分解成两个独立的步骤：</p>
+<ol>
+<li>首先，<code>var a</code>在其作用域中声明新变量。这会在最开始的阶段，也就是代码执行前进行。</li>
+<li>接下来， <code>a = 2</code>会查询(LHS查询)变量a对其进行赋值。</li>
+</ol>
+</blockquote>
 
-    
-
-    <!-- Comments -->
+        </div>
     
 
 </div>
+            
         </section>
-
     </div>
 </div>
+
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="wrap-pagination">
+                <a class="" href="/page/5/">
+                    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                </a>
+                <a class="disabled" href="/">
+                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
 
 </div>
 

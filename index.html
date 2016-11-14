@@ -123,6 +123,54 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/11/15/react/design_principles/">
+                设计原则
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-11-15</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/React/">React</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <blockquote>
+<p>我们写这篇文章的目的是为了让你对React有一个更好的认知，什么能做和什么不能做以及React的设计理念<br>虽然我们很乐意看到社区的贡献，但是我们也不希望悠然违反一些原则。<br>注意：这篇文章是假设你对React有一个很深的理解，它描述了React的设计原则，而不是React组件及程序<br>对React的简介请阅读<a href="https://facebook.github.io/react/docs/thinking-in-react.html" target="_blank" rel="external">Thinking in React</a></p>
+</blockquote>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><blockquote>
+<p>React的主要特性是组建的组成，不同人编写的组件可以一起更好的工作，你可以给一个组件添加功能而不会影响整个代码库的更改.<br>比如：在一个组件中引入一些本地state而不会对使用它的组件造成影响。同样，如果有必要可以添加初始化以及拆卸的代码到任何组件中。<br>在组建中使用state或生命周期挂钩也不是坏的，比如一些功能强大的特性，它们应该有节制的使用，但是我们没有移除它们的打算，相反的，<br>我们认为他们是使得的React更有用的组成部分。我们将来会使更多的<a href="https://github.com/reactjs/react-future/tree/master/07%20-%20Returning%20State" target="_blank" rel="external">功能模式</a><br>但是，本地state和生命周期挂钩将为该模型的一部分。<br>组件经常被描述为’just functions’,但是在我们的视角中，他们需要变得更加有用，在React中，组件描述了任何组成的行为，包括rendering<br>生命周期，以及state，一些外部的库，像Relay增加组件了其他的责任，比如描述data依赖。</p>
+</blockquote>
+<h3 id="Common-Abstraction（通用的抽象）"><a href="#Common-Abstraction（通用的抽象）" class="headerlink" title="Common Abstraction（通用的抽象）"></a>Common Abstraction（通用的抽象）</h3><blockquote>
+<p>通常情况下我们抵制在用户级就可以实现的行为，我们不想用无用的库膨胀你的应用，但是也有些例外，比如：如果React对本地state和生命周期<br>挂钩不提供支持，用户会创建通用抽象给他们，当有多个抽象竞争时React不能充分利用他们的属性执行，它不得不以最低的标准工作。这也是为什么<br>我们有时会给React添加一些特性，如果我们注意到许多组件不兼容或低效的执行某些功能，我们可能更愿意考到React。我们不会轻易的干这件事。<br>当我们做它时，因为我们有信心提高抽象层次使整个生态系统受益。state，生命周期挂钩跨浏览器事件正常化是个很好的例子。我们经常与社区讨论<br>改善建议，你可以在<a href="https://github.com/facebook/react/issues?q=is%3Aopen+is%3Aissue+label%3A%22big+picture%22" target="_blank" rel="external">big picture</a>中找到这些讨论</p>
+</blockquote>
+<h3 id="Escape-Hatches-逃生舱口"><a href="#Escape-Hatches-逃生舱口" class="headerlink" title="Escape Hatches(逃生舱口)"></a>Escape Hatches(逃生舱口)</h3><blockquote>
+<p>React是实用主义的，它是由写Facebook的产品需求而驱动的，虽然它受一些范例的影响，但也不是完全主流。比如，函数式编程，对不同技能的开发<br>保持可访问是项目的一个明确的目标。如果我们想反对一个我们不喜欢的模式，在反对它之前我们考虑所有存在的场景。如果一些模式对于构建app和有用<br>但是很难表达，我们会为它提供必要的API。</p>
+</blockquote>
+<h3 id="Stability-稳定性"><a href="#Stability-稳定性" class="headerlink" title="Stability(稳定性)"></a>Stability(稳定性)</h3><blockquote>
+<p>我们重视API的稳定性，Facebook有两万个组件在使用React，这也是我们为什么通常不愿意改变公共API或行为。但是”nothing changes”稳定性的意义有点被<br>高估了,它迅速停滞了。相反，我们更喜欢”在生产环境大量使用并且一些东西变化时有一个明确的迁移路径”的稳定意义。当我们反对一种形式时，我们在Facebook研究<br>它的内部使用并添加反对警告。这让我们评估改变的重大影响。有时，我们发现它太简单的话我们会退出，并且我们需要战略性的思考关于这次改动代码库的要点是否准备好。<br>如果我们自行这次的更改不是太具有破坏性并且此次战略性转移对用户场景是可实施的，我们会在社区中释放反对警告。我们会和外部使用React的用户密切联系并且我们会<br>监视流行的开源项目并指引他们修理这些警告。由于React代码库规模庞大，内部迁移成功是一个很好的指标并且其余公司也不会有问题。</p>
+</blockquote>
+<h3 id="Scheduling-时间表-进度表"><a href="#Scheduling-时间表-进度表" class="headerlink" title="Scheduling(时间表 进度表)"></a>Scheduling(时间表 进度表)</h3><blockquote>
+<p>在React中即使你的组件被描述为函数，你也不能直接调用它们。每一个组件返回一个<a href="https://facebook.github.io/react/contributing/design-principles.html" target="_blank" rel="external">需要渲染什么的描述</a><br>并且这个描述包括用户自定义组件及主机组件。通过组件的递归得到render结果去更改UI树。这是一个不明显但是很强大的区别，因为你不会调用组件函数但是让React自己调用.<br>这意味着如果有必要React有权延迟调用它。在当下的实现中，在单个刻度期间，React递归的走着树并调用所有的要修改的树的render函数。在反应的设计中这是一个共同的主题，<br>一些流行的库实现的是”push”方法，当新数据可用时再执行计算。然而React坚持”pull”方法，计算会被推迟，除非有必要。<br>React不是一个普通的数据处理库，它是用来构建用户界面的。我们认为在app中有独特的优势，因为它知道哪些计算是有意义的哪些没有。如果有些多东西在屏幕外，我们可以<br>延迟它的数据逻辑处理,如果数据到达的速度快于frame的速度，我们可以批量更新，我们可以优先考虑用户交互的工作（点击button的动画效果）来避免dropping frame，<br>不太重要的(从网络获取数据)后台工作</p>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/11/12/react/implemention_notes/">
                 实现说明
             </a>
@@ -1018,72 +1066,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
 
 </div>
             
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/10/21/http/leanr_tcp_ip/">
-                在浏览器输入URL后，发生了什么?
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-10-21</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Http/">Http</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <ol>
-<li>浏览器解析主机名</li>
-<li>浏览器查询这个主机名的IP地址（DNS）</li>
-<li>浏览器获得端口号</li>
-<li>浏览器发起IP:port的连接</li>
-<li>浏览器想服务器发送一条HTTP GET报文</li>
-<li>浏览器从服务器读取HTTP响应报文</li>
-<li>浏览器关闭连接</li>
-</ol>
-<blockquote>
-<p>HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的<strong>分组交换网络分层协议集</strong>.TCP的数据是通过名为IP分组<br>（或IP数据报）的小数据块来发送的。HTTP（应用层）-&gt;TCP(传输层)-&gt;IP（网络层）-&gt;网络接口(数据链路层)，<br>HTTP要传送一条报文时，会以流的形式将报文数据的内容通过一条打开的TCP连接按序传输。TCP收到数据之后<br>会将数据流砍成被称作段的小数据块，并将段封装在IP分组中，通过因特网传输，这些工作都是通过TCP/IP软件<br>处理的。<br>每个TCP段都是由IP分组承载，从一个IP地址发送到另一个IP地址，每个IP分组中都包括:</p>
-<ol>
-<li>一个IP分组首部（通常为20字节），包含了源和目的地的IP地址，长度和其他标记</li>
-<li>一个TCP段首部（通常为20字节），包含了TCP的端口号、TCP的控制标记，以及数据排序和完成性的数字值</li>
-<li>一个TCP数据块（0个或多个字节）</li>
-</ol>
-</blockquote>
-<p>TCP连接通过4个值识别: <strong>&lt;源IP地址， 源端口号， 目的地IP地址， 目的地端口号&gt;</strong></p>
-<p>TCP客户端和服务器是如何通过TCP套接字接口进行通信的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">客户端                                                        服务器</span><br><span class="line">                                                          S1  创建新的套接字(socket)</span><br><span class="line">                                                          S2  将套接字绑定到端口上去(bind)</span><br><span class="line">                                                          S3  允许套接字进行连接(listen)</span><br><span class="line">                                                          S4  等待连接(accept)</span><br><span class="line">C1 获取IP地址和端口号</span><br><span class="line">C2 创建新的套接字(socket)</span><br><span class="line">C3 连接到服务器的IP:port上去(connect)</span><br><span class="line">                                                          S5 通知应用程序有连接到来</span><br><span class="line">                                                          S6开始读取请求</span><br><span class="line">C4 连接成功</span><br><span class="line">C5 发送HTTP请求（write）</span><br><span class="line">C6 等待HTTP响应（read）</span><br><span class="line">                                                          S7 处理HTTP请求报文</span><br><span class="line">C7 处理HTTP响应                                            S8 回送HTTP响应（write）</span><br><span class="line">C8关闭连接（close）                                         S9 关闭连接（close）</span><br></pre></td></tr></table></figure></p>
-<p><strong>对TCP性能的考虑</strong>    </p>
-<p>HTTP紧挨着TCP，位于其上层，所以HTTP事务的性能取决于底层TCP通道的性能。TCP网络的时延取决于<br>硬件速度、网络和服务器的负载、请求和响应报文的尺寸、以及客户端和服务器之间的距离。</p>
-<p>最常见的TCP相关时延，包括:</p>
-<ol>
-<li>TCP连接建立握手</li>
-<li>TCP慢启动拥塞控制</li>
-<li>数据聚集的Nagle算法</li>
-<li>用于捎带的TCP延迟确认算法</li>
-<li>TIME_WRIT时延和端口耗尽</li>
-</ol>
-<p><strong>TCP连接的握手时延</strong><br>建立一条新的TCP连接时，甚至是在发生任意数据之前，TCP软件之间会交换一系列的IP分组，对连接<br>的有关参数进行沟通，如果连接只是用来传送少量数据，这些交换过程就会严重降低HTTP的性能。</p>
-<p><strong>TCP连接握手的步骤</strong></p>
-<ol>
-<li>请求新的TCP连接时，客户端要向服务器发送一个小的TCP分组，这个分组设置了一个特殊的SYN标记，说明这是一个连接请求。</li>
-<li>如果服务器接受了连接，就会对一些连接参数进行计算，并向客户端回送一个TCP分组，这个分组中的SYN和ACK标记都被置位，说明请求已被接受。</li>
-<li>最后，客户端向服务器回送一个确认信息，通知它连接已成功建立，现代的TCP栈都允许客户端在这个确认分组中发送数据。</li>
-</ol>
-
-        </div>
-    
-
-</div>
-            
         </section>
     </div>
 </div>
@@ -1126,6 +1108,10 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
         <ul>
             
             <li>
+                <a class="footer-post" href="/2016/11/15/react/design_principles/">设计原则</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2016/11/12/react/implemention_notes/">实现说明</a>
             </li>
             
@@ -1135,10 +1121,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             
             <li>
                 <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
             </li>
             
         </ul>
@@ -1152,11 +1134,11 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <ul>
         
         <li>
-            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+            <a class="footer-post" href="/categories/Git/">Git</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/Git/">Git</a>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
         </li>
         
         <li>
@@ -1164,7 +1146,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React/">React</a>
+            <a class="footer-post" href="/categories/JS/">JS</a>
         </li>
         
     </ul>

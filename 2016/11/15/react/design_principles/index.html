@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+    
+        <meta name="description" content="我们写这篇文章的目的是为了让你对React有一个更好的认知，什么能做和什么不能做以及React的设计理念虽然我们很乐意看到社区的贡献，但是我们也不希望悠然违反一些原则。注意：这篇文章是假设你对React有一个很深的理解，它描述了React的设计原则，而不是React组件及程序对React的简介请阅读">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="zhuxin">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="设计原则"/>
+    
+
+    <!--Open Graph Description-->
+    
+
+    <!--Open Graph Site Name-->
+    <meta property="og:site_name" content="zhuxin_blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article" />
+    
+
+    <!--Page Cover-->
+    
+
+    <meta name="twitter:card" content="summary" />
+    
+
+    <!-- Title -->
+    
+    <title>设计原则 - zhuxin_blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Google Analytics -->
+    
+
+
+</head>
+
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-pattern"></div>
+
+<!-- Menu -->
+<!--Menu Links and Overlay-->
+<div class="menu-bg">
+    <div class="menu-container">
+        <ul>
+            
+            <li class="menu-item">
+                <a href="/">
+                    Home
+                </a>
+            </li>
+            
+            <li class="menu-item">
+                <a href="/archives">
+                    Archives
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+<!--Hamburger Icon-->
+<nav>
+    <a href="#menu"></a>
+</nav>
+
+<div class="container">
+
+    <!-- Main Content -->
+    <div class="row">
+    <div class="col-sm-12">
+
+        <!--Title and Logo-->
+        <header>
+    <div class="logo">
+        <a href="/"><i class="logo-icon fa fa-cube" aria-hidden="true"></i></a>
+        
+    </div>
+</header>
+
+        <section class="main">
+            
+<div class="post">
+
+    <div class="post-header">
+        <h1 class="title">
+            <a href="/2016/11/15/react/design_principles/">
+                设计原则
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-11-15</span>
+            
+            <a href="#disqus_thread" class="comments">Comments</a>
+            
+                <span class="category">
+                    <a href="/categories/React/">React</a>
+                </span>
+            
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Gallery -->
+        
+
+        <!-- Post Content -->
+        <blockquote>
+<p>我们写这篇文章的目的是为了让你对React有一个更好的认知，什么能做和什么不能做以及React的设计理念<br>虽然我们很乐意看到社区的贡献，但是我们也不希望悠然违反一些原则。<br>注意：这篇文章是假设你对React有一个很深的理解，它描述了React的设计原则，而不是React组件及程序<br>对React的简介请阅读<a href="https://facebook.github.io/react/docs/thinking-in-react.html" target="_blank" rel="external">Thinking in React</a></p>
+</blockquote>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><blockquote>
+<p>React的主要特性是组建的组成，不同人编写的组件可以一起更好的工作，你可以给一个组件添加功能而不会影响整个代码库的更改.<br>比如：在一个组件中引入一些本地state而不会对使用它的组件造成影响。同样，如果有必要可以添加初始化以及拆卸的代码到任何组件中。<br>在组建中使用state或生命周期挂钩也不是坏的，比如一些功能强大的特性，它们应该有节制的使用，但是我们没有移除它们的打算，相反的，<br>我们认为他们是使得的React更有用的组成部分。我们将来会使更多的<a href="https://github.com/reactjs/react-future/tree/master/07%20-%20Returning%20State" target="_blank" rel="external">功能模式</a><br>但是，本地state和生命周期挂钩将为该模型的一部分。<br>组件经常被描述为’just functions’,但是在我们的视角中，他们需要变得更加有用，在React中，组件描述了任何组成的行为，包括rendering<br>生命周期，以及state，一些外部的库，像Relay增加组件了其他的责任，比如描述data依赖。</p>
+</blockquote>
+<h3 id="Common-Abstraction（通用的抽象）"><a href="#Common-Abstraction（通用的抽象）" class="headerlink" title="Common Abstraction（通用的抽象）"></a>Common Abstraction（通用的抽象）</h3><blockquote>
+<p>通常情况下我们抵制在用户级就可以实现的行为，我们不想用无用的库膨胀你的应用，但是也有些例外，比如：如果React对本地state和生命周期<br>挂钩不提供支持，用户会创建通用抽象给他们，当有多个抽象竞争时React不能充分利用他们的属性执行，它不得不以最低的标准工作。这也是为什么<br>我们有时会给React添加一些特性，如果我们注意到许多组件不兼容或低效的执行某些功能，我们可能更愿意考到React。我们不会轻易的干这件事。<br>当我们做它时，因为我们有信心提高抽象层次使整个生态系统受益。state，生命周期挂钩跨浏览器事件正常化是个很好的例子。我们经常与社区讨论<br>改善建议，你可以在<a href="https://github.com/facebook/react/issues?q=is%3Aopen+is%3Aissue+label%3A%22big+picture%22" target="_blank" rel="external">big picture</a>中找到这些讨论</p>
+</blockquote>
+<h3 id="Escape-Hatches-逃生舱口"><a href="#Escape-Hatches-逃生舱口" class="headerlink" title="Escape Hatches(逃生舱口)"></a>Escape Hatches(逃生舱口)</h3><blockquote>
+<p>React是实用主义的，它是由写Facebook的产品需求而驱动的，虽然它受一些范例的影响，但也不是完全主流。比如，函数式编程，对不同技能的开发<br>保持可访问是项目的一个明确的目标。如果我们想反对一个我们不喜欢的模式，在反对它之前我们考虑所有存在的场景。如果一些模式对于构建app和有用<br>但是很难表达，我们会为它提供必要的API。</p>
+</blockquote>
+<h3 id="Stability-稳定性"><a href="#Stability-稳定性" class="headerlink" title="Stability(稳定性)"></a>Stability(稳定性)</h3><blockquote>
+<p>我们重视API的稳定性，Facebook有两万个组件在使用React，这也是我们为什么通常不愿意改变公共API或行为。但是”nothing changes”稳定性的意义有点被<br>高估了,它迅速停滞了。相反，我们更喜欢”在生产环境大量使用并且一些东西变化时有一个明确的迁移路径”的稳定意义。当我们反对一种形式时，我们在Facebook研究<br>它的内部使用并添加反对警告。这让我们评估改变的重大影响。有时，我们发现它太简单的话我们会退出，并且我们需要战略性的思考关于这次改动代码库的要点是否准备好。<br>如果我们自行这次的更改不是太具有破坏性并且此次战略性转移对用户场景是可实施的，我们会在社区中释放反对警告。我们会和外部使用React的用户密切联系并且我们会<br>监视流行的开源项目并指引他们修理这些警告。由于React代码库规模庞大，内部迁移成功是一个很好的指标并且其余公司也不会有问题。</p>
+</blockquote>
+<h3 id="Scheduling-时间表-进度表"><a href="#Scheduling-时间表-进度表" class="headerlink" title="Scheduling(时间表 进度表)"></a>Scheduling(时间表 进度表)</h3><blockquote>
+<p>在React中即使你的组件被描述为函数，你也不能直接调用它们。每一个组件返回一个<a href="https://facebook.github.io/react/contributing/design-principles.html" target="_blank" rel="external">需要渲染什么的描述</a><br>并且这个描述包括用户自定义组件及主机组件。通过组件的递归得到render结果去更改UI树。这是一个不明显但是很强大的区别，因为你不会调用组件函数但是让React自己调用.<br>这意味着如果有必要React有权延迟调用它。在当下的实现中，在单个刻度期间，React递归的走着树并调用所有的要修改的树的render函数。在反应的设计中这是一个共同的主题，<br>一些流行的库实现的是”push”方法，当新数据可用时再执行计算。然而React坚持”pull”方法，计算会被推迟，除非有必要。<br>React不是一个普通的数据处理库，它是用来构建用户界面的。我们认为在app中有独特的优势，因为它知道哪些计算是有意义的哪些没有。如果有些多东西在屏幕外，我们可以<br>延迟它的数据逻辑处理,如果数据到达的速度快于frame的速度，我们可以批量更新，我们可以优先考虑用户交互的工作（点击button的动画效果）来避免dropping frame，<br>不太重要的(从网络获取数据)后台工作</p>
+</blockquote>
+
+    </div>
+
+    
+
+    
+
+    <!-- Comments -->
+    
+
+</div>
+        </section>
+
+    </div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="push"></div>
+
+<footer class="footer-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 footer-about">
+                <h2>About</h2>
+                <p>
+                    
+                </p>
+            </div>
+            
+    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/15/react/design_principles/">设计原则</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/12/react/implemention_notes/">实现说明</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorith</a>
+            </li>
+            
+            <li>
+                <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+
+            
+<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 footer-categories">
+    <h2>Categories</h2>
+    <ul>
+        
+        <li>
+            <a class="footer-post" href="/categories/Git/">Git</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/React-Native/">React Native</a>
+        </li>
+        
+        <li>
+            <a class="footer-post" href="/categories/JS/">JS</a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="list-inline footer-social-icons">
+                    
+                    <li class="list-inline-item">
+                        <a href="https://github.com/zhuxindaba">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-github"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <li class="list-inline-item">
+                        <a href="\#">
+                            <span class="footer-icon-container">
+                                <i class="fa fa-rss"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="footer-copyright">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- After footer scripts -->
+
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Tween Max -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.5/TweenMax.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Custom JavaScript -->
+<script src="/js/main.js"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

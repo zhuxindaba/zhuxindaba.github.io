@@ -123,6 +123,44 @@
 
     <div class="post-header index">
         <h1 class="title">
+            <a href="/2016/07/10/Webpack/multiple_entry_points/">
+                多入口配置
+            </a>
+        </h1>
+        <div class="post-info">
+            
+                <span class="date">2016-07-10</span>
+            
+            
+            
+                <span class="category">
+                    <a href="/categories/Webpack/">Webpack</a>
+                </span>
+            
+        </div>
+    </div>
+
+    
+        <div class="content">
+            <p><strong>前提需要: 代码拆分</strong></p>
+<blockquote>
+<p>如果你需要对不同的HTML页面使用不同的打包文件可以使用多入口拆分点的特性。webpack会立即<br>创建多个打包文件，额外的块文件可以被这些打包文件共享。<br>每一个入口块文件都包含webpack执行时间，所以每个页面加载一个入口块文件（提示：使用CommonsChunkPlugin<br>可以将运行时的东西移到一个单独的块中来避免这个限制）</p>
+</blockquote>
+<p><strong>配置</strong></p>
+<blockquote>
+<p>可以在entry这个属性中使用对象来配置多入口，每个值作为一个入口块，并且对应的键代表了入口<br>块的名称。<br>当使用多入口配置的时候，必须重写默认的<code>output.filename</code>否则每个入口块都会被写在相同的<br>文件中,使用<code>[name]</code>来获得每个入口块的名字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        a: &quot;./a&quot;,</span><br><span class="line">        b: &quot;./b&quot;,</span><br><span class="line">        c: [&quot;./c&quot;, &quot;./d&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;dist&quot;),</span><br><span class="line">        filename: &quot;[name].entry.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+        </div>
+    
+
+</div>
+            
+                
+<div class="post">
+
+    <div class="post-header index">
+        <h1 class="title">
             <a href="/2016/07/10/Webpack/how-to-write-plugin/">
                 如何写插件
             </a>
@@ -602,87 +640,6 @@
 
 </div>
             
-                
-<div class="post">
-
-    <div class="post-header index">
-        <h1 class="title">
-            <a href="/2016/07/03/Webpack/style_sheets/">
-                样式脚本
-            </a>
-        </h1>
-        <div class="post-info">
-            
-                <span class="date">2016-07-03</span>
-            
-            
-            
-                <span class="category">
-                    <a href="/categories/Webpack/">Webpack</a>
-                </span>
-            
-        </div>
-    </div>
-
-    
-        <div class="content">
-            <p><strong>嵌入的样式脚本</strong></p>
-<blockquote>
-<p>通过使用<code>style-loader</code>和<code>css-loader</code>，可以webpack打包的javascript文件中嵌入样式脚本.<br>通过这种方式可以是css模块化，这种方式使用很简单<code>require(&quot;./stylesheet.css&quot;)</code>。</p>
-</blockquote>
-<p><strong>通过npm安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install style-loader css-loader --save-dev</span><br></pre></td></tr></table></figure></p>
-<p><strong>配置</strong></p>
-<blockquote>
-<p>通过一下的方式支持<code>require(xxx.css)</code>这种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // ...</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123; test: /\.css$/, loader: &quot;style-loader!css-loader&quot; &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>对于css预处理语言，可以参照加载器的配置示例，你可以链式的使用它。<br>记住，掌握加载器的执行顺序很难，所以设计好样式让其与顺序无关（但是css文件内的样式顺序<br>还是得依靠的）。<br><strong>使用css</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// in your modules just require the stylesheet</span><br><span class="line">// This has the side effect that a &lt;style&gt;-tag is added to the DOM.</span><br><span class="line">require(&quot;./stylesheet.css&quot;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>分离css打包文件</strong></p>
-<blockquote>
-<p>与<code>extract-text-webpack-plugin</code>结合使用，可以生成一个原生的css文件。<br>使用两种方式实现代码分离</p>
-<ul>
-<li>每个初始块创建一个css文件，然后在其余块中引入（推荐）</li>
-<li>每个初始块创建一个 css 文件，其中同时包含了依赖块中的样式<br>推荐第一种方式是因为可以减少页面初始化时间，在小型多入口项目中第二种方式可以利用缓存来减少<br>http消耗</li>
-</ul>
-</blockquote>
-<p><strong>安装<code>extract-text-webpack-plugin</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install extract-text-webpack-plugin --save</span><br></pre></td></tr></table></figure></p>
-<p><strong>通用</strong></p>
-<blockquote>
-<p>使用这个插件需要标记加载器<br><strong>把css从初始化块中分离到css文件中</strong><br>这个例子适用于多入口以及单页面应用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// webpack.config.js</span><br><span class="line">var ExtractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // The standard entry point and output config</span><br><span class="line">    entry: &#123;</span><br><span class="line">        posts: &quot;./posts&quot;,</span><br><span class="line">        post: &quot;./post&quot;,</span><br><span class="line">        about: &quot;./about&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            // Extract css files</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader&quot;)</span><br><span class="line">            &#125;,</span><br><span class="line">            // Optionally extract less files</span><br><span class="line">            // or any other compile-to-css language</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader!less-loader&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">            // You could also use other loaders the same way. I. e. the autoprefixer-loader</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    // Use the plugin to specify the resulting filename (and add needed behavior to the compiler)</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你将获得以下文件</p>
-<ul>
-<li>posts.js posts.css</li>
-<li>post.js post.css</li>
-<li>about.js about.css</li>
-</ul>
-</blockquote>
-<p><strong>把所有的样式分离到css文件中</strong></p>
-<blockquote>
-<p>使用第二种方式只需要设置<code>allChunks</code>为<code>true</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;style.css&quot;, &#123;</span><br><span class="line">            allChunks: true</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你将会得到以下输出文件</p>
-<ul>
-<li>posts.js</li>
-<li>post.js</li>
-<li>about.js</li>
-<li>style.css</li>
-</ul>
-</blockquote>
-<p><strong>公共块的样式</strong></p>
-<blockquote>
-<p>你可以与<code>CommonsChunkPlugin</code>结合使用分离出一个css文件，在这个示例中公共快也会生成一个<br>css文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&quot;commons&quot;, &quot;commons.js&quot;),</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你会获得以下输出文件</p>
-<ul>
-<li>commons.js commons.css</li>
-<li>posts.js posts.css</li>
-<li>post.js post.css</li>
-<li>about.js about.css</li>
-</ul>
-</blockquote>
-
-        </div>
-    
-
-</div>
-            
         </section>
     </div>
 </div>
@@ -725,6 +682,10 @@
         <ul>
             
             <li>
+                <a class="footer-post" href="/2016/11/15/react/design_principles/">设计原则</a>
+            </li>
+            
+            <li>
                 <a class="footer-post" href="/2016/11/12/react/implemention_notes/">实现说明</a>
             </li>
             
@@ -734,10 +695,6 @@
             
             <li>
                 <a class="footer-post" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
-            </li>
-            
-            <li>
-                <a class="footer-post" href="/2016/11/01/react/react_redux/">redux</a>
             </li>
             
         </ul>
@@ -751,11 +708,11 @@
     <ul>
         
         <li>
-            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
+            <a class="footer-post" href="/categories/Git/">Git</a>
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/Git/">Git</a>
+            <a class="footer-post" href="/categories/Canvas/">Canvas</a>
         </li>
         
         <li>
@@ -763,7 +720,7 @@
         </li>
         
         <li>
-            <a class="footer-post" href="/categories/React/">React</a>
+            <a class="footer-post" href="/categories/JS/">JS</a>
         </li>
         
     </ul>
