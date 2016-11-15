@@ -3,17 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives | zhuxin_blog</title>
+  <title>内部实例的伪实现（思考） | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zhuxin_blog">
-<meta property="og:url" content="http://yoursite.com/archives/page/2/index.html">
+  <meta name="description" content="为什么需要内部实例呢?React的主要特性是你可以重新渲染任何东西，并且你不会重复创建DOM以及重置state.
+
+123ReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);//下面这一行会重新使用已存在的DOMReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);
+
+当组件需要更新时，如何存储必要的信息呢？比如说publicInstances,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内部实例的伪实现（思考）">
+<meta property="og:url" content="http://yoursite.com/2016/11/16/react/internal_instance/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description">
+<meta property="og:description" content="为什么需要内部实例呢?React的主要特性是你可以重新渲染任何东西，并且你不会重复创建DOM以及重置state.
+
+123ReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);//下面这一行会重新使用已存在的DOMReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);
+
+当组件需要更新时，如何存储必要的信息呢？比如说publicInstances,">
+<meta property="og:updated_time" content="2016-11-15T16:59:33.447Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zhuxin_blog">
-<meta name="twitter:description">
+<meta name="twitter:title" content="内部实例的伪实现（思考）">
+<meta name="twitter:description" content="为什么需要内部实例呢?React的主要特性是你可以重新渲染任何东西，并且你不会重复创建DOM以及重置state.
+
+123ReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);//下面这一行会重新使用已存在的DOMReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);
+
+当组件需要更新时，如何存储必要的信息呢？比如说publicInstances,">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -61,210 +74,67 @@
   </div>
 </div>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/server/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.559Z" itemprop="datePublished">Oct 21</time>
+        <section id="main"><article id="post-react/internal_instance" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/16/react/internal_instance/" class="article-date">
+  <time datetime="2016-11-15T16:59:33.447Z" itemprop="datePublished">2016-11-16</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/server/">WEB服务器、代理</a>
+    <h1 class="article-title" itemprop="name">
+      内部实例的伪实现（思考）
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/leanr_tcp_ip/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.555Z" itemprop="datePublished">Oct 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
-    </h1>
-  
+        <blockquote>
+<p>为什么需要内部实例呢?<br>React的主要特性是你可以重新渲染任何东西，并且你不会重复创建DOM以及重置state.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br><span class="line">//下面这一行会重新使用已存在的DOM</span><br><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当组件需要更新时，如何存储必要的信息呢？比如说<code>publicInstances</code>,DOM元素与组件之间的关系。<br>堆栈协调器代码库通过在类中加了一个<code>mount()</code>函数解决这个问题，这种方式有点缺点，正在改进。<br>把<code>mountHost()</code>和<code>mountComposite()</code>分离出来的替代方案是创建了两个类<code>DOMComponent</code>和<code>CompositeComponent</code><br>这两个类都有一个接收<code>element</code>的构造函数，当然还有一个<code>mount()</code>方法返回已镶嵌的节点，用一个工厂方法实例化正确的<br>class来替代顶级<code>mount()</code>方法。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function instantiateComponent(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  if(typeof type === &apos;function&apos;) &#123;</span><br><span class="line">    return new CompositeComponent(type);</span><br><span class="line">  &#125;else if(typeof type === &apos;string&apos;) &#123;</span><br><span class="line">    return new DOMComponent(type);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>CompositeComponent(复杂组件)的实现:</p>
+</blockquote>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/integration/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.550Z" itemprop="datePublished">Oct 21</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/integration/">网关、隧道及中继</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/digestAuthenticate/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.547Z" itemprop="datePublished">Oct 21</time>
-</a>
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civjqwpkb002nbwo0fovjmcd0" class="article-share-link">Share</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/digestAuthenticate/">摘要认证</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/cookie/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.542Z" itemprop="datePublished">Oct 21</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/cookie/">客户端识别与cookie技术</a>
-    </h1>
-  
-
-    </header>
+    </footer>-->
   </div>
-</article>
   
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/cache_2/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.538Z" itemprop="datePublished">Oct 21</time>
-</a>
-      
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/cache_2/">缓存（二）</a>
-    </h1>
   
+    <a href="/2016/11/15/react/design_principles/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">设计原则</div>
+    </a>
+  
+</nav>
 
-    </header>
-  </div>
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/cache_1/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.535Z" itemprop="datePublished">Oct 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/cache_1/">缓存（一）</a>
-    </h1>
-  
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/10/21/http/baseauthentication/" class="archive-article-date">
-  <time datetime="2016-10-20T16:36:41.529Z" itemprop="datePublished">Oct 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/10/21/http/baseauthentication/">基本认证机制</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/07/10/Electron/window.openction/" class="archive-article-date">
-  <time datetime="2016-07-10T14:48:00.278Z" itemprop="datePublished">Jul 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/07/10/Electron/window.openction/">window.open函数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2016/07/10/Electron/environments_variables/" class="archive-article-date">
-  <time datetime="2016-07-10T13:54:32.500Z" itemprop="datePublished">Jul 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/07/10/Electron/environments_variables/">环境变量</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 </section>
         
           

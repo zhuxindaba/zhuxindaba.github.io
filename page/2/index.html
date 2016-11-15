@@ -63,6 +63,106 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-http/server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/server/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.559Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/server/">WEB服务器、代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>代理和网关的对比</strong><br>代理连接的是两个或多个使用相同协议的应用程序，二网关连接的则是两个或多个使用不同协议的<br>端点。网关扮演的是“协议转换器”的角色，即使客户端和服务器使用不同的协议，客户端也可以通过<br>它完成与服务器之间的事务处理</p>
+<p><strong>为什么使用代理</strong></p>
+<ul>
+<li>安全防火墙</li>
+<li>Web缓存</li>
+<li><p>反向代理</p>
+<blockquote>
+<p>代理可以假扮web服务器。这些被称为替代物或者反向代理的代理接受发送给Web服务器的真是请求<br>，但与Web服务器不同的是，他们可以发起与其他服务器的通信，以便按需定位所请求的内容。<br>可以用这些反向代理来提高访问慢速Web服务器上公共内容时的性能。在这种配置中，通常将这些<br>反向代理称为服务器加速器</p>
+</blockquote>
+</li>
+<li><p>内容路由器</p>
+<blockquote>
+<p>代理服务器可以作为“内容路由器”使用，根据因特网流量状况以及内容类型将请求导向特定的Web<br>服务器。<br>内容路由器也可以用来实现各种服务级的请求。</p>
+</blockquote>
+</li>
+<li><p>转码器</p>
+<blockquote>
+<p>代理服务器在将内容发送给客户端之前，可以修改内容的主体格式。在这些数据表示法之间进行的<br>透明转换被称为转码<br>转码代理可以在传输GIF图片时，将其转换成JPEG图片，以减小尺寸，也可以对图片进行压缩，同样<br>也可以对文本文件进行压缩，代理甚至可以在传输文档的过程中将其转换成外语。</p>
+</blockquote>
+</li>
+<li><p>匿名者</p>
+<blockquote>
+<p>匿名者代理会主动从HTTP报文中删除身份特性（比如客户端IP地址、From首部、Referer首部、<br>cookie、URI的会话ID）从而提供高度的私密性和匿名性</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>代理会何去何从</strong></p>
+<ol>
+<li>怎样将代理部署到网络中去</li>
+<li>怎样将代理以层级方式连接在一起</li>
+<li>怎样先将网络流量导入到代理服务器中</li>
+</ol>
+<p><strong>代理服务器的部署</strong></p>
+<ul>
+<li>出口代理</li>
+<li>访问（入口）代理</li>
+<li><p>反向代理</p>
+<blockquote>
+<p>代理通常会被部署在网络边缘,在Web服务器之前，作为代替物（反向代理），在那里他们可以处理<br>所有传送给Web服务器的请求，并只在必要时向Web服务器请求资源，反向代理通常会直接冒用Web<br>服务器的名字和ip地址，这样所有的请求就会被发送给代理而不是服务器了</p>
+</blockquote>
+</li>
+<li><p>网络交换代理</p>
+</li>
+</ul>
+<p><strong>代理的层次结构</strong><br>可以通过代理的层次结构将代理级联起来，在代理的层次结构中，会将报文从一个代理传给另一个代<br>理，直到最终抵达原始服务器为止（然后通过代理传回给客户端）<br><strong>代理层次结构中的路由</strong><br>代理服务器可以根据众多因素，将报文转发给一个不断变化的代理服务器和原始服务器集。比如：</p>
+<ul>
+<li>负载均衡</li>
+<li>地理位置附近的路由</li>
+<li>协议/类型路由<blockquote>
+<p>子代理可能会根据不同的URI将报文转发到不同的父代理和原始服务器上去，某些特定类型的URI<br>可能会通过一些特殊的代理服务器转发请求，一遍进行特殊的协议处理。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>代理如何获取流量</strong><br>有四种方式可以使客户端流量流向代理</p>
+<ol>
+<li>修改客户端</li>
+<li>修改网络</li>
+<li>修改DNS的命名空间</li>
+<li>修改Web服务器</li>
+</ol>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="civjqwpia001tbwo0njryat0g" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/leanr_tcp_ip" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/21/http/leanr_tcp_ip/" class="article-date">
@@ -129,7 +229,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="civi9w66g002a5oo0wbcbegp1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="civjqwpiz0024bwo06e7swdvh" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -203,7 +303,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civi9w66i002c5oo0v1m3g9xk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civjqwpig001vbwo0eizisjwr" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -243,7 +343,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="civi9w66e00275oo04b5deotd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="civjqwpi4001qbwo0k2lxw1zl" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -328,7 +428,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="civi9w66900255oo0kl51mqqd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="civjqwpi2001obwo00zbuimpm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -384,7 +484,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civi9w66500235oo0j8um3dx9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civjqwpi0001lbwo0og36rvcx" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -484,7 +584,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civi9w65x001y5oo0lezv5uyf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civjqwphy001jbwo05x5xhrsg" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -542,7 +642,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civi9w66300205oo06ssvoyv4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civjqwphr001ebwo0n2pz2iou" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -583,7 +683,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civi9w62f000g5oo0nk4zdhmr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civjqwpf20009bwo0heio1izj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -624,51 +724,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="civi9w61c00035oo0jar5fc9k" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/supported_chrome_line_switches" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Electron/supported_chrome_line_switches/" class="article-date">
-  <time datetime="2016-07-10T13:48:42.251Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Electron/supported_chrome_line_switches/">支持的Chrom命令行开关</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>可以在你的项目的main脚本的<code>ready</code>事件前使用<code>app.commondLine.appendSwitch</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app&#125; = require(&apos;electron&apos;);</span><br><span class="line">app.commandLine.appendSwitch(&apos;remote-debugging-port&apos;, &apos;8315&apos;);</span><br><span class="line">app.commandLine.appendSwitch(&apos;host-rules&apos;, &apos;MAP * 127.0.0.1&apos;);</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  // Your code here</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>API TODO</strong></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="civi9w61t00095oo0eqhm6ftg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="civjqwpe40000bwo08srnvw8y" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -692,7 +748,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
     </div>
   </div>
 
@@ -702,6 +758,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
+          </li>
         
           <li>
             <a href="/2016/11/15/react/design_principles/">设计原则</a>
@@ -719,10 +779,6 @@
             <a href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
           </li>
         
-          <li>
-            <a href="/2016/11/01/react/react_redux/">redux</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -734,7 +790,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
