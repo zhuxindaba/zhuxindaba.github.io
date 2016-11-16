@@ -63,6 +63,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-react/life_cycle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/01/react/life_cycle/" class="article-date">
+  <time datetime="2016-10-31T16:02:35.210Z" itemprop="datePublished">2016-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/01/react/life_cycle/">react生命周期</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="组件的生命周期说明"><a href="#组件的生命周期说明" class="headerlink" title="组件的生命周期说明"></a>组件的生命周期说明</h2><hr>
+<h3 id="constructor的说明"><a href="#constructor的说明" class="headerlink" title="constructor的说明"></a>constructor的说明</h3><p>组建初始化时运行，仅一次</p>
+<h3 id="componentWillMount-组件即将镶嵌"><a href="#componentWillMount-组件即将镶嵌" class="headerlink" title="componentWillMount(组件即将镶嵌)"></a>componentWillMount(组件即将镶嵌)</h3><p>在初始化渲染之前立刻调用,如果在这个方法内调用setState()方法,render()将会感知到更新后的state,将会执行仅一次,尽管state改变了。  </p>
+<h3 id="componentDidMount-组件已经镶嵌"><a href="#componentDidMount-组件已经镶嵌" class="headerlink" title="componentDidMount(组件已经镶嵌)"></a>componentDidMount(组件已经镶嵌)</h3><p>仅调用一次<br>在组件初始化渲染之后立刻调用一次,在生命周期的这个时间点,组件拥有一个DOM展现,你可以通过ReactDOM.findDOMNode(this)获取整个dom节点<br>也可以访问dom组件中的ref属性代表的组件,可以在该方法中发送ajax请求<br>原先的this.getDOMNode()已经被弃用了，</p>
+<h3 id="componentWillReceiveProps-组件即将接收props"><a href="#componentWillReceiveProps-组件即将接收props" class="headerlink" title="componentWillReceiveProps(组件即将接收props)"></a>componentWillReceiveProps(组件即将接收props)</h3><p>在组件接收到新的props的时候调用,在初始化渲染的时候,改方法不会调用,用此函数可以作为react在prop传入之后,render()渲染之前更新state的机会。<br>老的props可以通过this.props获取到。在该函数中调用this.setState()将不会引起第二次渲染。  </p>
+<h3 id="shouldComponentUpdate-组件应该被更新"><a href="#shouldComponentUpdate-组件应该被更新" class="headerlink" title="shouldComponentUpdate(组件应该被更新)"></a>shouldComponentUpdate(组件应该被更新)</h3><p>在接受到新的props或者state,将要渲染之前调用。该方法在初始化渲染的时候不会调用,在使用forceUpdate方法的时候也不会。如果确定新的props和state<br>不会导致组件更新，则此处应该返回false.    </p>
+<pre><code>shouldComponentUpdate() {
+    return nextProps.id != this.props.id;
+}
+</code></pre><p>如果shouldComponentUpdate返回false,则render()将不会执行,直到下一次state改变(另外componentWillUpdate和componentDidUpdate也不会被调用)<br>默认情况下,shouldComponentUpdate总会返回true,使用shouldComponentUpdate可以提升应用的性能  </p>
+<h3 id="componentWillUpdate-组件即将更新"><a href="#componentWillUpdate-组件即将更新" class="headerlink" title="componentWillUpdate(组件即将更新)"></a>componentWillUpdate(组件即将更新)</h3><p>在接受到新的props和state之前立刻调用，在初始化渲染的时候该方法不会被调用。使用该方法做一些更新之前的准备工作。<br><code>注:不能在该方法中使用this.setState()如果需要更新state来相应某个prop的改变请使用componentWillReceiveProps()</code></p>
+<h3 id="componentDidUpdate-组件已经更新"><a href="#componentDidUpdate-组件已经更新" class="headerlink" title="componentDidUpdate(组件已经更新)"></a>componentDidUpdate(组件已经更新)</h3><p>在组件的更新已经同步到DOM中之后立刻被调用。改方法不会在初始化渲染的时候调用。使用该方法可以在组件更新之后操作DOM元素<br><code>使用该方法，你仍然可以获取DOM节点</code></p>
+<h3 id="componentWillUnmount-组件将要移除"><a href="#componentWillUnmount-组件将要移除" class="headerlink" title="componentWillUnmount(组件将要移除)"></a>componentWillUnmount(组件将要移除)</h3><p>在组件从DOM中移除的时候立刻被调用。<br>在该方法中执行任何必要的清理，比如无效的定时器，或者清除在componentDidMount中创建的DOM元素</p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="civl6rgxi002vywo03mljwim3" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/server" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/21/http/server/" class="article-date">
@@ -153,7 +206,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="civjqwpia001tbwo0njryat0g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="civl6rgw6001zywo0aa68nojj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -229,7 +282,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="civjqwpiz0024bwo06e7swdvh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="civl6rgvs001uywo0xeh8pfbx" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -303,7 +356,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civjqwpig001vbwo0eizisjwr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civl6rgvx001wywo0q22qi304" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -343,7 +396,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="civjqwpi4001qbwo0k2lxw1zl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="civl6rgvp001sywo0ahm1jsoc" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -428,7 +481,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="civjqwpi2001obwo00zbuimpm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="civl6rgvl001qywo06r9zr1hu" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -484,7 +537,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civjqwpi0001lbwo0og36rvcx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civl6rgvd001lywo09evyi093" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -584,7 +637,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civjqwphy001jbwo05x5xhrsg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civl6rgvi001oywo0vnmvn09j" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -642,7 +695,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civjqwphr001ebwo0n2pz2iou" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civl6rgvg001mywo0dfu04hti" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -683,48 +736,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civjqwpf20009bwo0heio1izj" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/environments_variables" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Electron/environments_variables/" class="article-date">
-  <time datetime="2016-07-10T13:54:32.500Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Electron/environments_variables/">环境变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>TODO</strong></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="civjqwpe40000bwo08srnvw8y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civl6rgr6000bywo02jzakji3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -748,7 +760,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -758,6 +770,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+          </li>
         
           <li>
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
@@ -775,10 +791,6 @@
             <a href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorithm</a>
           </li>
         
-          <li>
-            <a href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -790,7 +802,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

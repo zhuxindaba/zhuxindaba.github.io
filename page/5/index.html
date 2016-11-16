@@ -63,6 +63,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Webpack/using_plugin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/30/Webpack/using_plugin/" class="article-date">
+  <time datetime="2016-06-30T14:06:38.398Z" itemprop="datePublished">2016-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/30/Webpack/using_plugin/">使用插件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>内置插件</strong></p>
+<blockquote>
+<p>通过在webpack配置文件中添加<code>plugins</code>字段来使用插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.ResolverPlugin([</span><br><span class="line">            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(&quot;bower.json&quot;, [&quot;main&quot;])</span><br><span class="line">        ], [&quot;normal&quot;, &quot;loader&quot;])</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>其余插件</strong></p>
+<blockquote>
+<p>其他非内置插件通过<code>npm</code>或者其它方式来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install component-webpack-plugin</span><br></pre></td></tr></table></figure></p>
+<p>通过下面的方式来使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var ComponentPlugin = require(&quot;component-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new ComponentPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当通过npm安装第三方插件时，建议使用这种方式<a href="https://www.npmjs.com/package/webpack-load-plugins" target="_blank" rel="external">https://www.npmjs.com/package/webpack-load-plugins</a>,<br>它会检查所有安装的第三方依赖插件并且在你需要用的时候去加载</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/using_plugin/" data-id="civl6rgy00035ywo0tkro5lgs" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Webpack/using_loaders" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/29/Webpack/using_loaders/" class="article-date">
@@ -131,7 +181,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/29/Webpack/using_loaders/" data-id="civjqwph40018bwo0r3lfemi7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/29/Webpack/using_loaders/" data-id="civl6rgux001cywo04lg6vf2m" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -267,7 +317,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/usage/" data-id="civjqwphv001hbwo0pyrimofm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/usage/" data-id="civl6rguy001eywo0vtz8yu4c" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -321,7 +371,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/installation/" data-id="civjqwpg5000pbwo0si4de1s8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/installation/" data-id="civl6rgs7000rywo01kb5cr9r" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -382,7 +432,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/what_is_webpack/" data-id="civjqwpj10026bwo0v2u7gpdy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/what_is_webpack/" data-id="civl6rgva001iywo07yqi22l1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -500,7 +550,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/27/Webpack/module_system_styles/" data-id="civjqwpg8000sbwo0q43ajcxy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/27/Webpack/module_system_styles/" data-id="civl6rgse000uywo0se4u1ygb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -565,7 +615,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/js/aboutThis/" data-id="civjqwpix0023bwo0p2e1zxmz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/js/aboutThis/" data-id="civl6rgwb0023ywo0ziarmrfa" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -613,7 +663,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="civjqwphg001cbwo0nj6i11wz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="civl6rgv0001gywo0bwc926wj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -653,7 +703,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/js/closureAndScope/" data-id="civjqwpjm0027bwo0ii7zic9i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/15/js/closureAndScope/" data-id="civl6rgwe0026ywo0xewzuozb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -701,55 +751,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/14/js/functionAndBlockScope/" data-id="civjqwpjr0029bwo0nob5am9i" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-canvas/get_started" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/07/canvas/get_started/" class="article-date">
-  <time datetime="2016-06-06T16:02:53.813Z" itemprop="datePublished">2016-06-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Canvas/">Canvas</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/07/canvas/get_started/">画布学习的总结</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>canvas元素的大小与绘图表面积的大小</strong></p>
-<blockquote>
-<p>canvas元素实际上有两套尺寸，一个是元素本身的大小，还有一个是元素绘图表面的大小。当设置<br>元素的width和height属性时，实际上同时修改了该元素本身的大小与元素绘图表面的大小。然而如<br>果通过CSS来设定canvas元素的大小，那么只会改变元素本身的大小，而不会影响到绘图表面。当元<br>素的大小不符合绘图表面的大小时，浏览器就会对绘图表面进行缩放</p>
-</blockquote>
-<p><strong>Canvas状态的保存与恢复</strong></p>
-<blockquote>
-<p>Canvas的API提供了两个名叫save()和restore()的方法，用于保存及恢复当前canvas绘图环境的<br>所有属性。绘图环境的save()方法将当前的绘图环境压入栈顶顶部。对应的restore()方法则会从堆<br>栈顶部弹出一组状态信息，并据此恢复当前绘图环境的各个状态。<br>save():将当前的canvas状态推送到一个保存canvas状态的堆栈顶部。canvas状态包括了当前的坐<br>标变换信息，剪辑区域以及所有canvas绘图环境对象的属性，包括strokeStyle、fillStyle、与<br>globalCompositeOperation等，canvas状态并不包括当前的路径或位图。只能通过beginPath()<br>来重置路径<br>restore():将canvas状态堆栈顶部的条目弹出。原来保存于栈顶的那一组状态，在弹出之后，就被<br>设置成canvas当前的状态了，因此，在调用save()和restore()方法之间，对canvas状态所进行的<br>修改，其效果只会持续至restore()方法调用之前</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/canvas/get_started/" data-id="civjqwpjt002bbwo05370i0fn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/14/js/functionAndBlockScope/" data-id="civl6rgwg0028ywo0f5eagc7z" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -773,7 +775,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -783,6 +785,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+          </li>
         
           <li>
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
@@ -800,10 +806,6 @@
             <a href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorithm</a>
           </li>
         
-          <li>
-            <a href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -815,7 +817,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

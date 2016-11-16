@@ -63,6 +63,83 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Webpack/optimization" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/04/Webpack/optimization/" class="article-date">
+  <time datetime="2016-07-04T15:17:18.642Z" itemprop="datePublished">2016-07-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/04/Webpack/optimization/">优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>压缩</strong></p>
+<blockquote>
+<p>通过简单的配置可以让webpack压缩你的javascript代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-minimize 或new webpack.optimize.UglifyJsPlugin()</span><br></pre></td></tr></table></figure></p>
+<p>这是一个简单并有效优化你应用的方式<br>如果你已经知道webpack给每个模块和分块提供了id去标识他们，webpack可以通过一个简单的配置<br>改变id的分配，通过给常用模块最短的id进行优化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-dedupe 或new webpack.optimize.DedupePlugin()</span><br></pre></td></tr></table></figure></p>
+<p>入口块有更高的文件大小优先级</p>
+</blockquote>
+<p><strong>去重</strong></p>
+<blockquote>
+<p>如果使用一些库时，会发现一些文件是相同的，webpack可以找到这些文件并且去重，这可以阻止<br>在打包文件中包含重复的代码，并且在运行时提供一个复制函数，这不会影响语法问题，可以这样<br>嵌入它<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-dedupe 或 new webpack.optimize.DedupePlugin()</span><br></pre></td></tr></table></figure></p>
+<p>这个功能会在入口快之前添加。</p>
+</blockquote>
+<p><strong>分块</strong></p>
+<blockquote>
+<p>当在写代码时，可能你已经添加了一下代码分离点来按需加载，在编译之后你可能会发现有太多特别<br>小的分块，Http请求负担加重，幸运的是，你可以后置的去处理这些块文件，可以有两种配置。</p>
+<ul>
+<li><p>限制块文件的最大个数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-max-chunks 15或者new webpack.optimize.LimitChunkCountPlugin(&#123;maxChunks: 15&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>限制最小块文件的大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-min-chunk-size 10000或new webpack.optimize.MinChunkSizePlugin(&#123;minChunkSize: 10000&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>webpack会小心的处理分块合并（优先合并有重复的分块），任何东西都不会合并到入口块中，所以<br>不会影响首页加载时间</p>
+</blockquote>
+<p><strong>单页面应用</strong></p>
+<blockquote>
+<p>webpack就是用来处理单页面应用而设计和优化的。<br>你或许已经分离应用到多个分块，根据不同的路由加载不同的块，入口块只包含了路由和一些库，但<br>没有实质内容，这种做法对于应用中的浏览切换时很好的，但是首页加载需要两次请求：一次是路由<br>一次是页面内容。<br>如果你使用了 HTML5 的 history api 来做页面内容和 url 的一一对应，那么服务端就能根据<br>url来知道请求的具体单页应用中的哪一个页面.这样，可以通过服务端直接同时输出请求页面的处理分块，<br>利用浏览器的并行加载来节省网络请求时间.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;entry-chunk.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;3.chunk.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>你可以从stats中提取出分块的名字(<code>stats-webpack-plugin</code>导出构建的stats)</p>
+</blockquote>
+<p><strong>多页面应用</strong></p>
+<blockquote>
+<p>当你编译多页面应用时，你想在页面之间共享公共的代码，这对于webpack很简单，只需要使用多个<br>入口点``<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        p3: &quot;./page3&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].entry.chunk.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这会生成多个入口文件，<code>p1.entry.chunk.js</code>,<code>p2.entry.chunk.js</code>,<code>p3.entry.chunk.js</code>，<br>但是他们可以共享额外的块文件。<br>如果入口块有使用相同的模块，<code>CommonsChunkPlugin</code>可以找出相同的模块然后把他们提取出来<br>放到一个公共分块中,这样，页面中只需要引入两个 script，一个是公共分块另一个则是该页面的入口块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var CommonsChunkPlugin = require(&quot;webpack/lib/optimize/CommonsChunkPlugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        p3: &quot;./page3&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].entry.chunk.js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CommonsChunkPlugin(&quot;commons.chunk.js&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样会生成<code>p1.entry.chunk.js</code>、<code>p2.entry.chunk.js</code> 和 <code>p3.entry.chunk.js</code> 以及<br><code>commons.chunk.js</code>。首先加载 commons.chunk.js，然后加载对应的入口块。<br>你可以通过选择入口块生成多个公共块，公共块也可以嵌套使用.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var CommonsChunkPlugin = require(&quot;webpack/lib/optimize/CommonsChunkPlugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        p3: &quot;./page3&quot;,</span><br><span class="line">        ap1: &quot;./admin/page1&quot;,</span><br><span class="line">        ap2: &quot;./admin/page2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CommonsChunkPlugin(&quot;admin-commons.js&quot;, [&quot;ap1&quot;, &quot;ap2&quot;]),</span><br><span class="line">        new CommonsChunkPlugin(&quot;commons.js&quot;, [&quot;p1&quot;, &quot;p2&quot;, &quot;admin-commons.js&quot;])</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">// &lt;script&gt;s required:</span><br><span class="line">// page1.html: commons.js, p1.js</span><br><span class="line">// page2.html: commons.js, p2.js</span><br><span class="line">// page3.html: p3.js</span><br><span class="line">// admin-page1.html: commons.js, admin-commons.js, ap1.js</span><br><span class="line">// admin-page2.html: commons.js, admin-commons.js, ap2.js</span><br></pre></td></tr></table></figure></p>
+<p>高级用法，公共块的代码也可以直接运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var CommonsChunkPlugin = require(&quot;webpack/lib/optimize/CommonsChunkPlugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        commons: &quot;./entry-for-the-commons-chunk&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CommonsChunkPlugin(&quot;commons&quot;, &quot;commons.js&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>查看<a href="https://github.com/webpack/webpack/tree/master/examples/multiple-entry-points" target="_blank" rel="external"><code>multiple-entry-points example</code></a><br><a href="https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks" target="_blank" rel="external"><code>advanced multiple-commons-chunks example.</code></a></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/04/Webpack/optimization/" data-id="civl6rguu001aywo08zzpfjf2" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Electron/quik_start" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/04/Electron/quik_start/" class="article-date">
@@ -121,7 +198,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="civjqwpex0007bwo0hem7efr1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="civl6rgr3000aywo0wjac0tel" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -212,7 +289,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="civjqwpgz0014bwo0ywrqdyno" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="civl6rgup0018ywo0vt0poz9s" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -276,7 +353,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Electron/supported_platfroms/" data-id="civjqwper0005bwo0arsax8kl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Electron/supported_platfroms/" data-id="civl6rgr9000dywo01ai9vkjc" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -339,7 +416,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Electron/what_is_electron/" data-id="civjqwpff000cbwo09dvypbml" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Electron/what_is_electron/" data-id="civl6rgrl000fywo0t30x1ik5" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -415,7 +492,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/01/Webpack/codesplitting/" data-id="civjqwpg2000nbwo0d2i0sr6d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/01/Webpack/codesplitting/" data-id="civl6rgs6000qywo0tt4fczcy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -485,7 +562,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/amd/" data-id="civjqwpgp000ybwo0sac44znv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/amd/" data-id="civl6rguj0015ywo0jjn45fsw" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -554,7 +631,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/commonjs/" data-id="civjqwpgt0010bwo0y9gy82wf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/commonjs/" data-id="civl6rguk0016ywo02m157uiz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -607,7 +684,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/troubleshooting/" data-id="civjqwpgw0012bwo05dgnknzb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/troubleshooting/" data-id="civl6rgug0014ywo0btoawp2z" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -653,57 +730,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/devtools/" data-id="civjqwpfq000gbwo0nrb21iiq" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/using_plugin" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/30/Webpack/using_plugin/" class="article-date">
-  <time datetime="2016-06-30T14:06:38.398Z" itemprop="datePublished">2016-06-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/Webpack/using_plugin/">使用插件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>内置插件</strong></p>
-<blockquote>
-<p>通过在webpack配置文件中添加<code>plugins</code>字段来使用插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var webpack = require(&quot;webpack&quot;);</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.ResolverPlugin([</span><br><span class="line">            new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(&quot;bower.json&quot;, [&quot;main&quot;])</span><br><span class="line">        ], [&quot;normal&quot;, &quot;loader&quot;])</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>其余插件</strong></p>
-<blockquote>
-<p>其他非内置插件通过<code>npm</code>或者其它方式来安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install component-webpack-plugin</span><br></pre></td></tr></table></figure></p>
-<p>通过下面的方式来使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var ComponentPlugin = require(&quot;component-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        new ComponentPlugin()</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当通过npm安装第三方插件时，建议使用这种方式<a href="https://www.npmjs.com/package/webpack-load-plugins" target="_blank" rel="external">https://www.npmjs.com/package/webpack-load-plugins</a>,<br>它会检查所有安装的第三方依赖插件并且在你需要用的时候去加载</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/using_plugin/" data-id="civjqwpjv002dbwo0envx4b21" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/devtools/" data-id="civl6rgrw000lywo0xixk36w4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -727,7 +754,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -737,6 +764,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+          </li>
         
           <li>
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
@@ -754,10 +785,6 @@
             <a href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorithm</a>
           </li>
         
-          <li>
-            <a href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -769,7 +796,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

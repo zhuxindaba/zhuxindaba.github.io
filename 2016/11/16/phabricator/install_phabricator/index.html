@@ -3,45 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>网关、隧道及中继 | zhuxin_blog</title>
+  <title>phabricator的安装 | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器
-HTTP/*: 服务端Web网关
-
-请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议
-
-HTTP/HTTPS：服务器端安全网关
-
-一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用普通的HTTP浏览web内容，单网关会自动加密用户的对话
-
-HTTPS/HT">
+  <meta name="description" content="nginx的安装
+终于完成了phabricator的安装了。。。。明天记录笔记!">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网关、隧道及中继">
-<meta property="og:url" content="http://yoursite.com/2016/10/21/http/integration/index.html">
+<meta property="og:title" content="phabricator的安装">
+<meta property="og:url" content="http://yoursite.com/2016/11/16/phabricator/install_phabricator/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description" content="网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器
-HTTP/*: 服务端Web网关
-
-请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议
-
-HTTP/HTTPS：服务器端安全网关
-
-一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用普通的HTTP浏览web内容，单网关会自动加密用户的对话
-
-HTTPS/HT">
-<meta property="og:updated_time" content="2016-10-20T16:36:41.551Z">
+<meta property="og:description" content="nginx的安装
+终于完成了phabricator的安装了。。。。明天记录笔记!">
+<meta property="og:updated_time" content="2016-11-16T17:11:58.773Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="网关、隧道及中继">
-<meta name="twitter:description" content="网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器
-HTTP/*: 服务端Web网关
-
-请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议
-
-HTTP/HTTPS：服务器端安全网关
-
-一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用普通的HTTP浏览web内容，单网关会自动加密用户的对话
-
-HTTPS/HT">
+<meta name="twitter:title" content="phabricator的安装">
+<meta name="twitter:description" content="nginx的安装
+终于完成了phabricator的安装了。。。。明天记录笔记!">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -89,14 +65,14 @@ HTTPS/HT">
   </div>
 </div>
       <div class="outer">
-        <section id="main"><article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-phabricator/install_phabricator" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/21/http/integration/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.550Z" itemprop="datePublished">2016-10-21</time>
+    <a href="/2016/11/16/phabricator/install_phabricator/" class="article-date">
+  <time datetime="2016-11-16T14:15:53.637Z" itemprop="datePublished">2016-11-16</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
+    <a class="article-category-link" href="/categories/phabricator/">phabricator</a>
   </div>
 
   </div>
@@ -107,7 +83,7 @@ HTTPS/HT">
         
   
     <h1 class="article-title" itemprop="name">
-      网关、隧道及中继
+      phabricator的安装
     </h1>
   
 
@@ -115,45 +91,14 @@ HTTPS/HT">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器</strong></p>
-<p><strong>HTTP/*: 服务端Web网关</strong></p>
-<blockquote>
-<p>请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议</p>
-</blockquote>
-<p><strong>HTTP/HTTPS：服务器端安全网关</strong></p>
-<blockquote>
-<p>一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用<br>普通的HTTP浏览web内容，单网关会自动加密用户的对话</p>
-</blockquote>
-<p><strong>HTTPS/HTTP客户端安全加速器网关</strong></p>
-<blockquote>
-<p>HTTPS/HTTP网关位于Web服务器之前，通常可以作为不可见的拦截网关或者反向代理使用，他们接<br>收安全的HTTPS流量，对安全流量进行解密，并向Web服务器发送普通的HTTP请求。</p>
-</blockquote>
-<p><strong>隧道</strong></p>
-<blockquote>
-<p>Web隧道，这种方式可以通过HTTP应用程序访问使用非HTTP协议的应用程序。Web隧道允许用户通过<br>非HTTP连接发送非HTTP流量，这样就可以在HTTP上捎带其他协议数据了。使用Web隧道最常见的原因<br>就是要在HTTP连接中嵌入非HTTP流量，这样，这类流量就可以穿过只允许Web流量通过的防火墙了。</p>
-</blockquote>
-<p><strong>用CONNECT建立HTTP隧道</strong></p>
-<blockquote>
-<p>Web隧道是用HTTP的CONNECT方法建立起来的。CONNECT并不是HTTP/1.1核心规范的一部分，但却是<br>一种得到广泛应用的扩展。CONNECT方法请求隧道网关创建一条到达任意目的服务器和端口的TCP连接，<br>并对客户端和服务器之间的后继数据进行盲转发。通过CONNECT方法可以与使用任意协议的任意服务器<br>建立TCP连接。</p>
-</blockquote>
-<p><strong>CONNECT请求</strong></p>
-<blockquote>
-<p>除了起始行之外语法与其余HTTP方法类似<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONNECT host.netspace.com:443 http/1.0</span><br><span class="line">User-agent: Mozilla/4.0</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>CONNECT响应</strong></p>
-<blockquote>
-<p>发送了请求之后，客户端会等待来自网关的响应，和普通HTTP报文一样，响应码200表示成功，按照<br>惯例，响应中的响应短语通常被设置为”Connection Established”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 Connection Established</span><br><span class="line">Proxy-agent: Netscape-Proxy/1.1</span><br></pre></td></tr></table></figure></p>
-<p>与普通HTTP响应不同，这个响应并不需要包含Content-Type首部。此时连接只是对原始字节进行<br>转接，不再是报文的承载者，所以不需要使用内容类型了。</p>
-</blockquote>
-<p><strong>中继</strong></p>
-<blockquote>
-<p>HTTP中继是没有完全遵循HTTP规范的简单HTTP代理。中继负责处理HTTP中建立连接的部分，然后<br>对字节进行盲转发。某些简单中继实现中存在一个更常见的问题是，由于它们无法正确处理Connection<br>首部，所以有潜在的挂起keep-alive连接的可能。</p>
+        <h3 id="nginx的安装"><a href="#nginx的安装" class="headerlink" title="nginx的安装"></a>nginx的安装</h3><blockquote>
+<p>终于完成了phabricator的安装了。。。。明天记录笔记!</p>
 </blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civl6rgvx001wywo0q22qi304" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="civl6rgwj002aywo0hbfzkdm4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -162,19 +107,10 @@ HTTPS/HT">
     
 <nav id="article-nav">
   
-    <a href="/2016/10/21/http/leanr_tcp_ip/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          在浏览器输入URL后，发生了什么?
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/10/21/http/digestAuthenticate/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/11/16/react/internal_instance/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">摘要认证</div>
+      <div class="article-nav-title">内部实例的伪实现（思考）</div>
     </a>
   
 </nav>
