@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>了解Vue | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="介绍
+vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？
+
+和React的比较
+React和Vue有很多相似之处:
+
+利用虚拟DOM
+提供了reactive(反应性)和可组合的视图组件在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解Vue">
+<meta property="og:url" content="http://yoursite.com/2016/11/17/vue/movitation_design/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="介绍
+vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？
+
+和React的比较
+React和Vue有很多相似之处:
+
+利用虚拟DOM
+提供了reactive(反应性)和可组合的视图组件在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很">
+<meta property="og:updated_time" content="2016-11-17T16:21:29.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="了解Vue">
+<meta name="twitter:description" content="介绍
+vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？
+
+和React的比较
+React和Vue有很多相似之处:
+
+利用虚拟DOM
+提供了reactive(反应性)和可组合的视图组件在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-vue/movitation_design" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/17/vue/movitation_design/" class="article-date">
+  <time datetime="2016-11-17T11:43:37.495Z" itemprop="datePublished">2016-11-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Vue/">Vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      了解Vue
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
+<p>vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。<br>另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？</p>
+</blockquote>
+<h3 id="和React的比较"><a href="#和React的比较" class="headerlink" title="和React的比较"></a>和React的比较</h3><blockquote>
+<p>React和Vue有很多相似之处:</p>
+<ul>
+<li>利用虚拟DOM</li>
+<li>提供了reactive(反应性)和可组合的视图组件<br>在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很相似。我们想保证的不仅<br>有技术上的准确也要确保技术的平衡，我们找出React哪里优于Vue，比如，React庞大的生态圈以及自定义渲<br>染器的丰富性。</li>
+</ul>
+</blockquote>
+<h5 id="性能（渲染性能）"><a href="#性能（渲染性能）" class="headerlink" title="性能（渲染性能）"></a>性能（渲染性能）</h5><blockquote>
+<p>Vue胜过React，当渲染UI时，DOM的操作通常是非常昂贵的，没有库可以使那些原生的操作更快，我们能做的<br>最好的就是:</p>
+<ol>
+<li>尽量减少必要的DOM变化的数量，React和Vue都使用了虚拟DOM来解决这个问题。</li>
+<li>尽可能在顶层的DOM操作上添加较小的开销(纯js计算)，这里是React和Vue的区别。<br>javascript开销和计算必要的DOM操作机制有直接关系，Vue和React都利用虚拟DOM来达到它，但是Vue的实现更<br>轻量级，因此比React的开销更少。<br>React和Vue都提供了功能组件，他们是stateless，instanceless的因此需要的开销很少。当它们用于性能关键<br>的场景中，Vue更快，为了证明这个，我们渲染1万个item100次，强烈建议自己实践，因为它和软件、浏览器相关。<br>相关比较如下:</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">                  Vue       React</span><br><span class="line">Fatest            23ms      63ms</span><br><span class="line">Mediam            42ms      81ms</span><br><span class="line">Average           51ms      94ms</span><br><span class="line">95thPerc.         73ms      164ms</span><br><span class="line">Slowest           343ms     453ms</span><br></pre></td></tr></table></figure>
+<h5 id="更新性能"><a href="#更新性能" class="headerlink" title="更新性能"></a>更新性能</h5><blockquote>
+<p>在React中，当一个组件的state改变了，它会触发整个组件的sub-tree的重新渲染，为了避免child组件不必要<br>的渲染，你需要在该组件中使用<code>shouldComponentUpdate</code>并定义不变的结构，而在Vue中，在渲染过程中，会自<br>动的追踪组件的依赖项，所以系统会精确的知道哪个组件需要正真的重新渲染。这就意味着未优化的Vue比未优化的<br>React要快。由于Vue的加强了渲染性能，即使React进行了全部的优化操作，通常也比Vue慢。</p>
+</blockquote>
+<h5 id="在开发过程中"><a href="#在开发过程中" class="headerlink" title="在开发过程中"></a>在开发过程中</h5><blockquote>
+<p>虽然在生产环境中的性能指标是非常重要的，因为这和用户体验相关联。但是在开发时的性能仍然重要，因为这与<br>我们开发者相关联.<br>Vue和React在大多数程序中开发可以保持足够快速。但是，在高帧速率的可视化或动画时，Vue每秒处理10帧，而<br>React每秒只有1帧。这是因为在开发环境中React需要检查大量的不变量，这是用来提示一些重要的错误或警告用的。<br>当然在Vue中也是同意这是很重要的，但是当执行这些检查时，我们对性能保持密切关注。</p>
+</blockquote>
+<h5 id="HTML-amp-CSS"><a href="#HTML-amp-CSS" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h5><blockquote>
+<p>在React中，所有的东西是avascript，虽然听起来很简单且高雅但是当你向下挖掘时，在javascript中写HTML和CSS，<br>当解决问题时，会很痛苦。而在Vue中，我们信奉web的技术并将它们，将css写在html顶部。</p>
+<p>####### JSX vs Templates<br>在React中，所有的组件在JSX中来表示他们的UI，下面是个例子:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">render () &#123;</span><br><span class="line">  let &#123; items &#125; = this.props</span><br><span class="line">  let children</span><br><span class="line">  if (items.length &gt; 0) &#123;</span><br><span class="line">    children = (</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &#123;items.map(item =&gt;</span><br><span class="line">          &lt;li key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/li&gt;</span><br><span class="line">        )&#125;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    children = &lt;p&gt;No items found.&lt;/p&gt;</span><br><span class="line">  &#125;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&apos;list-container&apos;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>JSX有以下优点：</p>
+<ul>
+<li>使用编程语言（js）构建你的视图。</li>
+<li>在某些方式下，对JSX的工具支持比vue的模板更先进。<br>在Vue中，我们有<code>render functions</code>甚至还有支持<code>jsx</code>。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civmke8qa00339ko0ppczkhn6" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/16/phabricator/install_phabricator/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">phabricator的安装</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/15/react/design_principles/">设计原则</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

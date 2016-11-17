@@ -63,6 +63,102 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-react/API_Explain" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/01/react/API_Explain/" class="article-date">
+  <time datetime="2016-10-31T16:06:46.308Z" itemprop="datePublished">2016-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redux-API和词汇解释-词汇解释-State"><a href="#Redux-API和词汇解释-词汇解释-State" class="headerlink" title="Redux API和词汇解释 ###词汇解释 - State"></a>Redux API和词汇解释 ###词汇解释 - <strong>State</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">顶层state为一个对象,键-值集合，尽可能保证state可序列化。</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Action</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Action是一个用来表示即将改变state的对象。它是将数据放入store的唯一途径。action必须拥有一个`type`域，用来</span><br><span class="line">指明需要执行的action type</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Reducer</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Reducer接收两个参数：之前累计运算的结果和当前被累计的值，返回的是一个新的累计结果。在Redux中，累计对的运算</span><br><span class="line">结果是state对象，而被累计的值是action。Reducer由上次累计的结果state与当前被累积的action计算得到一个新state。</span><br><span class="line">`Reducer必须是纯函数，不要在Reducer中有副作用操作，比如API调用`</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>dispatch函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*dispatch function*是一个接收action或者异步action的函数，该函数要么往store分发一个或多个action，要么不分发</span><br><span class="line">任何action</span><br></pre></td></tr></table></figure>
+<p><br> <strong>一般的dispatch function 和store实例提供的没有middleware的base dispatch function之间的区别：</strong> Base dispatch functionzing是同步地把action与上一次从store返回的state发往reducer，然后重新计算出新的state，它 期望action会是一个可以被reducer消费的普通对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`Middleware`封装了base dispatch function，允许dispatch function处理action之外的异步action。middleware封装了</span><br><span class="line">base dispatch function，允许dispatch function处理action之外的异步action。Middleware可以改变、延迟、忽略action</span><br><span class="line">或异步action，也可以在传递给下一个middleware之前对它们进行解释</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Action Creator</strong><br> Action Creator就是一个创建action的函数，action是一个信息的负载，而action creator是一个创建action的工厂，调用action creator 只会生成action，但不分发，需要调用store的<code>dispatch</code>function才会引起变化，bound action creator，是指一个函数调用action creator并 立即将结果分发给一个特定的store实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果action creator需要读取当前的state、调用API、或引起诸如路由变化等副作用，那么它应该返回一个异步action而不是action。</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>异步Action</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">异步action是一个发给dispatch函数的值，但是这个值还不能被reducer消费。在发往base dispatch() function之前，middleware会把异步action</span><br><span class="line">转化成一个或一组action。异步action可以有多种type，这取决于你所使用的middleware，比如thunk，虽然不会立即把数据传递给reducer，但是一旦</span><br><span class="line">操作完成就会出发action的分发事件。</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Middleware</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Middleware是一个组合dispatch function的高阶函数，返回一个新的dispatch function，通常将异步actions转换成action。</span><br><span class="line"></span><br><span class="line">Middleware利用复合函数使其可以组合其他函数，可用于记录action日志、产生其他诸如变化路由的操作用，或将异步的API调用</span><br><span class="line">变为一组同步的action</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Store</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Store维持着应用的state tree对象。因为应用的构建发生于reducer，所以一个Redux应用当中应当只有一个store</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Store Creator</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Store Creator是一个创建Redux store的函数。理解由Redux导出的base store creator与从store enhancer返回的store creator</span><br><span class="line">之间的区别</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Store enhancer</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Store enhancer是一个组合store creator的高阶函数，返回一个新的强化过的store creator。这与middleware相似，它允许你通过符合函数</span><br><span class="line">改变store接口</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<hr>
+<h3 id="API文档-顶级暴露的方法-createStore-reducer-initialState"><a href="#API文档-顶级暴露的方法-createStore-reducer-initialState" class="headerlink" title="API文档 #### 顶级暴露的方法 - createStore(reducer, [initialState])"></a>API文档<br> #### 顶级暴露的方法 - <strong>createStore(reducer, [initialState])</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建一个Redux store来以存放应用中的所有state，应用中有且仅有一个store</span><br></pre></td></tr></table></figure>
+<p><strong>参数</strong></p>
+<ol>
+<li><p><code>reducer(*Function*)</code>:接收两个参数，分别是当前的state树和要处理的action，返回新的state树。</p>
+</li>
+<li><p><code>[initialState](any)</code>:初始时的state，如果你使用combineReducers创建reducer，它必须是一个普通对象，与传入的keys保持同样的结构</p>
+</li>
+</ol>
+<p><strong>返回值</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(Store):保存了应用所有state的对象。**改变state的惟一方法是dispatch action。**你也可以subscribe坚挺state的变化，然后更新UI</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>combineReducers(reducers)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">**state对象的结构由传入的多个reducer的key决定**,通过为传入对象的reducer命名来控制state key的命名。例如</span><br><span class="line">`combineReducers(&#123;todos: todoReducer, counter: counterReducer&#125;)`将state的结构变为`&#123;todos: &apos;xxx&apos;, counter: &apos;xxx&apos;&#125;`</span><br><span class="line">ES6的简写方法`combineReducers(&#123; counter, todos &#125;)`等价于`combineReducers(&#123; counter: counter, todos: todos &#125;)`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong><a href="./explain-applyMiddleware.md">applyMiddleware(…middlewares)</a></strong></p>
+</li>
+<li><p><strong><a href="./explain-bindActionCreators.md">bindActionCreators(actionCreators, dispatch)</a></strong></p>
+</li>
+<li><p><strong>compose(…functions)</strong>待研究</p>
+</li>
+</ul>
+<p>####Store API<br><em> <em>*Store</em></em></p>
+<ul>
+<li><p>getState()</p>
+</li>
+<li><p>dispatch(action)</p>
+</li>
+<li><p>subscribe(listener)</p>
+</li>
+<li><p>getReducer()</p>
+</li>
+<li><p>replaceReducer(nextReducer)</p>
+</li>
+</ul>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="civmke8ol002j9ko03ok68edi" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-react/life_cycle" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/01/react/life_cycle/" class="article-date">
@@ -106,7 +202,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="civl6rgxi002vywo03mljwim3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="civmke8ps002v9ko0io4idfb4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -206,7 +302,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="civl6rgw6001zywo0aa68nojj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="civmke8o000249ko0egl7gpk4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -282,7 +378,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="civl6rgvs001uywo0xeh8pfbx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="civmke8nv001z9ko0dp3kzro1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -356,7 +452,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civl6rgvx001wywo0q22qi304" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="civmke8ny00229ko00ihz8l8g" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -396,7 +492,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="civl6rgvp001sywo0ahm1jsoc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="civmke8nl001y9ko0ioatwzc9" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -481,7 +577,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="civl6rgvl001qywo06r9zr1hu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="civmke8ni001v9ko0i34egh03" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -537,7 +633,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civl6rgvd001lywo09evyi093" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civmke8nd001t9ko0brqu0ouh" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -637,7 +733,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civl6rgvi001oywo0vnmvn09j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civmke8n7001q9ko0c4vq3mt1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -695,48 +791,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civl6rgvg001mywo0dfu04hti" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/window.openction" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Electron/window.openction/" class="article-date">
-  <time datetime="2016-07-10T14:48:00.278Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Electron/window.openction/">window.open函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>window.open函数</strong><br>&gt;</p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civl6rgr6000bywo02jzakji3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civmke8n5001o9ko0izjok95j" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -760,7 +815,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -770,6 +825,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
+          </li>
         
           <li>
             <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
@@ -787,10 +846,6 @@
             <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
           </li>
         
-          <li>
-            <a href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorithm</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -802,7 +857,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

@@ -3,39 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>缓存（二） | zhuxin_blog</title>
+  <title>Category: Vue | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
-
-Cache-Control: no-store
-Cache-Control: no-cache
-Cache-Control: must-revalidate
-Cache-Control: max-age
-Expires
-不附加任何过期信息，让缓存确定自己的过期日期">
-<meta property="og:type" content="article">
-<meta property="og:title" content="缓存（二）">
-<meta property="og:url" content="http://yoursite.com/2016/10/21/http/cache_2/index.html">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zhuxin_blog">
+<meta property="og:url" content="http://yoursite.com/categories/Vue/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
-
-Cache-Control: no-store
-Cache-Control: no-cache
-Cache-Control: must-revalidate
-Cache-Control: max-age
-Expires
-不附加任何过期信息，让缓存确定自己的过期日期">
-<meta property="og:updated_time" content="2016-10-20T16:36:41.538Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缓存（二）">
-<meta name="twitter:description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
-
-Cache-Control: no-store
-Cache-Control: no-cache
-Cache-Control: must-revalidate
-Cache-Control: max-age
-Expires
-不附加任何过期信息，让缓存确定自己的过期日期">
+<meta name="twitter:title" content="zhuxin_blog">
+<meta name="twitter:description">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -83,81 +61,39 @@ Expires
   </div>
 </div>
       <div class="outer">
-        <section id="main"><article id="post-http/cache_2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/cache_2/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.538Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      缓存（二）
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/11/17/vue/movitation_design/" class="archive-article-date">
+  <time datetime="2016-11-17T11:43:37.495Z" itemprop="datePublished">Nov 17</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/11/17/vue/movitation_design/">了解Vue</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>控制缓存的能力</strong><br>服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递<br>减的顺序，服务器可以:</p>
-<ol>
-<li>Cache-Control: no-store</li>
-<li>Cache-Control: no-cache</li>
-<li>Cache-Control: must-revalidate</li>
-<li>Cache-Control: max-age</li>
-<li>Expires</li>
-<li>不附加任何过期信息，让缓存确定自己的过期日期</li>
-</ol>
-<blockquote>
-<p>no-Stroe与no-cache首部可以防止缓存提供未经证实的已缓存对象，表示为no-store的响应会<br>精致缓存对响应进行复制。缓存通常会向非缓存代理服务器一样，向客户端转发一条no-store响应，<br>然后删除对象。标示为no-cache的响应实际上是可以存储在本地缓冲区中的</p>
-<p>Cache-Contro:max-age首部表示从服务器将文档传过来之时起，可以认为此文档处于新鲜状态的<br>秒数，还有一个s-maxage首部，其行为与max-age类似，但仅用于共享缓存，服务器可以请求缓存<br>不要缓存文档，或者将最大使用期设置为0，从而每次访问的时候进行刷新</p>
-<p>不推荐使用Expires首部，它指定的是实际的过期日期而不是秒数，由于很多服务器的时钟不同，或<br>者不正确，所以最好用剩余秒数，而不是绝对日期。</p>
-<p>must-revalidate响应首部告诉缓存，在事先没有跟原始服务器进行再验证的情况下，不能提供这<br>个对象的陈旧副本。缓存仍然可以随意提供新鲜的副本。如果在缓存进行must-revalidate新鲜度<br>检查时，原始服务器不可用，缓存就必须返回一条504Gateway Timeout错误</p>
-<p>如果响应中没有Cache-Control: max-age首部，也没有Expires首部，缓存可以计算出一个试探<br>性最大使用期</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="civmke8nd001t9ko0brqu0ouh" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2016/10/21/http/cookie/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          客户端识别与cookie技术
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/10/21/http/cache_1/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">缓存（一）</div>
-    </a>
-  
-</nav>
-
-  
 </article>
-
+  
+  
+    </div></section>
+  
 </section>
         
           
