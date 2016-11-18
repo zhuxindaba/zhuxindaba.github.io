@@ -8,11 +8,10 @@
   <meta name="description" content="介绍
 vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务于复杂的单页面应用。但是Vue和其它的框架有什么不同呢？
 
-和React的比较
-React和Vue有很多相似之处:
 
-利用虚拟DOM
-提供了reactive(反应性)和可组合的视图组件在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很">
+title: 了解Vuecategories:
+- Vue介绍
+vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务员复杂的单页">
 <meta property="og:type" content="article">
 <meta property="og:title" content="了解Vue">
 <meta property="og:url" content="http://yoursite.com/2016/11/17/vue/movitation_design/index.html">
@@ -20,22 +19,20 @@ React和Vue有很多相似之处:
 <meta property="og:description" content="介绍
 vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务于复杂的单页面应用。但是Vue和其它的框架有什么不同呢？
 
-和React的比较
-React和Vue有很多相似之处:
 
-利用虚拟DOM
-提供了reactive(反应性)和可组合的视图组件在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很">
-<meta property="og:updated_time" content="2016-11-17T16:25:02.489Z">
+title: 了解Vuecategories:
+- Vue介绍
+vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务员复杂的单页">
+<meta property="og:updated_time" content="2016-11-18T15:34:50.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="了解Vue">
 <meta name="twitter:description" content="介绍
 vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务于复杂的单页面应用。但是Vue和其它的框架有什么不同呢？
 
-和React的比较
-React和Vue有很多相似之处:
 
-利用虚拟DOM
-提供了reactive(反应性)和可组合的视图组件在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很">
+title: 了解Vuecategories:
+- Vue介绍
+vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。另一方面，Vue完全有能力服务员复杂的单页">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -112,6 +109,11 @@ React和Vue有很多相似之处:
         <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
 <p>vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。<br>另一方面，Vue完全有能力服务于复杂的单页面应用。但是Vue和其它的框架有什么不同呢？</p>
 </blockquote>
+<hr>
+<p>title: 了解Vue<br>categories:</p>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="- Vue"></a>- Vue</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
+<p>vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。<br>另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？</p>
+</blockquote>
 <h3 id="和React的比较"><a href="#和React的比较" class="headerlink" title="和React的比较"></a>和React的比较</h3><blockquote>
 <p>React和Vue有很多相似之处:</p>
 <ul>
@@ -145,11 +147,43 @@ React和Vue有很多相似之处:
 <li>在某些方式下，对JSX的工具支持比vue的模板更先进。<br>在Vue中，我们有<code>render functions</code>甚至还有支持<code>jsx</code>。</li>
 </ul>
 </blockquote>
+<h3 id="HTML-amp-CSS-1"><a href="#HTML-amp-CSS-1" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h3><blockquote>
+<p>在Vue中，有渲染器函数并且支持<code>jsx</code>,默认情况下，我们提供模板作为选择方案:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;list-container&quot;&gt;</span><br><span class="line">    &lt;ul v-if=&quot;items.length&quot;&gt;</span><br><span class="line">      &lt;li v-for=&quot;item in items&quot;&gt;</span><br><span class="line">        &#123;&#123; item.name &#125;&#125;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;p v-else&gt;No items found.&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>它的优势：</p>
+<ul>
+<li>模板中有少量的实现并且代码风格优雅</li>
+<li>模板一直是称述性质的</li>
+<li>任何有效的HTML在模板中也是有效的</li>
+<li>读起来很像英语</li>
+<li>不需要再高版本的javascript中增加可读性。<br>另外一个好处就是你可以使用预处理器处理<code>HTML-compliant</code>模板，比如Pug书写你的Vue模板:</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.list-container</span><br><span class="line">  ul(v-if=&quot;items.length&quot;)</span><br><span class="line">    li(v-for=&quot;item in items&quot;) &#123;&#123; item.name &#125;&#125;</span><br><span class="line">  p(v-else) No items found.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Component-Scoped CSS（组件范围的CSS）</strong><br>除非你的组件分布在多个文件中（比如CSS Modules），范围性的CSS在React中通常是在js中。而在<br>Vue中，你完全可以在单个文件中访问到CSS：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">  @media (min-width: 250px) &#123;</span><br><span class="line">    .list-container:hover &#123;</span><br><span class="line">      background: orange;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>scoped</code>属性自动的对组件范围内的元素通过添加一个唯一的属性来编译。</p>
+</blockquote>
+<h3 id="规模"><a href="#规模" class="headerlink" title="规模"></a>规模</h3><blockquote>
+<p>React社区在状态管理上引入了<code>flux/redux</code>,状态管理方式可以在Vue很容易的集成进来。但是尽管<br>如此，React的生态圈还是要比Vue丰富。Vue提供了一个十分简单生成Vue项目的<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="external">命令行工具</a>。</p>
+</blockquote>
+<h3 id="Scaling-Down"><a href="#Scaling-Down" class="headerlink" title="Scaling Down"></a>Scaling Down</h3><blockquote>
+<p>React的学习曲线比较陡峭，在你学习之前你需要了解JSX以及ES2015.Vue中可以简单的通过在html引入vue库<br>来使用vue，React也行啊！！！</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Native-Rendering"><a href="#Native-Rendering" class="headerlink" title="Native Rendering"></a>Native Rendering</h3><blockquote>
+<p>React Native可以已React组件的形式写原生的IOS、Android程序，在这方面，Vue已经与<a href="https://alibaba.github.io/weex/" target="_blank" rel="external">Weex</a>合作了。<br>Weex是由阿里巴巴开发的一个跨平台UI框架，这意味着使用Weex，你可以以Vue的组件语法规则开发出的程序可以在浏览器，IOS，Android运行。<br>额，这点我承认确实比react-native强悍啊。。。。，当然Weex正在活跃的开发，和react-native一样不成熟。但是Vue和Weex合作开发啊，选择<br>React社区还是选择Vue社区呢？如果Weex和Vue成熟稳定的话选择Vue生态圈我觉得还是不错的。</p>
+</blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civmkjoa00034rgo0jjz1lchq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civny76qq002wuko01nqiymvj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -161,7 +195,7 @@ React和Vue有很多相似之处:
   
     <a href="/2016/11/16/phabricator/install_phabricator/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">phabricator的安装</div>
+      <div class="article-nav-title">Phbricator</div>
     </a>
   
 </nav>
@@ -178,7 +212,7 @@ React和Vue有很多相似之处:
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Phabricator/">Phabricator</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
     </div>
   </div>
 
@@ -194,7 +228,7 @@ React和Vue有很多相似之处:
           </li>
         
           <li>
-            <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+            <a href="/2016/11/16/phabricator/install_phabricator/">Phbricator</a>
           </li>
         
           <li>

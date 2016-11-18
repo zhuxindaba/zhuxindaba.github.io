@@ -92,6 +92,11 @@
         <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
 <p>vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。<br>另一方面，Vue完全有能力服务于复杂的单页面应用。但是Vue和其它的框架有什么不同呢？</p>
 </blockquote>
+<hr>
+<p>title: 了解Vue<br>categories:</p>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="- Vue"></a>- Vue</h2><h3 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
+<p>vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。<br>另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？</p>
+</blockquote>
 <h3 id="和React的比较"><a href="#和React的比较" class="headerlink" title="和React的比较"></a>和React的比较</h3><blockquote>
 <p>React和Vue有很多相似之处:</p>
 <ul>
@@ -125,11 +130,43 @@
 <li>在某些方式下，对JSX的工具支持比vue的模板更先进。<br>在Vue中，我们有<code>render functions</code>甚至还有支持<code>jsx</code>。</li>
 </ul>
 </blockquote>
+<h3 id="HTML-amp-CSS-1"><a href="#HTML-amp-CSS-1" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h3><blockquote>
+<p>在Vue中，有渲染器函数并且支持<code>jsx</code>,默认情况下，我们提供模板作为选择方案:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;list-container&quot;&gt;</span><br><span class="line">    &lt;ul v-if=&quot;items.length&quot;&gt;</span><br><span class="line">      &lt;li v-for=&quot;item in items&quot;&gt;</span><br><span class="line">        &#123;&#123; item.name &#125;&#125;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;p v-else&gt;No items found.&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>它的优势：</p>
+<ul>
+<li>模板中有少量的实现并且代码风格优雅</li>
+<li>模板一直是称述性质的</li>
+<li>任何有效的HTML在模板中也是有效的</li>
+<li>读起来很像英语</li>
+<li>不需要再高版本的javascript中增加可读性。<br>另外一个好处就是你可以使用预处理器处理<code>HTML-compliant</code>模板，比如Pug书写你的Vue模板:</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.list-container</span><br><span class="line">  ul(v-if=&quot;items.length&quot;)</span><br><span class="line">    li(v-for=&quot;item in items&quot;) &#123;&#123; item.name &#125;&#125;</span><br><span class="line">  p(v-else) No items found.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Component-Scoped CSS（组件范围的CSS）</strong><br>除非你的组件分布在多个文件中（比如CSS Modules），范围性的CSS在React中通常是在js中。而在<br>Vue中，你完全可以在单个文件中访问到CSS：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">  @media (min-width: 250px) &#123;</span><br><span class="line">    .list-container:hover &#123;</span><br><span class="line">      background: orange;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>scoped</code>属性自动的对组件范围内的元素通过添加一个唯一的属性来编译。</p>
+</blockquote>
+<h3 id="规模"><a href="#规模" class="headerlink" title="规模"></a>规模</h3><blockquote>
+<p>React社区在状态管理上引入了<code>flux/redux</code>,状态管理方式可以在Vue很容易的集成进来。但是尽管<br>如此，React的生态圈还是要比Vue丰富。Vue提供了一个十分简单生成Vue项目的<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="external">命令行工具</a>。</p>
+</blockquote>
+<h3 id="Scaling-Down"><a href="#Scaling-Down" class="headerlink" title="Scaling Down"></a>Scaling Down</h3><blockquote>
+<p>React的学习曲线比较陡峭，在你学习之前你需要了解JSX以及ES2015.Vue中可以简单的通过在html引入vue库<br>来使用vue，React也行啊！！！</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Native-Rendering"><a href="#Native-Rendering" class="headerlink" title="Native Rendering"></a>Native Rendering</h3><blockquote>
+<p>React Native可以已React组件的形式写原生的IOS、Android程序，在这方面，Vue已经与<a href="https://alibaba.github.io/weex/" target="_blank" rel="external">Weex</a>合作了。<br>Weex是由阿里巴巴开发的一个跨平台UI框架，这意味着使用Weex，你可以以Vue的组件语法规则开发出的程序可以在浏览器，IOS，Android运行。<br>额，这点我承认确实比react-native强悍啊。。。。，当然Weex正在活跃的开发，和react-native一样不成熟。但是Vue和Weex合作开发啊，选择<br>React社区还是选择Vue社区呢？如果Weex和Vue成熟稳定的话选择Vue生态圈我觉得还是不错的。</p>
+</blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civmkjoa00034rgo0jjz1lchq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civny76qq002wuko01nqiymvj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -146,7 +183,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/phabricator/">phabricator</a>
+    <a class="article-category-link" href="/categories/Phabricator/">Phabricator</a>
   </div>
 
   </div>
@@ -157,7 +194,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+      <a class="article-title" href="/2016/11/16/phabricator/install_phabricator/">Phbricator</a>
     </h1>
   
 
@@ -165,14 +202,74 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="nginx的安装"><a href="#nginx的安装" class="headerlink" title="nginx的安装"></a>nginx的安装</h3><blockquote>
-<p>终于完成了phabricator的安装了。。。。明天记录笔记!</p>
+        <h3 id="Phabricator"><a href="#Phabricator" class="headerlink" title="Phabricator"></a>Phabricator</h3><blockquote>
+<p>Phabricator是一个开发软件工具的集成，包含任务管理，代码review，管理git,svn等等,持续集成的构建，<br>内部通道的讨论等等。</p>
 </blockquote>
-
+<h3 id="在我们局域网内安装phabricator"><a href="#在我们局域网内安装phabricator" class="headerlink" title="在我们局域网内安装phabricator"></a>在我们局域网内安装phabricator</h3><blockquote>
+<p>Phabricator是一个LAMP应用程序，所以:</p>
+<ul>
+<li>一台linux或Mac OS电脑。(ps: windows不行奥，因为一些命令行在windows无法执行。。。)</li>
+<li>一个域名(可有可无，在内网上访问就行了，除非你需要家里办公也访问)(格式:phabricator.xxxxx.com).</li>
+<li>一些基本的系统管理员的技能(linux命令得熟悉啊！)</li>
+<li>一个web容器，Apache或Nginx（常用的两种方式）</li>
+<li>PHP(version: &gt;= 5.2, 版本7不支持), MySql(version: &gt;= 5.5), git.<br>系统管理员应该会的一些技能（也就是linux的一些指令）,比如：在操作系统安装软件，文件系统的操作，进程<br>的管理，权限的处理，修改配置文件，设置环境变量等等。</li>
+</ul>
+</blockquote>
+<h3 id="安装需要的组件"><a href="#安装需要的组件" class="headerlink" title="安装需要的组件"></a>安装需要的组件</h3><blockquote>
+<ul>
+<li>git(在包管理系统中一般称为’git’)</li>
+<li>Apache(一般称为”httpd”或”apache2”)或者nginx</li>
+<li>MySQL Server(一般是”mysqlId”或”mysql-server”)</li>
+<li>PHP(一般是”php”)</li>
+<li>需要的PHP扩展，比如”php-mysql”, “php5-mysql”<br>如果已经安装好了这些，那么获取Phrbricator以及它的依赖:</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//选择你要安装的文件夹，并在该文件夹下执行以下命令</span><br><span class="line">git clone https://github.com/phacility/libphutil.git</span><br><span class="line">git clone https://github.com/phacility/arcanist.git</span><br><span class="line">git clone https://github.com/phacility/phabricator.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>APC是建议安装的，所以没有深究。</p>
+</blockquote>
+<h3 id="Apache容器的配置"><a href="#Apache容器的配置" class="headerlink" title="Apache容器的配置"></a>Apache容器的配置</h3><blockquote>
+<ul>
+<li>配置web容器(Apache, nginx)</li>
+<li>在浏览器访问phabricator<br>Apache的httpd.conf</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *&gt;</span><br><span class="line">  # Change this to the domain which points to your host.</span><br><span class="line">  ServerName phabricator.example.com</span><br><span class="line"></span><br><span class="line">  # Change this to the path where you put &apos;phabricator&apos; when you checked it</span><br><span class="line">  # out from GitHub when following the Installation Guide.</span><br><span class="line">  #</span><br><span class="line">  # Make sure you include &quot;/webroot&quot; at the end!</span><br><span class="line">  DocumentRoot /path/to/phabricator/webroot</span><br><span class="line">  RewriteEngine on</span><br><span class="line">  RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果Apache的配置文件目录不是Phabricator的目录，那么你需要添加<code>&lt;Directory /&gt;</code>块，这个块<br>标示依赖于你的Apache的版本，通过运行<code>httpd -v</code>得到当前运行Apache的版本，如果版本号小于2.4,</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;/path/to/phabricator/webroot&quot;&gt;</span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow from all</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果大于2.4:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;/path/to/phabricator/webroot&quot;&gt;</span><br><span class="line">  Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>配置完成之后，请重启Apache，并继续接下来的配置.</p>
+</blockquote>
+<h3 id="Nginx的配置"><a href="#Nginx的配置" class="headerlink" title="Nginx的配置"></a>Nginx的配置</h3><blockquote>
+<p>nginx.conf:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  server_name phabricator.example.com;</span><br><span class="line">  #你的phabricator安装目录</span><br><span class="line">  root        /path/to/phabricator/webroot;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.php;</span><br><span class="line">    rewrite ^/(.*)$ /index.php?__path__=/$1 last;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location /index.php &#123;</span><br><span class="line">    fastcgi_pass   localhost:9000;</span><br><span class="line">    fastcgi_index   index.php;</span><br><span class="line"></span><br><span class="line">    #required if PHP was built with --enable-force-cgi-redirect</span><br><span class="line">    fastcgi_param  REDIRECT_STATUS    200;</span><br><span class="line"></span><br><span class="line">    #variables to make the $_SERVER populate in PHP</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;</span><br><span class="line">    fastcgi_param  QUERY_STRING       $query_string;</span><br><span class="line">    fastcgi_param  REQUEST_METHOD     $request_method;</span><br><span class="line">    fastcgi_param  CONTENT_TYPE       $content_type;</span><br><span class="line">    fastcgi_param  CONTENT_LENGTH     $content_length;</span><br><span class="line"></span><br><span class="line">    fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;</span><br><span class="line"></span><br><span class="line">    fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;</span><br><span class="line">    fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;</span><br><span class="line"></span><br><span class="line">    fastcgi_param  REMOTE_ADDR        $remote_addr;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>配置完成之后重启nginx，并继续接下来的配置</p>
+</blockquote>
+<h3 id="配置Mysql"><a href="#配置Mysql" class="headerlink" title="配置Mysql"></a>配置Mysql</h3><blockquote>
+<p>当MySQL运行时，需要加载Phabricator的schemata，所以要在phabricator目录下执行:<code>./bin/storage upgrade</code><br>如果你配置的用户不是连接数据库的特权用户，所以需要覆盖默认的用户，所以更改schema，通过一下命令更改<br><code>./bin/storage upgrade --user &lt;user&gt; --password &lt;password&gt;</code>并且<code>./bin/storage upgrade --force</code><br><strong>注意：</strong>当修改了phabricator后，运行<code>storage upgrade</code>来应用新的修改。</p>
+</blockquote>
+<h3 id="配置账号及注册"><a href="#配置账号及注册" class="headerlink" title="配置账号及注册"></a>配置账号及注册</h3><blockquote>
+<p>phabricator提供了很多的登录体系，你可以配置谁可以访问或者注册你安装的phabricator以及用户用存在的账号登录phabricator。<br>登录方式称之为授权给予，比如可用的”用户名/密码”授权，允许你通过传统的用户名密码登录，其余的支持用证书登录。比如:</p>
+<ul>
+<li><strong>用户名密码：</strong>使用用户名密码登录注册</li>
+<li><strong>LDAP：</strong>使用LDAP证书登录注册</li>
+<li><strong>OAuth：</strong>用户使用支持OAuth2的协议登录，比如(Facebook,Google,GitHub)</li>
+<li><strong>其余的提供程序：</strong>有许多可用的支持，Phabricator可以扩展，相关知识请自行了解。<br>默认情况下，没有可用的提供程序，你必须在安装完成之后使用”Auth”程序添加一种或多种提供程序。在你添加供应程序之后，<br>你可以使用存在的账号连接phabricator（比如你可以使用GitHub的OAuth账号登录Phabricator）或者用户使用它注册新的账<br>号（假设你启用这些选项）<br><strong>恢复管理员账号</strong>如果你意外的在phabrication中锁住了，你可以使用<code>bin/auth</code>脚本恢复管理员账号的访问，恢复访问，请使用:<br><code>./bin/auth recover &lt;username&gt;</code>,username是你想恢复的管理员的账号。<br><strong>通过web页面管理账号</strong>使用管理员账号登录phabricator并路由到<code>/people</code>,点击”People”,如果你是管理员，你可以看见创建<br>及修改账号的选项。<br><strong>手动的创建新账号</strong>，有两种手工创建账号的方式，一种是通过web网页另一种是通过命令行，<code>./bin/accountadamin</code>,一些选项<br>(如设置密码，更改账号标记)只能在命令行中可见。你可以使用此命令来使一个用户成为管理员（比如你意外的移除了你管理员的标记）<br>或者创建一个管理员账号。</li>
+</ul>
+</blockquote>
+<h3 id="TODO-配置文件存储"><a href="#TODO-配置文件存储" class="headerlink" title="TODO(配置文件存储)"></a>TODO(配置文件存储)</h3><h3 id="TODO-配置邮件发送"><a href="#TODO-配置邮件发送" class="headerlink" title="TODO(配置邮件发送)"></a>TODO(配置邮件发送)</h3>
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="civmkjo7k002grgo0xqh0tso6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="civny76op002cuko0fh2u9fij" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -223,7 +320,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civmkjo8y002wrgo0vclfzg9s" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civny76qa002ruko0qk7gpby6" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -281,7 +378,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="civmkjo7y002lrgo01yb81zzf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="civny76pb002juko07qow39v6" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -485,7 +582,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="civmkjo8o002urgo0lpsqcysp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="civny76py002ouko0t6g7wpqa" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -585,7 +682,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="civmkjo9u0032rgo0uwkp6kx0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="civny76r6002zuko0pje1o712" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -757,7 +854,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="civmkjo87002orgo0r3gjm2xa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="civny76ot002fuko0m7f6nllx" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -912,7 +1009,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="civmkjo91002yrgo06tu02ogu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="civny76ql002vuko041nwemyj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -969,7 +1066,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="civmkjo8l002trgo07uriq99u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="civny76pu002nuko0u6mr33on" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1022,7 +1119,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="civmkjo8h002qrgo02r9o1yt4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="civny76po002kuko0r0fnavyx" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1046,7 +1143,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Phabricator/">Phabricator</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li></ul>
     </div>
   </div>
 
@@ -1062,7 +1159,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
           </li>
         
           <li>
-            <a href="/2016/11/16/phabricator/install_phabricator/">phabricator的安装</a>
+            <a href="/2016/11/16/phabricator/install_phabricator/">Phbricator</a>
           </li>
         
           <li>
