@@ -63,6 +63,112 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Electron/online_offline_event_detection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/06/Electron/online_offline_event_detection/" class="article-date">
+  <time datetime="2016-07-06T14:28:51.541Z" itemprop="datePublished">2016-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/06/Electron/online_offline_event_detection/">在线离线事件探测</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示</p>
+<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const alertOnlineStatus = () =&gt; &#123;</span><br><span class="line">    window.alert(navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  alertOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  alertOnlineStatus);</span><br><span class="line"></span><br><span class="line">  alertOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>主进程是没有<code>navigator</code>这个对象的，所以不能直接的探测这些事件，使用Electron的进程间通信<br>的工具，这些事件将会被传递到主进程，并且根据需要去处理，下面的就是个例子:</p>
+<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const ipcMain = electron.ipcMain;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ipcMain.on(&apos;online-status-changed&apos;, (event, status) =&gt; &#123;</span><br><span class="line">  console.log(status);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const &#123;ipcRenderer&#125; = require(&apos;electron&apos;);</span><br><span class="line">  const updateOnlineStatus = () =&gt; &#123;</span><br><span class="line">    ipcRenderer.send(&apos;online-status-changed&apos;, navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  updateOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  updateOnlineStatus);</span><br><span class="line"></span><br><span class="line">  updateOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/06/Electron/online_offline_event_detection/" data-id="civv54snx000cr8o0yttr98w5" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Webpack/long_term_caching" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/05/Webpack/long_term_caching/" class="article-date">
+  <time datetime="2016-07-05T14:59:23.538Z" itemprop="datePublished">2016-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/05/Webpack/long_term_caching/">长期缓存</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹<br>但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.<br>Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经<br>做了这项工作，需要你允许块文件使用它，这里有两个级别</p>
+<ul>
+<li>计算所有块文件的hash并且添加它</li>
+<li>计算每个块文件的hash并且添加它</li>
+</ul>
+</blockquote>
+<p><strong>方式一：对打包文件增加一个hash串</strong></p>
+<blockquote>
+<p>命令行方式<code>webpack ./entry output.[hash].bundle.js</code>，配置文件方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;assets&quot;, &quot;[hash]&quot;),</span><br><span class="line">        publicPath: &quot;assets/[hash]/&quot;,</span><br><span class="line">        filename: &quot;output.[hash].bundle.js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].[hash].bundle.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>方式二：每一个块文件一个hash串</strong><br>可以通过添加[<code>chunkhash</code>]到配置文件的filename属性中<br><code>--output-chunk-file [chunkhash].js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output: &#123; chunkFilename: &quot;[chunkhash].bundle.js&quot; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：你需要在HTML中引入带有hash串的入口块，你需要从stats中提取出hash串。<br>为了兼容代码热部署，你需要使用方式一，但是不要在<code>publicPath</code>中使用hash串。</p>
+</blockquote>
+<p><strong>从stats中获取文件名</strong></p>
+<blockquote>
+<p>你可能需要访问最终的文件以便在HTML中嵌入，这段资料可获得webpack的stats，如果你使用命令<br>行,可通过<code>--with</code>获得json的标准输出。<br>可以在配置文件中添加插件比如<code>assets-webpack-plugin</code>来访问stats对象，这是一个将stats<br>写入文件的例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">  function() &#123;</span><br><span class="line">    this.plugin(&quot;done&quot;, function(stats) &#123;</span><br><span class="line">      require(&quot;fs&quot;).writeFileSync(</span><br><span class="line">        path.join(__dirname, &quot;..&quot;, &quot;stats.json&quot;),</span><br><span class="line">        JSON.stringify(stats.toJson()));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<p>stats的JSON格式包含了一个有用的属性<code>assetsByChunkNam</code>,它是一个对象，以块名字为键，对应<br>的文件名为值。<br>注意：如果一个块文件输出了多个资源文件，那么stats是数组，数组的第一个元素是你的<br>javascript资源。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/05/Webpack/long_term_caching/" data-id="civv54sow000xr8o08n3k2lkf" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Electron/desktop_environment_integration" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/05/Electron/desktop_environment_integration/" class="article-date">
@@ -143,7 +249,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/Electron/desktop_environment_integration/" data-id="civs7e9jx000ivgo00j3zvs92" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/Electron/desktop_environment_integration/" data-id="civv54sob000nr8o0w7llh9in" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -220,7 +326,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Webpack/optimization/" data-id="civs7e9ls0016vgo0b2zaop1x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/Webpack/optimization/" data-id="civv54sp90017r8o0f4gpn5ph" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -288,7 +394,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="civs7e9j00007vgo0co686gr7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="civv54so1000er8o0uy003mfy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -379,7 +485,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="civs7e9lk0014vgo033mr5qk7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="civv54sp10011r8o00t4se4wp" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -443,7 +549,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Electron/supported_platfroms/" data-id="civs7e9io0005vgo040v4dtc6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Electron/supported_platfroms/" data-id="civv54snb0003r8o0hi5urodf" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -506,7 +612,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Electron/what_is_electron/" data-id="civs7e9j30009vgo0gvfwy558" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Electron/what_is_electron/" data-id="civv54snj0007r8o02uq15c4v" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -582,7 +688,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/01/Webpack/codesplitting/" data-id="civs7e9k2000nvgo0q480ndjq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/01/Webpack/codesplitting/" data-id="civv54so3000gr8o0j6w1iifv" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -652,129 +758,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/amd/" data-id="civs7e9kv000yvgo0yvredbbw" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/commonjs" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/30/Webpack/commonjs/" class="article-date">
-  <time datetime="2016-06-30T15:01:10.467Z" itemprop="datePublished">2016-06-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/Webpack/commonjs/">CommonJs</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>CommonJs组织定义了一种模块格式，通过确保每一个模块都运行在它自己的命名空间中来解决<br>JavaScript的作用域问题。<br>通过强制模块明确的输出它想暴露出去的变量，并且引用其它模块的方式来完成。<br>为了实现CommonJs，它给了两个工具.</p>
-<ol>
-<li><code>require()</code>函数,在当前作用域引用别的模块.</li>
-<li><code>module</code>对象,允许从当前作用域输出变量。</li>
-</ol>
-</blockquote>
-<p><strong>简单的JavaScript</strong></p>
-<blockquote>
-<p>下面是一个未使用CommonJs的例子,定义一个<code>status.js</code>脚本文件，该文件只包含一个值，它将会<br>在别的脚本文件中使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br></pre></td></tr></table></figure></p>
-<p>在第二个名叫<code>world.js</code>的脚本文件中使用在<code>status.js</code>中定义的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot; world!&quot;;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>模块定义</strong></p>
-<blockquote>
-<p>当然<code>world.js</code>无法工作，因为<code>MySalute</code>未定义，我们需要定义每一个文件为一个模块。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在这里使用特殊的对象<code>module</code>并且将变量的引用赋值给<code>module.exports</code>,CommonJs模块系统将<br>会知道这个对象是想暴露给全局。<code>salute.js</code>暴露<code>MySalute</code>, <code>world.js</code>暴露<code>Result</code>。</p>
-</blockquote>
-<p><strong>模块依赖</strong></p>
-<blockquote>
-<p>缺省异步定义依赖，我们定义了每个javascript文件为一个单独的模块，但是<code>world.js</code>依旧需要<br>知道谁定义了<code>MySalute</code></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var MySalute = require(&quot;./salute&quot;);</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
-<p><strong>函数例子</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// moduleA.js</span><br><span class="line">module.exports = function( value )&#123;</span><br><span class="line">    return value*2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// moduleB.js</span><br><span class="line">var multiplyBy2 = require(&apos;./moduleA&apos;);</span><br><span class="line">var result = multiplyBy2( 4 );</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/commonjs/" data-id="civs7e9lg0012vgo0c2bc5zat" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/troubleshooting" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/30/Webpack/troubleshooting/" class="article-date">
-  <time datetime="2016-06-30T14:42:31.699Z" itemprop="datePublished">2016-06-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/30/Webpack/troubleshooting/">疑难解析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>解析</strong></p>
-<p><strong>常见解析问题</strong></p>
-<ul>
-<li><code>--display-error-details</code>提供更多的详细信息</li>
-</ul>
-<p><strong><code>npm link</code>找不到他们的依赖</strong></p>
-<blockquote>
-<p>node.js模块的解析算法很简单，从模块所在目录递归向上找寻<code>node_modules</code>目录。</p>
-</blockquote>
-<p><strong>Windows路径</strong></p>
-<blockquote>
-<p>webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是<code>\</code>，所以<code>__dirname + &quot;/app/folder&quot;</code><br>这样的代码将会出错，从而会导致问题。<br>需要使用正确的分隔符，如：<code>path.resolve(__dirname, &quot;app/folder&quot;)</code>或者<code>path.join(__dirname, &quot;app&quot;, &quot;folder&quot;)</code></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/troubleshooting/" data-id="civs7e9kx0010vgo05qpgoywy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/amd/" data-id="civv54soy000zr8o0j2iarp8m" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -798,7 +782,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -808,6 +792,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
+          </li>
         
           <li>
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
@@ -821,14 +813,6 @@
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
           </li>
         
-          <li>
-            <a href="/2016/11/15/react/design_principles/">设计原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -840,7 +824,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

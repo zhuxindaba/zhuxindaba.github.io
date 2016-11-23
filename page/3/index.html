@@ -63,6 +63,164 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-http/cache_1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/cache_1/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.535Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/cache_1/">缓存（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>再验证</strong><br>缓存的新鲜度检测被称为HTTP再验证，通过If-Modified-Since首部，将这个首部添加到GET请求<br>中去，就可以告诉服务器，只有在缓存了对象的副本之后，又对其进行修改的情况下，才发送此对象<br>服务器收到GET If-Modified-Since请求时会发生的情况:</p>
+<ul>
+<li><p>再验证命中</p>
+<blockquote>
+<p>如果服务器对象未被修改，服务器会向客户端发送一个小的Http 304Not Modified响应</p>
+</blockquote>
+</li>
+<li><p>再验证未命中</p>
+<blockquote>
+<p>如果服务器对象与已缓存副本不同，服务器向客户端发送一条普通的、带有完整内容的HTTp 200 OK响应</p>
+</blockquote>
+</li>
+<li><p>对象被删除</p>
+<blockquote>
+<p>如果服务器对象已被删除了，服务器就返回一个404缓存也会将其副本删除</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>区分命中和未命中的情况</strong></p>
+<blockquote>
+<p>客户端有一种方法可以判断响应是否来自缓存，就是使用Date首部，将响应中Date首部的值与当前<br>时间进行比较，如果响应中的日期比较早，客户端通常就可以认为这是一条缓存响应。客户端也可以<br>通过Age首部来检测缓存的响应，通过这个首部可以分辨出这条响应的使用期。</p>
+</blockquote>
+<p><strong>缓存的处理步骤</strong></p>
+<ol>
+<li><p>接收</p>
+<blockquote>
+<p>缓存从网络中读取抵达的报文</p>
+</blockquote>
+</li>
+<li><p>解析</p>
+<blockquote>
+<p>缓存对报文进行解析，提取出URL和各种首部</p>
+</blockquote>
+</li>
+<li><p>查询</p>
+<blockquote>
+<p>缓存查看是否有本地副本可用，如果没有，就获取一份副本（并将其保存在本地）</p>
+</blockquote>
+</li>
+<li><p>新鲜度检测</p>
+<blockquote>
+<p>缓存查看已缓存副本是否足够新鲜，如果不是，就询问服务器是否有任何更新</p>
+</blockquote>
+</li>
+<li><p>创建响应</p>
+<blockquote>
+<p>缓存会用新的首部和已缓存的主题来构建一条响应报文</p>
+</blockquote>
+</li>
+<li><p>发送</p>
+<blockquote>
+<p>缓存通过网络将响应发回给客户端</p>
+</blockquote>
+</li>
+<li><p>日志</p>
+<blockquote>
+<p>缓存可选地创建一个日志文件条目来描述这个事务</p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="civv54sq5001vr8o0m11mrrxt" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/baseauthentication" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/baseauthentication/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.529Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/baseauthentication/">基本认证机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>认证</strong></p>
+<blockquote>
+<p><strong>HTTP的质询/响应认证框架</strong><br>Web应用程序收到一个HTTP请求报文时，服务器没有按照请求执行动作，而是以一个”认证质询”进行<br>响应，要求用户提供一些保密信息来说明他是谁，从而对其进行质询。用户再次发送请求时，要附上<br>保密证书（用户名和密码）。如果证书不匹配，服务器可以再次质询客户端，或产生一条错误信息。<br>如果证书匹配，就可以完成正常请求了。<br><strong>认证协议与首部</strong><br>HTTP通过一组可定制的控制首部，为不同的认证协议提供了一个可扩展框架，首部格式和内容会随<br>认证协议的不同而发生变化。认证协议也是在HTTP认证首部中指定的。HTTP定义了两个官方的认证<br>协议：基本认证和摘要认证。<br>认证的4个步骤：<br>首部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法状态</p>
+<ul>
+<li>请求 第一条请求没有认证信息</li>
+<li>质询 WWW-Authenticate 服务器用401状态拒绝请求，说明需要用户提供用户名和密码，服务器<br>可能分为不同的区域，每个区域都有自己的密码，所以服务器会在WWW-Authenticate首部对保护区域<br>进行描述，同样，认证算法也是在WWW-Authenticate首部中指定的。</li>
+<li>授权 Authorization 客户端重新发出请求，但这一次会附加一个Authorization首部，用来<br>说明认证算法，用户名，密码。</li>
+<li>成功 Authentication-Info 如果授权证书是正确的，服务器就将文档返回。有些授权算法会<br>在可选的Authentication-Info首部返回一些与授权会话相关的附加信息。</li>
+</ul>
+</blockquote>
+<p><strong>基本认证的安全缺陷</strong></p>
+<blockquote>
+<ol>
+<li>基本认证会通过网络发送用户名和密码，这些用户名和密码以一种很容易解码的形式表示，不安全</li>
+<li>即使密码是一更难解码的方式加密的，第三方用户仍然可以捕获修改过的用户名和密码，并将<br>修改过的用户名和密码一次一次的重放给原始服务器。</li>
+<li>基本认证没有提供任何针对代理和作为中间人的中间节点防护措施，他们没有修改认证首部，但<br>却修改了报文的其余部分，这样就严重的改变了事务的本质。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="civv54spo001hr8o0f7lzbybk" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Electron/window.openction" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/10/Electron/window.openction/" class="article-date">
@@ -94,7 +252,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civs7e9jj000cvgo0i7jav851" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="civv54sno0009r8o0kpuli7pd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -135,7 +293,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="civs7e9ik0003vgo0g7gs2zpl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="civv54sm90000r8o0rkai00lv" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -179,7 +337,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="civs7e9im0004vgo0elevkud3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="civv54sne0005r8o0g3jjs3s4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -227,7 +385,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="civs7e9n6001uvgo0dpxzmi1m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="civv54sq0001tr8o05sf3kupz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -268,7 +426,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="civs7e9k0000lvgo0l54grn3c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="civv54so8000lr8o0ix8voksa" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -335,7 +493,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="civs7e9ke000svgo0v6rfwa7y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="civv54soe000pr8o0dl5v4xi5" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -408,7 +566,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="civs7e9i70001vgo06is7bvry" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="civv54snd0004r8o0krbkudor" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -460,113 +618,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/api_references_synopsis/" data-id="civs7e9hz0000vgo0sxvgk26k" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/online_offline_event_detection" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/06/Electron/online_offline_event_detection/" class="article-date">
-  <time datetime="2016-07-06T14:28:51.541Z" itemprop="datePublished">2016-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/06/Electron/online_offline_event_detection/">在线离线事件探测</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>使用标准的HTML5API可以在渲染进程中实现在线和离线事件的探测，如下所示</p>
-<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const alertOnlineStatus = () =&gt; &#123;</span><br><span class="line">    window.alert(navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  alertOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  alertOnlineStatus);</span><br><span class="line"></span><br><span class="line">  alertOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-<p>主进程是没有<code>navigator</code>这个对象的，所以不能直接的探测这些事件，使用Electron的进程间通信<br>的工具，这些事件将会被传递到主进程，并且根据需要去处理，下面的就是个例子:</p>
-<p><em>main.js</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">const app = electron.app;</span><br><span class="line">const ipcMain = electron.ipcMain;</span><br><span class="line">const BrowserWindow = electron.BrowserWindow;</span><br><span class="line"></span><br><span class="line">let onlineStatusWindow;</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  onlineStatusWindow = new BrowserWindow(&#123; width: 0, height: 0, show: false &#125;);</span><br><span class="line">  onlineStatusWindow.loadURL(`file://$&#123;__dirname&#125;/online-status.html`);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">ipcMain.on(&apos;online-status-changed&apos;, (event, status) =&gt; &#123;</span><br><span class="line">  console.log(status);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p><em>online-status.html</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const &#123;ipcRenderer&#125; = require(&apos;electron&apos;);</span><br><span class="line">  const updateOnlineStatus = () =&gt; &#123;</span><br><span class="line">    ipcRenderer.send(&apos;online-status-changed&apos;, navigator.onLine ? &apos;online&apos; : &apos;offline&apos;);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  window.addEventListener(&apos;online&apos;,  updateOnlineStatus);</span><br><span class="line">  window.addEventListener(&apos;offline&apos;,  updateOnlineStatus);</span><br><span class="line"></span><br><span class="line">  updateOnlineStatus();</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/online_offline_event_detection/" data-id="civs7e9jm000evgo0t154zt76" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/long_term_caching" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/05/Webpack/long_term_caching/" class="article-date">
-  <time datetime="2016-07-05T14:59:23.538Z" itemprop="datePublished">2016-07-05</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/05/Webpack/long_term_caching/">长期缓存</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>为了有效的缓存文件，URL需要有一个hash或版本号，你可以手动的将输出文件移到一个叫v1.3的文件夹<br>但是这有几个缺点：额外的开发工作并且没有任何改变的文件不能存缓存中获取.<br>Webpack可以在文件名之后添加hash串，加载器（worker-loader, file-loader）输出的文件已经<br>做了这项工作，需要你允许块文件使用它，这里有两个级别</p>
-<ul>
-<li>计算所有块文件的hash并且添加它</li>
-<li>计算每个块文件的hash并且添加它</li>
-</ul>
-</blockquote>
-<p><strong>方式一：对打包文件增加一个hash串</strong></p>
-<blockquote>
-<p>命令行方式<code>webpack ./entry output.[hash].bundle.js</code>，配置文件方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;assets&quot;, &quot;[hash]&quot;),</span><br><span class="line">        publicPath: &quot;assets/[hash]/&quot;,</span><br><span class="line">        filename: &quot;output.[hash].bundle.js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].[hash].bundle.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>方式二：每一个块文件一个hash串</strong><br>可以通过添加[<code>chunkhash</code>]到配置文件的filename属性中<br><code>--output-chunk-file [chunkhash].js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output: &#123; chunkFilename: &quot;[chunkhash].bundle.js&quot; &#125;</span><br></pre></td></tr></table></figure></p>
-<p>注意：你需要在HTML中引入带有hash串的入口块，你需要从stats中提取出hash串。<br>为了兼容代码热部署，你需要使用方式一，但是不要在<code>publicPath</code>中使用hash串。</p>
-</blockquote>
-<p><strong>从stats中获取文件名</strong></p>
-<blockquote>
-<p>你可能需要访问最终的文件以便在HTML中嵌入，这段资料可获得webpack的stats，如果你使用命令<br>行,可通过<code>--with</code>获得json的标准输出。<br>可以在配置文件中添加插件比如<code>assets-webpack-plugin</code>来访问stats对象，这是一个将stats<br>写入文件的例子:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line">  function() &#123;</span><br><span class="line">    this.plugin(&quot;done&quot;, function(stats) &#123;</span><br><span class="line">      require(&quot;fs&quot;).writeFileSync(</span><br><span class="line">        path.join(__dirname, &quot;..&quot;, &quot;stats.json&quot;),</span><br><span class="line">        JSON.stringify(stats.toJson()));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
-<p>stats的JSON格式包含了一个有用的属性<code>assetsByChunkNam</code>,它是一个对象，以块名字为键，对应<br>的文件名为值。<br>注意：如果一个块文件输出了多个资源文件，那么stats是数组，数组的第一个元素是你的<br>javascript资源。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/Webpack/long_term_caching/" data-id="civs7e9ku000wvgo0opw1z2l0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/api_references_synopsis/" data-id="civv54smh0001r8o0gpib7af9" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -590,7 +642,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -600,6 +652,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
+          </li>
         
           <li>
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
@@ -613,14 +673,6 @@
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
           </li>
         
-          <li>
-            <a href="/2016/11/15/react/design_principles/">设计原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -632,7 +684,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

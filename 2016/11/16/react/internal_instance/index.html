@@ -19,7 +19,7 @@
 123ReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);//下面这一行会重新使用已存在的DOMReactDOM.render(&amp;lt;App /&amp;gt;, rootEl);
 
 当组件需要更新时，如何存储必要的信息呢？比如说publicInstances,">
-<meta property="og:updated_time" content="2016-11-15T16:59:33.447Z">
+<meta property="og:updated_time" content="2016-11-23T14:30:24.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内部实例的伪实现（思考）">
 <meta name="twitter:description" content="为什么需要内部实例呢?React的主要特性是你可以重新渲染任何东西，并且你不会重复创建DOM以及重置state.
@@ -111,11 +111,31 @@
 <blockquote>
 <p>CompositeComponent(复杂组件)的实现:</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedComponent = null;</span><br><span class="line">    this.publicInstance = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    // For composite components, expose the class instance.</span><br><span class="line">    return this.publicInstance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line"></span><br><span class="line">    var publicInstance;</span><br><span class="line">    var renderedElement;</span><br><span class="line">    if (isClass(type)) &#123;</span><br><span class="line">      // Component class</span><br><span class="line">      publicInstance = new type(props);</span><br><span class="line">      // Set the props</span><br><span class="line">      publicInstance.props = props;</span><br><span class="line">      // Call the lifecycle if necessary</span><br><span class="line">      if (publicInstance.componentWillMount) &#123;</span><br><span class="line">        publicInstance.componentWillMount();</span><br><span class="line">      &#125;</span><br><span class="line">      renderedElement = publicInstance.render();</span><br><span class="line">    &#125; else if (typeof type === &apos;function&apos;) &#123;</span><br><span class="line">      // Component function</span><br><span class="line">      publicInstance = null;</span><br><span class="line">      renderedElement = type(props);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Save the public instance</span><br><span class="line">    this.publicInstance = publicInstance;</span><br><span class="line"></span><br><span class="line">    // Instantiate the child internal instance according to the element.</span><br><span class="line">    // It would be a DOMComponent for &lt;div /&gt; or &lt;p /&gt;,</span><br><span class="line">    // and a CompositeComponent for &lt;App /&gt; or &lt;Button /&gt;:</span><br><span class="line">    var renderedComponent = instantiateComponent(renderedElement);</span><br><span class="line">    this.renderedComponent = renderedComponent;</span><br><span class="line"></span><br><span class="line">    // Mount the rendered output</span><br><span class="line">    return renderedComponent.mount();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>DOMComponent</code>类的实现:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">class DOMComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedChildren = [];</span><br><span class="line">    this.node = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    // For DOM components, only expose the DOM node.</span><br><span class="line">    return this.node;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line">    var children = props.children || [];</span><br><span class="line">    if (!Array.isArray(children)) &#123;</span><br><span class="line">      children = [children];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Create and save the node</span><br><span class="line">    var node = document.createElement(type);</span><br><span class="line">    this.node = node;</span><br><span class="line"></span><br><span class="line">    // Set the attributes</span><br><span class="line">    Object.keys(props).forEach(propName =&gt; &#123;</span><br><span class="line">      if (propName !== &apos;children&apos;) &#123;</span><br><span class="line">        node.setAttribute(propName, props[propName]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // Create and save the contained children.</span><br><span class="line">    // Each of them can be a DOMComponent or a CompositeComponent,</span><br><span class="line">    // depending on whether the element type is a string or a function.</span><br><span class="line">    var renderedChildren = children.map(instantiateComponent);</span><br><span class="line">    this.renderedChildren = renderedChildren;</span><br><span class="line"></span><br><span class="line">    // Collect DOM nodes they return on mount</span><br><span class="line">    var childNodes = renderedChildren.map(child =&gt; child.mount());</span><br><span class="line">    childNodes.forEach(childNode =&gt; node.appendChild(childNode));</span><br><span class="line"></span><br><span class="line">    // Return the DOM node as mount result</span><br><span class="line">    return node;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果是，每一个内部实例都不论是复合型的还是平台特有的，都指向他的child的内部实例，比如:<br><code>&lt;App&gt;</code>组件渲染了一个<code>&lt;Button&gt;</code>,<code>&lt;Button&gt;</code>渲染了一个<code>&lt;div&gt;</code>,内部实例树将是下面的样子:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[object CompositeComponent] &#123;</span><br><span class="line">  currentElement: &lt;App /&gt;,</span><br><span class="line">  publicInstance: null,</span><br><span class="line">  renderedComponent: [object CompositeComponent] &#123;</span><br><span class="line">    currentElement: &lt;Button /&gt;,</span><br><span class="line">    publicInstance: [object Button],</span><br><span class="line">    renderedComponent: [object DOMComponent] &#123;</span><br><span class="line">      currentElement: &lt;div /&gt;,</span><br><span class="line">      node: [object HTMLDivElement],</span><br><span class="line">      renderedChildren: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在DOM中只看见<code>&lt;div&gt;</code>,但是内部实例可以包含混合型及平台特有的内部实例二者。混合型内部实例<br>需要存储:</p>
+<ul>
+<li>当前元素</li>
+<li>如果元素类型是类，则包含公共实例</li>
+<li>单独的渲染的内部实例，既可以是<code>DOMComponent</code>,也可以是<code>CompositeComponent</code>.<br>平台特有内部实例需要存储:</li>
+<li>当前元素</li>
+<li>DOM节点</li>
+<li>所有的子内部实例，它们既可以是<code>DOMComponent</code>也可以是<code>CompositeComponent</code>.</li>
+</ul>
+</blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civs7e9p8002xvgo0u55uyl61" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civv54sri002sr8o0y9igswyy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -153,7 +173,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -163,6 +183,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
+          </li>
         
           <li>
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
@@ -176,14 +204,6 @@
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
           </li>
         
-          <li>
-            <a href="/2016/11/15/react/design_principles/">设计原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -195,7 +215,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

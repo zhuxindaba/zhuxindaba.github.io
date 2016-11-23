@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>docker | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Docker(容器引擎)
+docker是一个开源的可以运行任何app的轻量级的容器。docker容器既’hardware-agnostic(硬件不可知？)’又‘platform-agnostic(平台不可知？)’.这意味着它可以运行在任何地方，在你的笔记本也行，在云平台亦可以。并且不要求使用特定的语言，框架，包系统。这使得应用程序的部署，web app的规模调整，后端服务能更好的构建而不依赖于特定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="http://yoursite.com/2016/11/24/phabricator/what_is_docker/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="Docker(容器引擎)
+docker是一个开源的可以运行任何app的轻量级的容器。docker容器既’hardware-agnostic(硬件不可知？)’又‘platform-agnostic(平台不可知？)’.这意味着它可以运行在任何地方，在你的笔记本也行，在云平台亦可以。并且不要求使用特定的语言，框架，包系统。这使得应用程序的部署，web app的规模调整，后端服务能更好的构建而不依赖于特定">
+<meta property="og:updated_time" content="2016-11-23T16:23:08.072Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker">
+<meta name="twitter:description" content="Docker(容器引擎)
+docker是一个开源的可以运行任何app的轻量级的容器。docker容器既’hardware-agnostic(硬件不可知？)’又‘platform-agnostic(平台不可知？)’.这意味着它可以运行在任何地方，在你的笔记本也行，在云平台亦可以。并且不要求使用特定的语言，框架，包系统。这使得应用程序的部署，web app的规模调整，后端服务能更好的构建而不依赖于特定">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-phabricator/what_is_docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/24/phabricator/what_is_docker/" class="article-date">
+  <time datetime="2016-11-23T16:23:08.071Z" itemprop="datePublished">2016-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/development-tools/">development tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      docker
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Docker-容器引擎"><a href="#Docker-容器引擎" class="headerlink" title="Docker(容器引擎)"></a>Docker(容器引擎)</h3><blockquote>
+<p>docker是一个开源的可以运行任何app的轻量级的容器。docker容器既’hardware-agnostic(硬件不可知？)’又<br>‘platform-agnostic(平台不可知？)’.这意味着它可以运行在任何地方，在你的笔记本也行，在云平台亦可以。<br>并且不要求使用特定的语言，框架，包系统。这使得应用程序的部署，web app的规模调整，后端服务能更好的构建<br>而不依赖于特定的堆栈或提供者。<br>docker是一个开放源码的部署引擎,它是由(dotCloud)[<a href="http://web.archive.org/web/20130530031104/https://www.dotcloud.com/]驱动的。" target="_blank" rel="external">http://web.archive.org/web/20130530031104/https://www.dotcloud.com/]驱动的。</a></p>
+</blockquote>
+<h3 id="比VMs好"><a href="#比VMs好" class="headerlink" title="比VMs好"></a>比VMs好</h3><blockquote>
+<p>分发应用程序及沙坑执行的常用方法是使用虚拟机。典型的VM格式有VMware的vmdk，Oracle的VirtualBox<br>亚马逊的ESC2,理论上这些格式允许每个开发者可以自动的打包应用程序到一个指定的机器以便于分发及部署。<br>实际上，几乎不会有这种情况，因为受到以下原因的制裁：</p>
+<ul>
+<li>Size: VMs很大，存储及移动他们不是很明智。</li>
+<li>性能: 运行VMs消耗CPU和内存很大，所以在很多场景下使用它们很不明智，安装过虚拟机的我深有体会。</li>
+<li>可移植性</li>
+<li>以硬件为中心: VMs的设计是基于机器管理员的想法，而不是软件开发者 。因此，它提供了非常有限的<br>的工具给开发者，building, testing, running,比如，VMs提供应用程序的版本控制，监控，配置，<br>日志记录等等。<br>相比之下，Docker依赖于一种不同于集装箱化的沙盒方法，不像传统的虚拟化，集装箱化发生在内核<br>级别。Docker容器非常小，几乎0内存0cpu消耗，可完全移植，并且是以程序为中心设计而设计的。<br>也许最重要的是，Docker可以在操作系统中运行，也可以在虚拟机中运行。</li>
+</ul>
+</blockquote>
+<h3 id="Play-Well-With-Others"><a href="#Play-Well-With-Others" class="headerlink" title="Play Well With Others"></a>Play Well With Others</h3><blockquote>
+<p>Docker不需要你购买特定的语言，特定的框架，特定的打包系统，特定的配置语言。<br>你的程序是Unix进程么？使用文件了么？tcp链接？环境变量？标准Unix流以及命令行参数作为输入<br>输出，在Docker都可以。</p>
+</blockquote>
+<h3 id="Escape-dependecy-hell-逃脱地狱依赖"><a href="#Escape-dependecy-hell-逃脱地狱依赖" class="headerlink" title="Escape dependecy hell(逃脱地狱依赖)"></a>Escape dependecy hell(逃脱地狱依赖)</h3><blockquote>
+<p>一个常见的问题就是开发人员很难以一个简单自动的方式管理一个程序的所有依赖，常见的原因有以下一些:</p>
+<ul>
+<li>跨平台依赖(cross-platform dependencies).现在的应用程序经常依赖系统库、二进制文件、特定语言包，<br>特定的框架模块、作为另外一个项目开发的内部组件等等的组合。这些依赖处在不同的”世界”并且需要不同的工具<br>而且相互之间不一定能正常的工作，所以需要尴尬的自定义集成。</li>
+<li>依赖冲突.不同的应用程序有可能需要依赖一个库的不同版本。</li>
+<li>自定义依赖.开发者可能需要准备应用程序依赖的一个自定义版本，一些打包工具可以处理依赖的自定义版本,<br>但是有些工具则不行，并且每种的处理方式又不同。<br>Docker让开发者在一个地方描述所有的程序依赖来轻松的解决了地狱依赖的这些常见的问题，同时精简了组装过程。<br>Docker通过运行Unix命令序列来定义一个build,在同一个容器里一个接一个的。构造命令修改了容器里的内容(经常<br>是安装新文件，新文件系统)，下一个命令修改了更多的内容等等。由于每一个命令都是基于上一个命令的结果，命令<br>执行的顺序标识依赖项。下面的是一个典型的Docker构造过程：</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:12.04</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y python python-pip curl</span><br><span class="line">RUN curl -sSL https://github.com/shykes/helloflask/archive/master.tar.gz | tar -xzv</span><br><span class="line">RUN cd helloflask-master &amp;&amp; pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Docker不关心依赖的构建关系，只要他们可以在容器中可以通过Unix命令构建。</p>
+</blockquote>
+<h3 id="ToDo（入门）"><a href="#ToDo（入门）" class="headerlink" title="ToDo（入门）"></a>ToDo（入门）</h3>
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/24/phabricator/what_is_docker/" data-id="civv54sqs002fr8o0z9vikhxo" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/11/21/phabricator/eslint/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">eslint</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

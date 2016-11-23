@@ -63,6 +63,128 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Webpack/commonjs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/30/Webpack/commonjs/" class="article-date">
+  <time datetime="2016-06-30T15:01:10.467Z" itemprop="datePublished">2016-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/30/Webpack/commonjs/">CommonJs</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>CommonJs组织定义了一种模块格式，通过确保每一个模块都运行在它自己的命名空间中来解决<br>JavaScript的作用域问题。<br>通过强制模块明确的输出它想暴露出去的变量，并且引用其它模块的方式来完成。<br>为了实现CommonJs，它给了两个工具.</p>
+<ol>
+<li><code>require()</code>函数,在当前作用域引用别的模块.</li>
+<li><code>module</code>对象,允许从当前作用域输出变量。</li>
+</ol>
+</blockquote>
+<p><strong>简单的JavaScript</strong></p>
+<blockquote>
+<p>下面是一个未使用CommonJs的例子,定义一个<code>status.js</code>脚本文件，该文件只包含一个值，它将会<br>在别的脚本文件中使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>在第二个名叫<code>world.js</code>的脚本文件中使用在<code>status.js</code>中定义的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot; world!&quot;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>模块定义</strong></p>
+<blockquote>
+<p>当然<code>world.js</code>无法工作，因为<code>MySalute</code>未定义，我们需要定义每一个文件为一个模块。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这里使用特殊的对象<code>module</code>并且将变量的引用赋值给<code>module.exports</code>,CommonJs模块系统将<br>会知道这个对象是想暴露给全局。<code>salute.js</code>暴露<code>MySalute</code>, <code>world.js</code>暴露<code>Result</code>。</p>
+</blockquote>
+<p><strong>模块依赖</strong></p>
+<blockquote>
+<p>缺省异步定义依赖，我们定义了每个javascript文件为一个单独的模块，但是<code>world.js</code>依旧需要<br>知道谁定义了<code>MySalute</code></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// salute.js</span><br><span class="line">var MySalute = &quot;Hello&quot;;</span><br><span class="line">module.exports = MySalute;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// world.js</span><br><span class="line">var MySalute = require(&quot;./salute&quot;);</span><br><span class="line">var Result = MySalute + &quot;world!&quot;;</span><br><span class="line">module.exports = Result;</span><br></pre></td></tr></table></figure>
+<p><strong>函数例子</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// moduleA.js</span><br><span class="line">module.exports = function( value )&#123;</span><br><span class="line">    return value*2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// moduleB.js</span><br><span class="line">var multiplyBy2 = require(&apos;./moduleA&apos;);</span><br><span class="line">var result = multiplyBy2( 4 );</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/commonjs/" data-id="civv54sp70015r8o09aja13p1" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Webpack/troubleshooting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/30/Webpack/troubleshooting/" class="article-date">
+  <time datetime="2016-06-30T14:42:31.699Z" itemprop="datePublished">2016-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/30/Webpack/troubleshooting/">疑难解析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>解析</strong></p>
+<p><strong>常见解析问题</strong></p>
+<ul>
+<li><code>--display-error-details</code>提供更多的详细信息</li>
+</ul>
+<p><strong><code>npm link</code>找不到他们的依赖</strong></p>
+<blockquote>
+<p>node.js模块的解析算法很简单，从模块所在目录递归向上找寻<code>node_modules</code>目录。</p>
+</blockquote>
+<p><strong>Windows路径</strong></p>
+<blockquote>
+<p>webpack 的配置文件需要时绝对路径，因为 windows 的路径分隔符是<code>\</code>，所以<code>__dirname + &quot;/app/folder&quot;</code><br>这样的代码将会出错，从而会导致问题。<br>需要使用正确的分隔符，如：<code>path.resolve(__dirname, &quot;app/folder&quot;)</code>或者<code>path.join(__dirname, &quot;app&quot;, &quot;folder&quot;)</code></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/troubleshooting/" data-id="civv54sp40013r8o0v20ew5kf" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Webpack/devtools" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/30/Webpack/devtools/" class="article-date">
@@ -99,7 +221,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/devtools/" data-id="civs7e9ju000gvgo08lc1m89c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/devtools/" data-id="civv54so5000ir8o0hsdzcmfn" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -149,7 +271,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/using_plugin/" data-id="civs7e9nm0021vgo0afhln4m1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/using_plugin/" data-id="civv54sq7001xr8o0ud60azaz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -227,7 +349,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/29/Webpack/using_loaders/" data-id="civs7e9lw0018vgo06d5q2f56" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/29/Webpack/using_loaders/" data-id="civv54spc0019r8o0etqplexn" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -363,7 +485,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/usage/" data-id="civs7e9lz001avgo0uedan8q3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/usage/" data-id="civv54spf001dr8o055jzkumj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -417,7 +539,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/installation/" data-id="civs7e9k5000pvgo0dsrw5sp2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/installation/" data-id="civv54som000sr8o0jjdca07z" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -478,7 +600,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/what_is_webpack/" data-id="civs7e9m3001cvgo0n5yo2n00" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/what_is_webpack/" data-id="civv54spe001br8o0i9ne7fpa" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -596,7 +718,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/27/Webpack/module_system_styles/" data-id="civs7e9kh000uvgo00uzo610b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/27/Webpack/module_system_styles/" data-id="civv54sop000ur8o0az7x9b5z" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -661,95 +783,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/js/aboutThis/" data-id="civs7e9mf001gvgo0l7tskefq" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-git/commonsComond" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/16/git/commonsComond/" class="article-date">
-  <time datetime="2016-06-15T16:01:42.945Z" itemprop="datePublished">2016-06-16</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Git/">Git</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/16/git/commonsComond/">git的常用指令(一)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><p><strong>配置别名</strong><br><code>git config alias.st &#39;status&#39;</code><br>git st 的作用等于 git status,只对当前仓库有效，如果想配置全局则<code>git config -g alias.st &#39;status&#39;</code></p>
-</li>
-<li><p><strong>git rm</strong><br>git rm –cached会删除索引中的文件并把它保留到工作目录中,而git rm则会将文件从索引和工作目录中都删除。</p>
-</li>
-<li><p><strong>gitk命令查看提交图</strong></p>
-</li>
-</ul>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="civs7e9mc001evgo03zx12cnk" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-js/closureAndScope" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/15/js/closureAndScope/" class="article-date">
-  <time datetime="2016-06-15T13:14:06.338Z" itemprop="datePublished">2016-06-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/JS/">JS</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/15/js/closureAndScope/">作用域和闭包</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/js/closureAndScope/" data-id="civs7e9mo001lvgo0z36wcy7l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/js/aboutThis/" data-id="civv54sqe0020r8o0drvyyrht" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -773,7 +807,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -783,6 +817,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
+          </li>
         
           <li>
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
@@ -796,14 +838,6 @@
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
           </li>
         
-          <li>
-            <a href="/2016/11/15/react/design_principles/">设计原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -815,7 +849,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

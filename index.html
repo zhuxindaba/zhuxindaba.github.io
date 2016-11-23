@@ -63,6 +63,116 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-phabricator/what_is_docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/24/phabricator/what_is_docker/" class="article-date">
+  <time datetime="2016-11-23T16:23:08.071Z" itemprop="datePublished">2016-11-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/development-tools/">development tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Docker-容器引擎"><a href="#Docker-容器引擎" class="headerlink" title="Docker(容器引擎)"></a>Docker(容器引擎)</h3><blockquote>
+<p>docker是一个开源的可以运行任何app的轻量级的容器。docker容器既’hardware-agnostic(硬件不可知？)’又<br>‘platform-agnostic(平台不可知？)’.这意味着它可以运行在任何地方，在你的笔记本也行，在云平台亦可以。<br>并且不要求使用特定的语言，框架，包系统。这使得应用程序的部署，web app的规模调整，后端服务能更好的构建<br>而不依赖于特定的堆栈或提供者。<br>docker是一个开放源码的部署引擎,它是由(dotCloud)[<a href="http://web.archive.org/web/20130530031104/https://www.dotcloud.com/]驱动的。" target="_blank" rel="external">http://web.archive.org/web/20130530031104/https://www.dotcloud.com/]驱动的。</a></p>
+</blockquote>
+<h3 id="比VMs好"><a href="#比VMs好" class="headerlink" title="比VMs好"></a>比VMs好</h3><blockquote>
+<p>分发应用程序及沙坑执行的常用方法是使用虚拟机。典型的VM格式有VMware的vmdk，Oracle的VirtualBox<br>亚马逊的ESC2,理论上这些格式允许每个开发者可以自动的打包应用程序到一个指定的机器以便于分发及部署。<br>实际上，几乎不会有这种情况，因为受到以下原因的制裁：</p>
+<ul>
+<li>Size: VMs很大，存储及移动他们不是很明智。</li>
+<li>性能: 运行VMs消耗CPU和内存很大，所以在很多场景下使用它们很不明智，安装过虚拟机的我深有体会。</li>
+<li>可移植性</li>
+<li>以硬件为中心: VMs的设计是基于机器管理员的想法，而不是软件开发者 。因此，它提供了非常有限的<br>的工具给开发者，building, testing, running,比如，VMs提供应用程序的版本控制，监控，配置，<br>日志记录等等。<br>相比之下，Docker依赖于一种不同于集装箱化的沙盒方法，不像传统的虚拟化，集装箱化发生在内核<br>级别。Docker容器非常小，几乎0内存0cpu消耗，可完全移植，并且是以程序为中心设计而设计的。<br>也许最重要的是，Docker可以在操作系统中运行，也可以在虚拟机中运行。</li>
+</ul>
+</blockquote>
+<h3 id="Play-Well-With-Others"><a href="#Play-Well-With-Others" class="headerlink" title="Play Well With Others"></a>Play Well With Others</h3><blockquote>
+<p>Docker不需要你购买特定的语言，特定的框架，特定的打包系统，特定的配置语言。<br>你的程序是Unix进程么？使用文件了么？tcp链接？环境变量？标准Unix流以及命令行参数作为输入<br>输出，在Docker都可以。</p>
+</blockquote>
+<h3 id="Escape-dependecy-hell-逃脱地狱依赖"><a href="#Escape-dependecy-hell-逃脱地狱依赖" class="headerlink" title="Escape dependecy hell(逃脱地狱依赖)"></a>Escape dependecy hell(逃脱地狱依赖)</h3><blockquote>
+<p>一个常见的问题就是开发人员很难以一个简单自动的方式管理一个程序的所有依赖，常见的原因有以下一些:</p>
+<ul>
+<li>跨平台依赖(cross-platform dependencies).现在的应用程序经常依赖系统库、二进制文件、特定语言包，<br>特定的框架模块、作为另外一个项目开发的内部组件等等的组合。这些依赖处在不同的”世界”并且需要不同的工具<br>而且相互之间不一定能正常的工作，所以需要尴尬的自定义集成。</li>
+<li>依赖冲突.不同的应用程序有可能需要依赖一个库的不同版本。</li>
+<li>自定义依赖.开发者可能需要准备应用程序依赖的一个自定义版本，一些打包工具可以处理依赖的自定义版本,<br>但是有些工具则不行，并且每种的处理方式又不同。<br>Docker让开发者在一个地方描述所有的程序依赖来轻松的解决了地狱依赖的这些常见的问题，同时精简了组装过程。<br>Docker通过运行Unix命令序列来定义一个build,在同一个容器里一个接一个的。构造命令修改了容器里的内容(经常<br>是安装新文件，新文件系统)，下一个命令修改了更多的内容等等。由于每一个命令都是基于上一个命令的结果，命令<br>执行的顺序标识依赖项。下面的是一个典型的Docker构造过程：</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM ubuntu:12.04</span><br><span class="line">RUN apt-get update &amp;&amp; apt-get install -y python python-pip curl</span><br><span class="line">RUN curl -sSL https://github.com/shykes/helloflask/archive/master.tar.gz | tar -xzv</span><br><span class="line">RUN cd helloflask-master &amp;&amp; pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Docker不关心依赖的构建关系，只要他们可以在容器中可以通过Unix命令构建。</p>
+</blockquote>
+<h3 id="ToDo（入门）"><a href="#ToDo（入门）" class="headerlink" title="ToDo（入门）"></a>ToDo（入门）</h3>
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/24/phabricator/what_is_docker/" data-id="civv54sqs002fr8o0z9vikhxo" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-phabricator/eslint" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/21/phabricator/eslint/" class="article-date">
+  <time datetime="2016-11-21T15:42:13.212Z" itemprop="datePublished">2016-11-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/development-tools/">development tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/21/phabricator/eslint/">eslint</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Why-We-Need-Eslint"><a href="#Why-We-Need-Eslint" class="headerlink" title="Why We Need Eslint?"></a>Why We Need Eslint?</h3><blockquote>
+<p>在团队配合中，有的人是Mac开发，有的人是Windows来发，使用Eslint来强制开发人员统一代码<br>格式，比如常见的<code>tab</code>以及空格,以及windows和Mac的回车标识，也可强制开发人员删除无用的<br>垃圾代码，比如<code>alert(1212), console.log(111)</code>等等，或者条件语句中使用<code>if(true){}</code>,<br>总之它就是用来检测开发人员代码书写规范的一个集成工具。so beautiful!</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/21/phabricator/eslint/" data-id="civv54sqq002cr8o0i4lx6rif" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-vue/movitation_design" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/17/vue/movitation_design/" class="article-date">
@@ -161,7 +271,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civs7e9o0002avgo0wj6xh56n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civv54ss10038r8o0joqd0vy1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -178,7 +288,7 @@
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/phabricator/">phabricator</a>
+    <a class="article-category-link" href="/categories/development-tools/">development tools</a>
   </div>
 
   </div>
@@ -264,7 +374,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="civs7e9p6002wvgo0xrjywcl8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="civv54sqo002ar8o0cpmeo1ni" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -311,11 +421,31 @@
 <blockquote>
 <p>CompositeComponent(复杂组件)的实现:</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedComponent = null;</span><br><span class="line">    this.publicInstance = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    // For composite components, expose the class instance.</span><br><span class="line">    return this.publicInstance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line"></span><br><span class="line">    var publicInstance;</span><br><span class="line">    var renderedElement;</span><br><span class="line">    if (isClass(type)) &#123;</span><br><span class="line">      // Component class</span><br><span class="line">      publicInstance = new type(props);</span><br><span class="line">      // Set the props</span><br><span class="line">      publicInstance.props = props;</span><br><span class="line">      // Call the lifecycle if necessary</span><br><span class="line">      if (publicInstance.componentWillMount) &#123;</span><br><span class="line">        publicInstance.componentWillMount();</span><br><span class="line">      &#125;</span><br><span class="line">      renderedElement = publicInstance.render();</span><br><span class="line">    &#125; else if (typeof type === &apos;function&apos;) &#123;</span><br><span class="line">      // Component function</span><br><span class="line">      publicInstance = null;</span><br><span class="line">      renderedElement = type(props);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Save the public instance</span><br><span class="line">    this.publicInstance = publicInstance;</span><br><span class="line"></span><br><span class="line">    // Instantiate the child internal instance according to the element.</span><br><span class="line">    // It would be a DOMComponent for &lt;div /&gt; or &lt;p /&gt;,</span><br><span class="line">    // and a CompositeComponent for &lt;App /&gt; or &lt;Button /&gt;:</span><br><span class="line">    var renderedComponent = instantiateComponent(renderedElement);</span><br><span class="line">    this.renderedComponent = renderedComponent;</span><br><span class="line"></span><br><span class="line">    // Mount the rendered output</span><br><span class="line">    return renderedComponent.mount();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>DOMComponent</code>类的实现:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">class DOMComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedChildren = [];</span><br><span class="line">    this.node = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    // For DOM components, only expose the DOM node.</span><br><span class="line">    return this.node;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line">    var children = props.children || [];</span><br><span class="line">    if (!Array.isArray(children)) &#123;</span><br><span class="line">      children = [children];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Create and save the node</span><br><span class="line">    var node = document.createElement(type);</span><br><span class="line">    this.node = node;</span><br><span class="line"></span><br><span class="line">    // Set the attributes</span><br><span class="line">    Object.keys(props).forEach(propName =&gt; &#123;</span><br><span class="line">      if (propName !== &apos;children&apos;) &#123;</span><br><span class="line">        node.setAttribute(propName, props[propName]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // Create and save the contained children.</span><br><span class="line">    // Each of them can be a DOMComponent or a CompositeComponent,</span><br><span class="line">    // depending on whether the element type is a string or a function.</span><br><span class="line">    var renderedChildren = children.map(instantiateComponent);</span><br><span class="line">    this.renderedChildren = renderedChildren;</span><br><span class="line"></span><br><span class="line">    // Collect DOM nodes they return on mount</span><br><span class="line">    var childNodes = renderedChildren.map(child =&gt; child.mount());</span><br><span class="line">    childNodes.forEach(childNode =&gt; node.appendChild(childNode));</span><br><span class="line"></span><br><span class="line">    // Return the DOM node as mount result</span><br><span class="line">    return node;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果是，每一个内部实例都不论是复合型的还是平台特有的，都指向他的child的内部实例，比如:<br><code>&lt;App&gt;</code>组件渲染了一个<code>&lt;Button&gt;</code>,<code>&lt;Button&gt;</code>渲染了一个<code>&lt;div&gt;</code>,内部实例树将是下面的样子:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[object CompositeComponent] &#123;</span><br><span class="line">  currentElement: &lt;App /&gt;,</span><br><span class="line">  publicInstance: null,</span><br><span class="line">  renderedComponent: [object CompositeComponent] &#123;</span><br><span class="line">    currentElement: &lt;Button /&gt;,</span><br><span class="line">    publicInstance: [object Button],</span><br><span class="line">    renderedComponent: [object DOMComponent] &#123;</span><br><span class="line">      currentElement: &lt;div /&gt;,</span><br><span class="line">      node: [object HTMLDivElement],</span><br><span class="line">      renderedChildren: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在DOM中只看见<code>&lt;div&gt;</code>,但是内部实例可以包含混合型及平台特有的内部实例二者。混合型内部实例<br>需要存储:</p>
+<ul>
+<li>当前元素</li>
+<li>如果元素类型是类，则包含公共实例</li>
+<li>单独的渲染的内部实例，既可以是<code>DOMComponent</code>,也可以是<code>CompositeComponent</code>.<br>平台特有内部实例需要存储:</li>
+<li>当前元素</li>
+<li>DOM节点</li>
+<li>所有的子内部实例，它们既可以是<code>DOMComponent</code>也可以是<code>CompositeComponent</code>.</li>
+</ul>
+</blockquote>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civs7e9p8002xvgo0u55uyl61" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civv54sri002sr8o0y9igswyy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -373,7 +503,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="civs7e9ov002pvgo0r36mt6wv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="civv54srl002vr8o08tcqvx4f" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -577,7 +707,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="civs7e9o7002ivgo0i3kak8uf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="civv54ss20039r8o0gnq768z1" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -677,7 +807,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="civs7e9qj003kvgo0qu7g19aw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="civv54srx0034r8o0sohpw3zc" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -849,7 +979,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="civs7e9pa002zvgo0kg5j6zv1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="civv54srn002xr8o034gbgh7y" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1004,117 +1134,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="civs7e9p4002tvgo0nphbj15l" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-react/explain_bindActionCreators" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/01/react/explain_bindActionCreators/" class="article-date">
-  <time datetime="2016-10-31T16:06:46.315Z" itemprop="datePublished">2016-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/react/explain_bindActionCreators/">bindActionCreators</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="bindActionCreators-actionCreators-dispatch"><a href="#bindActionCreators-actionCreators-dispatch" class="headerlink" title="bindActionCreators(actionCreators, dispatch)"></a>bindActionCreators(actionCreators, dispatch)</h1><p><strong>使用场景</strong>   </p>
-<p>需要把action creator往下传到一个组件上，却不想让这个组建觉察到Redux的存在，而且不希望把Redux store<br>或dispatch传给它</p>
-<p><br><br><strong>参数</strong>    </p>
-<ol>
-<li><p><code>actionCreators</code>(Fuction Or Object):一个action creator，或者键值是action creators的对象    </p>
-</li>
-<li><p><code>dispatch</code>(Function):一个dispatch函数，由<code>store</code>实例提供      </p>
-</li>
-</ol>
-<p><strong>返回值</strong>    </p>
-<p><em>(Function or Object)</em>:一个与原对象类似的对象，只不过这个对象中的每个函数值都可以直接dispatch<br>action。如果传入的是一个函数，返回的也是一个函数。</p>
-<p><br></p>
-<p><strong>示例</strong>    </p>
-<p><code>TodoActionCreationCreator.js</code>    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">export function addTodo(text) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;ADD_TODO&apos;,</span><br><span class="line">		text</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function removeTodo(id) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;REMOVE_TODO&apos;,</span><br><span class="line">		id</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><br><br><code>SomeComponent.js</code>   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import &#123; bindActionCreators &#125; from &apos;redux&apos;;</span><br><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;;</span><br><span class="line">import * as TodoActionCreators from &apos;./TodoActionCreators&apos;;</span><br><span class="line"></span><br><span class="line">class TodoListContainer extends React.Component &#123;</span><br><span class="line"></span><br><span class="line">	componentDidMount() &#123;</span><br><span class="line">		//由react-redux注入</span><br><span class="line">		let &#123; dispatch &#125; = this.props;</span><br><span class="line"></span><br><span class="line">		let action = TodoActionCreators.addTodo(&apos;Use Redux&apos;);</span><br><span class="line">		dispatch(action);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	render() &#123;</span><br><span class="line"></span><br><span class="line">		let &#123; todos, dispatch &#125; = this.props;</span><br><span class="line"></span><br><span class="line">		//应用bindActionCreator</span><br><span class="line">		let boundActionCreators = bindActionCreators(TodoActionCreators, dispatch);</span><br><span class="line"></span><br><span class="line">		return (</span><br><span class="line">			&lt;TodoList todos=&#123;todos&#125;</span><br><span class="line">				&#123;...boundActionCreators&#125;</span><br><span class="line">			/&gt;</span><br><span class="line">		);</span><br><span class="line"></span><br><span class="line">		//一种可以替换bindActionCreators的做法是直接把dispatch函数和action creators当作props传递给组件</span><br><span class="line">		//return &lt;TodoList todos=&#123;todos&#125; dispatch=&#123;dispatch&#125; /&gt;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default connect(state =&gt; (&#123;todos: state.todos&#125;))(TodoListContainer);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="civs7e9on002nvgo0ia3eg5f3" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-react/explain_applyMiddleware" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/01/react/explain_applyMiddleware/" class="article-date">
-  <time datetime="2016-10-31T16:06:46.313Z" itemprop="datePublished">2016-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="applyMiddleware-…middlewares"><a href="#applyMiddleware-…middlewares" class="headerlink" title="applyMiddleware(…middlewares)"></a>applyMiddleware(…middlewares)</h1><p>使用包含自定义功能的middleware来扩展Redux是一种推荐方式。Middleware可以让你包装store的dispatch方法来达到你想要的目的。<br>同事，middleware还拥有“可组合”这一关键特性。多个middleware可以被组合到一起使用，徐北广场middleware链。其中每个middleward<br>都不需要关心链中它前后的middleware的任何信息</p>
-<p>例如redux-thunk支持dispatch function，以此让action creator控制反转。被dispatch的function会接收dispatch作为参数，并且可以<br>异步调用它们。这类的function就称为thunk</p>
-<p>Middleware并不需要和<code>createStore</code>绑在一起使用。</p>
-<p><strong>参数</strong>    </p>
-<ul>
-<li>…middlewares(arguments):    </li>
-</ul>
-<p>遵循Redux middlewareAPI的函数。每个middleware接收<code>store</code>的dispatch和getState函数作为命名参数，并返回一个函数<br>该函数会被传入称为<code>next</code>的下一个middleware的dispatch方法,并返回一个接收action的新函数，这个函数可以直接调用next(action),<br>或者在其他需要的时刻调用。调用链中最后一个middleware会接收真实的store的<code>dispatch</code>方法作为<code>next</code>参数，并结束调用链</p>
-<p><strong>返回值</strong>    </p>
-<p>(Function)一个应用了middleware后的store enhancer。这个store enhancer就是一个函数，并且需要应用到createStore。它会<br>返回一个应用了middleware的新的<code>createStore</code></p>
-<p><strong>Example：自定义Logger Middleware</strong>    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import todos from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">function logger(&#123;getState&#125;) &#123;</span><br><span class="line">	return (next) =&gt; (action) =&gt; &#123;</span><br><span class="line">		console.log(&apos;will dispatch&apos;, action);</span><br><span class="line"></span><br><span class="line">		//调用middleware链中下一个middleware的dispatch</span><br><span class="line">		let returnValue = next(action);</span><br><span class="line"></span><br><span class="line">		console.log(&apos;state after dispatch&apos;, getState());</span><br><span class="line"></span><br><span class="line">		return returnValue;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let createStoreWithMiddleware = applyMiddleware(logger)(createStore);</span><br><span class="line">let store = createStoreWithMiddleware(todos, [&apos;use redux&apos;]);</span><br><span class="line"></span><br><span class="line">store.dispatch(&#123;type: &apos;ADD_TODO&apos;, text: &apos;understand the middleware&apos;&#125;)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">控制台打印</span><br><span class="line">will dispatch:&#123;type: &apos;ADD_TODO&apos;, text: &apos;use redux&apos;&#125;</span><br><span class="line">state after dispatch[&apos;use redux&apos;, &apos;understand the middleware&apos;]</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-<p><br><br><strong>Example：使用Thunk Middleware来做异步Action</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, combineReducers, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import thunk from &apos;redux-thunk&apos;;</span><br><span class="line">import * as reducers from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">//调用applyMiddleware,使用middleware增强createStore</span><br><span class="line">let createStoreWithMiddleware = applyMiddleware(thunk)(store);</span><br><span class="line"></span><br><span class="line">let reducer = combineReducers(reducers);</span><br><span class="line">//像原生createStore一样使用</span><br><span class="line">let store = createStoreWithMiddleware(reducer);</span><br><span class="line"></span><br><span class="line">function fetchSecretSauce() &#123;</span><br><span class="line">&#125;	return fetch(&apos;http:xx.xx.xx/xx/xx&apos;);</span><br><span class="line"></span><br><span class="line">//普通的action creator，它们返回的action不需要middleware就能被dispatch</span><br><span class="line">//但是，它们只表达【事实】，并不表达【异步数据流】</span><br><span class="line">function makeASandwich(forPerson, secretSauce) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;MAKE_SANDWICH&apos;,</span><br><span class="line">		forPerson,</span><br><span class="line">		secretSauce</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function apologize(fromPerson, toPerson, error) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;APOLOGIZE&apos;,</span><br><span class="line">		fromPerson,</span><br><span class="line">		toPerson,</span><br><span class="line">		error</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function withdrawMoney(amount) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;WITHDRAW&apos;,</span><br><span class="line">		amount</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//即使不使用middleware，也可以dispatch action：</span><br><span class="line">store.dispatch(withdrawMoney(100))</span><br><span class="line"></span><br><span class="line">//如何处理异步action？如：API调用，或者路由跳转</span><br><span class="line">//用thunk：它是一个返回函数的函数</span><br><span class="line"></span><br><span class="line">function makeASandWichSecretSauce(forPerson) &#123;</span><br><span class="line"></span><br><span class="line">	//控制反转！返回一个接收`dispatch`的函数</span><br><span class="line">	//Thunk middleware知道如何把异步 thunk action 转为普通action</span><br><span class="line">	return function (dispatch) &#123;</span><br><span class="line">		return fetchSecretSauce().then(</span><br><span class="line">			sauce =&gt; dispatch(makeASandwich(forPerson, sauce)),</span><br><span class="line">			error =&gt; dispatch(apologize(&apos;The Sandwich Shop&apos;, forPerson, error))</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Thunk middleware可以让我们像dispatch普通action一样dispatch异步的thunk action</span><br><span class="line">store.dispatch(makeASandWichSecretSauce(&apos;Me&apos;));</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="civs7e9ok002kvgo05atmon0r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="civv54srz0036r8o0ak6od7ys" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1138,7 +1158,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/phabricator/">phabricator</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1148,6 +1168,14 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
+          </li>
         
           <li>
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
@@ -1161,14 +1189,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
           </li>
         
-          <li>
-            <a href="/2016/11/15/react/design_principles/">设计原则</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/12/react/implemention_notes/">实现说明</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1180,7 +1200,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
