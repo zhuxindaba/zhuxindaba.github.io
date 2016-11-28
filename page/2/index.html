@@ -63,6 +63,178 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-react/codebase_overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/09/react/codebase_overview/" class="article-date">
+  <time datetime="2016-11-09T12:15:59.585Z" itemprop="datePublished">2016-11-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/09/react/codebase_overview/">React代码库概述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="代码库概述"><a href="#代码库概述" class="headerlink" title="代码库概述"></a>代码库概述</h2><blockquote>
+<p>这一节主要是给我们一个React代码库的概述，他的一些规范以及实现，如果你想对React有所贡献的话<br>这个指南将会使你更加舒服的更改。我们不一定推荐在React应用程序的任何这些惯例，有些惯例由于一些<br>历时原因而存在但是后期也许会更改.</p>
+</blockquote>
+<h3 id="自定义模块系统-Custom-Module-System"><a href="#自定义模块系统-Custom-Module-System" class="headerlink" title="自定义模块系统(Custom Module System)"></a>自定义模块系统(Custom Module System)</h3><blockquote>
+<p>在Facebook，内部的我们使用的是一个名叫’Haste’的自定义模块，他和commonjs和类似并且也使用<code>require()</code><br>但是有一些重要的不同而正是这些使外部的贡献者很困惑。在Commonjs中，当你导入一个模块时，你需要明确指定<br>它的相对路径：   </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Importing from the same folder:</span><br><span class="line">var setInnerHTML = require(&apos;./setInnerHTML&apos;);</span><br><span class="line"></span><br><span class="line">// Importing from a different folder:</span><br><span class="line">var setInnerHTML = require(&apos;../utils/setInnerHTML&apos;);</span><br><span class="line"></span><br><span class="line">// Importing from a deeply nested folder:</span><br><span class="line">var setInnerHTML = require(&apos;../client/utils/setInnerHTML&apos;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然而，在Haste中所有的文件名都是全局唯一的，在React代码库中，你可以按照文件名导入其他的任何模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var setInnerHTML = require(&apos;setInnerHTML&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>Haste最初是用来开发大型app的比如像Facebook，很容易将文件移动到不同的目录并且无需担心他们的相对路径<br>在任何编辑器的模糊查询会让你得到正确的位置，而这归功于全局唯一的文件名.<br>React是从Facebook的代码库中提取出来的，所以使用Haste是历时原因，在将来，我们有可能会移植Commonjs或ES6<br>的模块化方式同社区更好的对齐，但是这需要Facebook内部基础架构做出很大改变，所以也不是一朝一夕就能完成的.<br><strong>如果你记得一下这些规则，Haste会对你更有意义：</strong></p>
+<ol>
+<li>在React原生代码库中的所有文件名都是全局唯一的，这也是为什么有些文件名繁长啰嗦的原因。</li>
+<li>当你添加了一个新文件时，确认你包含了许可证的标头，你可以从别的地方复制一份，一个许可证标头的格式一般是：   </li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Copyright 2013-present, Facebook, Inc.</span><br><span class="line"> * All rights reserved.</span><br><span class="line"> *</span><br><span class="line"> * This source code is licensed under the BSD-style license found in the</span><br><span class="line"> * LICENSE file in the root directory of this source tree. An additional grant</span><br><span class="line"> * of patent rights can be found in the PATENTS file in the same directory.</span><br><span class="line"> *</span><br><span class="line"> * @providesModule setInnerHTML</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>记得更改@providesModule后面的名字，匹配你新创建的文件.<br>当我们为npm编译React时，一个script脚本将会复制所有的模块到一个单一的没有子目录的目录，命名为lib<br>预制所有的<code>require()</code>路径为<code>./.</code>,在这种方式下，Node，Browserify，Webpack，等工具将会理解React的生成输出而无需<br>关心Haste。<br><strong>如果你正在github上读react源码，并且想跳到某一个文件，请按’t’</strong><br>这是Github用来在当前仓库模糊搜索文件的快捷方式，输入你要搜索的文件名，它将会显示匹配的文件。</p>
+</blockquote>
+<h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><blockquote>
+<p>React几乎没有外部依赖，通常情况下，<code>require()</code>指向的是React自己代码库的文件，但是也有几个比较少见的例外：<br>如果你发现<code>require()</code>的文件在React仓库中没有所对应的文件，那么你可以在<a href="https://github.com/facebook/fbjs" target="_blank" rel="external">fbjs</a><br>这个仓库中找到,例如<code>require(&#39;warning&#39;)</code>将会从fbjs的<code>warning</code>模块中解析。<br>fbjs仓库存在是因为React共享了一些工具类比如<a href="https://github.com/facebook/relay" target="_blank" rel="external">Relay</a>,我们保持了他们之间的同步关系.<br>我们不依赖Node生态系统的等效小模块，因为我们希望Facebook的工程师在有需要的时候都可以做出改变,所有fbjs内部的实用程序不会被<br>作为开放的API，它们的意图仅仅是用来服务于Facebook的项目，比如React。</p>
+</blockquote>
+<h3 id="顶级文件夹"><a href="#顶级文件夹" class="headerlink" title="顶级文件夹"></a>顶级文件夹</h3><blockquote>
+<p>在克隆React仓库之后，你会发现有几个顶级文件夹在里面:</p>
+<ol>
+<li><code>src</code>是React的源码，如果你要修改相关的代码，<code>src</code>文件夹将是你花费时间最长的.</li>
+<li><code>docs</code>是React文档网站，当你修改了API时，请确认修改了相应的markdown文件</li>
+<li><code>examples</code>包含了一些生成不同配置的React例子</li>
+<li><code>packages</code>包含了元数据用来对应React仓库中的所有包（比如package.json），尽管如此，他们的源码还是位于<code>src</code>文件夹中。</li>
+<li><code>build</code>是React的生成输出，他不会再React仓库中出现，但是他会出现在你运行生成命令之后.<br>还有一些顶级目录，但是他们仅仅是工具类，很有可能你在贡献代码时，根本不会碰到他们。</li>
+</ol>
+</blockquote>
+<h3 id="协同定位测试"><a href="#协同定位测试" class="headerlink" title="协同定位测试"></a>协同定位测试</h3><blockquote>
+<p>我们没有一个顶级的测试目录，我们将测试用例放在一个<code>__tests__</code>的目录下代替。<br>例如，<code>setInnerHTML.js</code>的测试用例放在<code>__tests__/setInnerHTML-test.js</code>.</p>
+</blockquote>
+<h3 id="共享的代码"><a href="#共享的代码" class="headerlink" title="共享的代码"></a>共享的代码</h3><blockquote>
+<p>尽管Haste允许我们导入React仓库的任何模块，我们得遵循一个规范用来避免循环依赖以及其他的怪异现象，按照规范，一个文件仅能导入相同<br>目录以及子目录下的文件。<br>例如：在<code>src/renders/dom/client</code>下的文件可以导入相同目录以及该目录的所有子目录中的文件.但是他们不能导入<code>src/renders/dom/server</code><br>下的文件因为它不是<code>src/renders/dom/client</code>的子目录。<br>此规则的例外情况，有时候，我们需要在不同组的模块里共享一些公共的函数，在这种情况下，我们提升共享模块到这些目录最近的父目录里的一个叫<br>shared的模块里.<br>比如：<code>src/renders/dom/client</code>和<code>src/renders/dom/server</code>共享一段代码，那么这段代码应该位于<code>src/renders/shared</code>.<br>按照同样的逻辑，如果<code>src/renders/dom/client</code>和<code>src/renders/native</code>共享一个工具类，那么此工具类应该位于<code>src/renders/shared</code>.<br>这个规范虽然不是强制的，但是当我们遇到<code>pull request</code>时会检查.</p>
+</blockquote>
+<h3 id="警告及不变量"><a href="#警告及不变量" class="headerlink" title="警告及不变量"></a>警告及不变量</h3><blockquote>
+<p>React代码库用<code>warning</code>模块来展示警告：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var warning = require(&apos;warning&apos;);</span><br><span class="line"></span><br><span class="line">warning(</span><br><span class="line">  2 + 2 === 4,</span><br><span class="line">  &apos;Math is not working today.&apos;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>当<code>warning</code>条件为false时，警告将会显示</strong><br>这种思考方式是条件响应的是正常情况而不是异常情况。<br>这是一种避免垃圾邮件以及控制台重复输出的好主意。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var warning = require(&apos;warning&apos;);</span><br><span class="line">var didWarnAboutMath = false;</span><br><span class="line">if(!didWarnAboutMath) &#123;</span><br><span class="line">  warning(</span><br><span class="line">    2 + 2 === 4,</span><br><span class="line">    &apos;Math is not working today&apos;</span><br><span class="line">  );</span><br><span class="line">  didWarnAbout = true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>警告仅会在开发环境下可用，在正是环境下，他们会被完全削去，如果你需要禁止一些代码路径的执行<br>使用<code>invariant</code>模块代替.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var invariant = require(&apos;invariant&apos;);</span><br><span class="line">invariant(</span><br><span class="line">  2 + 2 === 4,</span><br><span class="line">  &apos;You shall not pass!&apos;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当<code>invariant</code>为false的时候，将引发<br>“invariant”是这种情况一直为true的一种说明方式，你可以把它当做断言。<br>保持开发和正是环境行为一直是很重要的，所以<code>invariant</code>可以在正式及开发环境引发，警告信息会自动<br>的被替换为错误码以避免字节数大小的影响。</p>
+</blockquote>
+<h3 id="开发和正式"><a href="#开发和正式" class="headerlink" title="开发和正式"></a>开发和正式</h3><blockquote>
+<p>你可以在代码库使用<code>__DEV__</code>伪全局变量，守卫只针对开发环境的代码块。<br>在编译阶段中，在CommonJS构建时，它将会被转变为<code>process.env.NODE_ENV !== &#39;production&#39;</code>。<br>在独立构建时，在未压缩的构建时它变为true，在压缩构建的时候它将会被剔除。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (__DEV__) &#123;</span><br><span class="line">  // This code will only run in development.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="JSDoc"><a href="#JSDoc" class="headerlink" title="JSDoc"></a>JSDoc</h3><blockquote>
+<p>一些内部的以及公共的方法以<a href="http://usejsdoc.org/" target="_blank" rel="external">JSDoc形式的注释</a>注释：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">  * Updates this component by updating the text content.</span><br><span class="line">  *</span><br><span class="line">  * @param &#123;ReactText&#125; nextText The next text content</span><br><span class="line">  * @param &#123;ReactReconcileTransaction&#125; transaction</span><br><span class="line">  * @internal</span><br><span class="line">  */</span><br><span class="line">receiveComponent: function(nextText, transaction) &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们试图让存在的注释更新但我们不是强制的，我们没有在新写的代码中使用JSDoc,替代方案是<br>我们使用Flow强制类型.</p>
+</blockquote>
+<h3 id="Flow"><a href="#Flow" class="headerlink" title="Flow"></a>Flow</h3><blockquote>
+<p>我们最近引入<a href="https://flowtype.org/" target="_blank" rel="external">Flow</a>来检查代码库，在许可证标头用<code>@flow</code>标记的文件<br>将会执行类型检查.<br>我们接受给已存在代码添加<code>@flow</code>的pull请求，Flow注释长这样:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ReactRef.detachRefs = function(</span><br><span class="line">  instance: ReactInstance,</span><br><span class="line">  element: ReactElement | string | number | null | false,</span><br><span class="line">): void &#123;</span><br><span class="line">  // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>只要有可能，新提交的代码应该使用Flow注解，你可以在本地运行<code>npm run flow</code>来检查你的代码.</p>
+</blockquote>
+<h3 id="类和Mixins"><a href="#类和Mixins" class="headerlink" title="类和Mixins"></a>类和Mixins</h3><blockquote>
+<p>React原来是用ES5编写的，我们已经用<a href="http://babeljs.io/" target="_blank" rel="external">babel</a>支持了ES6的特性。包含classes,<br>但是，许多React代码还是用ES5写的。<br>尤其是，你可能经常看到以下的形式：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// Constructor</span><br><span class="line">function ReactDOMComponent(element) &#123;</span><br><span class="line">  this._currentElement = element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Methods</span><br><span class="line">ReactDOMComponent.Mixin = &#123;</span><br><span class="line">  mountComponent: function() &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// Put methods on the prototype</span><br><span class="line">Object.assign(</span><br><span class="line">  ReactDOMComponent.prototype,</span><br><span class="line">  ReactDOMComponent.Mixin</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">module.exports = ReactDOMComponent;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这段代码的<code>Mixin</code>和React的<code>mixins</code>特性并无关系，这只是一种分组在一个对象的方法的方式，这些方法有可能<br>在后期获取并附加到别的class上，我们使用了这种方式尽管我们尝试在新代码中避免使用。同等的ES6代码长得是<br>这个样子的：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class ReactDOMComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this._currentElement = element;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mountComponent() &#123;</span><br><span class="line">    // ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">module.exports = ReactDOMComponent;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>有时候我们会转换ES5代码为ES6代码，然而这对我们来说不是非常重要，因为有一个正在进行的努力，React协调器的实现带有<br>少量的面向对象的方法，我们完全不需要使用class。</p>
+</blockquote>
+<h3 id="动态注入"><a href="#动态注入" class="headerlink" title="动态注入"></a>动态注入</h3><blockquote>
+<p>React在有些模块中使用了动态注入，虽然它易于理解，但是不幸的是，它阻碍了我对代码的理解，它存在的主要原因是React起初<br>只支持DOM作为target,React Native是已React的分支开始的，我们不得不添加动态注入让React Native覆盖一些行为.你有可能<br>会看见一些模块声明动态依赖是以下面的这种方式:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// Dynamically injected</span><br><span class="line">var textComponentClass = null;</span><br><span class="line"></span><br><span class="line">// Relies on dynamically injected value</span><br><span class="line">function createInstanceForText(text) &#123;</span><br><span class="line">  return new textComponentClass(text);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var ReactHostComponent = &#123;</span><br><span class="line">  createInstanceForText,</span><br><span class="line"></span><br><span class="line">  // Provides an opportunity for dynamic injection</span><br><span class="line">  injection: &#123;</span><br><span class="line">    injectTextComponentClass: function(componentClass) &#123;</span><br><span class="line">      textComponentClass = componentClass;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports = ReactHostComponent;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>injection</code>区域无论如何不会被特殊的处理，但是按照惯例，它意味着此模块在运行的时候想注入一些模块，在React DOM中，<br><a href="https://github.com/facebook/react/blob/4f345e021a6bd9105f09f3aee6d8762eaa9db3ec/src/renderers/dom/shared/ReactDefaultInjection.js" target="_blank" rel="external">ReactDefaultInjection</a>注入了DOM细节的实现<code>ReactHostComponent.injection.injectTextComponentClass(ReactDOMTextComponent);</code>,<br>在React Native中<a href="https://github.com/facebook/react/blob/4f345e021a6bd9105f09f3aee6d8762eaa9db3ec/src/renderers/native/ReactNativeDefaultInjection.js" target="_blank" rel="external">ReactNativeDefaultInjection</a>注入了它自己的实现,在代码库中有多个注射点，在未来，我们打算拜托动态注入的这种机制，在静态构建时串起所有的碎片文件。</p>
+</blockquote>
+<h3 id="大量的包"><a href="#大量的包" class="headerlink" title="大量的包"></a>大量的包</h3><blockquote>
+<p>React是一个<a href="http://danluu.com/monorepo/" target="_blank" rel="external">monorepo</a>,它的仓库包含了大量的独立的包，所以他们的改变可以协调在一起，并且文档以及问题是在一起的，<br><code>npm</code>元数据比如<code>package.json</code>文件在位于顶层目录<code>package</code>文件夹下的，但是，这里面几乎没有代码。<br>比如，<a href="https://github.com/facebook/react/blob/87724bd87506325fcaf2648c70fc1f43411a87be/packages/react/react.js" target="_blank" rel="external">packages/react/react.js</a>再导出<code>src/isomorphic/React.js</code>,真实的npm入口，其余的包大多数重复相同的规则，所有重要的代码都位于<code>src</code>文件夹下。<br>虽然在源码结构里代码都是独立的，确切的包的边界还是和npm的以及browser构建略有不同。</p>
+</blockquote>
+<h3 id="React-Core"><a href="#React-Core" class="headerlink" title="React Core"></a>React Core</h3><blockquote>
+<p>React的核心包含了所有顶级的<a href="https://facebook.github.io/react/docs/react-api.html" target="_blank" rel="external">React API</a>,比如：</p>
+<ul>
+<li>React.createElement()</li>
+<li>React.createClass()</li>
+<li>React.Component</li>
+<li>React.Children</li>
+<li>React.PropTypes<br>React核心仅仅包含了定义模块的API，不包括reconciliation算法以及具体平台的代码，它被用于React DOM以及React Native，React的核心代码位于<code>src/isomorphic</code><br>它可以在npm的react包中获取，相应的browser中是react.js,它导出的全局变量是React。</li>
+</ul>
+</blockquote>
+<h3 id="Renders"><a href="#Renders" class="headerlink" title="Renders"></a>Renders</h3><blockquote>
+<p>React最初是唯DOM创建的但是后来改编用来适应原生平台React Native，在这里介绍React内部构建的概念。<br><strong>Renders管理一个React树如何变成底层平台的调用</strong>，Renders位于<code>src/renders</code>文件夹下:</p>
+<ul>
+<li>React DOM Render渲染React组建为DOM。它实现了顶层的ReactDOM API并且可以在npm的react-dom中获取到，它可以<br>被用来做单独的browser bundle(react-dom.js)它导出了ReactDOM全局变量。</li>
+<li>React Native Render渲染React组建为原生视图，它是在React Native内部使用的，通过react-native-render npm包<br>将来可能会将它copy一份到React Native的仓库中，这样React Native可以在自己的工作空间中修改React了。</li>
+<li>React Test Render渲染React组建为JSON树，它使用了Jest的快照测试功能，在npm的react-test-render包中获取。<br>剩下的官方支持的render是react-art,为了避免我们在修改react时意外的破坏它，我们要在<code>src/renders/art</code>目录中运行测试运例<br>虽然如此，它的github仓库still acts as the source of truth。<br>虽然在技术上，我们可能会自定义render，目前不会官方支持，自定义render没有一个公共的稳定的协议，这就是我们将它放在单独的<br>一个地方的原因。<br><strong>注意：</strong>在技术上,native render是很薄的一层用来让React和React Native相互作用，真正具体管理原生视图的代码是在React<br>Native仓库中</li>
+</ul>
+</blockquote>
+<h3 id="Reconciler-协调器"><a href="#Reconciler-协调器" class="headerlink" title="Reconciler(协调器)"></a>Reconciler(协调器)</h3><blockquote>
+<p>甚至完全不同的render比如React DOM和React Native需要共享相同的逻辑，尤其是<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">reconciliation</a>算法应尽可能相似，声明的渲染，<br>自定义组建，状态，生命周期方法，以及refs始终跨平台工作。<br>为了解决这一问题，不同的renders共享一些代码。我们称这些代码为<code>reconciler</code>(协调器),当一个更新（setUpdate()）被安排时，<br>reconciler（协调器）调用了组建中的render(),mounts,updates,或者unmount.<br>reconciler（协调器）没有被单独的分离出来，因为它们目前没有公共的API，它们会被renders使用，比如React DOM，React Native。</p>
+</blockquote>
+<h3 id="Reconciler栈"><a href="#Reconciler栈" class="headerlink" title="Reconciler栈"></a>Reconciler栈</h3><blockquote>
+<p>‘stack’reconciler供应于所有的线上React代码，它位于<code>src/renducers/shared/stack/reconciler</code>文件夹中，用于React和React Native<br>它是以面向对象的形式书写的(object-oriented)并且维护一个内部实例的树，（该树对应于所有React组件）。这个内部实例存在于自定义组件<br>及平台组件，这个内部实例对应用户来说不能直接访问，并且他们的树不会被暴露出来。当一个组件mounts，updates，unmounts，这个stack &gt;reconciler将会调用内部实例的一个方法，这些方法是<code>mountComponent(element)</code>,<code>receiveComponent(element)</code>,和<code>unmountElement(element)</code>.<br><strong>Host Components</strong><br>平台特定组件，比如<code>&lt;div&gt;</code>,’View’，例如，React Dom通知stack reconciler使用DOM组件的<code>ReactDOMComponent</code>去处理mounting,updates,<br>以及unmounting。不论什么平台，<code>&lt;div&gt;</code>,<code>&lt;View&gt;</code>处理管理多子组件的方式是类似的，为了方便，reconciler提供了一个叫<code>ReactMultiChild</code><br>来供DOM和Native render使用。<br><strong>复杂的组件</strong><br>用户定义的组件和所有的renders表现形式是一样的，这就是为什么reconciler提供了一个叫<code>ReactCompositeComponent</code>的公共实现，<br>它使用于各平台的renderer。复杂的组件也要实现<code>mounting</code>,<code>updating</code>,<code>unmounting</code>,但是不同于平台组件，<code>ReactCompositeComponent</code><br>需要依赖于不同的代码，这就是为什么在用户定义的类中有<code>render()</code>,<code>componentDidMount()</code>方法的原因。<br>在更新期间中，<code>ReactCompositeComponent</code>检查<code>render()</code>在最后一次输出的<code>type</code>,’key’是否不同，如果<code>type</code>和<code>key</code>有改变，他会委派<br>去更新已存在的内部实例，另外，它会卸载老的子组件，并镶嵌新的，这个会在<a href="https://facebook.github.io/react/docs/reconciliation.html" target="_blank" rel="external">Reconciliation algorithm(协调器算法)</a>中描述。<br><strong>Recursion（递归）</strong><br>在一次更新中，stack reconciler会一直深入复杂的组件，运行他们的render()方法，并决定是否更新以及替换他们的唯一的组件。通过平台组件<br>(div View)执行平台代码，Host组件可能会有很多子组件，通常会递归处理。stack reconciler经常处理同步的单个处理组件树，当个别的树处理完成了<br>stack reconciler不会停止，所以当更新很深以及CPU有限时它不是最优的。</p>
+</blockquote>
+<h3 id="Fiber-reconciler"><a href="#Fiber-reconciler" class="headerlink" title="Fiber reconciler"></a>Fiber reconciler</h3><blockquote>
+<p>‘fiber’ reconciler是一个新的努力用来解决stack reconciler里的继承问题以及长期存在的一些问题。<br>它是完全重写的reconciler，<a href="https://github.com/facebook/react/pulls?utf8=%E2%9C%93&amp;q=is%3Apr%20is%3Aopen%20fiber" target="_blank" rel="external">目前正在被开发</a>。<br>它的主要目标是:</p>
+<ul>
+<li>在chunks中可拆分中断的能力。</li>
+<li>在进程中确定优先次序、重订、复用的工作能力。</li>
+<li>Ability to yield back and forth between parents and children to support layout in React。</li>
+<li>render()返回多标签的能力</li>
+<li>更好的支持错误边界<br>你可以阅读来更好的理解<a href="https://github.com/acdlite/react-fiber-architecture" target="_blank" rel="external">React Fiber Architecture</a>,此刻，它处于试验阶段。<br>它的代码位于<code>src/renders/shared/fiber</code></li>
+</ul>
+</blockquote>
+<h3 id="Event-System"><a href="#Event-System" class="headerlink" title="Event System"></a>Event System</h3><blockquote>
+<p>React实现了一个综合型的事件系统，在ReactDOM和React Native都可工作，它的代码位于<code>src/renders/shared/shared/event</code>.</p>
+</blockquote>
+<h3 id="Add-ons-附加组件"><a href="#Add-ons-附加组件" class="headerlink" title="Add-ons(附加组件)"></a>Add-ons(附加组件)</h3><blockquote>
+<p>每个React的附件组件在npm都以react-addons-的前缀的包单独的分离出来。它们的代码位于<code>src/addons</code>.<br>另外，我们提供了一个单独的叫<code>react-with-addons.js</code>的输出文件，它包含了React代码以及所有的addons暴露出的对象。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw2al0lp002og8o0kckchvrh" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-react/react_redux" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/01/react/react_redux/" class="article-date">
@@ -208,7 +380,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw22kio10033noo0jmwman91" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw2al0ma0031g8o0fceavqnz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -265,7 +437,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw22kinh002vnoo0tx0olef5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw2al0lw002tg8o0pazuxqz2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -318,7 +490,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw22kine002unoo0lfwhtx97" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw2al0lu002sg8o0q7c6m9xu" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -414,7 +586,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw22kin5002qnoo0wvk6vne3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw2al0lg002lg8o0l01v6g56" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -467,7 +639,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw22kinx0031noo0xjyr8l0t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw2al0m70030g8o0yn2c8tg6" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -567,7 +739,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw22kilo0024noo0ar8b6jnd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw2al0kp0022g8o0r0tz1z67" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -643,7 +815,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw22kilj0022noo07eg1v5dp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw2al0kl0020g8o0rqgqoul7" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -717,7 +889,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw22kil3001ynoo0y3ryw68q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw2al0kc001vg8o0kiaj5r7f" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -757,92 +929,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw22kikw001vnoo0zcywnu8m" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/cookie/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.542Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/http/cookie/">客户端识别与cookie技术</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>常见的用来承载用户相关信息的HTTP首部</strong></p>
-<blockquote>
-<p>From: 用户的E-mail地址<br>User-Agent: 用户的浏览器软件<br>Refer: 用户是从这个页面上依照连接跳转过来的<br>Authorization: 用户名和密码<br>Client-IP(扩展请求):客户端的ip地址<br>X-Forwarded-For(扩展请求): 客户端的IP地址<br>Cookie(扩展请求): 服务器产生的ID标签</p>
-</blockquote>
-<p><strong>使用客户端IP地址识别用户存在的缺点</strong></p>
-<blockquote>
-<ul>
-<li>客户端IP地址描述的是机器，而不是用户，多个用用户共享一台电脑，就无法区分了。</li>
-<li>很多因特网服务提供商都会在用户登录时为其动态分配IP地址。用户每次登录，都会得到一个不<br>同地址。</li>
-<li>为提供安全性，并对稀缺的地址资源进行管理，很多用户都是通过网络地址转换防火墙来浏览网<br>络内容。</li>
-<li>HTTP代理和网关通常会打开一些新的、到原始服务器的TCP连接，Web服务器看到的将是代理服务<br>器的IP地址而不是客户端的，有的代理会添加特殊的Client-IP或X-Forward-For扩展首部来保存原始<br>的IP地址，但并不是所有的代理都支持这种行为。</li>
-</ul>
-</blockquote>
-<p><strong>胖URL的缺点</strong></p>
-<blockquote>
-<ul>
-<li>URL比较丑陋</li>
-<li>无法共享URL，胖URL中包含了与特定用户和会话有关的状态信息，如果将这个URL发送给其他人<br>可能会在无意之间中将你的个人信息共享出去</li>
-<li>破坏缓存 为每个URL生成特有的版本就意味着不在有可供访问的URL需要缓存了</li>
-<li>额外的服务器负荷 服务器需要重写HTML页面使URL变胖</li>
-<li>逃逸口 用户转到其他站点或者请求一个特定的URL时，就很容易在无意中”逃离胖URL会话”</li>
-<li>在会话间是非持久的 除非用户收藏了特定的胖URL，否则用户退出登录时，所有的信息都会丢失</li>
-</ul>
-</blockquote>
-<p><strong>cookie</strong></p>
-<blockquote>
-<p>可以笼统的将cookie分为两类: 会话cookie和持久cookie。会话cookie是一种临时cookie,它记<br>录了用户访问站点时的设置和偏好。用户退出浏览器时，会话cookie就被删除了。持久cookie的生存<br>时间更长一些；它们存储在硬盘上，浏览器退出，计算机重启它们仍然存在。会话cookie和持久cookie<br>之间唯一的区别就是它们的过期时间。如果设置了Discard参数，或者没有设置Expires或Max-Age参数<br>来说明扩展的过期时间，这个cookie就是一个会话cookie。</p>
-</blockquote>
-<p><strong>cookie是如何工作的</strong></p>
-<blockquote>
-<p>用户首次访问Web站点时，Web服务器对用户一无所知。Web服务器希望这个用户会再次回来，所以在<br>响应报文中添加Set-Cookie首部。cookie中可以包含任何信息，但它们通常都只包含一个服务器为了<br>进行追踪而产生的独特的标识码。浏览器会记住从服务器返回的Set-Cookie或Set-Cookie2首部中的<br>cookie内容存储在浏览器的cookie数据库中。将来用户返回同一站点时，浏览器会挑中那个服务器<br>贴到用户上的那些cookie，并在一个cookie请求首部中将其传回去。</p>
-</blockquote>
-<p><strong>cookie罐:客户端的状态</strong></p>
-<blockquote>
-<p>cookie的基本思想就是让浏览器积累一组服务器特有的信息，每次访问服务器时都将这些信息提供<br>给他，因为浏览器要负责存储cookie信息，所以此系统被称为客户端侧状态，cookie内容的字段们:</p>
-<ul>
-<li>domain（域）cookie的域，控制哪些站点可以看到那个cookie</li>
-<li>allh 是域中所有的主机都获取cookie，还是只有指定了名字的主机获取。</li>
-<li>path（路径）域中与cookie相关的路径前缀。这个属性列出的URL路径前缀下所有cookie都是有<br>效的</li>
-<li>secure（安全）是否只有在使用SSL连接时才发送这个cookie</li>
-<li>expiration cookie的过期秒数</li>
-<li>name cookie变量的名字</li>
-<li>value cookie变量的值</li>
-</ul>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw22kilc001znoo0izvxb0vx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw2al0k5001sg8o0u4ry9ofx" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -866,7 +953,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -876,6 +963,10 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
+          </li>
         
           <li>
             <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
@@ -893,10 +984,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
           </li>
         
-          <li>
-            <a href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -908,7 +995,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

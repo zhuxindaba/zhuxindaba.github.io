@@ -63,6 +63,82 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Webpack/codesplitting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/01/Webpack/codesplitting/" class="article-date">
+  <time datetime="2016-07-01T14:07:09.821Z" itemprop="datePublished">2016-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/01/Webpack/codesplitting/">代码拆分</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>对于大型项目，将所有的代码放在一个文件中不是很好，特别是一些代码只会在响应的情况下才会<br>用到,webpack的其中一个特性就是将你的原代码拆分成块按需加载，一些其余的打包工具将它称之<br>为”层”,”片段”,webpack将其称为”代码拆分”.<br>这是一个可被选择的特性，你可以在你的原代码中定义拆分点，webpack会维持好依赖性，输出文件<br>以及运行时文件。<br>为了澄清一个常见的误解，代码拆分并不仅仅是将公共代码提取出来到一个公共的模块，更重要的特性<br>是可以将拆出来的代码块按需加载，这可以保证首次加载的代码更少，请求会按需加载所需要的代码。</p>
+</blockquote>
+<p><strong>定义分离点</strong></p>
+<blockquote>
+<p>AMD和CommonJs指定不同的方法实现按需加载，webpack都支持并且并且都是定义为分离点的形式。<br><strong>CommonJs: require.ensure</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require.ensure(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
+<p><code>require.ensure</code>方法保证 每个依赖都会在回调函数被同步的请求进来，回调函数被执行时，<br><code>require</code>是回调函数的参数.例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require.ensure([&quot;module-a&quot;, &quot;module-b&quot;], function(require) &#123;</span><br><span class="line">    var a = require(&quot;module-a&quot;);</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>注意：<code>require.ensure</code>仅仅是加载模块，但是并不会去执行他们</p>
+</blockquote>
+<p><strong>AMD:<code>require</code></strong></p>
+<blockquote>
+<p>AMD规范以下面的方式定义了一个异步的<code>require</code>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require(dependencies, callback)</span><br></pre></td></tr></table></figure></p>
+<p>当调用时，所有的依赖都会被加载，并且将他们作为参数给回调函数,例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module-a&quot;, &quot;module-b&quot;], function(a, b) &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>注意：AMD<code>require</code>加载并执行响应的模块，在webpack中模块是从左向右执行的，并且可以省略<br>回调函数。</p>
+</blockquote>
+<p><strong>ES6模块</strong></p>
+<blockquote>
+<p>Webpack不支持ES6模块，直接使用<code>require.ensure</code>或者<code>require</code>取决于设计哪个模块组成你的<br>编译.<br>Webpack1.x.x(2.0即将来临)原生的不支持ES6模块，但是你可以通过转换器解决他，比如使用Babel<br>转换ES6的<code>import</code>语法为CommonJs或者AMD模块，这种途径是有效的，但是当动态加载时会有警告。<br>这种模块添加方式<code>import x from &#39;foo&#39;</code>是故意设计为静态分析的，意味着你不能用于动态导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// INVALID!!!!!!!!!</span><br><span class="line">[&apos;lodash&apos;, &apos;backbone&apos;].forEach(name =&gt; import name )</span><br></pre></td></tr></table></figure></p>
+<p>幸运的是，JavaScript有<code>loader</code>规范去处理动态导入:<code>System.load</code>或者<code>System.import</code>)<br>原生的API和<code>require</code>的定义是等价的，但是大多数编译器不支持转化<code>System.load</code>为’require.ensure’<br>所以如果想使用动态代码拆分的话直接使用<code>require.ensure</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//static imports</span><br><span class="line">import _ from &apos;lodash&apos;</span><br><span class="line"></span><br><span class="line">// dynamic imports</span><br><span class="line">require.ensure([], function(require) &#123;</span><br><span class="line">  let contacts = require(&apos;./contacts&apos;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>分块内容</strong></p>
+<blockquote>
+<p>分离点处的所有依赖都会被独立成一个块，依赖会递归的被添加。<br>如果在分离点处的回调函数是一个函数，webpack 会把该函数里的依赖都提取到按需加载的代码块中。</p>
+</blockquote>
+<p><strong>分块优化</strong></p>
+<blockquote>
+<p>如果两个分块包含相同的模块，它们会被合并成一个，这会造成分块有多个父模块，如果一个模块<br>在一个分块中的所有父模块都可用,那么它将会从该分块中移除。<br>如果一个分块包含了另一个分块中的所有模块，它会被储存起来，满足多个分块.</p>
+</blockquote>
+<p><strong>分块加载</strong></p>
+<blockquote>
+<p>根据配置文件的<code>target</code>选项的值，打包时执行不同的逻辑去加载分块，比如<code>web</code>target,分块通<br>过jsonp被加载，一个分块只会被加载一次，并发的请求将会被合并成一个，运行时检查加载的分块是<br>否满足多个分块</p>
+</blockquote>
+<p><strong>分块类型</strong></p>
+<blockquote>
+<p><strong>入口块</strong></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/01/Webpack/codesplitting/" data-id="ciw2al0i8000kg8o07us220y7" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Webpack/amd" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/30/Webpack/amd/" class="article-date">
@@ -123,7 +199,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/amd/" data-id="ciw22kihg000knoo0ttt02cmv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/amd/" data-id="ciw2al0i5000ig8o0mab7sar4" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -192,7 +268,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/commonjs/" data-id="ciw22kiif000rnoo0s95kovak" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/commonjs/" data-id="ciw2al0ia000ng8o0mdwiq2vj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -245,7 +321,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/troubleshooting/" data-id="ciw22kijf0017noo0teb2afkg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/troubleshooting/" data-id="ciw2al0jc0017g8o0rhcajkkl" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -291,7 +367,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/devtools/" data-id="ciw22kihj000nnoo0vfwfut9q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/devtools/" data-id="ciw2al0ie000pg8o02498wjue" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -341,7 +417,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/30/Webpack/using_plugin/" data-id="ciw22kik5001fnoo0sh8scpj6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/30/Webpack/using_plugin/" data-id="ciw2al0ji001bg8o00se91evm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -419,7 +495,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/29/Webpack/using_loaders/" data-id="ciw22kijm001bnoo0xzuealcl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/29/Webpack/using_loaders/" data-id="ciw2al0jk001dg8o0li1kfjru" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -555,7 +631,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/usage/" data-id="ciw22kijh0019noo0pphvi90y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/usage/" data-id="ciw2al0jf0019g8o0n838rgzp" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -609,7 +685,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/installation/" data-id="ciw22kiij000unoo04xj8xu5d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/installation/" data-id="ciw2al0io000ug8o0810lp66v" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -670,125 +746,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/28/Webpack/what_is_webpack/" data-id="ciw22kijt001dnoo0iwaoh22j" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/module_system_styles" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/27/Webpack/module_system_styles/" class="article-date">
-  <time datetime="2016-06-27T14:52:05.725Z" itemprop="datePublished">2016-06-27</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/27/Webpack/module_system_styles/">前端模块化系统的几种方式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li><p><code>&lt;script&gt;</code>-tag的形式，主要问题有:    </p>
-<blockquote>
-<ul>
-<li>全局的变量冲突</li>
-<li>按序加载的重要性</li>
-<li>解决不同模块、包之间的依赖性</li>
-<li>项目庞大的时候，需要写很多很多<code>&lt;script&gt;</code>标签</li>
-</ul>
-</blockquote>
-</li>
-<li><p>CommonJS: 同步请求(synchronous):</p>
-<blockquote>
-<p>这种方式使用同步的<code>require</code>方法去加载依赖模块并返回依赖模块所暴露出的接口，一个模块可以<br>通过增加属性到<code>export</code>的对象中或者设置<code>module.exports</code>的值来明确的指定暴露的接口。<br>优点:</p>
-<ol>
-<li>服务端模块可以使用</li>
-<li>npm上已经有好多使用这种方式的写法</li>
-<li>使用简单<br>缺点:</li>
-<li>阻塞式的请求不适用于网络请求，网络请求是异步的</li>
-<li>不能并发的请求多个模块<br>实现者:</li>
-</ol>
-<ul>
-<li>node.js- server-side</li>
-<li>browserify</li>
-<li>modules-webmake   - compile to one bundle</li>
-<li>wreq - client-side<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;../file.js&quot;);</span><br><span class="line">exports.doStuff = function() &#123;&#125;;//方式一</span><br><span class="line">module.exports = someValue;//方式二</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<p>3.AMD: 异步(asynchronous)请求</p>
-<blockquote>
-<p>对于浏览器来说同步请求有很多问题(CommonJS)所以引入了一个异步版本(一种定义模块与导出模块的方式)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;module&quot;, &quot;../file&quot;], function(module, file) &#123; /* ... */ &#125;);</span><br><span class="line">define(&quot;mymodule&quot;, [&quot;dep1&quot;, &quot;dep2&quot;], function(d1, d2) &#123;</span><br><span class="line">  return someExportedValue;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>优点:</p>
-<ol>
-<li>适用于异步的网络请求</li>
-<li>并发加载模块<br>缺点:</li>
-<li>代码不易于维护<br>实现者:</li>
-</ol>
-<ul>
-<li>require.js - client-side</li>
-<li>curl - client-side</li>
-</ul>
-</blockquote>
-<p>4.ES6 Modules</p>
-<blockquote>
-<p>ES6给javascript增加了一些语言特性，实现了另外的模块化系统<br>优点:</p>
-<ol>
-<li>易于静态分析</li>
-<li>未来的ES标准<br>缺点:</li>
-<li>浏览器原生支持需要时间</li>
-<li>目前这种风格还很少<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import &quot;jquery&quot;;</span><br><span class="line">export function doStuff() &#123;&#125;</span><br><span class="line">module &quot;localModule&quot; &#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</blockquote>
-<p><strong>模块加载</strong></p>
-<blockquote>
-<p>模块可以执行在浏览器端，所以它必须从服务端加载到浏览器中去，有两种极端的加载方式:</p>
-<ol>
-<li>一个模块一个请求<br>优点:</li>
-</ol>
-<ul>
-<li>只有需要的才会被加载<br>缺点:</li>
-<li>过多的模块会造成网络负载，程序响应过慢</li>
-</ul>
-<ol>
-<li>所有的模块一个请求<br>优点:</li>
-</ol>
-<ul>
-<li>只有一个请求<br>缺点:</li>
-<li>不需要的模块也加载了</li>
-</ul>
-</blockquote>
-<p><strong>分块加载</strong></p>
-<blockquote>
-<p>编译模块时，将模块拆分成多个小块，拆分点由开发者定义<br>同样适用于img css webfont html模板等等</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/27/Webpack/module_system_styles/" data-id="ciw22kij70011noo0apvg4qt4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/28/Webpack/what_is_webpack/" data-id="ciw2al0ju001hg8o04d8hitfs" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -812,7 +770,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -822,6 +780,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
+          </li>
         
           <li>
             <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
@@ -839,10 +801,6 @@
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
           </li>
         
-          <li>
-            <a href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -854,7 +812,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

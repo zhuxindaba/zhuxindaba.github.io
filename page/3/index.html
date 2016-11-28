@@ -63,6 +63,91 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/cookie/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.542Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/cookie/">客户端识别与cookie技术</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>常见的用来承载用户相关信息的HTTP首部</strong></p>
+<blockquote>
+<p>From: 用户的E-mail地址<br>User-Agent: 用户的浏览器软件<br>Refer: 用户是从这个页面上依照连接跳转过来的<br>Authorization: 用户名和密码<br>Client-IP(扩展请求):客户端的ip地址<br>X-Forwarded-For(扩展请求): 客户端的IP地址<br>Cookie(扩展请求): 服务器产生的ID标签</p>
+</blockquote>
+<p><strong>使用客户端IP地址识别用户存在的缺点</strong></p>
+<blockquote>
+<ul>
+<li>客户端IP地址描述的是机器，而不是用户，多个用用户共享一台电脑，就无法区分了。</li>
+<li>很多因特网服务提供商都会在用户登录时为其动态分配IP地址。用户每次登录，都会得到一个不<br>同地址。</li>
+<li>为提供安全性，并对稀缺的地址资源进行管理，很多用户都是通过网络地址转换防火墙来浏览网<br>络内容。</li>
+<li>HTTP代理和网关通常会打开一些新的、到原始服务器的TCP连接，Web服务器看到的将是代理服务<br>器的IP地址而不是客户端的，有的代理会添加特殊的Client-IP或X-Forward-For扩展首部来保存原始<br>的IP地址，但并不是所有的代理都支持这种行为。</li>
+</ul>
+</blockquote>
+<p><strong>胖URL的缺点</strong></p>
+<blockquote>
+<ul>
+<li>URL比较丑陋</li>
+<li>无法共享URL，胖URL中包含了与特定用户和会话有关的状态信息，如果将这个URL发送给其他人<br>可能会在无意之间中将你的个人信息共享出去</li>
+<li>破坏缓存 为每个URL生成特有的版本就意味着不在有可供访问的URL需要缓存了</li>
+<li>额外的服务器负荷 服务器需要重写HTML页面使URL变胖</li>
+<li>逃逸口 用户转到其他站点或者请求一个特定的URL时，就很容易在无意中”逃离胖URL会话”</li>
+<li>在会话间是非持久的 除非用户收藏了特定的胖URL，否则用户退出登录时，所有的信息都会丢失</li>
+</ul>
+</blockquote>
+<p><strong>cookie</strong></p>
+<blockquote>
+<p>可以笼统的将cookie分为两类: 会话cookie和持久cookie。会话cookie是一种临时cookie,它记<br>录了用户访问站点时的设置和偏好。用户退出浏览器时，会话cookie就被删除了。持久cookie的生存<br>时间更长一些；它们存储在硬盘上，浏览器退出，计算机重启它们仍然存在。会话cookie和持久cookie<br>之间唯一的区别就是它们的过期时间。如果设置了Discard参数，或者没有设置Expires或Max-Age参数<br>来说明扩展的过期时间，这个cookie就是一个会话cookie。</p>
+</blockquote>
+<p><strong>cookie是如何工作的</strong></p>
+<blockquote>
+<p>用户首次访问Web站点时，Web服务器对用户一无所知。Web服务器希望这个用户会再次回来，所以在<br>响应报文中添加Set-Cookie首部。cookie中可以包含任何信息，但它们通常都只包含一个服务器为了<br>进行追踪而产生的独特的标识码。浏览器会记住从服务器返回的Set-Cookie或Set-Cookie2首部中的<br>cookie内容存储在浏览器的cookie数据库中。将来用户返回同一站点时，浏览器会挑中那个服务器<br>贴到用户上的那些cookie，并在一个cookie请求首部中将其传回去。</p>
+</blockquote>
+<p><strong>cookie罐:客户端的状态</strong></p>
+<blockquote>
+<p>cookie的基本思想就是让浏览器积累一组服务器特有的信息，每次访问服务器时都将这些信息提供<br>给他，因为浏览器要负责存储cookie信息，所以此系统被称为客户端侧状态，cookie内容的字段们:</p>
+<ul>
+<li>domain（域）cookie的域，控制哪些站点可以看到那个cookie</li>
+<li>allh 是域中所有的主机都获取cookie，还是只有指定了名字的主机获取。</li>
+<li>path（路径）域中与cookie相关的路径前缀。这个属性列出的URL路径前缀下所有cookie都是有<br>效的</li>
+<li>secure（安全）是否只有在使用SSL连接时才发送这个cookie</li>
+<li>expiration cookie的过期秒数</li>
+<li>name cookie变量的名字</li>
+<li>value cookie变量的值</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw2al0kf001xg8o0h09nwvn8" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/cache_2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/21/http/cache_2/" class="article-date">
@@ -109,7 +194,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw22kikm001qnoo0lvv9tnf0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw2al0k1001og8o0edzacy8p" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -209,7 +294,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw22kikq001tnoo0lwn3m0jd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw2al0k3001qg8o05u07ig1d" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -267,7 +352,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw22kikf001onoo0cv0wkdb7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw2al0jx001jg8o09racwe21" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -308,7 +393,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw22kih6000gnoo0r1a66up5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw2al0i0000eg8o0zc2rbt9r" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -349,7 +434,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="ciw22kig10004noo0c5fnlhfh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="ciw2al0go0001g8o0dyr9cpfs" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -393,7 +478,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="ciw22kigj0009noo08su3n24j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="ciw2al0hw000cg8o0zu51ishp" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -441,7 +526,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="ciw22kija0013noo0yi65vfpx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="ciw2al0j50013g8o0f62qucyp" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -482,7 +567,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="ciw22kiib000pnoo0qciz0eoq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="ciw2al0ij000rg8o0xo8agqqe" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -549,80 +634,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="ciw22kiix000wnoo0x6az7hfp" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/progress_object" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/06/Electron/progress_object/" class="article-date">
-  <time datetime="2016-07-06T15:12:15.481Z" itemprop="datePublished">2016-07-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/06/Electron/progress_object/">进程对象</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>progress(进程)</strong></p>
-<blockquote>
-<p>进程对象的扩展<br><code>progress</code>对象扩展了以下的API</p>
-</blockquote>
-<p><strong>事件</strong></p>
-<blockquote>
-<p><strong>‘loaded’事件</strong><br>当Electron已经加载完它内部的初始化脚本并准备加载web页面或者main脚本时触发.<br>当node集成被关闭时，它可以用来预加载移除的node全局变量给全局作用域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// preload.js</span><br><span class="line">const _setImmediate = setImmediate;</span><br><span class="line">const _clearImmediate = clearImmediate;</span><br><span class="line">process.once(&apos;loaded&apos;, () =&gt; &#123;</span><br><span class="line">  global.setImmediate = _setImmediate;</span><br><span class="line">  global.clearImmediate = _clearImmediate;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>属性</strong></p>
-<blockquote>
-<p><strong><code>process.noAsar</code></strong><br>设置为<code>true</code>可以使nodejs的<code>asar</code>内置文件无效。<br><strong><code>process.type</code></strong><br>当前的进程类型，可以是<code>&quot;browser&quot;</code>(主进程)或者<code>&quot;render&quot;</code><br><strong><code>process.versions.electron</code></strong><br>Electron的字符串版本号<br><strong><code>process.versions.chrome</code></strong><br>Chrome的字符串版本号<br><strong><code>process.resourcesPath</code></strong><br>资源目录的路劲<br><strong><code>process.mas</code></strong><br>对于Mac App Store，这个属性是<code>true</code>,其余的构建是<code>undefined</code><br><strong><code>process.windowsStore</code></strong><br>对于Windows的app这个属性是<code>true</code>,其他的则是<code>undefined</code><br><strong><code>process.defaultApp</code></strong><br>应用启动时，这个值作为参数默认传入，在主进程中这个属性是<code>true</code>，其他方面是<code>undefined</code></p>
-</blockquote>
-<p><strong>方法</strong></p>
-<blockquote>
-<p>进程有以下的方法:<br><strong><code>process.crash()</code></strong><br>销毁当前进程的主线程<br><strong><code>process.hang()</code></strong><br>挂起当前进程的主线程<br><strong><code>process.setFdLimit(maxDescriptors) macOS Linux</code></strong></p>
-<ul>
-<li><code>maxDescriptors</code> 整数<br>设置文件描述符软限制于 maxDescriptors 或硬限制与os, 无论它是否低于当前进程.<br><strong><code>process.getProcessMemoryInfo()</code></strong><br>返回当前进程的内存使用总计计的一个对象，注意所有的统计以千字节报告:</li>
-<li><code>workingSetSize</code>- 被压入到真实RAM物理机的内存总计</li>
-<li><code>peakWorkingSetSize</code>- 被压入到真实RAM物理机的的最大内存</li>
-<li><code>privateBytes</code>- 不被其他进程共享的内存总计，比如JS堆，HTML内容</li>
-<li><code>sharedBytes</code>- 进程间共享的内存总计，通常情况下是Electron自己的代码消耗的内存</li>
-</ul>
-<p><strong><code>process.getSystemMemoryInfo()</code></strong><br>返回系统内存使用总计的对象，注意所有的统计以千字节报告:</p>
-<ul>
-<li><code>total</code>- 系统可用物理内存的总计</li>
-<li><code>free</code>- 还有多少空闲内存可用</li>
-</ul>
-<p>在Windows或Linux</p>
-<ul>
-<li>swapTotal</li>
-<li>swapFree</li>
-</ul>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="ciw22kig40005noo0vmas446r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="ciw2al0ix000wg8o0vntobtaj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -646,7 +658,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -656,6 +668,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
+          </li>
         
           <li>
             <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
@@ -673,10 +689,6 @@
             <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
           </li>
         
-          <li>
-            <a href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -688,7 +700,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
