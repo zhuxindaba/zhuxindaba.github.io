@@ -3,39 +3,29 @@
 <head>
   <meta charset="utf-8">
   
-  <title>缓存（二） | zhuxin_blog</title>
+  <title>Vue纵览 | zhuxin_blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
+  <meta name="description" content="Vue实例的属性和方法
+Vue实例通过var app = new Vue({})来创建，构造参数接收一个对象，该对象包含的属性有data, template, el, methods, 生命周期回调函数等等，简单的实例:
 
-Cache-Control: no-store
-Cache-Control: no-cache
-Cache-Control: must-revalidate
-Cache-Control: max-age
-Expires
-不附加任何过期信息，让缓存确定自己的过期日期">
+1234567891011var vm = new Vue(&amp;#123;    el: &amp;apos;#app&amp;apos;,    data: &amp;#123;      a: 1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="缓存（二）">
-<meta property="og:url" content="http://yoursite.com/2016/10/21/http/cache_2/index.html">
+<meta property="og:title" content="Vue纵览">
+<meta property="og:url" content="http://yoursite.com/2016/11/28/vue/get_started/index.html">
 <meta property="og:site_name" content="zhuxin_blog">
-<meta property="og:description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
+<meta property="og:description" content="Vue实例的属性和方法
+Vue实例通过var app = new Vue({})来创建，构造参数接收一个对象，该对象包含的属性有data, template, el, methods, 生命周期回调函数等等，简单的实例:
 
-Cache-Control: no-store
-Cache-Control: no-cache
-Cache-Control: must-revalidate
-Cache-Control: max-age
-Expires
-不附加任何过期信息，让缓存确定自己的过期日期">
-<meta property="og:updated_time" content="2016-10-20T16:36:41.538Z">
+1234567891011var vm = new Vue(&amp;#123;    el: &amp;apos;#app&amp;apos;,    data: &amp;#123;      a: 1">
+<meta property="og:image" content="http://yoursite.com/./../../images/lifecycle.png">
+<meta property="og:updated_time" content="2016-11-28T12:45:11.216Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缓存（二）">
-<meta name="twitter:description" content="控制缓存的能力服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递减的顺序，服务器可以:
+<meta name="twitter:title" content="Vue纵览">
+<meta name="twitter:description" content="Vue实例的属性和方法
+Vue实例通过var app = new Vue({})来创建，构造参数接收一个对象，该对象包含的属性有data, template, el, methods, 生命周期回调函数等等，简单的实例:
 
-Cache-Control: no-store
-Cache-Control: no-cache
-Cache-Control: must-revalidate
-Cache-Control: max-age
-Expires
-不附加任何过期信息，让缓存确定自己的过期日期">
+1234567891011var vm = new Vue(&amp;#123;    el: &amp;apos;#app&amp;apos;,    data: &amp;#123;      a: 1">
+<meta name="twitter:image" content="http://yoursite.com/./../../images/lifecycle.png">
   
     <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
   
@@ -83,14 +73,14 @@ Expires
   </div>
 </div>
       <div class="outer">
-        <section id="main"><article id="post-http/cache_2" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-vue/get_started" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/21/http/cache_2/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.538Z" itemprop="datePublished">2016-10-21</time>
+    <a href="/2016/11/28/vue/get_started/" class="article-date">
+  <time datetime="2016-11-28T12:44:58.565Z" itemprop="datePublished">2016-11-28</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
+    <a class="article-category-link" href="/categories/Vue/">Vue</a>
   </div>
 
   </div>
@@ -101,7 +91,7 @@ Expires
         
   
     <h1 class="article-title" itemprop="name">
-      缓存（二）
+      Vue纵览
     </h1>
   
 
@@ -109,27 +99,23 @@ Expires
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><strong>控制缓存的能力</strong><br>服务器可以通过HTTP定义的几种方式来指定在文档过期之前可以将其缓存多长时间，按照优先级递<br>减的顺序，服务器可以:</p>
-<ol>
-<li>Cache-Control: no-store</li>
-<li>Cache-Control: no-cache</li>
-<li>Cache-Control: must-revalidate</li>
-<li>Cache-Control: max-age</li>
-<li>Expires</li>
-<li>不附加任何过期信息，让缓存确定自己的过期日期</li>
-</ol>
-<blockquote>
-<p>no-Stroe与no-cache首部可以防止缓存提供未经证实的已缓存对象，表示为no-store的响应会<br>精致缓存对响应进行复制。缓存通常会向非缓存代理服务器一样，向客户端转发一条no-store响应，<br>然后删除对象。标示为no-cache的响应实际上是可以存储在本地缓冲区中的</p>
-<p>Cache-Contro:max-age首部表示从服务器将文档传过来之时起，可以认为此文档处于新鲜状态的<br>秒数，还有一个s-maxage首部，其行为与max-age类似，但仅用于共享缓存，服务器可以请求缓存<br>不要缓存文档，或者将最大使用期设置为0，从而每次访问的时候进行刷新</p>
-<p>不推荐使用Expires首部，它指定的是实际的过期日期而不是秒数，由于很多服务器的时钟不同，或<br>者不正确，所以最好用剩余秒数，而不是绝对日期。</p>
-<p>must-revalidate响应首部告诉缓存，在事先没有跟原始服务器进行再验证的情况下，不能提供这<br>个对象的陈旧副本。缓存仍然可以随意提供新鲜的副本。如果在缓存进行must-revalidate新鲜度<br>检查时，原始服务器不可用，缓存就必须返回一条504Gateway Timeout错误</p>
-<p>如果响应中没有Cache-Control: max-age首部，也没有Expires首部，缓存可以计算出一个试探<br>性最大使用期</p>
+        <h3 id="Vue实例的属性和方法"><a href="#Vue实例的属性和方法" class="headerlink" title="Vue实例的属性和方法"></a>Vue实例的属性和方法</h3><blockquote>
+<p>Vue实例通过<code>var app = new Vue({})</code>来创建，构造参数接收一个对象，该对象包含的属性有<br><code>data</code>, <code>template</code>, <code>el</code>, <code>methods</code>, 生命周期回调函数等等，简单的实例:</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">      a: 1</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      hello: function() &#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Vue的生命周期钩子"><a href="#Vue的生命周期钩子" class="headerlink" title="Vue的生命周期钩子"></a>Vue的生命周期钩子</h3><blockquote>
+<p>每一个Vue实例在创建的时候都需要经过几个初始化步骤。比如，它需要设置data的监听器，模板的<br>编译，将实例镶嵌到DOM上，以及当data修改时更新DOM。沿着这个途径，它会调用一些生命周期的<br>钩子,以便给我们一些执行自定义逻辑的机会。比如：<code>created</code>钩子当实例创建完成后会调用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      a: 1</span><br><span class="line">    &#125;,</span><br><span class="line">    created: function() &#123;</span><br><span class="line">      console.log(this.msg);</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted: function() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    updated: function() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    destroyed: function() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这些生命钩子调用时，他们的上下文(this)指向当前vue实例。</p>
+</blockquote>
+<h3 id="生命周期图"><a href="#生命周期图" class="headerlink" title="生命周期图"></a>生命周期图</h3><p><img src="./../../images/lifecycle.png" alt="lifecycleImg"></p>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw22kikm001qnoo0lvv9tnf0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/28/vue/get_started/" data-id="ciw22kioa0039noo01zm7g97j" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -138,19 +124,10 @@ Expires
     
 <nav id="article-nav">
   
-    <a href="/2016/10/21/http/cookie/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          客户端识别与cookie技术
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/10/21/http/cache_1/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/11/24/phabricator/what_is_docker/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">缓存（一）</div>
+      <div class="article-nav-title">docker</div>
     </a>
   
 </nav>

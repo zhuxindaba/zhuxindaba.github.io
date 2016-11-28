@@ -63,6 +63,58 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-vue/get_started" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/28/vue/get_started/" class="article-date">
+  <time datetime="2016-11-28T12:44:58.565Z" itemprop="datePublished">2016-11-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Vue/">Vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/28/vue/get_started/">Vue纵览</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Vue实例的属性和方法"><a href="#Vue实例的属性和方法" class="headerlink" title="Vue实例的属性和方法"></a>Vue实例的属性和方法</h3><blockquote>
+<p>Vue实例通过<code>var app = new Vue({})</code>来创建，构造参数接收一个对象，该对象包含的属性有<br><code>data</code>, <code>template</code>, <code>el</code>, <code>methods</code>, 生命周期回调函数等等，简单的实例:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">      a: 1</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      hello: function() &#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Vue的生命周期钩子"><a href="#Vue的生命周期钩子" class="headerlink" title="Vue的生命周期钩子"></a>Vue的生命周期钩子</h3><blockquote>
+<p>每一个Vue实例在创建的时候都需要经过几个初始化步骤。比如，它需要设置data的监听器，模板的<br>编译，将实例镶嵌到DOM上，以及当data修改时更新DOM。沿着这个途径，它会调用一些生命周期的<br>钩子,以便给我们一些执行自定义逻辑的机会。比如：<code>created</code>钩子当实例创建完成后会调用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">    data: &#123;</span><br><span class="line">      a: 1</span><br><span class="line">    &#125;,</span><br><span class="line">    created: function() &#123;</span><br><span class="line">      console.log(this.msg);</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted: function() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    updated: function() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    destroyed: function() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这些生命钩子调用时，他们的上下文(this)指向当前vue实例。</p>
+</blockquote>
+<h3 id="生命周期图"><a href="#生命周期图" class="headerlink" title="生命周期图"></a>生命周期图</h3><p><img src="./../../images/lifecycle.png" alt="lifecycleImg"></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/28/vue/get_started/" data-id="ciw22kioa0039noo01zm7g97j" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-phabricator/what_is_docker" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/24/phabricator/what_is_docker/" class="article-date">
@@ -120,7 +172,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/24/phabricator/what_is_docker/" data-id="civv5sbk1002jz4o0xyiuqzdt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/24/phabricator/what_is_docker/" data-id="ciw22kimp002mnoo0yjqf23hs" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -163,7 +215,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/21/phabricator/eslint/" data-id="civv5sbjs002fz4o0s33adu5j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/21/phabricator/eslint/" data-id="ciw22kiml002jnoo0tqvitl7g" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -271,7 +323,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="civv5sbla0033z4o091vfdqvo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="ciw22kiod003bnoo08wduahs8" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -374,7 +426,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="civv5sbjy002iz4o098z4aj0t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="ciw22kimb002hnoo084l1hi7c" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -445,7 +497,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="civv5sbld0037z4o0kc7koy1c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="ciw22kinm002znoo0y4r8gd9l" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -503,7 +555,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="civv5sbkk002qz4o0kglrpj9g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="ciw22kin7002rnoo0bza68ut2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -707,7 +759,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="civv5sbku002vz4o024v551bk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw22kink002ynoo097h2g8jd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -807,7 +859,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="civv5sbl2002zz4o0x9vw2msr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw22kio30035noo0ukm9tafm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -979,162 +1031,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="civv5sbkh002nz4o0dojyh9os" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-react/react_redux" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/01/react/react_redux/" class="article-date">
-  <time datetime="2016-10-31T16:06:46.319Z" itemprop="datePublished">2016-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/react/react_redux/">redux</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="为什么要用react-redux"><a href="#为什么要用react-redux" class="headerlink" title="为什么要用react-redux?"></a>为什么要用react-redux?</h3><blockquote>
-<p>在单页应用中,服务器的相应,UI状态,缓存数据,被选中的标签,是否加载动画效果等等这些都可以理解为state,当应用变得庞<br>大复杂时传统的javascript代码处理这些状态 ,只会让维护变得更加困难,而用redux的原因就是将应用程序中的state的变化变得<br>可预测</p>
-</blockquote>
-<h3 id="redux的三大原则"><a href="#redux的三大原则" class="headerlink" title="redux的三大原则"></a>redux的三大原则</h3><ol>
-<li>单一的store,整个应用的state存放在一个object tree中,并且这个store是唯一的</li>
-<li><p>state是只读的,唯一改变state的方法就是触发action,action就是一个描述你要干什么的js对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var actionName = &#123;</span><br><span class="line">	type: typeName,//必须为type表示你将要执行什么动作,</span><br><span class="line">	desc: &apos;&apos;	//自己定义，你将希望通过这个动作告知其余组建通过这个动作发生的事</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用reducer修改state,reducer是一个纯函数,它接收的参数为先前的state和将要执行的action,并返回新的state</p>
-</li>
-</ol>
-<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><p>Action是把数据从应用中传到store的有效载荷,它是store数据的唯一来源,一般通过<code>store.dispatch( {type: &#39;xx&#39;, desc: &#39;xx&#39;} )</code>将action传到store</p>
-<h3 id="ActionCreator"><a href="#ActionCreator" class="headerlink" title="ActionCreator"></a>ActionCreator</h3><p>ActionCreator就是生成action对象的函数,返回一个action对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function addTodo(text) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;ADD_TODO&apos;,</span><br><span class="line">		text</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><br><br>在store里调用action创建函数: <code>store.dispatch(addTodo(&#39;learn redux&#39;))</code><br>在React组建中如何调用呢？需要用到react-redux中提供的connect()(ComponentName)将dispatch函数注入到组建的props中然后通过<br><code>this.props.dispatch(addTodo(text))</code>调用<br>bindActionCreators()待定</p>
-<hr>
-<h3 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a>Reducer</h3><p>Action只是描述了事件发生了而已,但是并没有指明应用如何更新state,而更新state正是reducer做的事情。    </p>
-<h6 id="设计state的结构"><a href="#设计state的结构" class="headerlink" title="设计state的结构"></a>设计state的结构</h6><p>在redux应用中,所有的state都被保存在一个单一对象中。reducer就是一个函数,接收旧的state和action,返回新的state.<br>不要在reducer里做以下操作:    </p>
-<ol>
-<li>修改传入参数</li>
-<li>执行有副作用的操作,如API请求和路由跳转  </li>
-<li>调用非纯函数,如Date.norw()或Math.random(),每个reducer只负责全局state中它负责的一部分。每个reducer的state<br>参数都不同，分别对应它管理的那部分的state数据,combineReducers()所做的只是生成一个函数,这个函数来调用你的一系列<br>reducer，每个reducer根据它们的key来筛选出state中的一部分数据并处理,然后这个生成函数将所有reducer的结果合并成一个大的对象。</li>
-</ol>
-<hr>
-<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>action用来描述发生了什么，使用reducer根据action更新state，Store就是将它们联系到一起的对象,Store的职责:    </p>
-<ol>
-<li>维持应用程序的state    </li>
-<li>提供getState()获取state    </li>
-<li>提供dispatch(action)方法更新state    </li>
-<li>提供subscribe(listener)注册监听器<br>Redux应用中只有唯一的一个store,通过redux的createStore(reducers, initialState)创建store<br>createStore()的第二个参数用来设置初始状态    </li>
-</ol>
-<hr>
-<h3 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h3><p>严格的单项数据流是redux架构的设计核心,Redux应用中数据的生命周期遵循下面4个步骤:   </p>
-<ol>
-<li>调用store.dispatch(action),你可以在任何地方调用store.dispatch(action),组件中，定时器中    </li>
-<li>Redux store调用传入的reducer函数.Store会把连个参数传入reducer：当前的state树和action。<br>reducer是一个纯函数。它仅仅用于计算下一个state。它应该是完全可以预测的：多次传入相同的输入<br>必须产生相同的输出。它不应该做有副作用的操作，如API调用或路由跳转。这些应该在dispatch action前发生    </li>
-<li>根reducer应该用combineReducers()把多个reducer输出合并成单一的一个state树<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function todos(state=[], action) &#123;</span><br><span class="line">	//...</span><br><span class="line">	return nextState;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function visibleTodoFilter(state=&apos;SHOW_ALL&apos;, action) &#123;</span><br><span class="line">	//...</span><br><span class="line">	return nextState;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const reducers = combineReducers(&#123;</span><br><span class="line">	todos,</span><br><span class="line">	visibleTodoFilter</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><br><br>当你触发action后，combineReducers返回的reducers会负责调用两个reducer,然后把两个结果集合并成一个state树:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">return&#123;</span><br><span class="line">	todos: nextTodos,</span><br><span class="line">	visibleTodoFilter: nextVisibleTodoFilter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>Redux Store保存了根reducer返回的完整的state树，这个新的树就是应用的下一个state!所有调用store.subscribe(listener)<br>的监听器都将被调用;监听器里可以调用<code>store.getState()</code>获取当前的state<br>现在，可以应用新的state来更新UI，在组建中的componentDidMount生命周期中调用<code>this.setState()</code>来更新        </li>
-</ol>
-<hr>
-<h3 id="搭配React"><a href="#搭配React" class="headerlink" title="搭配React"></a>搭配React</h3><p>Redux和React之间没有关系。Redux支持React、Angular、jQuery甚至纯javascript    </p>
-<ol>
-<li>Redux的React绑定包含了容器组件和展示组件相分离的开发思想，明智的做法就是只在最顶层组件（路由操作）<br>里使用Redux。其余内部组件仅仅是展示性的，所有数据都通过props传入    </li>
-<li>连接到Redux，<strong>通过react-redux提供的connect()方法将包装好的组件连接到redux</strong>。     <pre><code>**任何一个从connect()包装好的组件都可以得到一个dispatch方法作为组件的props，以及得到全局state中所需的内容**
-connect()的唯一参数是selector。此方法可以从Redux store中接收到全局state，然后返回组件中需要的props
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class App extends React.Component &#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		return(</span><br><span class="line">			//...</span><br><span class="line">		);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//基于全局state，哪些是我们想要注入props的</span><br><span class="line">//https://github.com/reactjs/reselect这个待研究，用这个注入效果更好?</span><br><span class="line">function select(state) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		xxx: state.xxx</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//包装component</span><br><span class="line">export default connect(select)(App);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<hr>
-<h3 id="异步Action"><a href="#异步Action" class="headerlink" title="异步Action"></a>异步Action</h3><pre><code>前面所述的是同步action,每当dispatch action时,state会理解被更新。那么Redux如何操作异步数据流?
-</code></pre><h6 id="Action-1"><a href="#Action-1" class="headerlink" title="Action"></a>Action</h6><p>当调用异步API时,有两个非常关键的时刻:发起请求的时刻,和接收响应的时刻（也可能是超时）。<br><br><br>这两个时刻都可以更改应用的state;为此，你需要dispatch普通的同步action。一般情况下，每个api请求都至少需要dispatch三个不同的action:    </p>
-<ul>
-<li><p><strong>一个通知reducer请求开始的action</strong><br>对于这种action,reducer可能会切换一下state中的isFeching标记.以此来告诉UI来显示进度条.    </p>
-</li>
-<li><p><strong>一个通知reducer请求成功结束的action</strong><br>对于这种action,reducer可能会把接收到的新数据合并到state中,并重置isFetching。UI则会隐藏进度条，并显示接收到的数据    </p>
-</li>
-<li><p><strong>一个通知reducer请求失败的action</strong><br>对于这种action，reducer可能会重置isFetching.或者，有些reducer会保存这些失败信息,并在UI显示出来.    </p>
-</li>
-</ul>
-<hr>
-<h3 id="异步Action-Creator"><a href="#异步Action-Creator" class="headerlink" title="异步Action Creator"></a>异步Action Creator</h3><blockquote>
-<p>如何将不同的action creator和网络请求结合起来?使用Redux Thunk这个中间件,通过使用中间件，action creator除了返回action对象<br>外还乐意返回函数,当action creator返回函数时，这个函数会被Redux Thunk middleware执行。这个函数并不需要保持纯净；它可以带有<br>副作用，包括异步执行、API请求。这个函数还可以dispatch action    </p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//thunk action creator</span><br><span class="line">//使用方式和同步cation一样	dispatch(fetchPosts(&apos;xxx&apos;))</span><br><span class="line">export function fetchPosts(xxx) &#123;</span><br><span class="line">	//Thunk middleware知道如可处理函数</span><br><span class="line">	//这里把dispatch方法通过参数的形式传给函数，以此来让它自己也能dispatch action</span><br><span class="line"></span><br><span class="line">	return function(dispatch) &#123;</span><br><span class="line"></span><br><span class="line">		dispatch(action);</span><br><span class="line"></span><br><span class="line">		//执行api请求使用isomorphic-fetch库替代XMLHttpRequest</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><br><br>        我们如何在dispatch机制中引入Redux Thunk middleware？使用appluMiddleware(),<strong>thunk的一个优点就是它的结果可以再次被dispatch</strong>    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//**index.js代码**</span><br><span class="line">import thunkMiddleware from &apos;react-thunk&apos;;</span><br><span class="line">import createLogger from &apos;redux-logger&apos;;</span><br><span class="line">import &#123; createStore, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line"></span><br><span class="line">const createStoreWithMiddleware = applyMiddleware(</span><br><span class="line">	thunkMiddleware,	//允许我们dispatch()函数</span><br><span class="line">	createLogger</span><br><span class="line">)(createStore);</span><br><span class="line"></span><br><span class="line">const reducers = combineReducers(&#123;</span><br><span class="line">	//拆分的单个reducer函数</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const store = createStoreWithMiddleware(reducers);</span><br></pre></td></tr></table></figure>
-<p><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//**action.js代码**</span><br><span class="line">export function fetchPosts(xxx) &#123;</span><br><span class="line">	return (dispatch) =&gt; &#123;</span><br><span class="line">		//...</span><br><span class="line">		dispatch(action)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function fetchPostsIfNeeder(xxx) &#123;</span><br><span class="line">	//可接收getState()方法</span><br><span class="line">	return (fetch, getState) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><br></p>
-<hr>
-<h3 id="异步数据流"><a href="#异步数据流" class="headerlink" title="异步数据流"></a>异步数据流</h3><p>如果不使用middleware的话,Redux的store只支持同步数据流。而这也是createStore()所默认提供的创建方式，可以使用applyMiddleware()<br>来增强createStore(),使用redux-thunk这样支持异步的middleware都包装了store的dispatch()方法,以此让你dispatch一些除了action以外<br>的内容。<strong>当niddleware链中的最后一个middleware dispatch action 时，这个action必须是一个普通对象。</strong>    </p>
-<h3 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a>Middleware</h3><p><strong>middleware是指可以被嵌入在框架接收请求道产生相应过程之中的代码，它提供的是位于action被发起之后，到达reducer之前的扩展点</strong><br>可以利用Redux middleware来进行日志记录、创建崩溃报告、调用异步接口或者路由等等。        </p>
-<p><strong>使用Redux的一个益处就是它让state的变化过程变得可预知和透明。每当一个action发起后，新的state就会被计算保<br>存下来。state不能自身修改，只能由特定的action引起变化</strong>    </p>
-<hr>
-<h3 id="减少样板代码"><a href="#减少样板代码" class="headerlink" title="减少样板代码"></a>减少样板代码</h3><ul>
-<li><p>Action的type用常量，可以将所有type放在一个文件中，然后引入    </p>
-</li>
-<li><p>Action Creators创建生成action的函数    </p>
-</li>
-<li><p>生产Action Creators写简单的action creator函数，尤其是数量巨大的时候，代码不易于维护，可以写一个用于生成action creator的函数：</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function makeActionCreator(type, ...argNames) &#123;</span><br><span class="line">	return function(...args) &#123;</span><br><span class="line">		let action = &#123; type &#125;;</span><br><span class="line">		argNames.forEach(arg, index) &#123;</span><br><span class="line">			action[argNames[index]] = args[index];</span><br><span class="line">		&#125;</span><br><span class="line">		return action;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const ADD_TODO = &apos;ADD_TODO&apos;;</span><br><span class="line">const EDIT_TODO = &apos;EDIT_TODO&apos;</span><br><span class="line">const REMOVE_TODO = &apos;REMOVE_TODO&apos;;</span><br><span class="line"></span><br><span class="line">export const addTodo = makeActionCreator(ADD_TODO, &apos;todo&apos;);</span><br><span class="line">export const editTodo = makeActionCreator(EDIT_TODO, &apos;id&apos;, &apos;todo&apos;);</span><br><span class="line">export const removeTodo = makeActionCreator(REMOVE_TODO, &apos;id&apos;);</span><br></pre></td></tr></table></figure>
-<p><strong>redux-actions可以帮助生成action creator，这个待研究</strong>    </p>
-<ul>
-<li>异步Action Creators<br>中间件让你在每个action对象分发出去之前，注入一个自定义的逻辑来解释你的action对象。异步action是中间件<br>最常见用例。如果没有中间件，dispatch只能接收一个普通对象。因此我们必须在components里面进行AJAX调用：    </li>
-</ul>
-<p><code>actions.js</code><br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">export function loadPostsSuccess(userId, response) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    type: &apos;LOAD_POSTS_SUCCESS&apos;,</span><br><span class="line">    userId,</span><br><span class="line">    response</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function loadPostsFailure(userId, error) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    type: &apos;LOAD_POSTS_FAILURE&apos;,</span><br><span class="line">    userId,</span><br><span class="line">    error</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export function loadPostsRequest(userId) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    type: &apos;LOAD_POSTS_REQUEST&apos;,</span><br><span class="line">    userId</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><code>component.js</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;;</span><br><span class="line">import &#123; loadPostsRequest, loadPostsSuccess, loadPostsFailure &#125; from &apos;./actionCreators&apos;;</span><br><span class="line"></span><br><span class="line">class Posts extends Component &#123;</span><br><span class="line">  loadData(userId) &#123;</span><br><span class="line">    // 调用 React Redux `connect()` 注入 props ：</span><br><span class="line">    let &#123; dispatch, posts &#125; = this.props;</span><br><span class="line"></span><br><span class="line">    if (posts[userId]) &#123;</span><br><span class="line">      // 这里是被缓存的数据！啥也不做。</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Reducer 可以通过设置 `isFetching` 反应这个 action</span><br><span class="line">    // 因此让我们显示一个 Spinner 控件。</span><br><span class="line">    dispatch(loadPostsRequest(userId));</span><br><span class="line"></span><br><span class="line">    // Reducer 可以通过填写 `users` 反应这些 actions</span><br><span class="line">    fetch(`http://myapi.com/users/$&#123;userId&#125;/posts`).then(</span><br><span class="line">      response =&gt; dispatch(loadPostsSuccess(userId, response)),</span><br><span class="line">      error =&gt; dispatch(loadPostsFailure(userId, error))</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    this.loadData(this.props.userId);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillReceiveProps(nextProps) &#123;</span><br><span class="line">    if (nextProps.userId !== this.props.userId) &#123;</span><br><span class="line">      this.loadData(nextProps.userId);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    if (this.props.isLoading) &#123;</span><br><span class="line">      return &lt;p&gt;Loading...&lt;/p&gt;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let posts = this.props.posts.map(post =&gt;</span><br><span class="line">      &lt;Post post=&#123;post&#125; key=&#123;post.id&#125; /&gt;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    return &lt;div&gt;&#123;posts&#125;&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default connect(state =&gt; (&#123;</span><br><span class="line">  posts: state.posts</span><br><span class="line">&#125;))(Posts);</span><br></pre></td></tr></table></figure></p>
-<p><strong><code>redux-thunk</code>中间件可以把action creators写成<code>thunks</code>,也就是返回函数的函数</strong>    </p>
-<p>使用react-redux修改上面的代码：   </p>
-<p><code>actions.js</code><br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">export function loadPosts(userId) &#123;</span><br><span class="line">  // 用 thunk 中间件解释：</span><br><span class="line">  return function (dispatch, getState) &#123;</span><br><span class="line">    let &#123; posts &#125; = getState();</span><br><span class="line">    if (posts[userId]) &#123;</span><br><span class="line">      // 这里是数据缓存！啥也不做。</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dispatch(&#123;</span><br><span class="line">      type: &apos;LOAD_POSTS_REQUEST&apos;,</span><br><span class="line">      userId</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // 异步分发原味 action</span><br><span class="line">    fetch(`http://myapi.com/users/$&#123;userId&#125;/posts`).then(</span><br><span class="line">      response =&gt; dispatch(&#123;</span><br><span class="line">        type: &apos;LOAD_POSTS_SUCCESS&apos;,</span><br><span class="line">        userId,</span><br><span class="line">        respone</span><br><span class="line">      &#125;),</span><br><span class="line">      error =&gt; dispatch(&#123;</span><br><span class="line">        type: &apos;LOAD_POSTS_FAILURE&apos;,</span><br><span class="line">        userId,</span><br><span class="line">        error</span><br><span class="line">      &#125;)</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><br><br><code>component.js</code><br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;;</span><br><span class="line">import &#123; loadPosts &#125; from &apos;./actionCreators&apos;;</span><br><span class="line"></span><br><span class="line">class Posts extends Component &#123;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    this.props.dispatch(loadPosts(this.props.userId));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillReceiveProps(nextProps) &#123;</span><br><span class="line">    if (nextProps.userId !== this.props.userId) &#123;</span><br><span class="line">      this.props.dispatch(loadPosts(nextProps.userId));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    if (this.props.isLoading) &#123;</span><br><span class="line">      return &lt;p&gt;Loading...&lt;/p&gt;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let posts = this.props.posts.map(post =&gt;</span><br><span class="line">      &lt;Post post=&#123;post&#125; key=&#123;post.id&#125; /&gt;</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    return &lt;div&gt;&#123;posts&#125;&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">export default connect(state =&gt; (&#123;</span><br><span class="line">  posts: state.posts</span><br><span class="line">&#125;))(Posts);</span><br></pre></td></tr></table></figure></p>
-<p><br></p>
-<hr>
-<h3 id="计算衍生数据"><a href="#计算衍生数据" class="headerlink" title="计算衍生数据"></a>计算衍生数据</h3><p><code>Reselect库</code>可以创建可记忆的可组合的selector函数，Reselect selectors可以高效的计算<br>Redux store里的衍生数据    </p>
-<p>不使用<code>reselect</code>当state发生变化，组件更新时，会如果state tree非常大，会带来性能问题        </p>
-<ul>
-<li><strong>创建可记忆的Selector：</strong><br>只有在我们关注的state发生变化时才重新计算此state，而在其他非相关state的变化不会引起<br>此state重新计算。<br>Reselect提供的<code>creatSelector</code>函数创建可记忆的selector，<code>createSelector</code>接收一个input-selectors<br>数组和一个转换函数作为参数。如果state tree的改变会引起input-selectors值变化，那么selector会调用<br>转换函数，传入input-selectors作为参数，并返回结果，如果input-selectors的值和前一次一样，它将会直接<br>返回前一次计算的数据，而不重新调用转换函数    </li>
-</ul>
-<p><code>selectors/TodoSelectors.js</code><br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createSelector &#125; from &apos;reselect&apos;;</span><br><span class="line">import &#123; VisibilityFilters &#125; from &apos;./actions&apos;;</span><br><span class="line"></span><br><span class="line">function selectTodos(todos, filter) &#123;</span><br><span class="line">  switch (filter) &#123;</span><br><span class="line">  case VisibilityFilters.SHOW_ALL:</span><br><span class="line">    return todos;</span><br><span class="line">  case VisibilityFilters.SHOW_COMPLETED:</span><br><span class="line">    return todos.filter(todo =&gt; todo.completed);</span><br><span class="line">  case VisibilityFilters.SHOW_ACTIVE:</span><br><span class="line">    return todos.filter(todo =&gt; !todo.completed);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const visibilityFilterSelector = (state) =&gt; state.visibilityFilter;</span><br><span class="line">const todosSelector = (state) =&gt; state.todos;</span><br><span class="line"></span><br><span class="line">export const visibleTodosSelector = createSelector(</span><br><span class="line">  [visibilityFilterSelector, todosSelector],</span><br><span class="line">  (visibilityFilter, todos) =&gt; &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      visibleTodos: selectTodos(todos, visibilityFilter),</span><br><span class="line">      visibilityFilter</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure></p>
-<p><br><br>        在上例中，visibilityFilterSelector 和 todosSelector 是 input-selector。因为他们并不转换数据，<br>        所以被创建成普通的非记忆的 selector 函数。但是，visibleTodosSelector 是一个可记忆的 selector。<br>        他接收 visibilityFilterSelector 和 todosSelector 为 input-selector，还有一个转换函数来计算过<br>        滤的 todos 列表。</p>
-<ul>
-<li><strong>组合 Selector</strong><pre><code>可记忆的 selector 自身可以作为其它可记忆的 selector 的 input-selector。下面
-的 visibleTodosSelector 被当作另一个 selector 的 input-selector，来进一步通过关键字（keyword）过滤 todos。    
-</code></pre></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const keywordSelector = (state) =&gt; state.keyword</span><br><span class="line"></span><br><span class="line">const keywordFilterSelector = createSelector(</span><br><span class="line">  [ visibleTodosSelector, keywordSelector ],</span><br><span class="line">  (visibleTodos, keyword) =&gt; visibleTodos.filter(</span><br><span class="line">    todo =&gt; todo.indexOf(keyword) &gt; -1</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<p><br></p>
-<ul>
-<li><strong>连接 Selector 和 Redux Store</strong><br>在react-redux中，使用 connect 来连接可记忆的 selector 和 Redux store    </li>
-</ul>
-<p><code>containers/App.js</code><br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Component, PropTypes &#125; from &apos;react&apos;</span><br><span class="line">import &#123; connect &#125; from &apos;react-redux&apos;</span><br><span class="line">import &#123; addTodo, completeTodo, setVisibilityFilter &#125; from &apos;../actions&apos;</span><br><span class="line">import AddTodo from &apos;../components/AddTodo&apos;</span><br><span class="line">import TodoList from &apos;../components/TodoList&apos;</span><br><span class="line">import Footer from &apos;../components/Footer&apos;</span><br><span class="line">import &#123; visibleTodosSelector &#125; from &apos;../selectors/todoSelectors&apos;</span><br><span class="line"></span><br><span class="line">class App extends Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    // Injected by connect() call:</span><br><span class="line">    const &#123; dispatch, visibleTodos, visibilityFilter &#125; = this.props</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;AddTodo</span><br><span class="line">          onAddClick=&#123;text =&gt;</span><br><span class="line">            dispatch(addTodo(text))</span><br><span class="line">          &#125; /&gt;</span><br><span class="line">        &lt;TodoList</span><br><span class="line">          todos=&#123;this.props.visibleTodos&#125;</span><br><span class="line">          onTodoClick=&#123;index =&gt;</span><br><span class="line">            dispatch(completeTodo(index))</span><br><span class="line">          &#125; /&gt;</span><br><span class="line">        &lt;Footer</span><br><span class="line">          filter=&#123;visibilityFilter&#125;</span><br><span class="line">          onFilterChange=&#123;nextFilter =&gt;</span><br><span class="line">            dispatch(setVisibilityFilter(nextFilter))</span><br><span class="line">          &#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">App.propTypes = &#123;</span><br><span class="line">  visibleTodos: PropTypes.arrayOf(PropTypes.shape(&#123;</span><br><span class="line">    text: PropTypes.string.isRequired,</span><br><span class="line">    completed: PropTypes.bool.isRequired</span><br><span class="line">  &#125;)),</span><br><span class="line">  visibilityFilter: PropTypes.oneOf([</span><br><span class="line">    &apos;SHOW_ALL&apos;,</span><br><span class="line">    &apos;SHOW_COMPLETED&apos;,</span><br><span class="line">    &apos;SHOW_ACTIVE&apos;</span><br><span class="line">  ]).isRequired</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 把 selector 传递给连接的组件</span><br><span class="line">export default connect(visibleTodosSelector)(App)</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="civv5sbl80032z4o0jbi82qp8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw22kimy002nnoo0dqnohp9c" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1158,7 +1055,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1168,6 +1065,10 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
+          </li>
         
           <li>
             <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
@@ -1185,10 +1086,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             <a href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
           </li>
         
-          <li>
-            <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1200,7 +1097,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

@@ -63,6 +63,71 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-js/aboutThis" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/16/js/aboutThis/" class="article-date">
+  <time datetime="2016-06-16T13:52:57.317Z" itemprop="datePublished">2016-06-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JS/">JS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/16/js/aboutThis/">对this的理解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><strong>this是调用时被绑定的，完全取决于函数的调用位置</strong></li>
+<li><p><strong>调用位置</strong></p>
+<blockquote>
+<p>调用位置就是函数被调用的位置，要寻找调用位置就要分析调用栈（就是为了到达当前执行位置所<br>调用的所有函数）。调用位置就在当前正在执行的函数的前一个调用中。</p>
+</blockquote>
+</li>
+<li><p><strong>this的绑定规则</strong></p>
+</li>
+</ul>
+<ol>
+<li>默认绑定</li>
+<li>隐式绑定</li>
+<li>显示绑定</li>
+<li>new绑定</li>
+</ol>
+<ul>
+<li><strong>判断this（优先级）</strong></li>
+</ul>
+<ol>
+<li>函数是否在new中调用（new 绑定）?如果是的话this绑定的新创建的对象</li>
+<li>函数是否通过call、apply（显示绑定）调用？如果是的话，this绑定的是指定的对象</li>
+<li>函数是否在某个上下文对象中调用（隐式绑定）？如果是的话，this绑定的是那个上下文对象</li>
+<li>如果都不是的话，使用默认绑定。如果在严格模式下，就绑定到undefined，否则绑定到全局对象。</li>
+</ol>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/16/js/aboutThis/" data-id="ciw22kim00027noo04zu2p5dg" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-git/commonsComond" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/16/git/commonsComond/" class="article-date">
@@ -101,7 +166,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="civv5sbic001lz4o01k8xo84v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/16/git/commonsComond/" data-id="ciw22kika001jnoo0ifr49623" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -141,7 +206,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/15/js/closureAndScope/" data-id="civv5sbjm002az4o0u9m1valj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/15/js/closureAndScope/" data-id="ciw22kim6002cnoo0jb3k5wwr" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -189,7 +254,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/14/js/functionAndBlockScope/" data-id="civv5sbjo002dz4o0mk8j0g19" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/14/js/functionAndBlockScope/" data-id="ciw22kim8002enoo0op5puxch" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -237,7 +302,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/canvas/get_started/" data-id="civv5sbi9001jz4o0nzwvuvnx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/canvas/get_started/" data-id="ciw22kik7001hnoo0kx0e264y" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -282,7 +347,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/31/react_native/react_native_vector_icons_learn_1/" data-id="civv5sblb0035z4o02ifybbzo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/31/react_native/react_native_vector_icons_learn_1/" data-id="ciw22kio50037noo01ztrb3zz" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -345,7 +410,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/25/js/actionScope/" data-id="civv5sbjk0028z4o0t3st8o73" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/25/js/actionScope/" data-id="ciw22kim30029noo033kyc6fc" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -369,7 +434,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -379,6 +444,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
+          </li>
         
           <li>
             <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
@@ -396,10 +465,6 @@
             <a href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
           </li>
         
-          <li>
-            <a href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -411,7 +476,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
