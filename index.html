@@ -93,13 +93,82 @@
 <p>Vue使用基于HTML的模板语法，允许你以声明式的方式绑定渲染的DOM到Vue实例的data。<br>所有的Vue模板是有效的html，它可以被特定兼容性的浏览器及html解析器解析。在引擎下，Vue编<br>译模板到虚拟DOM的render函数里，与反应系统相结合，聪明的计算出最小数量的组件重新渲染当<br>应用程序state发生变化时，最小数量的DOM操作。如果很熟悉虚拟DOM的概念，并更喜欢原生js的<br>特性，可以直接写render函数来代替模板。</p>
 </blockquote>
 <h3 id="文本插入"><a href="#文本插入" class="headerlink" title="文本插入"></a>文本插入</h3><h4 id="Text"><a href="#Text" class="headerlink" title="Text"></a>Text</h4><blockquote>
-<p>最常用的文本绑定就是使用</p>
+<p>最常用的文本绑定就是使用双括号语法这种格式，比如: <code>&lt;span&gt;Message: &lt;/span&gt;</code><br><code></code>将会替换为相应data对象的属性值，当data的msg属性值改变时，<code></code>也会改变。<br>通过使用<code>v-once</code>指令让data属性改变时相应的<code></code>不更新。但是记住，这回影响任何在该<br>节点绑定的数据。</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span v-once&gt;This will never change: &#123;&#123; msg &#125;&#125;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="原始html"><a href="#原始html" class="headerlink" title="原始html"></a>原始html</h4><blockquote>
+<p>双花括号的语法以文本格式解释data，而不是HTML,如果要输出HTML，使用<code>v-html</code>指令.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">  &lt;div v-html=&quot;raw&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var vue = new Vue(&#123;</span><br><span class="line">    el: &apos;#app&apos;,</span><br><span class="line">    data: &#123;</span><br><span class="line">    raw: &apos;&lt;p style=&apos;color:red&apos;&gt;测试&lt;/p&gt;&apos;</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Vue不是基于字符串模板引擎，组件是UI重用和组成首选的基本单位。注意：在网站动态的渲染任何<br>HTML是非常危险的，因为会引起XSS攻击，只有使用HTML插入在信赖的内容上并永远不会使用用户提<br>供的内容才是安全的。</p>
+</blockquote>
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><blockquote>
+<p>双花括号语法不能使用在HTML的属性中，替换方案是使用<code>v-bind</code>命令:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于boolean类型的属性同样有效，当值为false时，移除此属性：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-bind:disabled=&quot;someDynamicCondition&quot;&gt;Button&lt;/button&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="使用JS表达式"><a href="#使用JS表达式" class="headerlink" title="使用JS表达式"></a>使用JS表达式</h4><blockquote>
+<p>Vue支持在数据绑定时使用js表达式，比如:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; number + 1 &#125;&#125;</span><br><span class="line">&#123;&#123; ok ? &apos;YES&apos; : &apos;NO&apos; &#125;&#125;</span><br><span class="line">&#123;&#123; message.split(&apos;&apos;).reverse().join(&apos;&apos;) &#125;&#125;</span><br><span class="line">&lt;div v-bind:id=&quot;&apos;list-&apos; + id&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样绑定的限制是，在双花括号语法中只能使用一个表达式：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- this is a statement, not an expression: --&gt;</span><br><span class="line">&#123;&#123; var a = 1 &#125;&#125;</span><br><span class="line">&lt;!-- flow control won&apos;t work either, use ternary expressions --&gt;</span><br><span class="line">&#123;&#123; if (ok) &#123; return message &#125; &#125;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>模板表达式是沙箱式的，你可以访问类似<code>Math</code>和<code>Date</code>的全局变量，但是不能在模板表达式中<br>访问用户自定义的全局变量。</p>
+</blockquote>
+<h4 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h4><blockquote>
+<p>指令是以<code>v</code>为前缀的特殊的属性，指令属性值期望的是一个简单的js表达式，指令的作用就是当表<br>达式的值更改时，将响应作用应用到DOM上：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当<code>seen</code>表达式的值为false时，<code>v-if</code>指令将移除<code>p</code>元素，反之则插入<code>p</code>元素。</p>
+</blockquote>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><blockquote>
+<p>一些指令可以携带一个参数，它由指令<code>:</code>后的名字表示。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:href=&quot;url&quot;&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>href</code>是一个参数，它告诉<code>v-bind</code>指令绑定元素的<code>href</code>属性到<code>url</code>表达式的值，还有就是<br><code>v-on</code>指令，用来监听DOM事件:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click=&quot;doSomething&quot;&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>时间名称就是要监听的DOM时间.</p>
+</blockquote>
+<h4 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h4><blockquote>
+<p>修饰符是一个特殊的后缀又一个<code>.</code>表示，它表明一个指令由一种特殊的方式绑定，比如<code>.prevent</code><br>让<code>v-on</code>指令调用<code>e.preventDefault()</code>阻止事件的默认执行。</p>
+</blockquote>
+<h4 id="筛选器"><a href="#筛选器" class="headerlink" title="筛选器"></a>筛选器</h4><blockquote>
+<p>Vue.js允许你定义筛选器，可以应用于常见的文本格式，筛选器常用在两个地方,双花括号以及<code>v-bind</code><br>表达式，筛选器添加在js表达式的后面，由管道<code>|</code>符号表示：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- in mustaches --&gt;</span><br><span class="line">&#123;&#123; message | capitalize &#125;&#125;</span><br><span class="line">&lt;!-- in v-bind --&gt;</span><br><span class="line">&lt;div v-bind:id=&quot;rawId | formatId&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：Vue2.x的筛选器只能用在双花括号以及<code>v-bind</code>表达式中，因为筛选器的主要设计用来文本<br>转换的目的，对于更复杂的指令，使用<a href="https://vuejs.org/v2/guide/computed.html" target="_blank" rel="external">计算的属性</a>来代替。<br>筛选器函数总是接收表达式的值作为第一个参数：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">  // ...</span><br><span class="line">  filters: &#123;</span><br><span class="line">    capitalize: function (value) &#123;</span><br><span class="line">      if (!value) return &apos;&apos;</span><br><span class="line">      value = value.toString()</span><br><span class="line">      return value.charAt(0).toUpperCase() + value.slice(1)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>筛选器可以使链式的：   </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; message | filterA | filterB &#125;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>筛选器是js函数，所以他们可以接收参数：    </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; message | filterA(&apos;arg1&apos;, arg2) &#125;&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这里，<code>&#39;arg1&#39;</code>将作为第二个参数传递给filter函数,而<code>arg2</code>表达式会评估它的值并作为第三<br>个参数传递。</p>
+</blockquote>
+<h4 id="速记"><a href="#速记" class="headerlink" title="速记"></a>速记</h4><blockquote>
+<p>频繁的使用<code>v-</code>前缀的指令很繁琐，所以Vue提供了两种常用指令的简写方式<code>v-bind</code>,<code>v-on</code>:</p>
+</blockquote>
+<h5 id="v-bind的速记方式"><a href="#v-bind的速记方式" class="headerlink" title="v-bind的速记方式"></a><code>v-bind</code>的速记方式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- full syntax --&gt;</span><br><span class="line">&lt;a v-bind:href=&quot;url&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- shorthand --&gt;</span><br><span class="line">&lt;a :href=&quot;url&quot;&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="v-on的速记方式"><a href="#v-on的速记方式" class="headerlink" title="v-on的速记方式"></a><code>v-on</code>的速记方式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- full syntax --&gt;</span><br><span class="line">&lt;a v-on:click=&quot;doSomething&quot;&gt;&lt;/a&gt;</span><br><span class="line">&lt;!-- shorthand --&gt;</span><br><span class="line">&lt;a @click=&quot;doSomething&quot;&gt;&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/29/vue/template_syntax/" data-id="ciw2al0mm003cg8o0csifqmqm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/29/vue/template_syntax/" data-id="ciw2b2qdq003bbso002n5owz3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -151,7 +220,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/28/vue/get_started/" data-id="ciw2al0mh0038g8o0gew1hfrb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/28/vue/get_started/" data-id="ciw2b2qdl0037bso0b3su660n" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -218,7 +287,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/24/phabricator/what_is_docker/" data-id="ciw2al0lb002kg8o0vbcnsv7e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/24/phabricator/what_is_docker/" data-id="ciw2b2qci002jbso0hbph4aq7" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -261,7 +330,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/21/phabricator/eslint/" data-id="ciw2al0l3002gg8o0t3y0736h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/21/phabricator/eslint/" data-id="ciw2b2qc9002fbso0ei342e8w" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -369,7 +438,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="ciw2al0mj0039g8o0en2jiv4a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="ciw2b2qdo0039bso0v6p95h9r" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -472,7 +541,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="ciw2al0l5002ig8o0nudbiahn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="ciw2b2qce002ibso04s7wv025" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -543,7 +612,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="ciw2al0m1002xg8o083u12vc7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="ciw2b2qd4002ybso0k5p647hs" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -601,7 +670,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="ciw2al0lr002pg8o00782jxz8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="ciw2b2qct002nbso0wyvathzg" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -805,7 +874,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw2al0lz002wg8o0arzmpb40" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw2b2qd2002vbso0dshybk13" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -905,7 +974,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw2al0md0034g8o0t0jjnx8y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw2b2qdg0033bso08b304mnp" class="article-share-link">Share</a>
       
       
     </footer>-->
