@@ -63,6 +63,310 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-react/implemention_notes" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/12/react/implemention_notes/" class="article-date">
+  <time datetime="2016-11-12T03:01:19.631Z" itemprop="datePublished">2016-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/12/react/implemention_notes/">实现说明</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="实现说明"><a href="#实现说明" class="headerlink" title="实现说明"></a>实现说明</h3><blockquote>
+<p>这一节主要是对堆栈协调器的实现说明,对React的API有一个技术性的理解，以及React是如何将<br>它分为core,renders,reconciler是很重要的，如果你对React的代码库不是很熟悉，请阅读React<br>代码库的概览。stack reconciler(堆栈协调器)供应所有React的生产代码。它位于<code>src/renders/shared/stack/reconciler</code>目录下<br>并且ReactDOM和ReactNative都使用它。</p>
+</blockquote>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
+<p>协调器没有一个公共的API，ReactDOM和ReactNative的渲染器有效的使用它有效的更新用户接口，这些接口是用户编写的用户组件。<br><strong>以递归的过程镶嵌</strong><br>你第一次镶嵌一个组件时:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ReactDOM会顺着reconciler(协调器)传递<code>&lt;App /&gt;</code>,自助<code>&lt;App /&gt;</code>是一个React元素，下面的是一个渲染什么的描述，你可以认为它是<br>一个简单的对象：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(&lt;App /&gt;);</span><br><span class="line">// &#123; type: App, props: &#123;&#125; &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>协调器会检查<code>&lt;App/&gt;</code>是一个class还是一个函数，如果App是一个函数，协调器会调用<code>App(props)</code>来获取要渲染的元素。<br>如果App是一个类，协调器会用<code>new App(props)</code>实例化这个App，调用<code>componentWillMount()</code>生命周期方法，然后调用<code>render()</code>方法<br>来获取渲染的元素.<br>无论哪种方式，协调器会知道App要渲染的元素。这个过程是递归的，App有可能渲染到<code>&lt;Greeting /&gt;</code>, Greeting可能渲染到<code>&lt;Button / &gt;</code>等等,<br>协调器会递归的通过用户定义的组件向下挖去，知道它知道每一个组件会渲染成什么。你可以假设这个过程的伪代码：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">function isClass(type) &#123;</span><br><span class="line">  //React.Component的子类都有这个标记</span><br><span class="line">  return (Boolean(type.prototype) &amp;&amp; Boolean(type.prototype.isReactComponet));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//这个函数接受一个React元素，比如(&lt;App/&gt;)</span><br><span class="line">//返回一个表示为镶嵌的树的DOM或原生节点</span><br><span class="line">function mount(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  var props = element.props;</span><br><span class="line">  //我们需要查明/确定渲染的元素，将type作为函数运行或者创建一个实例并调用render</span><br><span class="line">  var renderedElement;</span><br><span class="line">  if(isClass(type)) &#123;</span><br><span class="line">    //组件类</span><br><span class="line">    var publicInstance = new type(props);</span><br><span class="line">    //设置属性</span><br><span class="line">    publicInstance.props = props;</span><br><span class="line">    //如果有必要则调用生命周期</span><br><span class="line">    if(publicInstance.componentWillMount) &#123;</span><br><span class="line">      publicInstance.componentWillMount();</span><br><span class="line">    &#125;</span><br><span class="line">    //通过调用render()得到渲染的元素</span><br><span class="line">    renderedElement = publicInstance.render();</span><br><span class="line">  &#125;else&#123;</span><br><span class="line">    //组件函数</span><br><span class="line">    renderedElement = type(props);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  //这个过程是递归的因为一个组件返回的元素有可能是一个别的类型的组件</span><br><span class="line">  return mount(renderedElement);</span><br><span class="line">  //注意：这个实现是没有完成的而且会无限循环，它只会处理类似&lt;App /&gt;,&lt;Button&gt;的元素</span><br><span class="line">  //它还没有支持处理像&lt;div /&gt;或&lt;p/&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var rootEl = document.getElementById(&apos;root&apos;);</span><br><span class="line">var node = mount(&lt;App /&gt;);</span><br><span class="line">rootEl.appendChild(node);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：这仅仅是一段伪代码，它不是真正的实现，它会导致栈溢出，因为我们没有讨论终止递归的条件。<br>我们回顾一下上面例子的几个关键概念：</p>
+<ul>
+<li>React元素是一些简单的对象来代表组件类型和属性(比如<code>&lt;App/&gt;</code>)。</li>
+<li>用户自定义的组件（比如<code>&lt;App /&gt;</code>）可以是一个类也可以是一个函数但是他们最终都会被渲染为元素。</li>
+<li>“mounting”是一个递归的过程它用来创建DOM以及Native树，给React的顶级元素（比如<code>&lt;App&gt;</code>）.</li>
+</ul>
+</blockquote>
+<h3 id="Mounting-Host-Elements-镶嵌主机元素"><a href="#Mounting-Host-Elements-镶嵌主机元素" class="headerlink" title="Mounting Host Elements(镶嵌主机元素)"></a>Mounting Host Elements(镶嵌主机元素)</h3><blockquote>
+<p>如果我们最终不向屏幕渲染任何东西这个过程将毫无作用，除了用户自定义的组件，React元素也可以表示特定<br>平台的组件.比如，<code>Button</code>可能在render方法中会返回一个<code>&lt;div /&gt;</code>。如果一个元素的类型是字符串，这样处理<br>主机元素：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(&lt;div /&gt;);</span><br><span class="line">// &#123; type: &apos;div&apos;, props: &#123;&#125; &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>没有用户定义与主机元素相联系的代码。<br>当协调器遇到一个主机元素时，协调器会让render小心的镶嵌它，比如，ReactDOM会创建一个DOM节点，如果这个主机元素<br>有子节点，协调器会按照上面的算法递归的镶嵌，子元素是否是主机元素都没有关系（<code>&lt;div&gt;&lt;hr&gt;&lt;/div&gt;</code>），复杂的组件（<code>&lt;div&gt;&lt;Button/&gt;&lt;/div&gt;</code>）<br>子组件生产出来的DOM节点将会追加到父DOM节点，递归的方式，组装为完整的DOM结构。<br>注意：协调器本身不依赖于DOM，完整的镶嵌过程依赖于render（有时候，在源码中称之为镶嵌快照），最终结果可以是DOM node（React DOM）<br>一个字符串(ReactDOM Server)或者是原声的视图(React Native).<br>如果我们想扩展去处理主机元素的话，可以这样：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">function isClass(type) &#123;</span><br><span class="line">  // React.Component子类都有这个标记</span><br><span class="line">  return (</span><br><span class="line">    Boolean(type.prototype) &amp;&amp;</span><br><span class="line">    Boolean(type.prototype.isReactComponent)</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//这个函数只处理复杂类型的元素</span><br><span class="line">//它只处理类似于&lt;App/&gt;和&lt;Button /&gt;这样的，而不是&lt;div/&gt;</span><br><span class="line">function mountComposite(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  var props = element.props;</span><br><span class="line"></span><br><span class="line">  var renderedElement;</span><br><span class="line">  if (isClass(type)) &#123;</span><br><span class="line">    //组件类</span><br><span class="line">    var publicInstance = new type(props);</span><br><span class="line">    // 设置属性</span><br><span class="line">    publicInstance.props = props;</span><br><span class="line">    //如果有必要，调用生命周期</span><br><span class="line">    if (publicInstance.componentWillMount) &#123;</span><br><span class="line">      publicInstance.componentWillMount();</span><br><span class="line">    &#125;</span><br><span class="line">    renderedElement = publicInstance.render();</span><br><span class="line">  &#125; else if (typeof type === &apos;function&apos;) &#123;</span><br><span class="line">    //组件函数</span><br><span class="line">    renderedElement = type(props);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // This is recursive but we&apos;ll eventually reach the bottom of recursion when</span><br><span class="line">  //这是个递归的过程，但是当元素是主机元素时（比如&lt;div/&gt;而不是复杂的组件）我们最终会到达递归的底部</span><br><span class="line">  return mount(renderedElement);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//这个函数只处理主机类型元素</span><br><span class="line">//比如，它处理&lt;div/&gt;,&lt;p/&gt;不会出来&lt;App/&gt;</span><br><span class="line">function mountHost(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  var props = element.props;</span><br><span class="line">  var children = props.children || [];</span><br><span class="line">  if (!Array.isArray(children)) &#123;</span><br><span class="line">    children = [children];</span><br><span class="line">  &#125;</span><br><span class="line">  children = children.filter(Boolean);</span><br><span class="line"></span><br><span class="line">  //这一块的代码不会再协调器中</span><br><span class="line">  //不同的渲染器可能会初始化不同的节点</span><br><span class="line">  //比如，React Native可能会创建IOS或者Android的视图</span><br><span class="line">  var node = document.createElement(type);</span><br><span class="line">  Object.keys(props).forEach(propName =&gt; &#123;</span><br><span class="line">    if (propName !== &apos;children&apos;) &#123;</span><br><span class="line">      node.setAttribute(propName, props[propName]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  //镶嵌子元素</span><br><span class="line">  children.forEach(childElement =&gt; &#123;</span><br><span class="line">    // Children may be host (e.g. &lt;div /&gt;) or composite (e.g. &lt;Button /&gt;).</span><br><span class="line">    //子元素们可能是主机元素（比如&lt;div/&gt;）或复杂性元素(&lt;Button/&gt;)</span><br><span class="line">    //我们会递归的装载他们</span><br><span class="line">    var childNode = mount(childElement);</span><br><span class="line"></span><br><span class="line">    //这行代码也是渲染器特有的</span><br><span class="line">    //不同的渲染器有不同的结果</span><br><span class="line">    node.appendChild(childNode);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  //将DOM节点的装载结果返回</span><br><span class="line">  //这儿递归结束</span><br><span class="line">  return node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function mount(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  if (typeof type === &apos;function&apos;) &#123;</span><br><span class="line">    // User-defined components</span><br><span class="line">    return mountComposite(element);</span><br><span class="line">  &#125; else if (typeof type === &apos;string&apos;) &#123;</span><br><span class="line">    // Platform-specific components</span><br><span class="line">    return mountHost(element);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var rootEl = document.getElementById(&apos;root&apos;);</span><br><span class="line">var node = mount(&lt;App /&gt;);</span><br><span class="line">rootEl.appendChild(node);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>虽然这也能工作但里协调器的真正实现还有很远的距离，主要是漏掉了对更新的支持。</p>
+</blockquote>
+<h3 id="介绍（引入）内部实例"><a href="#介绍（引入）内部实例" class="headerlink" title="介绍（引入）内部实例"></a>介绍（引入）内部实例</h3><blockquote>
+<p>React的关键特性是你可以重复渲染任何东西，并且他不会创新创建DOM或重置state：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br><span class="line">//会重新使用存在的DOM</span><br><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然而，我们上面的实现知识装载初始状态的树，不能对他执行更新操作，因为没有存储一些必要的信息，<br>如publicInstance，或DOM节点对应于哪些组件。stack reconciler代码库通过将<code>mount()</code>函数和一个方法<br>放在一个类上。这种方式有一些缺陷，我们现在正在一相反的方向解决这个问题，重写reconciler正在进行中<br>不管怎样，现在它的工作方式就是这样的。<br>将<code>mountHost</code>和<code>mountComposite</code>函数拆分出来的替代方案就是，我们将创建两个类：<code>DOMComponent</code>和<code>CompositeComponent</code><br>两个类都有一个接收elements的<code>constructor</code>，还有一个返回镶嵌了dom节点的<code>mount()</code>方法，我们将会使用工厂模式代替类中<br>顶级的mount()函数。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function instantiateComponent(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  if(typeof type === &apos;function&apos;) &#123;</span><br><span class="line">    //用户定义的组件</span><br><span class="line">    return new CompositeComponent(element);</span><br><span class="line">  &#125;else if(typeof === &apos;string&apos;) &#123;</span><br><span class="line">    //平台组件</span><br><span class="line">    return new DOMComponent(element);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>首先，让我们思考<code>CompositeComponent</code>的实现方式：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedElement = null;</span><br><span class="line">    this.publicInstance = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    //对应复杂的组件，暴露出这个类实例</span><br><span class="line">    return this.publicInstance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line">    var publicInstance;</span><br><span class="line">    var renderedElement;</span><br><span class="line">    if(isClass(type)) &#123;</span><br><span class="line">      //组件类</span><br><span class="line">      publicInstance = new type(props);</span><br><span class="line">      //设置属性</span><br><span class="line">      publicInstance.props = props;</span><br><span class="line">      //如果有必要，调用生命周期</span><br><span class="line">      if(publicInstance.componentWillMount) &#123;</span><br><span class="line">        publicInstance.componentWillMount();</span><br><span class="line">      &#125;</span><br><span class="line">      renderedElement = publicInstance.render();</span><br><span class="line">    &#125;else if(typeof type === &apos;function&apos;) &#123;</span><br><span class="line">      publicInstance = null;</span><br><span class="line">      renderedElement = type(props);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //保存公共实例</span><br><span class="line">    this.publicInstance = publicInstance;</span><br><span class="line">    //根据元素实例化子组件的内部实例</span><br><span class="line">    //&lt;div&gt;,&lt;p&gt;将为一个DOM节点</span><br><span class="line">    //&lt;App /&gt; &lt;Button&gt;将为一个复杂组件</span><br><span class="line">    var renderedComponent = instantiateComponent(renderedElement);</span><br><span class="line">    this.renderedComponent = renderedComponent;</span><br><span class="line"></span><br><span class="line">    //装载renderd的输出</span><br><span class="line">    return renderedComponent.mount();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>重构<code>mountHost()</code>之后的主要区别是，我们可以保持<code>this.node</code>以及<code>this.renderedChildren</code>于内部的组件实例相关联。<br>我们也可以在未来将它们用于非破坏性的更新。因此，每一个内部实例，复杂的以及主机的，现在指向其孩子内部实例。<br>为了帮助构思它，如果一个<code>&lt;App&gt;</code>组件函数渲染了一个<code>&lt;Button&gt;</code>类组件，并且<code>Button</code>类渲染了一个<code>&lt;div&gt;</code>，内部实例树<br>长得是这个样子的：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[object CompositeComponent] &#123;</span><br><span class="line">  currentElement: &lt;App /&gt;,</span><br><span class="line">  publicInstance: null,</span><br><span class="line">  rendererComponent: [object CompositeComponent] &#123;</span><br><span class="line">    currentElement: &lt;Button /&gt;,</span><br><span class="line">    publicInstance: [object Button],</span><br><span class="line">    renderedComponent: [object DOMComponent] &#123;</span><br><span class="line">      currentElement: &lt;div /&gt;,</span><br><span class="line">      node: [object HTMLDivElement],</span><br><span class="line">      renderedChildren: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在DOM中你仅仅能看见<code>div</code>,但是内部实例树既包含复杂的内部实例也包含主机的内部实例。<br>复杂的内部实例需要被存储：</p>
+<ul>
+<li>当前的元素</li>
+<li>如果元素类型是个类，public实例</li>
+<li>单个的内部实例的渲染结果，它既可以是<code>DOMComponent</code>也可以是<code>CompositeComponent</code><br>主机内部实例也需要被存储:</li>
+<li>当前的元素</li>
+<li>DOM节点</li>
+<li>所有的子内部实例，它们既可以是<code>DOMComponent</code>也可以是<code>CompositeComponent</code>.<br>如果你努力设想在复杂的程序中一个内部实例是什么样的结构，(React DevTools)[<a href="https://github.com/facebook/react-devtools" target="_blank" rel="external">https://github.com/facebook/react-devtools</a>]<br>可以给你一个近似的结果，主机实例是灰色的，复杂实例是紫色的。<br>要完成这个重构，我们要引入一个函数镶嵌完整的树到节点容器。比如<code>ReactDOM.render()</code>,它返回一个公共实例：</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function mountTree(element, containerNode) &#123;</span><br><span class="line">  //创建顶层的内部实例</span><br><span class="line">  var rootComponent = instantiateComponent(element);</span><br><span class="line"></span><br><span class="line">  //装载顶层组件到containetr</span><br><span class="line">  var node = rootComponent.mount();</span><br><span class="line">  containerNode.appendChild(node);</span><br><span class="line">  //返回它提供的公共实例</span><br><span class="line">  var publicInstance = rootComponent.getPublicInstance();</span><br><span class="line">  return publicInstance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var rootEl = document.getElementById(&apos;root&apos;);</span><br><span class="line">mountTree(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<h3 id="Unmounting-正在解除挂载"><a href="#Unmounting-正在解除挂载" class="headerlink" title="Unmounting(正在解除挂载)"></a>Unmounting(正在解除挂载)</h3><blockquote>
+<p>现在我们有内部实例维持他们的字元素与DOM节点，我们可以实现unmounting，d对于一个复杂的组件，unmounting调用生命周期的钩子<br>然后递归：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line"></span><br><span class="line">  //....</span><br><span class="line">  unmount() &#123;</span><br><span class="line">    //如果有必要调用生命周期的钩子</span><br><span class="line">    var publicInstance = this.publicInstance;</span><br><span class="line">    if(publicInstance) &#123;</span><br><span class="line">      if(publicInstance.componentWillUnMount) &#123;</span><br><span class="line">        publicInstance.componentWillUnMount();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //卸载单个渲染的组件</span><br><span class="line">    var renderedComponent = this.renderedComponent;</span><br><span class="line">    renderedComponent.unmount();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于<code>DOMComponent</code>,unmounting告诉每一个子元素卸载:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class DOMComponent &#123;</span><br><span class="line">  //...</span><br><span class="line"></span><br><span class="line">  unmount() &#123;</span><br><span class="line">    //卸载所有children</span><br><span class="line">    var renderedChildren = this.renderedChildren;</span><br><span class="line">    renderedChildren.forEach( child =&gt; child.unmount());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在实践中，卸载DOM组件也会移除事件监听器并且清楚缓存，在这里跳过这些细节。<br>现在我们添加一个新的顶级函数调用<code>unmountTree(containerNode)</code>，这和<code>ReactDOM.unmountComponentAtNode()</code>很相似：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function unmountTree(containerNode) &#123;</span><br><span class="line">  //从DOM节点中读取内部实例</span><br><span class="line">  //(这个还不能工作，我们需要改变mountTree来来储存它)</span><br><span class="line">  var node = containerNode.firstChild;</span><br><span class="line">  var rootComponent = node._internalInstance;</span><br><span class="line"></span><br><span class="line">  //卸载这个树并且情况这个container</span><br><span class="line">  rootComponent.unmount();</span><br><span class="line">  containerNode.innerHTML = &apos;&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为了使它工作，我们需要从DOM节点中获取内部根实例，我们将会修改<code>mountTree()</code>添加<code>_internalInstance</code>属性到根DOM节点。<br>我们也会告诉<code>mountTree()</code>销毁任何存在的树，所以它可以被调用多次：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">function mountTree(element, containerNode) &#123;</span><br><span class="line">  //销毁任何存在的树</span><br><span class="line">  if(containerNode.firstChild) &#123;</span><br><span class="line">    unmountTree(containerNode);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  //创建顶层内部实例</span><br><span class="line">  var rootComponent = instantiateComponent(element);</span><br><span class="line"></span><br><span class="line">  //装载顶层内部实例到container</span><br><span class="line">  var mode = rootComponent.mount();</span><br><span class="line">  containerNode.appendChild(node);</span><br><span class="line"></span><br><span class="line">  //保存一个到内部实例的引用</span><br><span class="line">  node._internalInstance = rootComponent;</span><br><span class="line"></span><br><span class="line">  //返回它所提供的公共实例</span><br><span class="line">  var publicInstance = rootComponent.getPublicInstance();</span><br><span class="line">  return publicInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>现在，运行<code>unmountTree()</code>或者运行<code>mountTree()</code>多次，移除旧的树然后运行组件的生命周期方法<code>componentWillUnmount</code>.</p>
+</blockquote>
+<h3 id="Updating"><a href="#Updating" class="headerlink" title="Updating"></a>Updating</h3><blockquote>
+<p>在上一节，我们实现了<code>unmounting</code>,但是如果每一个属性的变化都会改变unmounted和mounted整个树，这对于React来说没有用，<br>协调器的目的是尽可能的保持和重用现有实例：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var rootEl = document.getElementById(&apos;root&apos;);</span><br><span class="line">mountTree(&lt;App /&gt;, rootEl);</span><br><span class="line">//这里应返回已存在的DOM</span><br><span class="line">mountTree(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们将会扩展我们的内部实例建立一个或多个方法，除了<code>mount()</code>和<code>unmount()</code>，<code>DOMComponent</code>和<code>CompositeComponent</code>将会<br>实现一个新的<code>receive(nextElement)</code>方法：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line">  //...</span><br><span class="line"></span><br><span class="line">  receive(nextElement) &#123;</span><br><span class="line">    //...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class DOMComponent &#123;</span><br><span class="line">  //...</span><br><span class="line"></span><br><span class="line">  receive(nextElement) &#123;</span><br><span class="line">    //...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>它的职责是根据下一个元素提供的说明做任何有必要的组建更新，这部分通常称之为’虚拟dom差异比较’，尽管真正发生的是内部树的递归然后<br>让每个内部实例接收到更新。</p>
+</blockquote>
+<h3 id="更新复杂组件-Updating-Composite-Component"><a href="#更新复杂组件-Updating-Composite-Component" class="headerlink" title="更新复杂组件(Updating Composite Component)"></a>更新复杂组件(Updating Composite Component)</h3><blockquote>
+<p>当一个复杂组件接收到一个新的元素时，我们运行<code>componentWillUpdate()</code>生命周期钩子。然后我们根据新的属性重新渲染组件，然后得到<br>下一个渲染的元素：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line"></span><br><span class="line">  //...</span><br><span class="line"></span><br><span class="line">  receive(nextElement) &#123;</span><br><span class="line">    var prevProps = this.currentElement.props;</span><br><span class="line">    var publicInstance = this.publicInstance;</span><br><span class="line">    var prevRenderedComponent = this.renderedComponent;</span><br><span class="line">    var prevRenderedElement = this.renderedElement;</span><br><span class="line"></span><br><span class="line">    //修改*自己的*元素</span><br><span class="line">    this.currentElement = nextElement;</span><br><span class="line">    var type = nextElement.type;</span><br><span class="line">    var nextProps = nextElement.props;</span><br><span class="line"></span><br><span class="line">    //解决下一次的render()输出的是什么</span><br><span class="line">    var nextRenderedElement;</span><br><span class="line">    if(isClass(type)) &#123;</span><br><span class="line">      //组件类</span><br><span class="line">      //如果有必要调用生命周期</span><br><span class="line">      if(publicInstance.componentWillUpdate) &#123;</span><br><span class="line">        publicInstance.componentWillUpdate(prevProps);</span><br><span class="line">      &#125;</span><br><span class="line">      //修改属性</span><br><span class="line">      publicInstance.props = nextProps;</span><br><span class="line">      //重新渲染</span><br><span class="line">      nextRenderedElement = publicInstance.render();</span><br><span class="line">    &#125;else if(typeof type === &apos;function&apos;) &#123;</span><br><span class="line">      //组件函数</span><br><span class="line">      nextRenderedElement = type(nextProps);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>接下来，我们可以看一下渲染的元素的类型，如果在最后一次的渲染中<code>type</code>没有发生变化，下面的<br>组件可以就地更新。例如：如果第一次返回<code>&lt;Button color=&#39;red&#39; /&gt;</code>，第二次返回<code>&lt;Button color=&#39;blue&#39;&gt;</code><br>我们只需要告诉相关联的内部实例接收下一个元素：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//如果渲染的元素的类型没有变化</span><br><span class="line">//复用已存在的组建实例并退出</span><br><span class="line">if(prevRenderedElement.type === nextRenderedElement.type) &#123;</span><br><span class="line">  prevRenderedComponent.receive(nextRenderedElement);</span><br><span class="line">  return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但是，如果下一次渲染的组件类型和上一次渲染的组件类型不同，我们不会修改内部实例，一个<code>&lt;button&gt;</code>不会变为<br>一个<code>&lt;input&gt;</code>：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line"></span><br><span class="line">  //如果我们达到这一点，我们需要卸载先前的</span><br><span class="line">  //装载组件，装载新的，交换他们的节点</span><br><span class="line"></span><br><span class="line">  //找到老节点因为它将被替换</span><br><span class="line">  var prevNode = prevRenderedComponent.getHostNode();</span><br><span class="line"></span><br><span class="line">  //卸载老child并装载新的child</span><br><span class="line">  prevRenderedComponent.unmount();</span><br><span class="line">  var nextRenderedComponent = instantiateComponent(nextRenderedElement);</span><br><span class="line">  var nextNode = nextRenderedComponent.mount();</span><br><span class="line"></span><br><span class="line">  //替换child的引用</span><br><span class="line">  this.renderedComponent = nextRenderedComponent;</span><br><span class="line"></span><br><span class="line">  //用新的替换老节点</span><br><span class="line">  //注意：这是渲染器特定的代码并且在理想情况下，因位于CompositeComponent的外面</span><br><span class="line">  prevNode.parentNode.replaceChild(nextNode, prevNode);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>综上所述，当一个复杂的组件接收到一个新的元素时，要么委托去修改内部实例，要么卸载它并在原来<br>的位置新建一个。<br>这里有另外一种情况，一个组件将会重新装载而不是接收一个元素，当元素的<code>key</code>改变时，我们不讨论<br><code>key</code>的处理，因为它会增加教程的复杂性。注意：我们需要在内部实例添加一个叫<code>getHostNode</code>的方法，<br>它可能位于特定平台的节点并取代它的更新过程。它的实现简单明了：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line">  // ...</span><br><span class="line"></span><br><span class="line">  getHostNode() &#123;</span><br><span class="line">    // Ask the rendered component to provide it.</span><br><span class="line">    // This will recursively drill down any composites.</span><br><span class="line">    return this.renderedComponent.getHostNode();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class DOMComponent &#123;</span><br><span class="line">  // ...</span><br><span class="line"></span><br><span class="line">  getHostNode() &#123;</span><br><span class="line">    return this.node;</span><br><span class="line">  &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更新主机组件"><a href="#更新主机组件" class="headerlink" title="更新主机组件"></a>更新主机组件</h3><blockquote>
+<p>主机组件实现，比如<code>DOMComponent</code>已不同的方式更新，当它们接收到新的元素时，他们需要更新基于平台特有的视图,<br>在React DOM的情景中，这意味着要更新DOM属性：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class DOMComponent &#123;</span><br><span class="line">  //...</span><br><span class="line">  receive(nextElement) &#123;</span><br><span class="line">    var node = this.node;</span><br><span class="line">    var prevElement = this.currentElement;</span><br><span class="line">    var prevProps = prevElement.props;</span><br><span class="line">    var nextProps = nextElement.props;    </span><br><span class="line">    this.currentElement = nextElement;</span><br><span class="line"></span><br><span class="line">    // Remove old attributes.</span><br><span class="line">    Object.keys(prevProps).forEach(propName =&gt; &#123;</span><br><span class="line">      if (propName !== &apos;children&apos; &amp;&amp; !nextProps.hasOwnProperty(propName)) &#123;</span><br><span class="line">        node.removeAttribute(propName);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    // Set next attributes.</span><br><span class="line">    Object.keys(nextProps).forEach(propName =&gt; &#123;</span><br><span class="line">      if (propName !== &apos;children&apos;) &#123;</span><br><span class="line">        node.setAttribute(propName, nextProps[propName]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>接着，主机组件需要更新它们的children，和复杂组件不同的是，他们可能包含不止一个child，在下面这个简单的例子中，<br>我们使用内部实例数组并遍历它，是更新还是替换内部实例依赖于接收到的<code>type</code>是否与他们先前的<code>type</code>一致，真正的reconciler<br>也会也需要元素的<code>key</code>来进行插入还是删除，但是我们省略相关的实现。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line"></span><br><span class="line">    //这是React元素的数组</span><br><span class="line">    var prevChildren = prevProps.children || [];</span><br><span class="line">    if (!Array.isArray(prevChildren)) &#123;</span><br><span class="line">      prevChildren = [prevChildren];</span><br><span class="line">    &#125;</span><br><span class="line">    var nextChildren = nextProps.children || [];</span><br><span class="line">    if (!Array.isArray(nextChildren)) &#123;</span><br><span class="line">      nextChildren = [nextChildren];</span><br><span class="line">    &#125;</span><br><span class="line">    //这是内部实例的数组</span><br><span class="line">    var prevRenderedChildren = this.renderedChildren;</span><br><span class="line">    var nextRenderedChildren = [];</span><br><span class="line"></span><br><span class="line">    //当我们遍历children时，我们要添加对这个数组的一些操作</span><br><span class="line">    var operationQueue = [];</span><br><span class="line"></span><br><span class="line">    //注意：下面的部分非常简单，他不会处理重新排序，它的存在只是为了说明整体流程，但不具体</span><br><span class="line">    for (var i = 0; i &lt; nextChildren.length; i++) &#123;</span><br><span class="line">      // Try to get an existing internal instance for this child</span><br><span class="line">      var prevChild = prevRenderedChildren[i];</span><br><span class="line"></span><br><span class="line">      // If there is no internal instance under this index,</span><br><span class="line">      // a child has been appended to the end. Create a new</span><br><span class="line">      // internal instance, mount it, and use its node.</span><br><span class="line">      if (!prevChild) &#123;</span><br><span class="line">        var nextChild = instantiateComponent(nextChildren[i]);</span><br><span class="line">        var node = nextChild.mount();</span><br><span class="line"></span><br><span class="line">        // Record that we need to append a node</span><br><span class="line">        operationQueue.push(&#123;type: &apos;ADD&apos;, node&#125;);</span><br><span class="line">        nextRenderedChildren.push(nextChild);</span><br><span class="line">        continue;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // We can only update the instance if its element&apos;s type matches.</span><br><span class="line">      // For example, &lt;Button size=&quot;small&quot; /&gt; can be updated to</span><br><span class="line">      // &lt;Button size=&quot;large&quot; /&gt; but not to an &lt;App /&gt;.</span><br><span class="line">      var canUpdate = prevChildren[i].type === nextChildren[i].type;</span><br><span class="line"></span><br><span class="line">      // If we can&apos;t update an existing instance, we have to unmount it</span><br><span class="line">      // and mount a new one instead of it.</span><br><span class="line">      if (!canUpdate) &#123;</span><br><span class="line">        var prevNode = prevChild.node;</span><br><span class="line">        prevChild.unmount();</span><br><span class="line"></span><br><span class="line">        var nextChild = instantiateComponent(nextChildren[i]);</span><br><span class="line">        var nextNode = nextChild.mount();</span><br><span class="line"></span><br><span class="line">        // Record that we need to swap the nodes</span><br><span class="line">        operationQueue.push(&#123;type: &apos;REPLACE&apos;, prevNode, nextNode&#125;);</span><br><span class="line">        nextRenderedChildren.push(nextChild);</span><br><span class="line">        continue;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      // If we can update an existing internal instance,</span><br><span class="line">      // just let it receive the next element and handle its own update.</span><br><span class="line">      prevChild.receive(nextChildren[i]);</span><br><span class="line">      nextRenderedChildren.push(prevChild);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Finally, unmount any children that don&apos;t exist:</span><br><span class="line">    for (var j = nextChildren.length; j &lt; prevChildren.length; j++) &#123;</span><br><span class="line">     var prevChild = prevRenderedChildren[j];</span><br><span class="line">     var node = prevChild.node;</span><br><span class="line">     prevChild.unmount();</span><br><span class="line"></span><br><span class="line">     // Record that we need to remove the node</span><br><span class="line">     operationQueue.push(&#123;type: &apos;REMOVE&apos;, node&#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Point the list of rendered children to the updated version.</span><br><span class="line">    this.renderedChildren = nextRenderedChildren;</span><br><span class="line"></span><br><span class="line">    // ...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>最后一步，我们执行DOM操作，真实的reconciler是很复杂的因为它还得处理移动:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Process the operation queue.</span><br><span class="line">  while (operationQueue.length &gt; 0) &#123;</span><br><span class="line">    var operation = operationQueue.shift();</span><br><span class="line">    switch (operation.type) &#123;</span><br><span class="line">    case &apos;ADD&apos;:</span><br><span class="line">      this.node.appendChild(operation.node);</span><br><span class="line">      break;</span><br><span class="line">    case &apos;REPLACE&apos;:</span><br><span class="line">      this.node.replaceChild(operation.nextNode, operation.prevNode);</span><br><span class="line">      break;</span><br><span class="line">    case &apos;REMOVE&apos;:</span><br><span class="line">      this.node.removeChild(operation.node);</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>主机组件更新也是这样。</p>
+</blockquote>
+<h3 id="顶级更新"><a href="#顶级更新" class="headerlink" title="顶级更新"></a>顶级更新</h3><blockquote>
+<p>现在<code>CompositeComponent</code>和<code>DOMComponent</code>实现了<code>receive(nextElement)</code>方法，当元素类型同最后一次相同时，<br>我们可以改变顶层<code>mountTree()</code>来使用它:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">function mountTree(element, containerNode) &#123;</span><br><span class="line">  // Check for an existing tree</span><br><span class="line">  if (containerNode.firstChild) &#123;</span><br><span class="line">    var prevNode = containerNode.firstChild;</span><br><span class="line">    var prevRootComponent = prevNode._internalInstance;</span><br><span class="line">    var prevElement = prevRootComponent.currentElement;</span><br><span class="line"></span><br><span class="line">    // If we can, reuse the existing root component</span><br><span class="line">    if (prevElement.type === element.type) &#123;</span><br><span class="line">      prevRootComponent.receive(element);</span><br><span class="line">      return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Otherwise, unmount the existing tree</span><br><span class="line">    unmountTree(containerNode);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // ...</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>现在调用<code>mountTree()</code>两次非破坏性的</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var rootEl = document.getElementById(&apos;root&apos;);</span><br><span class="line"></span><br><span class="line">mountTree(&lt;App /&gt;, rootEl);</span><br><span class="line">// Reuses the existing DOM:</span><br><span class="line">mountTree(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这是React内部工作的基本原理。</p>
+</blockquote>
+<h3 id="What-We-Left-Out"><a href="#What-We-Left-Out" class="headerlink" title="What We Left Out"></a>What We Left Out</h3><blockquote>
+<p>这篇文章和真实的代码库进行了一个简单的比较，这儿有几个我们没有解决的问题：</p>
+<ul>
+<li>组件可以返回null，reconciler(协调器)可以处理数组中的”空插槽(empty slots)”并渲染出去。</li>
+<li>协调器会从元素中读取<code>key</code>,并且用它建立内部实例和数组中元素之间的关系，在真实的React实现中，大量的复杂性和它有关。</li>
+<li>除了复杂的以及主机的内部实例，还有一些类对应空元素和文本组件。可以通过null代表文本节点和数组的空插槽。</li>
+<li>renders(渲染器)使用注入来传递主机内部类给reconciler(协调器)，比如，React DOM告诉协调器使用ReactDOMComponent作为主机内部实例来实现.</li>
+<li>更新子机列表的逻辑被提取到一个叫ReactMultiChild 的一个mixin,它被用与ReactDOM和React Native的内部实例类的实现。</li>
+<li>协调器也实现了在复杂组件中对<code>setState()</code>的支持，在事件处理中，大量的更新会成批的放入单个更新。</li>
+<li>协调器会小心处理附加及分离到复杂组件和主机节点的refs</li>
+<li>生命周期的钩子，会在DOM准备好之后调用，像<code>componentDidMount()</code>,<code>componentDidUpdate()</code>,获取’回调队列’并批处理执行。</li>
+<li>React将当前的更新的信息放到一个叫<code>transaction</code>的内部对象中，<code>transactions</code>用于追踪挂起的生命周期钩子队列。当前DOM的<br>内部警告以及其余”global”会给到一个特定的更新，<code>transactions</code>用来确保React更新后清空一切，例如，<code>transactions</code>提供<br>React DOM恢复输入选择后的更新。</li>
+</ul>
+</blockquote>
+<h3 id="Jumping-into-the-Code"><a href="#Jumping-into-the-Code" class="headerlink" title="Jumping into the Code"></a>Jumping into the Code</h3><blockquote>
+<ul>
+<li><code>ReactMount</code>is where the code like mountTree() and unmountTree() from this tutorial lives,它负责装载和卸载顶级组件<br><code>ReactNativeMount</code>是ReactNative的模拟。</li>
+<li>本教程中<code>ReactDOMComponent</code>和<code>DOMComponent</code>是同等的，它实现了ReactDOM渲染器的主机组件类。<code>ReactNativeBaseComponent</code>是<br>React Native的模拟。</li>
+<li><code>ReactCompositeComponent</code>和<code>CompositeComponent</code>是同等的，它处理调用用户自定义组建以及维持state。</li>
+<li><code>instantiateReactComponent</code>包含了一个开关用来选择一个正确的内部实例类用来构造一个元素。在此教程中和<code>instantiateComponent()</code>是同等的。</li>
+<li><code>ReactReconciler</code>是<code>mountComponent</code>和<code>receiveComponent</code>以及<code>unmountComponent</code>方法的包装。它在内部实例上调用底层的实现。当然它也<br>包含所有内部实例实现的共享代码。</li>
+<li><code>ReactChildReconciler</code>实现了通过元素的<code>key</code>,<code>mounting</code>，<code>updating</code>,<code>unmounting</code>children的逻辑。</li>
+<li><code>ReactMultiChild</code>实现了渲染器对操作队列的处理。child的插入，移动，删除。</li>
+<li><code>mount()</code>,<code>receive()</code>,<code>unmount</code>因为一些遗留原因在React代码库中，实际上被称为<code>mountComponent()</code>,<code>receiveComponent</code>,<br><code>unmountComponent()</code></li>
+<li>内部实例的属性以下划线开头，比如,_currentElement,在代码库中自始至终它们被认为是只读的。</li>
+</ul>
+</blockquote>
+<h3 id="Future-Directions-未来方向"><a href="#Future-Directions-未来方向" class="headerlink" title="Future Directions(未来方向)"></a>Future Directions(未来方向)</h3><blockquote>
+<p>stack reconciler具有的局限性，如同步，不能中断工作或chunks的拆分。在新的<code>Fiber reconciler</code>中有一个完全不同的结构，在未来我们打算使用<br>它代替现有的reconciler，但是目前还很遥远。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw3cie5h002wqso0emg84kie" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-react/reconciler_algorithm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/10/react/reconciler_algorithm/" class="article-date">
+  <time datetime="2016-11-10T12:33:34.111Z" itemprop="datePublished">2016-11-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/10/react/reconciler_algorithm/">React Reconciler Algorithm</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Reconciliation-协调器"><a href="#Reconciliation-协调器" class="headerlink" title="Reconciliation(协调器)"></a>Reconciliation(协调器)</h3><blockquote>
+<p>React提供了一个声明式的API，所以你不用担心在每次更新时到底发生了什么变化，这使得写代码变得简单了许多<br>但是React是如何实现的对我们来说是透明的不明显的。这篇文章阐述了React的’diffing’算法所做的选择，因此<br>组件的更新是可预见的并且是高性能的。</p>
+</blockquote>
+<h3 id="Motivation-动机"><a href="#Motivation-动机" class="headerlink" title="Motivation(动机)"></a>Motivation(动机)</h3><blockquote>
+<p>当你使用React时，你可以认为在一个单一的时间点render()函数创建了一个React元素的树，当下一个props或state<br>更新时，render()函数将会得到一个新的不同的React元素的树，React需要解决如何高效的更新UI以匹配最新的树。<br>一些通用方案有性能问题，时间复杂度会为(O(n3))如果在React使用这些通用方案的话，100个元素将会进行一百万次<br>的比较,话费太昂贵了，替代方案是，React实现了一种基于以下两种假设的时间复杂度为O(n)的算法:</p>
+<ol>
+<li>两种不同类型的元素将会产出不同的树。</li>
+<li>开发人员可以暗示在render时维持一个稳定的key属性。<br>在实践中，这些假设在实际使用的情况下都有效。</li>
+</ol>
+</blockquote>
+<h3 id="The-Diffing-Algorithm-Diff算法"><a href="#The-Diffing-Algorithm-Diff算法" class="headerlink" title="The Diffing Algorithm(Diff算法)"></a>The Diffing Algorithm(Diff算法)</h3><blockquote>
+<p>当比较两个树时，React首先会比较两者的根元素，该行为取决于根元素的类型。<br><strong>不同类型的元素</strong><br>每当根元素有不同类型时，React将会销毁该树并且重新构建新的树，从<code>&lt;a&gt;</code>到<code>&lt;img&gt;</code>,<code>&lt;Article&gt;</code>到<code>Coment</code>,<br>从<code>&lt;Button&gt;</code>到<code>&lt;div&gt;</code>都会进行全新的重新构建过程。当拆卸一个树时，旧的DOM节点会被销毁，组件实例收到<code>componentWillUnmount()</code><br>当构建新树的时候，新的DOM节点将会被插入到DOM中，组件实例会收到<code>componentWillMount()</code>接着会<code>componentDidMount()</code><br>任何和旧树相关的状态都会丢失.任何在root节点之下的组件以及他们的state都会被销毁，比如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;Counter /&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;span&gt;</span><br><span class="line">  &lt;Counter /&gt;</span><br><span class="line">&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这将会销毁<code>&lt;Counter&gt;</code>并重新镶嵌一个新的<code>&lt;Counter&gt;</code>.</p>
+</blockquote>
+<h3 id="相同类型的DOM元素"><a href="#相同类型的DOM元素" class="headerlink" title="相同类型的DOM元素"></a>相同类型的DOM元素</h3><blockquote>
+<p>当比较两个相同类型的DOM元素时，React会查看两个组件的属性，保持相同的DOM节点，只会更新改变的属性，例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&quot;before&quot; title=&quot;stuff&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div className=&quot;after&quot; title=&quot;stuff&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当比较这两个DOM元素时，React知道只修改基础DOM节点的类名。当更新<code>style</code>时，React同样知道只改变的变化了的属性<br>例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&#123;&#123;color: &apos;red&apos;, fontWeight: &apos;bold&apos;&#125;&#125; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;div style=&#123;&#123;color: &apos;green&apos;, fontWeight: &apos;bold&apos;&#125;&#125; /&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当在两个元素之间转换时，React知道仅修改<code>color</code>样式。不会去修改<code>fontWeight</code>样式。处理完DOM节点之后，React会递归操作<br>子节点。</p>
+</blockquote>
+<h3 id="相同类型的组件节点"><a href="#相同类型的组件节点" class="headerlink" title="相同类型的组件节点"></a>相同类型的组件节点</h3><blockquote>
+<p>当一个组件更新时，该实例保持不变，所以在render时state是被维护的，React修改基础组件实例的属性，以匹配新的元素，然后调用<br>基础组件实例的<code>componentWillReceiveProps()</code>和<code>componentWillUpdate()</code>。<br>接下来，<code>render()</code>方法被调用，然后diff算法(diff algorithm)递归上次的结果和最新的结果.</p>
+</blockquote>
+<h3 id="子组件的递归"><a href="#子组件的递归" class="headerlink" title="子组件的递归"></a>子组件的递归</h3><blockquote>
+<p>默认情况下，当递归一个DOM节点的子节点时，React在同一时间仅仅是迭代子组件们的列表并且每当有差异的时候会生成一个突变。<br>例如:当在子组件的最后添加一个新的元素时，这两个树的之间的转变，工作的很好。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;first&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;second&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;third&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>React将匹配两个<code>&lt;li&gt;first&lt;/li&gt;</code>树，匹配<code>&lt;li&gt;second&lt;/li&gt;</code>树，然后去插入<code>&lt;li&gt;third&lt;/li&gt;</code>树。<br>如果你天真的实现，当插入在最开始的位置，那么会有很糟糕的性能问题。比如，以下的这两课树之间的转换很差：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li&gt;Connecticut&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>React将会改变每一个子节点而不是实现它，它可以保持<code>&lt;li&gt;Duke&lt;/li&gt;</code>和<code>&lt;li&gt;Villanova&lt;/li&gt;</code>的子节点的完整性，<br>这种低效性是一个问题.</p>
+</blockquote>
+<h3 id="Keys"><a href="#Keys" class="headerlink" title="Keys"></a>Keys</h3><blockquote>
+<p>为了解决这一个问题，React支持了一个key的属性，当子组件有key属性时，React使用这个key，来匹配原始树的子节点与<br>随后的树中的子节点，通过添加key使树的转换更加高效。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li key=&quot;2015&quot;&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li key=&quot;2016&quot;&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;li key=&quot;2014&quot;&gt;Connecticut&lt;/li&gt;</span><br><span class="line">  &lt;li key=&quot;2015&quot;&gt;Duke&lt;/li&gt;</span><br><span class="line">  &lt;li key=&quot;2016&quot;&gt;Villanova&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>现在React知道持有’2014’的key是新的节点，而持有<code>2015</code>和<code>2016</code>的节点仅仅移动就可以了，在实践中，发现一个key并不是<br>很难，你将要陈列的元素也许已经有一个唯一的id了，所以这个key值来源于你的data：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当不是这种场景时，你可以添加一个key或生成一个key，这个key只需要和他相邻的节点不同就可以了，不需要全局唯一。<br>作为最后的手段，你可以传递数组的下标作为key，如果列表不需要排序这工作的很好，但是重新排序会很慢。</p>
+</blockquote>
+<h3 id="Tradeoffs-权衡"><a href="#Tradeoffs-权衡" class="headerlink" title="Tradeoffs(权衡)"></a>Tradeoffs(权衡)</h3><blockquote>
+<p>记住reconciliation算法的实现细节很重要，React可以在每一个动作下重新render整个App，最终结果相同，我们会定期的改善<br>使常见的场景更加快速。<br>在最近的实现中，你可以表达一个事实，一个子组件已经从它的兄弟节点中移除了，但是你不能告诉它被移到哪里了。算法会重新<br>render整个子组件们。<br>因为React依赖于启发式算法，如果不能满足它背后的假设，性能会受影响。</p>
+<ol>
+<li>该算法不会视图去匹配不同类型节点的子树，如果你发现两个类型的组件的输出很相似，你可以让他们变为相同的类型，在实践中<br>我们还没发现这会成为一个问题。</li>
+<li>keys应该是稳定的，可预测的，以及唯一的，不稳定的key（比如:Math.random()）将会引起，组件实例和DOM节点不必要的重新创建，<br>从而导致性能退化和状态丢失.</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw3cie7l003rqso0ws9dy2hn" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-react/codebase_overview" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/09/react/codebase_overview/" class="article-date">
@@ -225,7 +529,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw2biu5j002llco0ygr1iedq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw3cie57002sqso0g2fk70ao" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -380,7 +684,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw2biu700030lco0neyc7ln3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw3cie5z0034qso0x9dfsnk8" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -437,7 +741,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw2biu61002slco0zhp9ex1h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw3cie5l002zqso0oyfbyu6h" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -490,7 +794,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw2biu5v002plco0uw3lhm39" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw3cie5a002vqso027cwynb0" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -586,7 +890,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw2biu59002klco0m26uo81i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw3cie4t002oqso0y2a94553" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -639,7 +943,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw2biu6g002wlco0j546yuxt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw3cie5x0033qso05pgq9qhh" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -739,7 +1043,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw2biu45002blco0rt41hr6b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw3cie3q0025qso0g0grvj04" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -815,121 +1119,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw2biu3z0027lco0ee9f58vy" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/integration/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.550Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/http/integration/">网关、隧道及中继</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器</strong></p>
-<p><strong>HTTP/*: 服务端Web网关</strong></p>
-<blockquote>
-<p>请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议</p>
-</blockquote>
-<p><strong>HTTP/HTTPS：服务器端安全网关</strong></p>
-<blockquote>
-<p>一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用<br>普通的HTTP浏览web内容，单网关会自动加密用户的对话</p>
-</blockquote>
-<p><strong>HTTPS/HTTP客户端安全加速器网关</strong></p>
-<blockquote>
-<p>HTTPS/HTTP网关位于Web服务器之前，通常可以作为不可见的拦截网关或者反向代理使用，他们接<br>收安全的HTTPS流量，对安全流量进行解密，并向Web服务器发送普通的HTTP请求。</p>
-</blockquote>
-<p><strong>隧道</strong></p>
-<blockquote>
-<p>Web隧道，这种方式可以通过HTTP应用程序访问使用非HTTP协议的应用程序。Web隧道允许用户通过<br>非HTTP连接发送非HTTP流量，这样就可以在HTTP上捎带其他协议数据了。使用Web隧道最常见的原因<br>就是要在HTTP连接中嵌入非HTTP流量，这样，这类流量就可以穿过只允许Web流量通过的防火墙了。</p>
-</blockquote>
-<p><strong>用CONNECT建立HTTP隧道</strong></p>
-<blockquote>
-<p>Web隧道是用HTTP的CONNECT方法建立起来的。CONNECT并不是HTTP/1.1核心规范的一部分，但却是<br>一种得到广泛应用的扩展。CONNECT方法请求隧道网关创建一条到达任意目的服务器和端口的TCP连接，<br>并对客户端和服务器之间的后继数据进行盲转发。通过CONNECT方法可以与使用任意协议的任意服务器<br>建立TCP连接。</p>
-</blockquote>
-<p><strong>CONNECT请求</strong></p>
-<blockquote>
-<p>除了起始行之外语法与其余HTTP方法类似<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONNECT host.netspace.com:443 http/1.0</span><br><span class="line">User-agent: Mozilla/4.0</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>CONNECT响应</strong></p>
-<blockquote>
-<p>发送了请求之后，客户端会等待来自网关的响应，和普通HTTP报文一样，响应码200表示成功，按照<br>惯例，响应中的响应短语通常被设置为”Connection Established”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 Connection Established</span><br><span class="line">Proxy-agent: Netscape-Proxy/1.1</span><br></pre></td></tr></table></figure></p>
-<p>与普通HTTP响应不同，这个响应并不需要包含Content-Type首部。此时连接只是对原始字节进行<br>转接，不再是报文的承载者，所以不需要使用内容类型了。</p>
-</blockquote>
-<p><strong>中继</strong></p>
-<blockquote>
-<p>HTTP中继是没有完全遵循HTTP规范的简单HTTP代理。中继负责处理HTTP中建立连接的部分，然后<br>对字节进行盲转发。某些简单中继实现中存在一个更常见的问题是，由于它们无法正确处理Connection<br>首部，所以有潜在的挂起keep-alive连接的可能。</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw2biu410028lco0qqftdtmg" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/digestAuthenticate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/digestAuthenticate/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.547Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/http/digestAuthenticate/">摘要认证</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw2biu3q0024lco0glnik2bj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw3cie3n0023qso0sau8639n" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -953,7 +1143,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -963,6 +1153,14 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
+          </li>
         
           <li>
             <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
@@ -976,14 +1174,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
           </li>
         
-          <li>
-            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -995,7 +1185,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

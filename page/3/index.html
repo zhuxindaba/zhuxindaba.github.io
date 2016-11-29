@@ -63,6 +63,120 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/integration/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.550Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/integration/">网关、隧道及中继</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>网关类型:服务器协议转换器、服务端安全网关、客户端安全网关以及应用程序服务器</strong></p>
+<p><strong>HTTP/*: 服务端Web网关</strong></p>
+<blockquote>
+<p>请求流入到原始服务器，服务器Web网关会将客户端HTTP请求转换为其他协议</p>
+</blockquote>
+<p><strong>HTTP/HTTPS：服务器端安全网关</strong></p>
+<blockquote>
+<p>一个组织可以通过网关对所有的输入Web请求加密，以提供额外的隐私和安全性保护，客户端可以用<br>普通的HTTP浏览web内容，单网关会自动加密用户的对话</p>
+</blockquote>
+<p><strong>HTTPS/HTTP客户端安全加速器网关</strong></p>
+<blockquote>
+<p>HTTPS/HTTP网关位于Web服务器之前，通常可以作为不可见的拦截网关或者反向代理使用，他们接<br>收安全的HTTPS流量，对安全流量进行解密，并向Web服务器发送普通的HTTP请求。</p>
+</blockquote>
+<p><strong>隧道</strong></p>
+<blockquote>
+<p>Web隧道，这种方式可以通过HTTP应用程序访问使用非HTTP协议的应用程序。Web隧道允许用户通过<br>非HTTP连接发送非HTTP流量，这样就可以在HTTP上捎带其他协议数据了。使用Web隧道最常见的原因<br>就是要在HTTP连接中嵌入非HTTP流量，这样，这类流量就可以穿过只允许Web流量通过的防火墙了。</p>
+</blockquote>
+<p><strong>用CONNECT建立HTTP隧道</strong></p>
+<blockquote>
+<p>Web隧道是用HTTP的CONNECT方法建立起来的。CONNECT并不是HTTP/1.1核心规范的一部分，但却是<br>一种得到广泛应用的扩展。CONNECT方法请求隧道网关创建一条到达任意目的服务器和端口的TCP连接，<br>并对客户端和服务器之间的后继数据进行盲转发。通过CONNECT方法可以与使用任意协议的任意服务器<br>建立TCP连接。</p>
+</blockquote>
+<p><strong>CONNECT请求</strong></p>
+<blockquote>
+<p>除了起始行之外语法与其余HTTP方法类似<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONNECT host.netspace.com:443 http/1.0</span><br><span class="line">User-agent: Mozilla/4.0</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>CONNECT响应</strong></p>
+<blockquote>
+<p>发送了请求之后，客户端会等待来自网关的响应，和普通HTTP报文一样，响应码200表示成功，按照<br>惯例，响应中的响应短语通常被设置为”Connection Established”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 Connection Established</span><br><span class="line">Proxy-agent: Netscape-Proxy/1.1</span><br></pre></td></tr></table></figure></p>
+<p>与普通HTTP响应不同，这个响应并不需要包含Content-Type首部。此时连接只是对原始字节进行<br>转接，不再是报文的承载者，所以不需要使用内容类型了。</p>
+</blockquote>
+<p><strong>中继</strong></p>
+<blockquote>
+<p>HTTP中继是没有完全遵循HTTP规范的简单HTTP代理。中继负责处理HTTP中建立连接的部分，然后<br>对字节进行盲转发。某些简单中继实现中存在一个更常见的问题是，由于它们无法正确处理Connection<br>首部，所以有潜在的挂起keep-alive连接的可能。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw3cie3e0020qso0h9209hqq" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/digestAuthenticate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/digestAuthenticate/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.547Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/digestAuthenticate/">摘要认证</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw3cie2y001yqso04hr86wgm" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/cookie" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/21/http/cookie/" class="article-date">
@@ -138,7 +252,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw2biu3j0020lco0tj2qk2lp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw3cie2v001vqso0c61ftm1h" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -194,7 +308,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw2biu3n0023lco0liah0c8r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw3cie2p001rqso07am9qe89" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -294,7 +408,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw2biu3f001zlco0fapojfql" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw3cie2r001tqso0bgovd4u6" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -352,7 +466,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw2biu2y001vlco0hpdk6d0j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw3cie2i001oqso0hd099djy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -393,7 +507,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw2bity8000glco0uvkf3zma" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw3cidz2000gqso07kkryyf2" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -434,7 +548,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="ciw2bitwt0003lco0i1zmljj4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="ciw3cidww0000qso05fmwkvv7" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -478,7 +592,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="ciw2bitx30005lco0bk8bkr6x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="ciw3cidy70007qso0cdrkkwpv" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -526,115 +640,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="ciw2biu0c000zlco06shldpb6" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/how-to-write-plugin" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Webpack/how-to-write-plugin/" class="article-date">
-  <time datetime="2016-07-10T12:08:41.801Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Webpack/how-to-write-plugin/">如何写插件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>TODO</strong></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="ciw2bitzf000rlco05wt0qfty" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/how_to_write_loader" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/07/Webpack/how_to_write_loader/" class="article-date">
-  <time datetime="2016-07-07T14:36:40.166Z" itemprop="datePublished">2016-07-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/07/Webpack/how_to_write_loader/">如何写加载器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>加载器是一个返回函数的node模块。<br>当加载器转换资源时，这个函数将被调用。<br>一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件<br>内容是字符串.<br>加载器通过这个函数的<code>this</code>上下文访问<a href="http://webpack.github.io/docs/loaders.html" target="_blank" rel="external">loader API</a><br>同步加载器可以通过<code>return</code>仅返回一个值，在其他情况下，可以通过<code>this.callback(err, values...)</code><br>返回任意数量的值,错误将传给回调函数，或者抛给一个同步加载器。<br>加载器被期望返回两个值，第一个值是返回JavaScript的字符串代码，第二个值是返回一个资源图的<br>JavaScript对象。<br>在复杂的情况下，当有多个加载器链式调用，只有最后一个加载器获得资源文件，仅第一个加载器会<br>输出两个值(JavaScript和SourceMap)，其余的加载器传递值给前一个加载器。</p>
-</blockquote>
-<p><strong>Examples</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">  return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader with SourceMap support</span><br><span class="line">module.exports = function(source, map) &#123;</span><br><span class="line">  this.callback(null, source, map);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>指导方针（参考）</strong></p>
-<blockquote>
-<p>优先级顺序，第一个应该给最高的优先级，加载器应该：<br><strong>只做一个简单的任务</strong><br>加载器可以链式化，为每一步创建加载器，替代一个加载器立刻做任何事。同样的意思就是，如果<br>没有必要的话不必转换为JavaScript.<br>例如：通过应用查询参数从模板文件渲染HTML。<br>写一个加载器从源文件里编译模板，执行然后返回一个组件，它是一个返回了包含HTML代码的字符串<br>这太糟糕了。<br>替代方案是，为每一个任务写一个加载器然后全部调用（管道的形式）。</p>
-<ul>
-<li>jade-loader: 转换模板为一个模块输出一个函数</li>
-<li>apply-loader: 拿到输出函数并且返回通过应用查询参数返回行结果</li>
-<li>html-loader: 拿到HTML并输出一个字符串形式的模块<br><strong>生产标准的模块</strong><br>加载器生成的模块需要像标准的模块遵守同样的管道设计方式。<br>例如：这是一个糟糕的设计方式（非标准，通用场景）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;any-template-language-loader!./xyz.atl&quot;);</span><br><span class="line"></span><br><span class="line">var html = anyTemplateLanguage.render(&quot;xyz&quot;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</blockquote>
-<p><strong>尽可能的标记自己为可缓存</strong></p>
-<blockquote>
-<p>大多数加载器可缓存，所以他们得标记自己为可缓存。<br>只需在加载器中调用<code>cacheable</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Cacheable identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p><strong>不要在模块和流之间保持状态</strong><br>一个加载器需要在其它加载器编译时保持独立。<br>一个模块先前的编译结果，和当前加载器应该保持独立.<br><strong>标记依赖</strong><br>如果一个加载器使用了外部资源（从文件系统读），他们<strong>必须</strong>被告知，被用来使缓存加载器无效<br>并且在监听方法中重新编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Loader adding a header</span><br><span class="line">var path = require(&quot;path&quot;);</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    var callback = this.async();</span><br><span class="line">    var headerPath = path.resolve(&quot;header.js&quot;);</span><br><span class="line">    this.addDependency(headerPath);</span><br><span class="line">    fs.readFile(headerPath, &quot;utf-8&quot;, function(err, header) &#123;</span><br><span class="line">        if(err) return callback(err);</span><br><span class="line">        callback(null, header + &quot;\n&quot; + source);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p><strong>解析依赖</strong><br>在很多种语言中，有多重模式去指定依赖，比如在css中的<code>@import</code>和url(…),这些依赖关系需<br>要模块系统去解析。有两种方式去处理:</p>
-<ul>
-<li>转换他们为<code>require</code>s</li>
-<li>使用<code>this.resolve</code>函数去解析路径<br>实例一 css-loader: css-loader在样式表中替换<code>@import</code>、<code>url(...)</code>为require的方式去编译<br>依赖关系。<br>实例二 less-loader: less-loader不能将<code>@import</code>转换为<code>require</code>因为所有的less文件都会<br>被编译到一个临时变量中，因此，less-loader继承了less编译器的通过定义路径解析的逻辑，这个<br>定义逻辑使用<code>this.resolve</code>通过模块系统的配置去解析文件（或者定义的模块目录等等）<br>如果语言之允许相对路径（比如css中:<code>url(file)</code>意思就是<code>./file</code>）,这儿用<code>~</code>的惯例去引用模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(file) -&gt; require(&quot;./file&quot;)</span><br><span class="line">url(~module) -&gt; require(&quot;module&quot;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>提取公共代码</strong><br>不要在加载器中去处理每个模块中相同的代码，不要生成这些公共代码，在加载器中创建一个运行时<br>文件,通过<code>require</code>来使用这些公共代码<br><strong>不要嵌入绝对路劲</strong><br>不要在模块代码中使用绝对路径，当项目被移动时会破坏hash,在<code>loader-utils</code>中有一个<br><code>stringifyRequest</code>的方法将绝对路径转换为相对路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var loaderUtils = require(&quot;loader-utils&quot;);</span><br><span class="line">return &quot;var runtime = require(&quot; +</span><br><span class="line">  loaderUtils.stringifyRequest(this, &quot;!&quot; + require.resolve(&quot;module/runtime&quot;)) +</span><br><span class="line">  &quot;);&quot;;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="ciw2biu0e0011lco0vjtdav85" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="ciw3cie110015qso07393ysdn" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -658,7 +664,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -668,6 +674,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
+          </li>
         
           <li>
             <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
@@ -681,14 +695,6 @@
             <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
           </li>
         
-          <li>
-            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -700,7 +706,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

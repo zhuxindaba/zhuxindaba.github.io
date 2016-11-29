@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vue属性的计算及监听器 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Vue属性计算及监听器属性计算
+模板内使用表达式是很方便的，但只是对于简单的操作。如果在模板中放入大量的逻辑，只会让模板变得庞大且难以管理：
+
+123&amp;lt;div id=&amp;quot;example&amp;quot;&amp;gt;  &amp;#123;&amp;#123; message.split(&amp;apos;&amp;apos;).reverse().join(&amp;apos;&amp;apos;) &amp;#125;&amp;#125;&amp;lt;/di">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue属性的计算及监听器">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/vue/computed_properties/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="Vue属性计算及监听器属性计算
+模板内使用表达式是很方便的，但只是对于简单的操作。如果在模板中放入大量的逻辑，只会让模板变得庞大且难以管理：
+
+123&amp;lt;div id=&amp;quot;example&amp;quot;&amp;gt;  &amp;#123;&amp;#123; message.split(&amp;apos;&amp;apos;).reverse().join(&amp;apos;&amp;apos;) &amp;#125;&amp;#125;&amp;lt;/di">
+<meta property="og:updated_time" content="2016-11-29T08:46:37.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue属性的计算及监听器">
+<meta name="twitter:description" content="Vue属性计算及监听器属性计算
+模板内使用表达式是很方便的，但只是对于简单的操作。如果在模板中放入大量的逻辑，只会让模板变得庞大且难以管理：
+
+123&amp;lt;div id=&amp;quot;example&amp;quot;&amp;gt;  &amp;#123;&amp;#123; message.split(&amp;apos;&amp;apos;).reverse().join(&amp;apos;&amp;apos;) &amp;#125;&amp;#125;&amp;lt;/di">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-vue/computed_properties" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/29/vue/computed_properties/" class="article-date">
+  <time datetime="2016-11-29T06:24:55.080Z" itemprop="datePublished">2016-11-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Vue/">Vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vue属性的计算及监听器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Vue属性计算及监听器"><a href="#Vue属性计算及监听器" class="headerlink" title="Vue属性计算及监听器"></a>Vue属性计算及监听器</h3><h3 id="属性计算"><a href="#属性计算" class="headerlink" title="属性计算"></a>属性计算</h3><blockquote>
+<p>模板内使用表达式是很方便的，但只是对于简单的操作。如果在模板中放入大量的逻辑，只会让模板<br>变得庞大且难以管理：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;example&quot;&gt;</span><br><span class="line">  &#123;&#123; message.split(&apos;&apos;).reverse().join(&apos;&apos;) &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>你需要看一会才知道这个模板显示的是倒序的字符串，如果你要在模板中多次使用的话，这会变得很<br>糟糕。对于复杂逻辑，应该使用属性的计算。</p>
+</blockquote>
+<h3 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;example&quot;&gt;</span><br><span class="line">  &lt;p&gt;Original message: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;/p&gt;</span><br><span class="line">  &lt;p&gt;Computed reversed message: &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">  el: &apos;#example&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    message: &apos;Hello&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    // a computed getter</span><br><span class="line">    reversedMessage: function () &#123;</span><br><span class="line">      // `this` points to the vm instance</span><br><span class="line">      return this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这里我们已经宣布了一个计算的属性<code>reversedMessage</code>,我们提供的这个函数和属性的getter函数<br>类似<code>rm.reversedMessage</code>:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">console.log(vm.reversedMessage) // -&gt; &apos;olleH&apos;</span><br><span class="line">vm.message = &apos;Goodbye&apos;</span><br><span class="line">console.log(vm.reversedMessage) // -&gt; &apos;eybdooG&apos;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>vm.reversedMessage</code>的值依赖于<code>vm.message</code>的值。你可以将计算的属性像普通属性一样绑定到<br>模板上，Vue会意识到<code>vm.reversedMessage</code>依赖<code>vm.message</code>,所以当<code>vm.message</code>改变的时候<br>修改对应绑定的<code>vm.reversedMessage</code>的值，当然最好的部分是我们已经以声明的方式创建了依赖<br>关系:计算的getter函数是纯函数并且没有副作用，这样可以很轻松的测试。</p>
+</blockquote>
+<h3 id="计算的缓存VS方法"><a href="#计算的缓存VS方法" class="headerlink" title="计算的缓存VS方法"></a>计算的缓存VS方法</h3><blockquote>
+<p>你可能已经注意到我们可以通过在表达式中调用方法得到相同的结果：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;Reversed message: &quot;&#123;&#123; reverseMessage() &#125;&#125;&quot;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">// in component</span><br><span class="line">methods: &#123;</span><br><span class="line">  reverseMessage: function () &#123;</span><br><span class="line">    return this.message.split(&apos;&apos;).reverse().join(&apos;&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们可以定义一个方法来代替属性的计算。对于最终结果，这两种方式确实完全相同。但是，不同之<br>处是，计算的属性会缓存基于它的依赖，一个计算的属性只有当它的依赖项发生改变时才会重新计算<br>这意味着只要<code>message</code>没有改变，多次访问计算的属性<code>reversedMessage</code>会返回上次计算的结果<br>而不是重新运行该函数。下面的计算的属性永远不会发生变化，因为<code>Date.now()</code>不是一个反应式<br>的依赖项：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  now: function () &#123;</span><br><span class="line">    return Date.now()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>作为比较，不管是否重新渲染，一个方法的调用都需要重新运行该方法。我们为什么需要缓存呢？<br>想象一个非常耗时的计算属性A，它需要在一个很大的数组中循环并且进行大量的计算，然后可能有<br>其余的计算属性依赖于A的计算属性，如果没有还从的话，我们将毫无必要的执行多次A的计算，当在<br>不需要使用缓存的情况下，使用方法代替。</p>
+</blockquote>
+<h3 id="计算的属性VS监听的属性"><a href="#计算的属性VS监听的属性" class="headerlink" title="计算的属性VS监听的属性"></a>计算的属性VS监听的属性</h3><blockquote>
+<p>Vue确实提供了一种通用的方法来观察Vue实例中data的变化做出反应：<code>watch properties</code>.当你<br>的一些数据需要基于其它一些数据做出改变时，可以尝试使用<code>watch</code>属性。但是使用属性的计算相对<br>来说更好一点，考虑下面的例子：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;demo&quot;&gt;&#123;&#123; fullName &#125;&#125;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">var vm = new Vue(&#123;</span><br><span class="line">  el: &apos;#demo&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    firstName: &apos;Foo&apos;,</span><br><span class="line">    lastName: &apos;Bar&apos;,</span><br><span class="line">    fullName: &apos;Foo Bar&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    firstName: function (val) &#123;</span><br><span class="line">      this.fullName = val + &apos; &apos; + this.lastName</span><br><span class="line">    &#125;,</span><br><span class="line">    lastName: function (val) &#123;</span><br><span class="line">      this.fullName = this.firstName + &apos; &apos; + val</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的代码有重复，和属性的计算相比较：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var vm = new Vue(&#123;</span><br><span class="line">  el: &apos;#demo&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    firstName: &apos;Foo&apos;,</span><br><span class="line">    lastName: &apos;Bar&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    fullName: function () &#123;</span><br><span class="line">      return this.firstName + &apos; &apos; + this.lastName</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样更好一点。</p>
+</blockquote>
+<h3 id="计算属性的Setter"><a href="#计算属性的Setter" class="headerlink" title="计算属性的Setter"></a>计算属性的Setter</h3><blockquote>
+<p>默认情况下计算的属性时只读的，但是当你需要时你可以提供一个setter函数：    </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  fullName: &#123;</span><br><span class="line">    // getter</span><br><span class="line">    get: function () &#123;</span><br><span class="line">      return this.firstName + &apos; &apos; + this.lastName</span><br><span class="line">    &#125;,</span><br><span class="line">    // setter</span><br><span class="line">    set: function (newValue) &#123;</span><br><span class="line">      var names = newValue.split(&apos; &apos;)</span><br><span class="line">      this.firstName = names[0]</span><br><span class="line">      this.lastName = names[names.length - 1]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>现在当你执行<code>vm.fullName = &#39;John Doe&#39;</code>,setter函数将会被执行，相应的<code>vm.firstName</code>和<br><code>vm.lastName</code>也会改变。</p>
+</blockquote>
+<h3 id="监听器"><a href="#监听器" class="headerlink" title="监听器"></a>监听器</h3><blockquote>
+<p>虽然在多数情况下，属性的计算是很合适的，但是有时候自定义监听器也是有必要的。这也是为什么<br>Vue提供了一个同用的方式，通过<code>watch</code>选项来对数据的变化做出反应。当你要响应不断变化的数据<br>执行异步操作或者昂贵操作的时候很有用。例如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;watch-example&quot;&gt;</span><br><span class="line">  &lt;p&gt;</span><br><span class="line">    Ask a yes/no question:</span><br><span class="line">    &lt;input v-model=&quot;question&quot;&gt;</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">  &lt;p&gt;&#123;&#123; answer &#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Since there is already a rich ecosystem of ajax libraries    --&gt;</span><br><span class="line">&lt;!-- and collections of general-purpose utility methods, Vue core --&gt;</span><br><span class="line">&lt;!-- is able to remain small by not reinventing them. This also   --&gt;</span><br><span class="line">&lt;!-- gives you the freedom to just use what you&apos;re familiar with. --&gt;</span><br><span class="line">&lt;script src=&quot;https://unpkg.com/axios@0.12.0/dist/axios.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;https://unpkg.com/lodash@4.13.1/lodash.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">var watchExampleVM = new Vue(&#123;</span><br><span class="line">  el: &apos;#watch-example&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    question: &apos;&apos;,</span><br><span class="line">    answer: &apos;I cannot give you an answer until you ask a question!&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    // whenever question changes, this function will run</span><br><span class="line">    question: function (newQuestion) &#123;</span><br><span class="line">      this.answer = &apos;Waiting for you to stop typing...&apos;</span><br><span class="line">      this.getAnswer()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    // _.debounce is a function provided by lodash to limit how</span><br><span class="line">    // often a particularly expensive operation can be run.</span><br><span class="line">    // In this case, we want to limit how often we access</span><br><span class="line">    // yesno.wtf/api, waiting until the user has completely</span><br><span class="line">    // finished typing before making the ajax request. To learn</span><br><span class="line">    // more about the _.debounce function (and its cousin</span><br><span class="line">    // _.throttle), visit: https://lodash.com/docs#debounce</span><br><span class="line">    getAnswer: _.debounce(</span><br><span class="line">      function () &#123;</span><br><span class="line">        var vm = this</span><br><span class="line">        if (this.question.indexOf(&apos;?&apos;) === -1) &#123;</span><br><span class="line">          vm.answer = &apos;Questions usually contain a question mark. ;-)&apos;</span><br><span class="line">          return</span><br><span class="line">        &#125;</span><br><span class="line">        vm.answer = &apos;Thinking...&apos;</span><br><span class="line">        axios.get(&apos;https://yesno.wtf/api&apos;)</span><br><span class="line">          .then(function (response) &#123;</span><br><span class="line">            vm.answer = _.capitalize(response.data.answer)</span><br><span class="line">          &#125;)</span><br><span class="line">          .catch(function (error) &#123;</span><br><span class="line">            vm.answer = &apos;Error! Could not reach the API. &apos; + error</span><br><span class="line">          &#125;)</span><br><span class="line">      &#125;,</span><br><span class="line">      // This is the number of milliseconds we wait for the</span><br><span class="line">      // user to stop typing.</span><br><span class="line">      500</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这个场景中，使用<code>watch</code>选项允许我们执行异步操作，限制多久执行操作，以及只有获取到数据<br>才设置state。而这些在属性计算都是不可用的。除了这个选项你还可以使用必要的<a href="https://vuejs.org/v2/api/#vm-watch" target="_blank" rel="external">vm.$watch API</a></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/29/vue/computed_properties/" data-id="ciw3cie7y003sqso07ufc6w6a" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/29/vue/style_class_binding/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          样式绑定
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/29/vue/template_syntax/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Vue模板语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

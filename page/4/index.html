@@ -63,6 +63,114 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Webpack/how-to-write-plugin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Webpack/how-to-write-plugin/" class="article-date">
+  <time datetime="2016-07-10T12:08:41.801Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Webpack/how-to-write-plugin/">如何写插件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>TODO</strong></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="ciw3cie06000uqso0ygzwsu9q" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Webpack/how_to_write_loader" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/07/Webpack/how_to_write_loader/" class="article-date">
+  <time datetime="2016-07-07T14:36:40.166Z" itemprop="datePublished">2016-07-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/07/Webpack/how_to_write_loader/">如何写加载器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>加载器是一个返回函数的node模块。<br>当加载器转换资源时，这个函数将被调用。<br>一个很简单的实例是，当只有一个加载器应用于原资源文件时，传递一个参数调用加载器:资源文件<br>内容是字符串.<br>加载器通过这个函数的<code>this</code>上下文访问<a href="http://webpack.github.io/docs/loaders.html" target="_blank" rel="external">loader API</a><br>同步加载器可以通过<code>return</code>仅返回一个值，在其他情况下，可以通过<code>this.callback(err, values...)</code><br>返回任意数量的值,错误将传给回调函数，或者抛给一个同步加载器。<br>加载器被期望返回两个值，第一个值是返回JavaScript的字符串代码，第二个值是返回一个资源图的<br>JavaScript对象。<br>在复杂的情况下，当有多个加载器链式调用，只有最后一个加载器获得资源文件，仅第一个加载器会<br>输出两个值(JavaScript和SourceMap)，其余的加载器传递值给前一个加载器。</p>
+</blockquote>
+<p><strong>Examples</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">  return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Identity loader with SourceMap support</span><br><span class="line">module.exports = function(source, map) &#123;</span><br><span class="line">  this.callback(null, source, map);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>指导方针（参考）</strong></p>
+<blockquote>
+<p>优先级顺序，第一个应该给最高的优先级，加载器应该：<br><strong>只做一个简单的任务</strong><br>加载器可以链式化，为每一步创建加载器，替代一个加载器立刻做任何事。同样的意思就是，如果<br>没有必要的话不必转换为JavaScript.<br>例如：通过应用查询参数从模板文件渲染HTML。<br>写一个加载器从源文件里编译模板，执行然后返回一个组件，它是一个返回了包含HTML代码的字符串<br>这太糟糕了。<br>替代方案是，为每一个任务写一个加载器然后全部调用（管道的形式）。</p>
+<ul>
+<li>jade-loader: 转换模板为一个模块输出一个函数</li>
+<li>apply-loader: 拿到输出函数并且返回通过应用查询参数返回行结果</li>
+<li>html-loader: 拿到HTML并输出一个字符串形式的模块<br><strong>生产标准的模块</strong><br>加载器生成的模块需要像标准的模块遵守同样的管道设计方式。<br>例如：这是一个糟糕的设计方式（非标准，通用场景）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">require(&quot;any-template-language-loader!./xyz.atl&quot;);</span><br><span class="line"></span><br><span class="line">var html = anyTemplateLanguage.render(&quot;xyz&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><strong>尽可能的标记自己为可缓存</strong></p>
+<blockquote>
+<p>大多数加载器可缓存，所以他们得标记自己为可缓存。<br>只需在加载器中调用<code>cacheable</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Cacheable identity loader</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    return source;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>不要在模块和流之间保持状态</strong><br>一个加载器需要在其它加载器编译时保持独立。<br>一个模块先前的编译结果，和当前加载器应该保持独立.<br><strong>标记依赖</strong><br>如果一个加载器使用了外部资源（从文件系统读），他们<strong>必须</strong>被告知，被用来使缓存加载器无效<br>并且在监听方法中重新编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// Loader adding a header</span><br><span class="line">var path = require(&quot;path&quot;);</span><br><span class="line">module.exports = function(source) &#123;</span><br><span class="line">    this.cacheable();</span><br><span class="line">    var callback = this.async();</span><br><span class="line">    var headerPath = path.resolve(&quot;header.js&quot;);</span><br><span class="line">    this.addDependency(headerPath);</span><br><span class="line">    fs.readFile(headerPath, &quot;utf-8&quot;, function(err, header) &#123;</span><br><span class="line">        if(err) return callback(err);</span><br><span class="line">        callback(null, header + &quot;\n&quot; + source);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>解析依赖</strong><br>在很多种语言中，有多重模式去指定依赖，比如在css中的<code>@import</code>和url(…),这些依赖关系需<br>要模块系统去解析。有两种方式去处理:</p>
+<ul>
+<li>转换他们为<code>require</code>s</li>
+<li>使用<code>this.resolve</code>函数去解析路径<br>实例一 css-loader: css-loader在样式表中替换<code>@import</code>、<code>url(...)</code>为require的方式去编译<br>依赖关系。<br>实例二 less-loader: less-loader不能将<code>@import</code>转换为<code>require</code>因为所有的less文件都会<br>被编译到一个临时变量中，因此，less-loader继承了less编译器的通过定义路径解析的逻辑，这个<br>定义逻辑使用<code>this.resolve</code>通过模块系统的配置去解析文件（或者定义的模块目录等等）<br>如果语言之允许相对路径（比如css中:<code>url(file)</code>意思就是<code>./file</code>）,这儿用<code>~</code>的惯例去引用模块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(file) -&gt; require(&quot;./file&quot;)</span><br><span class="line">url(~module) -&gt; require(&quot;module&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>提取公共代码</strong><br>不要在加载器中去处理每个模块中相同的代码，不要生成这些公共代码，在加载器中创建一个运行时<br>文件,通过<code>require</code>来使用这些公共代码<br><strong>不要嵌入绝对路劲</strong><br>不要在模块代码中使用绝对路径，当项目被移动时会破坏hash,在<code>loader-utils</code>中有一个<br><code>stringifyRequest</code>的方法将绝对路径转换为相对路径。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var loaderUtils = require(&quot;loader-utils&quot;);</span><br><span class="line">return &quot;var runtime = require(&quot; +</span><br><span class="line">  loaderUtils.stringifyRequest(this, &quot;!&quot; + require.resolve(&quot;module/runtime&quot;)) +</span><br><span class="line">  &quot;);&quot;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="ciw3cie0l000wqso0v78gcddw" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Electron/progress_object" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/06/Electron/progress_object/" class="article-date">
@@ -126,7 +234,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="ciw2bitx90007lco0bu1o9hfw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="ciw3cidy10005qso0ywrr7x65" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -178,7 +286,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/api_references_synopsis/" data-id="ciw2bitw60000lco0w3oq1o52" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/api_references_synopsis/" data-id="ciw3cidxb0001qso0y7ys24fy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -226,7 +334,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/online_offline_event_detection/" data-id="ciw2bitx00004lco03342rkwz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/online_offline_event_detection/" data-id="ciw3cidxu0004qso0b4tg6k4e" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -284,7 +392,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/Webpack/long_term_caching/" data-id="ciw2biu03000wlco0ycwiy1q6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/Webpack/long_term_caching/" data-id="ciw3cie0x0013qso05yokqvyt" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -374,7 +482,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/Electron/desktop_environment_integration/" data-id="ciw2bitwi0001lco0vfepy3wm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/Electron/desktop_environment_integration/" data-id="ciw3cidxr0003qso0iu5lh8s9" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -451,7 +559,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Webpack/optimization/" data-id="ciw2biu0g0013lco0ytkxu0rh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/Webpack/optimization/" data-id="ciw3cie1d0018qso0ep1j51d3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -519,7 +627,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="ciw2bitxh0009lco09mb4xaqp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="ciw3cidy90009qso00rbuyuyu" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -610,134 +718,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="ciw2biu0n0015lco0x5mouvft" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/supported_platfroms" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/03/Electron/supported_platfroms/" class="article-date">
-  <time datetime="2016-07-03T14:50:43.334Z" itemprop="datePublished">2016-07-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/03/Electron/supported_platfroms/">支持的平台</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>支持的平台</strong></p>
-<blockquote>
-<p>以下的平台是Electron支持的</p>
-<ul>
-<li><strong>macOS</strong><br>只支持macOS64进制的系统，支持的最低版本是macOS 10.9</li>
-</ul>
-</blockquote>
-<ul>
-<li><p><strong>Windows</strong></p>
-<blockquote>
-<p>支持windows7以后的系统，老系统暂不支持，并且不会运行，32位和64位都支持，<code>ARM</code>版本的windows<br>暂不支持</p>
-</blockquote>
-</li>
-<li><p><strong>Linux</strong></p>
-<blockquote>
-<p>预编译的<code>Electron</code>的<code>ia32(i686)</code>和<code>x64(amd64)</code>二进制文件都是在<code>Ubuntu12.04</code>上编译的。<br>一下的linux系统证实了可以运行预编译版本的<code>Electron</code></p>
-<ul>
-<li>Ubuntu 12.04 and later</li>
-<li>Fedora 21</li>
-<li>Debian 8</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Electron/supported_platfroms/" data-id="ciw2bity0000clco0kx67at34" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/what_is_electron" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/03/Electron/what_is_electron/" class="article-date">
-  <time datetime="2016-07-03T12:11:01.376Z" itemprop="datePublished">2016-07-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/03/Electron/what_is_electron/">Electron-常见问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Electron框架让你通过CSS、JS、HTML写跨平台的桌面应用，它基于Node.js以及Chrom内核，Atom<br>编辑器就是通过它完成的。</p>
-</blockquote>
-<p><strong>FAQ(Frequently Asked Questions)常见问题</strong></p>
-<blockquote>
-<p><strong>什么时候=会升级到最新版本的Chrome</strong><br>通常会在稳定版本的Chrom发布1-2周内，更新Electron内的Chrome版本，Electron只会使用稳定<br>版本的Chrome,但如果在beta或dev有重要的更新的话，会使用补丁的方式应用到现版本的Chrome上<br><strong>什么时候会升级到最新版本的nodejs</strong><br>当一个新版本的nodejs发布之后，通常会在1月之后更新Electron，这样可以避免引入新版本的nodejs<br>所带来的bug，这太常见了.<br>Nodejs的新特性通常是在V8带来的，由于Electron使用的是Chrome装配的V8,所以Electron内已经<br>有了新版本Nodejs的新特性.<br><strong>如何在不同的页面共享数据</strong><br>在不同的网页之间共享数据最简单的方法就是使用浏览器中以实现的HTML5Api，比较好的方案就是<br><code>Storage API</code>, <code>localStorage</code>, <code>sessionStorage</code>, 还有<code>IndexDB</code>。或者使用Electron的<br>IPC系统，将对象储存在主进程中的一个全局变量中，然后在所有的渲染进程中通过<code>Electron</code>的<br><code>remote</code>属性访问它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// In the main process.</span><br><span class="line">global.sharedObject = &#123;</span><br><span class="line">  someProperty: &apos;default value&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// In page 1.</span><br><span class="line">require(&apos;electron&apos;).remote.getGlobal(&apos;sharedObject&apos;).someProperty = &apos;new value&apos;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// In page 2.</span><br><span class="line">console.log(require(&apos;electron&apos;).remote.getGlobal(&apos;sharedObject&apos;).someProperty);</span><br></pre></td></tr></table></figure>
-<p><strong>应用的窗口/托盘在一段时间之后不见了</strong><br>这通常是因为储存窗口/托盘的变量被垃圾收集器收集了。<br>如果遇到这个问题，下面的文章会有所帮助</p>
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management" target="_blank" rel="external">Memory Management(内存管理)</a></li>
-<li><a href="https://msdn.microsoft.com/library/bzt2dkta" target="_blank" rel="external">Variable Scope(变量作用域)</a><br>如果想要一个快速的解决方案，让这些变量变成全局的<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  const tray = new Tray(&apos;/path/to/icon.png&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>改变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let tray = null;</span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  tray = new Tray(&apos;/path/to/icon.png&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p><strong>为什么不能在Electron中使用jQuery、RequireJs、Meteor、AngularJs</strong><br>由于nodejs集成了Electron，一些特殊的符号（标识）比如<code>require</code>,<code>exports</code>,’module’会被<br>插入到DOM中，这会导致一些类库插入相同命名的标识失败。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// In the main process.</span><br><span class="line">let win = new BrowserWindow(&#123;</span><br><span class="line">  webPreferences: &#123;</span><br><span class="line">    nodeIntegration: false</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>如果想继续使用Nodejs和Electron提供的API，你需要在页面中重命名这些符号（标识）在引入其<br>它类库时<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">window.nodeRequire = require;</span><br><span class="line">delete window.require;</span><br><span class="line">delete window.exports;</span><br><span class="line">delete window.module;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure></p>
-<p><strong>require(<code>electron</code>).xxx未定义</strong><br>在使用electron的内置模块时，可能会遇到这样的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require(&apos;electron&apos;).webFrame.setZoomFactor(1.0);</span><br><span class="line">Uncaught TypeError: Cannot read property &apos;setZoomLevel&apos; of undefined</span><br></pre></td></tr></table></figure></p>
-<p>这是因为你通过<code>npm</code>安装了全局的或本地的<code>electron</code>模块,它覆写了<code>Electron</code>的内置模块<br>你可以打印出<code>electron</code>的路径来核实你是否使用了正确的内置模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(require.resolve(&apos;electron&apos;));</span><br></pre></td></tr></table></figure></p>
-<p>检查一下是否符合下面的形式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;/path/to/Electron.app/Contents/Resources/atom.asar/renderer/api/lib/exports/electron.js&quot;</span><br></pre></td></tr></table></figure></p>
-<p>如果是<code>node_modules/electron/index.js</code>这种格式的话，你需要删除或者重命名npm安装的electron模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall electron</span><br><span class="line">npm uninstall -g electron</span><br></pre></td></tr></table></figure></p>
-<p>如果依然遇到同样的问题，很可能是因为你在错误的进程中使用了此模块，比如<code>electron.app</code>只能<br>在主进程中使用，而<code>electron.webFrame</code>只能在渲染进程中使用.</p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Electron/what_is_electron/" data-id="ciw2bity5000elco0goyunsku" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="ciw3cie1h001aqso0upo91gdl" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -761,7 +742,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -771,6 +752,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
+          </li>
         
           <li>
             <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
@@ -784,14 +773,6 @@
             <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
           </li>
         
-          <li>
-            <a href="/2016/11/21/phabricator/eslint/">eslint</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/17/vue/movitation_design/">了解Vue</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -803,7 +784,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
