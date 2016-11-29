@@ -63,6 +63,238 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-phabricator/install_phabricator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/16/phabricator/install_phabricator/" class="article-date">
+  <time datetime="2016-11-16T14:15:53.637Z" itemprop="datePublished">2016-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/development-tools/">development tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/16/phabricator/install_phabricator/">phbricator的安装</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Phabricator"><a href="#Phabricator" class="headerlink" title="Phabricator"></a>Phabricator</h3><blockquote>
+<p>Phabricator是一个开发软件工具的集成，包含任务管理，代码review，管理git,svn等等,持续集成的构建，<br>内部通道的讨论等等。</p>
+</blockquote>
+<h3 id="在我们局域网内安装phabricator"><a href="#在我们局域网内安装phabricator" class="headerlink" title="在我们局域网内安装phabricator"></a>在我们局域网内安装phabricator</h3><blockquote>
+<p>Phabricator是一个LAMP应用程序，所以:</p>
+<ul>
+<li>一台linux或Mac OS电脑。(ps: windows不行奥，因为一些命令行在windows无法执行。。。)</li>
+<li>一个域名(可有可无，在内网上访问就行了，除非你需要家里办公也访问)(格式:phabricator.xxxxx.com).</li>
+<li>一些基本的系统管理员的技能(linux命令得熟悉啊！)</li>
+<li>一个web容器，Apache或Nginx（常用的两种方式）</li>
+<li>PHP(version: &gt;= 5.2, 版本7不支持), MySql(version: &gt;= 5.5), git.<br>系统管理员应该会的一些技能（也就是linux的一些指令）,比如：在操作系统安装软件，文件系统的操作，进程<br>的管理，权限的处理，修改配置文件，设置环境变量等等。</li>
+</ul>
+</blockquote>
+<h3 id="安装需要的组件"><a href="#安装需要的组件" class="headerlink" title="安装需要的组件"></a>安装需要的组件</h3><blockquote>
+<ul>
+<li>git(在包管理系统中一般称为’git’)</li>
+<li>Apache(一般称为”httpd”或”apache2”)或者nginx</li>
+<li>MySQL Server(一般是”mysqlId”或”mysql-server”)</li>
+<li>PHP(一般是”php”)</li>
+<li>需要的PHP扩展，比如”php-mysql”, “php5-mysql”<br>如果已经安装好了这些，那么获取Phrbricator以及它的依赖:</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//选择你要安装的文件夹，并在该文件夹下执行以下命令</span><br><span class="line">git clone https://github.com/phacility/libphutil.git</span><br><span class="line">git clone https://github.com/phacility/arcanist.git</span><br><span class="line">git clone https://github.com/phacility/phabricator.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>APC是建议安装的，所以没有深究。</p>
+</blockquote>
+<h3 id="Apache容器的配置"><a href="#Apache容器的配置" class="headerlink" title="Apache容器的配置"></a>Apache容器的配置</h3><blockquote>
+<ul>
+<li>配置web容器(Apache, nginx)</li>
+<li>在浏览器访问phabricator<br>Apache的httpd.conf</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *&gt;</span><br><span class="line">  # Change this to the domain which points to your host.</span><br><span class="line">  ServerName phabricator.example.com</span><br><span class="line"></span><br><span class="line">  # Change this to the path where you put &apos;phabricator&apos; when you checked it</span><br><span class="line">  # out from GitHub when following the Installation Guide.</span><br><span class="line">  #</span><br><span class="line">  # Make sure you include &quot;/webroot&quot; at the end!</span><br><span class="line">  DocumentRoot /path/to/phabricator/webroot</span><br><span class="line">  RewriteEngine on</span><br><span class="line">  RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果Apache的配置文件目录不是Phabricator的目录，那么你需要添加<code>&lt;Directory /&gt;</code>块，这个块<br>标示依赖于你的Apache的版本，通过运行<code>httpd -v</code>得到当前运行Apache的版本，如果版本号小于2.4,</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;/path/to/phabricator/webroot&quot;&gt;</span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow from all</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果大于2.4:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;/path/to/phabricator/webroot&quot;&gt;</span><br><span class="line">  Require all granted</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>配置完成之后，请重启Apache，并继续接下来的配置.</p>
+</blockquote>
+<h3 id="Nginx的配置"><a href="#Nginx的配置" class="headerlink" title="Nginx的配置"></a>Nginx的配置</h3><blockquote>
+<p>nginx.conf:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  server_name phabricator.example.com;</span><br><span class="line">  #你的phabricator安装目录</span><br><span class="line">  root        /path/to/phabricator/webroot;</span><br><span class="line"></span><br><span class="line">  location / &#123;</span><br><span class="line">    index index.php;</span><br><span class="line">    rewrite ^/(.*)$ /index.php?__path__=/$1 last;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  location /index.php &#123;</span><br><span class="line">    fastcgi_pass   localhost:9000;</span><br><span class="line">    fastcgi_index   index.php;</span><br><span class="line"></span><br><span class="line">    #required if PHP was built with --enable-force-cgi-redirect</span><br><span class="line">    fastcgi_param  REDIRECT_STATUS    200;</span><br><span class="line"></span><br><span class="line">    #variables to make the $_SERVER populate in PHP</span><br><span class="line">    fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;</span><br><span class="line">    fastcgi_param  QUERY_STRING       $query_string;</span><br><span class="line">    fastcgi_param  REQUEST_METHOD     $request_method;</span><br><span class="line">    fastcgi_param  CONTENT_TYPE       $content_type;</span><br><span class="line">    fastcgi_param  CONTENT_LENGTH     $content_length;</span><br><span class="line"></span><br><span class="line">    fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;</span><br><span class="line"></span><br><span class="line">    fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;</span><br><span class="line">    fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;</span><br><span class="line"></span><br><span class="line">    fastcgi_param  REMOTE_ADDR        $remote_addr;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>配置完成之后重启nginx，并继续接下来的配置</p>
+</blockquote>
+<h3 id="配置Mysql"><a href="#配置Mysql" class="headerlink" title="配置Mysql"></a>配置Mysql</h3><blockquote>
+<p>当MySQL运行时，需要加载Phabricator的schemata，所以要在phabricator目录下执行:<code>./bin/storage upgrade</code><br>如果你配置的用户不是连接数据库的特权用户，所以需要覆盖默认的用户，所以更改schema，通过一下命令更改<br><code>./bin/storage upgrade --user &lt;user&gt; --password &lt;password&gt;</code>并且<code>./bin/storage upgrade --force</code><br><strong>注意：</strong>当修改了phabricator后，运行<code>storage upgrade</code>来应用新的修改。</p>
+</blockquote>
+<h3 id="配置账号及注册"><a href="#配置账号及注册" class="headerlink" title="配置账号及注册"></a>配置账号及注册</h3><blockquote>
+<p>phabricator提供了很多的登录体系，你可以配置谁可以访问或者注册你安装的phabricator以及用户用存在的账号登录phabricator。<br>登录方式称之为授权给予，比如可用的”用户名/密码”授权，允许你通过传统的用户名密码登录，其余的支持用证书登录。比如:</p>
+<ul>
+<li><strong>用户名密码：</strong>使用用户名密码登录注册</li>
+<li><strong>LDAP：</strong>使用LDAP证书登录注册</li>
+<li><strong>OAuth：</strong>用户使用支持OAuth2的协议登录，比如(Facebook,Google,GitHub)</li>
+<li><strong>其余的提供程序：</strong>有许多可用的支持，Phabricator可以扩展，相关知识请自行了解。<br>默认情况下，没有可用的提供程序，你必须在安装完成之后使用”Auth”程序添加一种或多种提供程序。在你添加供应程序之后，<br>你可以使用存在的账号连接phabricator（比如你可以使用GitHub的OAuth账号登录Phabricator）或者用户使用它注册新的账<br>号（假设你启用这些选项）<br><strong>恢复管理员账号</strong>如果你意外的在phabrication中锁住了，你可以使用<code>bin/auth</code>脚本恢复管理员账号的访问，恢复访问，请使用:<br><code>./bin/auth recover &lt;username&gt;</code>,username是你想恢复的管理员的账号。<br><strong>通过web页面管理账号</strong>使用管理员账号登录phabricator并路由到<code>/people</code>,点击”People”,如果你是管理员，你可以看见创建<br>及修改账号的选项。<br><strong>手动的创建新账号</strong>，有两种手工创建账号的方式，一种是通过web网页另一种是通过命令行，<code>./bin/accountadamin</code>,一些选项<br>(如设置密码，更改账号标记)只能在命令行中可见。你可以使用此命令来使一个用户成为管理员（比如你意外的移除了你管理员的标记）<br>或者创建一个管理员账号。</li>
+</ul>
+</blockquote>
+<h3 id="TODO-配置文件存储"><a href="#TODO-配置文件存储" class="headerlink" title="TODO(配置文件存储)"></a>TODO(配置文件存储)</h3><h3 id="TODO-配置邮件发送"><a href="#TODO-配置邮件发送" class="headerlink" title="TODO(配置邮件发送)"></a>TODO(配置邮件发送)</h3>
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="ciw3pesgj002kpco0jq9o8ptl" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-react/internal_instance" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/16/react/internal_instance/" class="article-date">
+  <time datetime="2016-11-15T16:59:33.447Z" itemprop="datePublished">2016-11-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/16/react/internal_instance/">内部实例的伪实现（思考）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>为什么需要内部实例呢?<br>React的主要特性是你可以重新渲染任何东西，并且你不会重复创建DOM以及重置state.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br><span class="line">//下面这一行会重新使用已存在的DOM</span><br><span class="line">ReactDOM.render(&lt;App /&gt;, rootEl);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当组件需要更新时，如何存储必要的信息呢？比如说<code>publicInstances</code>,DOM元素与组件之间的关系。<br>堆栈协调器代码库通过在类中加了一个<code>mount()</code>函数解决这个问题，这种方式有点缺点，正在改进。<br>把<code>mountHost()</code>和<code>mountComposite()</code>分离出来的替代方案是创建了两个类<code>DOMComponent</code>和<code>CompositeComponent</code><br>这两个类都有一个接收<code>element</code>的构造函数，当然还有一个<code>mount()</code>方法返回已镶嵌的节点，用一个工厂方法实例化正确的<br>class来替代顶级<code>mount()</code>方法。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function instantiateComponent(element) &#123;</span><br><span class="line">  var type = element.type;</span><br><span class="line">  if(typeof type === &apos;function&apos;) &#123;</span><br><span class="line">    return new CompositeComponent(type);</span><br><span class="line">  &#125;else if(typeof type === &apos;string&apos;) &#123;</span><br><span class="line">    return new DOMComponent(type);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>CompositeComponent(复杂组件)的实现:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">class CompositeComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedComponent = null;</span><br><span class="line">    this.publicInstance = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    // For composite components, expose the class instance.</span><br><span class="line">    return this.publicInstance;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line"></span><br><span class="line">    var publicInstance;</span><br><span class="line">    var renderedElement;</span><br><span class="line">    if (isClass(type)) &#123;</span><br><span class="line">      // Component class</span><br><span class="line">      publicInstance = new type(props);</span><br><span class="line">      // Set the props</span><br><span class="line">      publicInstance.props = props;</span><br><span class="line">      // Call the lifecycle if necessary</span><br><span class="line">      if (publicInstance.componentWillMount) &#123;</span><br><span class="line">        publicInstance.componentWillMount();</span><br><span class="line">      &#125;</span><br><span class="line">      renderedElement = publicInstance.render();</span><br><span class="line">    &#125; else if (typeof type === &apos;function&apos;) &#123;</span><br><span class="line">      // Component function</span><br><span class="line">      publicInstance = null;</span><br><span class="line">      renderedElement = type(props);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Save the public instance</span><br><span class="line">    this.publicInstance = publicInstance;</span><br><span class="line"></span><br><span class="line">    // Instantiate the child internal instance according to the element.</span><br><span class="line">    // It would be a DOMComponent for &lt;div /&gt; or &lt;p /&gt;,</span><br><span class="line">    // and a CompositeComponent for &lt;App /&gt; or &lt;Button /&gt;:</span><br><span class="line">    var renderedComponent = instantiateComponent(renderedElement);</span><br><span class="line">    this.renderedComponent = renderedComponent;</span><br><span class="line"></span><br><span class="line">    // Mount the rendered output</span><br><span class="line">    return renderedComponent.mount();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>DOMComponent</code>类的实现:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">class DOMComponent &#123;</span><br><span class="line">  constructor(element) &#123;</span><br><span class="line">    this.currentElement = element;</span><br><span class="line">    this.renderedChildren = [];</span><br><span class="line">    this.node = null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  getPublicInstance() &#123;</span><br><span class="line">    // For DOM components, only expose the DOM node.</span><br><span class="line">    return this.node;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  mount() &#123;</span><br><span class="line">    var element = this.currentElement;</span><br><span class="line">    var type = element.type;</span><br><span class="line">    var props = element.props;</span><br><span class="line">    var children = props.children || [];</span><br><span class="line">    if (!Array.isArray(children)) &#123;</span><br><span class="line">      children = [children];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Create and save the node</span><br><span class="line">    var node = document.createElement(type);</span><br><span class="line">    this.node = node;</span><br><span class="line"></span><br><span class="line">    // Set the attributes</span><br><span class="line">    Object.keys(props).forEach(propName =&gt; &#123;</span><br><span class="line">      if (propName !== &apos;children&apos;) &#123;</span><br><span class="line">        node.setAttribute(propName, props[propName]);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    // Create and save the contained children.</span><br><span class="line">    // Each of them can be a DOMComponent or a CompositeComponent,</span><br><span class="line">    // depending on whether the element type is a string or a function.</span><br><span class="line">    var renderedChildren = children.map(instantiateComponent);</span><br><span class="line">    this.renderedChildren = renderedChildren;</span><br><span class="line"></span><br><span class="line">    // Collect DOM nodes they return on mount</span><br><span class="line">    var childNodes = renderedChildren.map(child =&gt; child.mount());</span><br><span class="line">    childNodes.forEach(childNode =&gt; node.appendChild(childNode));</span><br><span class="line"></span><br><span class="line">    // Return the DOM node as mount result</span><br><span class="line">    return node;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果是，每一个内部实例都不论是复合型的还是平台特有的，都指向他的child的内部实例，比如:<br><code>&lt;App&gt;</code>组件渲染了一个<code>&lt;Button&gt;</code>,<code>&lt;Button&gt;</code>渲染了一个<code>&lt;div&gt;</code>,内部实例树将是下面的样子:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[object CompositeComponent] &#123;</span><br><span class="line">  currentElement: &lt;App /&gt;,</span><br><span class="line">  publicInstance: null,</span><br><span class="line">  renderedComponent: [object CompositeComponent] &#123;</span><br><span class="line">    currentElement: &lt;Button /&gt;,</span><br><span class="line">    publicInstance: [object Button],</span><br><span class="line">    renderedComponent: [object DOMComponent] &#123;</span><br><span class="line">      currentElement: &lt;div /&gt;,</span><br><span class="line">      node: [object HTMLDivElement],</span><br><span class="line">      renderedChildren: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在DOM中只看见<code>&lt;div&gt;</code>,但是内部实例可以包含混合型及平台特有的内部实例二者。混合型内部实例<br>需要存储:</p>
+<ul>
+<li>当前元素</li>
+<li>如果元素类型是类，则包含公共实例</li>
+<li>单独的渲染的内部实例，既可以是<code>DOMComponent</code>,也可以是<code>CompositeComponent</code>.<br>平台特有内部实例需要存储:</li>
+<li>当前元素</li>
+<li>DOM节点</li>
+<li>所有的子内部实例，它们既可以是<code>DOMComponent</code>也可以是<code>CompositeComponent</code>.</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="ciw3pesi70030pco0cyjkrj1c" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-react/design_principles" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/15/react/design_principles/" class="article-date">
+  <time datetime="2016-11-14T16:00:36.545Z" itemprop="datePublished">2016-11-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React/">React</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/15/react/design_principles/">设计原则</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>我们写这篇文章的目的是为了让你对React有一个更好的认知，什么能做和什么不能做以及React的设计理念<br>虽然我们很乐意看到社区的贡献，但是我们也不希望悠然违反一些原则。<br>注意：这篇文章是假设你对React有一个很深的理解，它描述了React的设计原则，而不是React组件及程序<br>对React的简介请阅读<a href="https://facebook.github.io/react/docs/thinking-in-react.html" target="_blank" rel="external">Thinking in React</a></p>
+</blockquote>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><blockquote>
+<p>React的主要特性是组建的组成，不同人编写的组件可以一起更好的工作，你可以给一个组件添加功能而不会影响整个代码库的更改.<br>比如：在一个组件中引入一些本地state而不会对使用它的组件造成影响。同样，如果有必要可以添加初始化以及拆卸的代码到任何组件中。<br>在组建中使用state或生命周期挂钩也不是坏的，比如一些功能强大的特性，它们应该有节制的使用，但是我们没有移除它们的打算，相反的，<br>我们认为他们是使得的React更有用的组成部分。我们将来会使更多的<a href="https://github.com/reactjs/react-future/tree/master/07%20-%20Returning%20State" target="_blank" rel="external">功能模式</a><br>但是，本地state和生命周期挂钩将为该模型的一部分。<br>组件经常被描述为’just functions’,但是在我们的视角中，他们需要变得更加有用，在React中，组件描述了任何组成的行为，包括rendering<br>生命周期，以及state，一些外部的库，像Relay增加组件了其他的责任，比如描述data依赖。</p>
+</blockquote>
+<h3 id="Common-Abstraction（通用的抽象）"><a href="#Common-Abstraction（通用的抽象）" class="headerlink" title="Common Abstraction（通用的抽象）"></a>Common Abstraction（通用的抽象）</h3><blockquote>
+<p>通常情况下我们抵制在用户级就可以实现的行为，我们不想用无用的库膨胀你的应用，但是也有些例外，比如：如果React对本地state和生命周期<br>挂钩不提供支持，用户会创建通用抽象给他们，当有多个抽象竞争时React不能充分利用他们的属性执行，它不得不以最低的标准工作。这也是为什么<br>我们有时会给React添加一些特性，如果我们注意到许多组件不兼容或低效的执行某些功能，我们可能更愿意考到React。我们不会轻易的干这件事。<br>当我们做它时，因为我们有信心提高抽象层次使整个生态系统受益。state，生命周期挂钩跨浏览器事件正常化是个很好的例子。我们经常与社区讨论<br>改善建议，你可以在<a href="https://github.com/facebook/react/issues?q=is%3Aopen+is%3Aissue+label%3A%22big+picture%22" target="_blank" rel="external">big picture</a>中找到这些讨论</p>
+</blockquote>
+<h3 id="Escape-Hatches-逃生舱口"><a href="#Escape-Hatches-逃生舱口" class="headerlink" title="Escape Hatches(逃生舱口)"></a>Escape Hatches(逃生舱口)</h3><blockquote>
+<p>React是实用主义的，它是由写Facebook的产品需求而驱动的，虽然它受一些范例的影响，但也不是完全主流。比如，函数式编程，对不同技能的开发<br>保持可访问是项目的一个明确的目标。如果我们想反对一个我们不喜欢的模式，在反对它之前我们考虑所有存在的场景。如果一些模式对于构建app和有用<br>但是很难表达，我们会为它提供必要的API。</p>
+</blockquote>
+<h3 id="Stability-稳定性"><a href="#Stability-稳定性" class="headerlink" title="Stability(稳定性)"></a>Stability(稳定性)</h3><blockquote>
+<p>我们重视API的稳定性，Facebook有两万个组件在使用React，这也是我们为什么通常不愿意改变公共API或行为。但是”nothing changes”稳定性的意义有点被<br>高估了,它迅速停滞了。相反，我们更喜欢”在生产环境大量使用并且一些东西变化时有一个明确的迁移路径”的稳定意义。当我们反对一种形式时，我们在Facebook研究<br>它的内部使用并添加反对警告。这让我们评估改变的重大影响。有时，我们发现它太简单的话我们会退出，并且我们需要战略性的思考关于这次改动代码库的要点是否准备好。<br>如果我们自行这次的更改不是太具有破坏性并且此次战略性转移对用户场景是可实施的，我们会在社区中释放反对警告。我们会和外部使用React的用户密切联系并且我们会<br>监视流行的开源项目并指引他们修理这些警告。由于React代码库规模庞大，内部迁移成功是一个很好的指标并且其余公司也不会有问题。</p>
+</blockquote>
+<h3 id="Scheduling-时间表-进度表"><a href="#Scheduling-时间表-进度表" class="headerlink" title="Scheduling(时间表 进度表)"></a>Scheduling(时间表 进度表)</h3><blockquote>
+<p>在React中即使你的组件被描述为函数，你也不能直接调用它们。每一个组件返回一个<a href="https://facebook.github.io/react/contributing/design-principles.html" target="_blank" rel="external">需要渲染什么的描述</a><br>并且这个描述包括用户自定义组件及主机组件。通过组件的递归得到render结果去更改UI树。这是一个不明显但是很强大的区别，因为你不会调用组件函数但是让React自己调用.<br>这意味着如果有必要React有权延迟调用它。在当下的实现中，在单个刻度期间，React递归的走着树并调用所有的要修改的树的render函数。在反应的设计中这是一个共同的主题，<br>一些流行的库实现的是”push”方法，当新数据可用时再执行计算。然而React坚持”pull”方法，计算会被推迟，除非有必要。<br>React不是一个普通的数据处理库，它是用来构建用户界面的。我们认为在app中有独特的优势，因为它知道哪些计算是有意义的哪些没有。如果有些多东西在屏幕外，我们可以<br>延迟它的数据逻辑处理,如果数据到达的速度快于frame的速度，我们可以批量更新，我们可以优先考虑用户交互的工作（点击button的动画效果）来避免dropping frame，<br>不太重要的(从网络获取数据)后台工作</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="ciw3peshj002rpco085c9142r" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-react/implemention_notes" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/12/react/implemention_notes/" class="article-date">
@@ -257,7 +489,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw3cie5h002wqso0emg84kie" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw3pesi1002zpco0ymw3txsh" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -357,7 +589,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw3cie7l003rqso0ws9dy2hn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw3pesiy0037pco09x1td6tr" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -529,7 +761,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw3cie57002sqso0g2fk70ao" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw3peshk002spco0g3ljdrjy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -684,7 +916,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw3cie5z0034qso0x9dfsnk8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw3pesiu0034pco0hmhtad6i" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -741,7 +973,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw3cie5l002zqso0oyfbyu6h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw3peshv002wpco038e94pzr" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -794,7 +1026,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw3cie5a002vqso027cwynb0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw3peshs002vpco0k4xz9n6w" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -890,236 +1122,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw3cie4t002oqso0y2a94553" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-react/life_cycle" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/01/react/life_cycle/" class="article-date">
-  <time datetime="2016-10-31T16:02:35.210Z" itemprop="datePublished">2016-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/react/life_cycle/">react生命周期</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="组件的生命周期说明"><a href="#组件的生命周期说明" class="headerlink" title="组件的生命周期说明"></a>组件的生命周期说明</h2><hr>
-<h3 id="constructor的说明"><a href="#constructor的说明" class="headerlink" title="constructor的说明"></a>constructor的说明</h3><p>组建初始化时运行，仅一次</p>
-<h3 id="componentWillMount-组件即将镶嵌"><a href="#componentWillMount-组件即将镶嵌" class="headerlink" title="componentWillMount(组件即将镶嵌)"></a>componentWillMount(组件即将镶嵌)</h3><p>在初始化渲染之前立刻调用,如果在这个方法内调用setState()方法,render()将会感知到更新后的state,将会执行仅一次,尽管state改变了。  </p>
-<h3 id="componentDidMount-组件已经镶嵌"><a href="#componentDidMount-组件已经镶嵌" class="headerlink" title="componentDidMount(组件已经镶嵌)"></a>componentDidMount(组件已经镶嵌)</h3><p>仅调用一次<br>在组件初始化渲染之后立刻调用一次,在生命周期的这个时间点,组件拥有一个DOM展现,你可以通过ReactDOM.findDOMNode(this)获取整个dom节点<br>也可以访问dom组件中的ref属性代表的组件,可以在该方法中发送ajax请求<br>原先的this.getDOMNode()已经被弃用了，</p>
-<h3 id="componentWillReceiveProps-组件即将接收props"><a href="#componentWillReceiveProps-组件即将接收props" class="headerlink" title="componentWillReceiveProps(组件即将接收props)"></a>componentWillReceiveProps(组件即将接收props)</h3><p>在组件接收到新的props的时候调用,在初始化渲染的时候,改方法不会调用,用此函数可以作为react在prop传入之后,render()渲染之前更新state的机会。<br>老的props可以通过this.props获取到。在该函数中调用this.setState()将不会引起第二次渲染。  </p>
-<h3 id="shouldComponentUpdate-组件应该被更新"><a href="#shouldComponentUpdate-组件应该被更新" class="headerlink" title="shouldComponentUpdate(组件应该被更新)"></a>shouldComponentUpdate(组件应该被更新)</h3><p>在接受到新的props或者state,将要渲染之前调用。该方法在初始化渲染的时候不会调用,在使用forceUpdate方法的时候也不会。如果确定新的props和state<br>不会导致组件更新，则此处应该返回false.    </p>
-<pre><code>shouldComponentUpdate() {
-    return nextProps.id != this.props.id;
-}
-</code></pre><p>如果shouldComponentUpdate返回false,则render()将不会执行,直到下一次state改变(另外componentWillUpdate和componentDidUpdate也不会被调用)<br>默认情况下,shouldComponentUpdate总会返回true,使用shouldComponentUpdate可以提升应用的性能  </p>
-<h3 id="componentWillUpdate-组件即将更新"><a href="#componentWillUpdate-组件即将更新" class="headerlink" title="componentWillUpdate(组件即将更新)"></a>componentWillUpdate(组件即将更新)</h3><p>在接受到新的props和state之前立刻调用，在初始化渲染的时候该方法不会被调用。使用该方法做一些更新之前的准备工作。<br><code>注:不能在该方法中使用this.setState()如果需要更新state来相应某个prop的改变请使用componentWillReceiveProps()</code></p>
-<h3 id="componentDidUpdate-组件已经更新"><a href="#componentDidUpdate-组件已经更新" class="headerlink" title="componentDidUpdate(组件已经更新)"></a>componentDidUpdate(组件已经更新)</h3><p>在组件的更新已经同步到DOM中之后立刻被调用。改方法不会在初始化渲染的时候调用。使用该方法可以在组件更新之后操作DOM元素<br><code>使用该方法，你仍然可以获取DOM节点</code></p>
-<h3 id="componentWillUnmount-组件将要移除"><a href="#componentWillUnmount-组件将要移除" class="headerlink" title="componentWillUnmount(组件将要移除)"></a>componentWillUnmount(组件将要移除)</h3><p>在组件从DOM中移除的时候立刻被调用。<br>在该方法中执行任何必要的清理，比如无效的定时器，或者清除在componentDidMount中创建的DOM元素</p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw3cie5x0033qso05pgq9qhh" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/server" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/server/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.559Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/http/server/">WEB服务器、代理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>代理和网关的对比</strong><br>代理连接的是两个或多个使用相同协议的应用程序，二网关连接的则是两个或多个使用不同协议的<br>端点。网关扮演的是“协议转换器”的角色，即使客户端和服务器使用不同的协议，客户端也可以通过<br>它完成与服务器之间的事务处理</p>
-<p><strong>为什么使用代理</strong></p>
-<ul>
-<li>安全防火墙</li>
-<li>Web缓存</li>
-<li><p>反向代理</p>
-<blockquote>
-<p>代理可以假扮web服务器。这些被称为替代物或者反向代理的代理接受发送给Web服务器的真是请求<br>，但与Web服务器不同的是，他们可以发起与其他服务器的通信，以便按需定位所请求的内容。<br>可以用这些反向代理来提高访问慢速Web服务器上公共内容时的性能。在这种配置中，通常将这些<br>反向代理称为服务器加速器</p>
-</blockquote>
-</li>
-<li><p>内容路由器</p>
-<blockquote>
-<p>代理服务器可以作为“内容路由器”使用，根据因特网流量状况以及内容类型将请求导向特定的Web<br>服务器。<br>内容路由器也可以用来实现各种服务级的请求。</p>
-</blockquote>
-</li>
-<li><p>转码器</p>
-<blockquote>
-<p>代理服务器在将内容发送给客户端之前，可以修改内容的主体格式。在这些数据表示法之间进行的<br>透明转换被称为转码<br>转码代理可以在传输GIF图片时，将其转换成JPEG图片，以减小尺寸，也可以对图片进行压缩，同样<br>也可以对文本文件进行压缩，代理甚至可以在传输文档的过程中将其转换成外语。</p>
-</blockquote>
-</li>
-<li><p>匿名者</p>
-<blockquote>
-<p>匿名者代理会主动从HTTP报文中删除身份特性（比如客户端IP地址、From首部、Referer首部、<br>cookie、URI的会话ID）从而提供高度的私密性和匿名性</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>代理会何去何从</strong></p>
-<ol>
-<li>怎样将代理部署到网络中去</li>
-<li>怎样将代理以层级方式连接在一起</li>
-<li>怎样先将网络流量导入到代理服务器中</li>
-</ol>
-<p><strong>代理服务器的部署</strong></p>
-<ul>
-<li>出口代理</li>
-<li>访问（入口）代理</li>
-<li><p>反向代理</p>
-<blockquote>
-<p>代理通常会被部署在网络边缘,在Web服务器之前，作为代替物（反向代理），在那里他们可以处理<br>所有传送给Web服务器的请求，并只在必要时向Web服务器请求资源，反向代理通常会直接冒用Web<br>服务器的名字和ip地址，这样所有的请求就会被发送给代理而不是服务器了</p>
-</blockquote>
-</li>
-<li><p>网络交换代理</p>
-</li>
-</ul>
-<p><strong>代理的层次结构</strong><br>可以通过代理的层次结构将代理级联起来，在代理的层次结构中，会将报文从一个代理传给另一个代<br>理，直到最终抵达原始服务器为止（然后通过代理传回给客户端）<br><strong>代理层次结构中的路由</strong><br>代理服务器可以根据众多因素，将报文转发给一个不断变化的代理服务器和原始服务器集。比如：</p>
-<ul>
-<li>负载均衡</li>
-<li>地理位置附近的路由</li>
-<li>协议/类型路由<blockquote>
-<p>子代理可能会根据不同的URI将报文转发到不同的父代理和原始服务器上去，某些特定类型的URI<br>可能会通过一些特殊的代理服务器转发请求，一遍进行特殊的协议处理。</p>
-</blockquote>
-</li>
-</ul>
-<p><strong>代理如何获取流量</strong><br>有四种方式可以使客户端流量流向代理</p>
-<ol>
-<li>修改客户端</li>
-<li>修改网络</li>
-<li>修改DNS的命名空间</li>
-<li>修改Web服务器</li>
-</ol>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw3cie3q0025qso0g0grvj04" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/leanr_tcp_ip" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/leanr_tcp_ip/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.555Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li>浏览器解析主机名</li>
-<li>浏览器查询这个主机名的IP地址（DNS）</li>
-<li>浏览器获得端口号</li>
-<li>浏览器发起IP:port的连接</li>
-<li>浏览器想服务器发送一条HTTP GET报文</li>
-<li>浏览器从服务器读取HTTP响应报文</li>
-<li>浏览器关闭连接</li>
-</ol>
-<blockquote>
-<p>HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的<strong>分组交换网络分层协议集</strong>.TCP的数据是通过名为IP分组<br>（或IP数据报）的小数据块来发送的。HTTP（应用层）-&gt;TCP(传输层)-&gt;IP（网络层）-&gt;网络接口(数据链路层)，<br>HTTP要传送一条报文时，会以流的形式将报文数据的内容通过一条打开的TCP连接按序传输。TCP收到数据之后<br>会将数据流砍成被称作段的小数据块，并将段封装在IP分组中，通过因特网传输，这些工作都是通过TCP/IP软件<br>处理的。<br>每个TCP段都是由IP分组承载，从一个IP地址发送到另一个IP地址，每个IP分组中都包括:</p>
-<ol>
-<li>一个IP分组首部（通常为20字节），包含了源和目的地的IP地址，长度和其他标记</li>
-<li>一个TCP段首部（通常为20字节），包含了TCP的端口号、TCP的控制标记，以及数据排序和完成性的数字值</li>
-<li>一个TCP数据块（0个或多个字节）</li>
-</ol>
-</blockquote>
-<p>TCP连接通过4个值识别: <strong>&lt;源IP地址， 源端口号， 目的地IP地址， 目的地端口号&gt;</strong></p>
-<p>TCP客户端和服务器是如何通过TCP套接字接口进行通信的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">客户端                                                        服务器</span><br><span class="line">                                                          S1  创建新的套接字(socket)</span><br><span class="line">                                                          S2  将套接字绑定到端口上去(bind)</span><br><span class="line">                                                          S3  允许套接字进行连接(listen)</span><br><span class="line">                                                          S4  等待连接(accept)</span><br><span class="line">C1 获取IP地址和端口号</span><br><span class="line">C2 创建新的套接字(socket)</span><br><span class="line">C3 连接到服务器的IP:port上去(connect)</span><br><span class="line">                                                          S5 通知应用程序有连接到来</span><br><span class="line">                                                          S6开始读取请求</span><br><span class="line">C4 连接成功</span><br><span class="line">C5 发送HTTP请求（write）</span><br><span class="line">C6 等待HTTP响应（read）</span><br><span class="line">                                                          S7 处理HTTP请求报文</span><br><span class="line">C7 处理HTTP响应                                            S8 回送HTTP响应（write）</span><br><span class="line">C8关闭连接（close）                                         S9 关闭连接（close）</span><br></pre></td></tr></table></figure></p>
-<p><strong>对TCP性能的考虑</strong>    </p>
-<p>HTTP紧挨着TCP，位于其上层，所以HTTP事务的性能取决于底层TCP通道的性能。TCP网络的时延取决于<br>硬件速度、网络和服务器的负载、请求和响应报文的尺寸、以及客户端和服务器之间的距离。</p>
-<p>最常见的TCP相关时延，包括:</p>
-<ol>
-<li>TCP连接建立握手</li>
-<li>TCP慢启动拥塞控制</li>
-<li>数据聚集的Nagle算法</li>
-<li>用于捎带的TCP延迟确认算法</li>
-<li>TIME_WRIT时延和端口耗尽</li>
-</ol>
-<p><strong>TCP连接的握手时延</strong><br>建立一条新的TCP连接时，甚至是在发生任意数据之前，TCP软件之间会交换一系列的IP分组，对连接<br>的有关参数进行沟通，如果连接只是用来传送少量数据，这些交换过程就会严重降低HTTP的性能。</p>
-<p><strong>TCP连接握手的步骤</strong></p>
-<ol>
-<li>请求新的TCP连接时，客户端要向服务器发送一个小的TCP分组，这个分组设置了一个特殊的SYN标记，说明这是一个连接请求。</li>
-<li>如果服务器接受了连接，就会对一些连接参数进行计算，并向客户端回送一个TCP分组，这个分组中的SYN和ACK标记都被置位，说明请求已被接受。</li>
-<li>最后，客户端向服务器回送一个确认信息，通知它连接已成功建立，现代的TCP栈都允许客户端在这个确认分组中发送数据。</li>
-</ol>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw3cie3n0023qso0sau8639n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw3pesgo002npco09f43pqcg" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1131,7 +1134,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -1143,7 +1146,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1155,23 +1158,23 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       <ul>
         
           <li>
+            <a href="/2016/11/29/vue/event_handle/">事件处理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/list_render/">Vue的列表渲染</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/conditional_render/">条件渲染</a>
+          </li>
+        
+          <li>
             <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
           </li>
         
           <li>
             <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
           </li>
         
       </ul>
@@ -1185,7 +1188,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

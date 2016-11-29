@@ -63,6 +63,235 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-react/life_cycle" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/01/react/life_cycle/" class="article-date">
+  <time datetime="2016-10-31T16:02:35.210Z" itemprop="datePublished">2016-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/01/react/life_cycle/">react生命周期</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="组件的生命周期说明"><a href="#组件的生命周期说明" class="headerlink" title="组件的生命周期说明"></a>组件的生命周期说明</h2><hr>
+<h3 id="constructor的说明"><a href="#constructor的说明" class="headerlink" title="constructor的说明"></a>constructor的说明</h3><p>组建初始化时运行，仅一次</p>
+<h3 id="componentWillMount-组件即将镶嵌"><a href="#componentWillMount-组件即将镶嵌" class="headerlink" title="componentWillMount(组件即将镶嵌)"></a>componentWillMount(组件即将镶嵌)</h3><p>在初始化渲染之前立刻调用,如果在这个方法内调用setState()方法,render()将会感知到更新后的state,将会执行仅一次,尽管state改变了。  </p>
+<h3 id="componentDidMount-组件已经镶嵌"><a href="#componentDidMount-组件已经镶嵌" class="headerlink" title="componentDidMount(组件已经镶嵌)"></a>componentDidMount(组件已经镶嵌)</h3><p>仅调用一次<br>在组件初始化渲染之后立刻调用一次,在生命周期的这个时间点,组件拥有一个DOM展现,你可以通过ReactDOM.findDOMNode(this)获取整个dom节点<br>也可以访问dom组件中的ref属性代表的组件,可以在该方法中发送ajax请求<br>原先的this.getDOMNode()已经被弃用了，</p>
+<h3 id="componentWillReceiveProps-组件即将接收props"><a href="#componentWillReceiveProps-组件即将接收props" class="headerlink" title="componentWillReceiveProps(组件即将接收props)"></a>componentWillReceiveProps(组件即将接收props)</h3><p>在组件接收到新的props的时候调用,在初始化渲染的时候,改方法不会调用,用此函数可以作为react在prop传入之后,render()渲染之前更新state的机会。<br>老的props可以通过this.props获取到。在该函数中调用this.setState()将不会引起第二次渲染。  </p>
+<h3 id="shouldComponentUpdate-组件应该被更新"><a href="#shouldComponentUpdate-组件应该被更新" class="headerlink" title="shouldComponentUpdate(组件应该被更新)"></a>shouldComponentUpdate(组件应该被更新)</h3><p>在接受到新的props或者state,将要渲染之前调用。该方法在初始化渲染的时候不会调用,在使用forceUpdate方法的时候也不会。如果确定新的props和state<br>不会导致组件更新，则此处应该返回false.    </p>
+<pre><code>shouldComponentUpdate() {
+    return nextProps.id != this.props.id;
+}
+</code></pre><p>如果shouldComponentUpdate返回false,则render()将不会执行,直到下一次state改变(另外componentWillUpdate和componentDidUpdate也不会被调用)<br>默认情况下,shouldComponentUpdate总会返回true,使用shouldComponentUpdate可以提升应用的性能  </p>
+<h3 id="componentWillUpdate-组件即将更新"><a href="#componentWillUpdate-组件即将更新" class="headerlink" title="componentWillUpdate(组件即将更新)"></a>componentWillUpdate(组件即将更新)</h3><p>在接受到新的props和state之前立刻调用，在初始化渲染的时候该方法不会被调用。使用该方法做一些更新之前的准备工作。<br><code>注:不能在该方法中使用this.setState()如果需要更新state来相应某个prop的改变请使用componentWillReceiveProps()</code></p>
+<h3 id="componentDidUpdate-组件已经更新"><a href="#componentDidUpdate-组件已经更新" class="headerlink" title="componentDidUpdate(组件已经更新)"></a>componentDidUpdate(组件已经更新)</h3><p>在组件的更新已经同步到DOM中之后立刻被调用。改方法不会在初始化渲染的时候调用。使用该方法可以在组件更新之后操作DOM元素<br><code>使用该方法，你仍然可以获取DOM节点</code></p>
+<h3 id="componentWillUnmount-组件将要移除"><a href="#componentWillUnmount-组件将要移除" class="headerlink" title="componentWillUnmount(组件将要移除)"></a>componentWillUnmount(组件将要移除)</h3><p>在组件从DOM中移除的时候立刻被调用。<br>在该方法中执行任何必要的清理，比如无效的定时器，或者清除在componentDidMount中创建的DOM元素</p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw3pesip0033pco0ki1kp553" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/server/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.559Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/server/">WEB服务器、代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>代理和网关的对比</strong><br>代理连接的是两个或多个使用相同协议的应用程序，二网关连接的则是两个或多个使用不同协议的<br>端点。网关扮演的是“协议转换器”的角色，即使客户端和服务器使用不同的协议，客户端也可以通过<br>它完成与服务器之间的事务处理</p>
+<p><strong>为什么使用代理</strong></p>
+<ul>
+<li>安全防火墙</li>
+<li>Web缓存</li>
+<li><p>反向代理</p>
+<blockquote>
+<p>代理可以假扮web服务器。这些被称为替代物或者反向代理的代理接受发送给Web服务器的真是请求<br>，但与Web服务器不同的是，他们可以发起与其他服务器的通信，以便按需定位所请求的内容。<br>可以用这些反向代理来提高访问慢速Web服务器上公共内容时的性能。在这种配置中，通常将这些<br>反向代理称为服务器加速器</p>
+</blockquote>
+</li>
+<li><p>内容路由器</p>
+<blockquote>
+<p>代理服务器可以作为“内容路由器”使用，根据因特网流量状况以及内容类型将请求导向特定的Web<br>服务器。<br>内容路由器也可以用来实现各种服务级的请求。</p>
+</blockquote>
+</li>
+<li><p>转码器</p>
+<blockquote>
+<p>代理服务器在将内容发送给客户端之前，可以修改内容的主体格式。在这些数据表示法之间进行的<br>透明转换被称为转码<br>转码代理可以在传输GIF图片时，将其转换成JPEG图片，以减小尺寸，也可以对图片进行压缩，同样<br>也可以对文本文件进行压缩，代理甚至可以在传输文档的过程中将其转换成外语。</p>
+</blockquote>
+</li>
+<li><p>匿名者</p>
+<blockquote>
+<p>匿名者代理会主动从HTTP报文中删除身份特性（比如客户端IP地址、From首部、Referer首部、<br>cookie、URI的会话ID）从而提供高度的私密性和匿名性</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>代理会何去何从</strong></p>
+<ol>
+<li>怎样将代理部署到网络中去</li>
+<li>怎样将代理以层级方式连接在一起</li>
+<li>怎样先将网络流量导入到代理服务器中</li>
+</ol>
+<p><strong>代理服务器的部署</strong></p>
+<ul>
+<li>出口代理</li>
+<li>访问（入口）代理</li>
+<li><p>反向代理</p>
+<blockquote>
+<p>代理通常会被部署在网络边缘,在Web服务器之前，作为代替物（反向代理），在那里他们可以处理<br>所有传送给Web服务器的请求，并只在必要时向Web服务器请求资源，反向代理通常会直接冒用Web<br>服务器的名字和ip地址，这样所有的请求就会被发送给代理而不是服务器了</p>
+</blockquote>
+</li>
+<li><p>网络交换代理</p>
+</li>
+</ul>
+<p><strong>代理的层次结构</strong><br>可以通过代理的层次结构将代理级联起来，在代理的层次结构中，会将报文从一个代理传给另一个代<br>理，直到最终抵达原始服务器为止（然后通过代理传回给客户端）<br><strong>代理层次结构中的路由</strong><br>代理服务器可以根据众多因素，将报文转发给一个不断变化的代理服务器和原始服务器集。比如：</p>
+<ul>
+<li>负载均衡</li>
+<li>地理位置附近的路由</li>
+<li>协议/类型路由<blockquote>
+<p>子代理可能会根据不同的URI将报文转发到不同的父代理和原始服务器上去，某些特定类型的URI<br>可能会通过一些特殊的代理服务器转发请求，一遍进行特殊的协议处理。</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>代理如何获取流量</strong><br>有四种方式可以使客户端流量流向代理</p>
+<ol>
+<li>修改客户端</li>
+<li>修改网络</li>
+<li>修改DNS的命名空间</li>
+<li>修改Web服务器</li>
+</ol>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw3peset0023pco0umar8kly" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-http/leanr_tcp_ip" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/21/http/leanr_tcp_ip/" class="article-date">
+  <time datetime="2016-10-20T16:36:41.555Z" itemprop="datePublished">2016-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Http/">Http</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/21/http/leanr_tcp_ip/">在浏览器输入URL后，发生了什么?</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>浏览器解析主机名</li>
+<li>浏览器查询这个主机名的IP地址（DNS）</li>
+<li>浏览器获得端口号</li>
+<li>浏览器发起IP:port的连接</li>
+<li>浏览器想服务器发送一条HTTP GET报文</li>
+<li>浏览器从服务器读取HTTP响应报文</li>
+<li>浏览器关闭连接</li>
+</ol>
+<blockquote>
+<p>HTTP通信都是由TCP/IP承载的，TCP/IP是一种常用的<strong>分组交换网络分层协议集</strong>.TCP的数据是通过名为IP分组<br>（或IP数据报）的小数据块来发送的。HTTP（应用层）-&gt;TCP(传输层)-&gt;IP（网络层）-&gt;网络接口(数据链路层)，<br>HTTP要传送一条报文时，会以流的形式将报文数据的内容通过一条打开的TCP连接按序传输。TCP收到数据之后<br>会将数据流砍成被称作段的小数据块，并将段封装在IP分组中，通过因特网传输，这些工作都是通过TCP/IP软件<br>处理的。<br>每个TCP段都是由IP分组承载，从一个IP地址发送到另一个IP地址，每个IP分组中都包括:</p>
+<ol>
+<li>一个IP分组首部（通常为20字节），包含了源和目的地的IP地址，长度和其他标记</li>
+<li>一个TCP段首部（通常为20字节），包含了TCP的端口号、TCP的控制标记，以及数据排序和完成性的数字值</li>
+<li>一个TCP数据块（0个或多个字节）</li>
+</ol>
+</blockquote>
+<p>TCP连接通过4个值识别: <strong>&lt;源IP地址， 源端口号， 目的地IP地址， 目的地端口号&gt;</strong></p>
+<p>TCP客户端和服务器是如何通过TCP套接字接口进行通信的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">客户端                                                        服务器</span><br><span class="line">                                                          S1  创建新的套接字(socket)</span><br><span class="line">                                                          S2  将套接字绑定到端口上去(bind)</span><br><span class="line">                                                          S3  允许套接字进行连接(listen)</span><br><span class="line">                                                          S4  等待连接(accept)</span><br><span class="line">C1 获取IP地址和端口号</span><br><span class="line">C2 创建新的套接字(socket)</span><br><span class="line">C3 连接到服务器的IP:port上去(connect)</span><br><span class="line">                                                          S5 通知应用程序有连接到来</span><br><span class="line">                                                          S6开始读取请求</span><br><span class="line">C4 连接成功</span><br><span class="line">C5 发送HTTP请求（write）</span><br><span class="line">C6 等待HTTP响应（read）</span><br><span class="line">                                                          S7 处理HTTP请求报文</span><br><span class="line">C7 处理HTTP响应                                            S8 回送HTTP响应（write）</span><br><span class="line">C8关闭连接（close）                                         S9 关闭连接（close）</span><br></pre></td></tr></table></figure></p>
+<p><strong>对TCP性能的考虑</strong>    </p>
+<p>HTTP紧挨着TCP，位于其上层，所以HTTP事务的性能取决于底层TCP通道的性能。TCP网络的时延取决于<br>硬件速度、网络和服务器的负载、请求和响应报文的尺寸、以及客户端和服务器之间的距离。</p>
+<p>最常见的TCP相关时延，包括:</p>
+<ol>
+<li>TCP连接建立握手</li>
+<li>TCP慢启动拥塞控制</li>
+<li>数据聚集的Nagle算法</li>
+<li>用于捎带的TCP延迟确认算法</li>
+<li>TIME_WRIT时延和端口耗尽</li>
+</ol>
+<p><strong>TCP连接的握手时延</strong><br>建立一条新的TCP连接时，甚至是在发生任意数据之前，TCP软件之间会交换一系列的IP分组，对连接<br>的有关参数进行沟通，如果连接只是用来传送少量数据，这些交换过程就会严重降低HTTP的性能。</p>
+<p><strong>TCP连接握手的步骤</strong></p>
+<ol>
+<li>请求新的TCP连接时，客户端要向服务器发送一个小的TCP分组，这个分组设置了一个特殊的SYN标记，说明这是一个连接请求。</li>
+<li>如果服务器接受了连接，就会对一些连接参数进行计算，并向客户端回送一个TCP分组，这个分组中的SYN和ACK标记都被置位，说明请求已被接受。</li>
+<li>最后，客户端向服务器回送一个确认信息，通知它连接已成功建立，现代的TCP栈都允许客户端在这个确认分组中发送数据。</li>
+</ol>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw3pesf30025pco0y6mukzao" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-http/integration" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/21/http/integration/" class="article-date">
@@ -127,7 +356,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw3cie3e0020qso0h9209hqq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw3pesep0020pco0uc2csyca" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -167,7 +396,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw3cie2y001yqso04hr86wgm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw3pesea001ypco0i21973wy" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -252,7 +481,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw3cie2v001vqso0c61ftm1h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw3pese6001vpco01ot3qaag" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -308,7 +537,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw3cie2p001rqso07am9qe89" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw3pescy001tpco09zffe67c" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -408,7 +637,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw3cie2r001tqso0bgovd4u6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw3pescv001rpco02hi34tvb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -466,7 +695,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw3cie2i001oqso0hd099djy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw3pescq001opco0xp2q7puf" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -507,140 +736,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw3cidz2000gqso07kkryyf2" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/environments_variables" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Electron/environments_variables/" class="article-date">
-  <time datetime="2016-07-10T13:54:32.500Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Electron/environments_variables/">环境变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>TODO</strong></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="ciw3cidww0000qso05fmwkvv7" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/supported_chrome_line_switches" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Electron/supported_chrome_line_switches/" class="article-date">
-  <time datetime="2016-07-10T13:48:42.251Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Electron/supported_chrome_line_switches/">支持的Chrom命令行开关</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>可以在你的项目的main脚本的<code>ready</code>事件前使用<code>app.commondLine.appendSwitch</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app&#125; = require(&apos;electron&apos;);</span><br><span class="line">app.commandLine.appendSwitch(&apos;remote-debugging-port&apos;, &apos;8315&apos;);</span><br><span class="line">app.commandLine.appendSwitch(&apos;host-rules&apos;, &apos;MAP * 127.0.0.1&apos;);</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  // Your code here</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>API TODO</strong></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="ciw3cidy70007qso0cdrkkwpv" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/multiple_entry_points" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Webpack/multiple_entry_points/" class="article-date">
-  <time datetime="2016-07-10T13:06:49.393Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Webpack/multiple_entry_points/">多入口配置</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>前提需要: 代码拆分</strong></p>
-<blockquote>
-<p>如果你需要对不同的HTML页面使用不同的打包文件可以使用多入口拆分点的特性。webpack会立即<br>创建多个打包文件，额外的块文件可以被这些打包文件共享。<br>每一个入口块文件都包含webpack执行时间，所以每个页面加载一个入口块文件（提示：使用CommonsChunkPlugin<br>可以将运行时的东西移到一个单独的块中来避免这个限制）</p>
-</blockquote>
-<p><strong>配置</strong></p>
-<blockquote>
-<p>可以在entry这个属性中使用对象来配置多入口，每个值作为一个入口块，并且对应的键代表了入口<br>块的名称。<br>当使用多入口配置的时候，必须重写默认的<code>output.filename</code>否则每个入口块都会被写在相同的<br>文件中,使用<code>[name]</code>来获得每个入口块的名字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        a: &quot;./a&quot;,</span><br><span class="line">        b: &quot;./b&quot;,</span><br><span class="line">        c: [&quot;./c&quot;, &quot;./d&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;dist&quot;),</span><br><span class="line">        filename: &quot;[name].entry.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="ciw3cie110015qso07393ysdn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw3pes6x000gpco0bfcgj0vk" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -652,7 +748,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -664,7 +760,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -676,23 +772,23 @@
       <ul>
         
           <li>
+            <a href="/2016/11/29/vue/event_handle/">事件处理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/list_render/">Vue的列表渲染</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/conditional_render/">条件渲染</a>
+          </li>
+        
+          <li>
             <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
           </li>
         
           <li>
             <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
           </li>
         
       </ul>
@@ -706,7 +802,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

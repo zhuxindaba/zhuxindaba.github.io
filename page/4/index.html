@@ -63,6 +63,139 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Electron/environments_variables" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Electron/environments_variables/" class="article-date">
+  <time datetime="2016-07-10T13:54:32.500Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Electron/environments_variables/">环境变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>TODO</strong></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/10/Electron/environments_variables/" data-id="ciw3pes520003pco0nuoxc6vj" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Electron/supported_chrome_line_switches" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Electron/supported_chrome_line_switches/" class="article-date">
+  <time datetime="2016-07-10T13:48:42.251Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Electron/">Electron</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Electron/supported_chrome_line_switches/">支持的Chrom命令行开关</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>可以在你的项目的main脚本的<code>ready</code>事件前使用<code>app.commondLine.appendSwitch</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const &#123;app&#125; = require(&apos;electron&apos;);</span><br><span class="line">app.commandLine.appendSwitch(&apos;remote-debugging-port&apos;, &apos;8315&apos;);</span><br><span class="line">app.commandLine.appendSwitch(&apos;host-rules&apos;, &apos;MAP * 127.0.0.1&apos;);</span><br><span class="line"></span><br><span class="line">app.on(&apos;ready&apos;, () =&gt; &#123;</span><br><span class="line">  // Your code here</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>API TODO</strong></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/10/Electron/supported_chrome_line_switches/" data-id="ciw3pes6h000cpco0c9alggox" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Webpack/multiple_entry_points" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/10/Webpack/multiple_entry_points/" class="article-date">
+  <time datetime="2016-07-10T13:06:49.393Z" itemprop="datePublished">2016-07-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/10/Webpack/multiple_entry_points/">多入口配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>前提需要: 代码拆分</strong></p>
+<blockquote>
+<p>如果你需要对不同的HTML页面使用不同的打包文件可以使用多入口拆分点的特性。webpack会立即<br>创建多个打包文件，额外的块文件可以被这些打包文件共享。<br>每一个入口块文件都包含webpack执行时间，所以每个页面加载一个入口块文件（提示：使用CommonsChunkPlugin<br>可以将运行时的东西移到一个单独的块中来避免这个限制）</p>
+</blockquote>
+<p><strong>配置</strong></p>
+<blockquote>
+<p>可以在entry这个属性中使用对象来配置多入口，每个值作为一个入口块，并且对应的键代表了入口<br>块的名称。<br>当使用多入口配置的时候，必须重写默认的<code>output.filename</code>否则每个入口块都会被写在相同的<br>文件中,使用<code>[name]</code>来获得每个入口块的名字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        a: &quot;./a&quot;,</span><br><span class="line">        b: &quot;./b&quot;,</span><br><span class="line">        c: [&quot;./c&quot;, &quot;./d&quot;]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, &quot;dist&quot;),</span><br><span class="line">        filename: &quot;[name].entry.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/multiple_entry_points/" data-id="ciw3pesaj0015pco04u7incwp" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Webpack/how-to-write-plugin" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/07/10/Webpack/how-to-write-plugin/" class="article-date">
@@ -94,7 +227,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="ciw3cie06000uqso0ygzwsu9q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/10/Webpack/how-to-write-plugin/" data-id="ciw3pes8m000rpco00f56lxwg" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -161,7 +294,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="ciw3cie0l000wqso0v78gcddw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/07/Webpack/how_to_write_loader/" data-id="ciw3pes9l000wpco0ddvcu7vs" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -234,7 +367,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="ciw3cidy10005qso0ywrr7x65" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/progress_object/" data-id="ciw3pes5f0005pco0ugqdvmvd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -286,7 +419,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/api_references_synopsis/" data-id="ciw3cidxb0001qso0y7ys24fy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/api_references_synopsis/" data-id="ciw3pes3i0000pco0pntr7f4n" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -334,7 +467,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/06/Electron/online_offline_event_detection/" data-id="ciw3cidxu0004qso0b4tg6k4e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/06/Electron/online_offline_event_detection/" data-id="ciw3pes5d0004pco0twwot3hk" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -392,7 +525,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/Webpack/long_term_caching/" data-id="ciw3cie0x0013qso05yokqvyt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/Webpack/long_term_caching/" data-id="ciw3pesa00010pco0ajy3upcg" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -482,243 +615,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/05/Electron/desktop_environment_integration/" data-id="ciw3cidxr0003qso0iu5lh8s9" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/optimization" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/04/Webpack/optimization/" class="article-date">
-  <time datetime="2016-07-04T15:17:18.642Z" itemprop="datePublished">2016-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/04/Webpack/optimization/">优化</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>压缩</strong></p>
-<blockquote>
-<p>通过简单的配置可以让webpack压缩你的javascript代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-minimize 或new webpack.optimize.UglifyJsPlugin()</span><br></pre></td></tr></table></figure></p>
-<p>这是一个简单并有效优化你应用的方式<br>如果你已经知道webpack给每个模块和分块提供了id去标识他们，webpack可以通过一个简单的配置<br>改变id的分配，通过给常用模块最短的id进行优化<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-dedupe 或new webpack.optimize.DedupePlugin()</span><br></pre></td></tr></table></figure></p>
-<p>入口块有更高的文件大小优先级</p>
-</blockquote>
-<p><strong>去重</strong></p>
-<blockquote>
-<p>如果使用一些库时，会发现一些文件是相同的，webpack可以找到这些文件并且去重，这可以阻止<br>在打包文件中包含重复的代码，并且在运行时提供一个复制函数，这不会影响语法问题，可以这样<br>嵌入它<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-dedupe 或 new webpack.optimize.DedupePlugin()</span><br></pre></td></tr></table></figure></p>
-<p>这个功能会在入口快之前添加。</p>
-</blockquote>
-<p><strong>分块</strong></p>
-<blockquote>
-<p>当在写代码时，可能你已经添加了一下代码分离点来按需加载，在编译之后你可能会发现有太多特别<br>小的分块，Http请求负担加重，幸运的是，你可以后置的去处理这些块文件，可以有两种配置。</p>
-<ul>
-<li><p>限制块文件的最大个数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-max-chunks 15或者new webpack.optimize.LimitChunkCountPlugin(&#123;maxChunks: 15&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>限制最小块文件的大小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--optimize-min-chunk-size 10000或new webpack.optimize.MinChunkSizePlugin(&#123;minChunkSize: 10000&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>webpack会小心的处理分块合并（优先合并有重复的分块），任何东西都不会合并到入口块中，所以<br>不会影响首页加载时间</p>
-</blockquote>
-<p><strong>单页面应用</strong></p>
-<blockquote>
-<p>webpack就是用来处理单页面应用而设计和优化的。<br>你或许已经分离应用到多个分块，根据不同的路由加载不同的块，入口块只包含了路由和一些库，但<br>没有实质内容，这种做法对于应用中的浏览切换时很好的，但是首页加载需要两次请求：一次是路由<br>一次是页面内容。<br>如果你使用了 HTML5 的 history api 来做页面内容和 url 的一一对应，那么服务端就能根据<br>url来知道请求的具体单页应用中的哪一个页面.这样，可以通过服务端直接同时输出请求页面的处理分块，<br>利用浏览器的并行加载来节省网络请求时间.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;entry-chunk.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;3.chunk.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
-<p>你可以从stats中提取出分块的名字(<code>stats-webpack-plugin</code>导出构建的stats)</p>
-</blockquote>
-<p><strong>多页面应用</strong></p>
-<blockquote>
-<p>当你编译多页面应用时，你想在页面之间共享公共的代码，这对于webpack很简单，只需要使用多个<br>入口点``<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        p3: &quot;./page3&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].entry.chunk.js&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这会生成多个入口文件，<code>p1.entry.chunk.js</code>,<code>p2.entry.chunk.js</code>,<code>p3.entry.chunk.js</code>，<br>但是他们可以共享额外的块文件。<br>如果入口块有使用相同的模块，<code>CommonsChunkPlugin</code>可以找出相同的模块然后把他们提取出来<br>放到一个公共分块中,这样，页面中只需要引入两个 script，一个是公共分块另一个则是该页面的入口块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var CommonsChunkPlugin = require(&quot;webpack/lib/optimize/CommonsChunkPlugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        p3: &quot;./page3&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].entry.chunk.js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CommonsChunkPlugin(&quot;commons.chunk.js&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样会生成<code>p1.entry.chunk.js</code>、<code>p2.entry.chunk.js</code> 和 <code>p3.entry.chunk.js</code> 以及<br><code>commons.chunk.js</code>。首先加载 commons.chunk.js，然后加载对应的入口块。<br>你可以通过选择入口块生成多个公共块，公共块也可以嵌套使用.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var CommonsChunkPlugin = require(&quot;webpack/lib/optimize/CommonsChunkPlugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        p3: &quot;./page3&quot;,</span><br><span class="line">        ap1: &quot;./admin/page1&quot;,</span><br><span class="line">        ap2: &quot;./admin/page2&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CommonsChunkPlugin(&quot;admin-commons.js&quot;, [&quot;ap1&quot;, &quot;ap2&quot;]),</span><br><span class="line">        new CommonsChunkPlugin(&quot;commons.js&quot;, [&quot;p1&quot;, &quot;p2&quot;, &quot;admin-commons.js&quot;])</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br><span class="line">// &lt;script&gt;s required:</span><br><span class="line">// page1.html: commons.js, p1.js</span><br><span class="line">// page2.html: commons.js, p2.js</span><br><span class="line">// page3.html: p3.js</span><br><span class="line">// admin-page1.html: commons.js, admin-commons.js, ap1.js</span><br><span class="line">// admin-page2.html: commons.js, admin-commons.js, ap2.js</span><br></pre></td></tr></table></figure></p>
-<p>高级用法，公共块的代码也可以直接运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var CommonsChunkPlugin = require(&quot;webpack/lib/optimize/CommonsChunkPlugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        p1: &quot;./page1&quot;,</span><br><span class="line">        p2: &quot;./page2&quot;,</span><br><span class="line">        commons: &quot;./entry-for-the-commons-chunk&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        new CommonsChunkPlugin(&quot;commons&quot;, &quot;commons.js&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>查看<a href="https://github.com/webpack/webpack/tree/master/examples/multiple-entry-points" target="_blank" rel="external"><code>multiple-entry-points example</code></a><br><a href="https://github.com/webpack/webpack/tree/master/examples/multiple-commons-chunks" target="_blank" rel="external"><code>advanced multiple-commons-chunks example.</code></a></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Webpack/optimization/" data-id="ciw3cie1d0018qso0ep1j51d3" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/quik_start" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/04/Electron/quik_start/" class="article-date">
-  <time datetime="2016-07-04T14:11:04.268Z" itemprop="datePublished">2016-07-04</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/04/Electron/quik_start/">快速开始</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>快速开始</strong></p>
-<blockquote>
-<p>Electron可以使用纯粹的javaScript通过调用原生的API创建桌面应用，可以把它当做是nodejs<br>运行时多变多样的专注于桌面应用而不是web服务器。<br>这并不意味着Electron是绑定了GUI库的javaScript，Electron使用Web页面作为它的UI，你可以<br>把它当作是简易版的Chrom浏览器，由javascript控制。</p>
-</blockquote>
-<p><strong>主线程</strong></p>
-<blockquote>
-<p>在Electron中，运行<code>package.json</code>中<code>main</code>脚本的进程是主进程，在主进程运行的脚本通过创<br>建Web页面来展示GUI.</p>
-</blockquote>
-<p><strong>渲染进程</strong></p>
-<blockquote>
-<p>由于Electron使用Chromium来展示web页面，所以Chromium的多进程架构也被利用上了，每一个<br>在Electron的web页面都运行着自己的进程，这样的进程称之为渲染进程。<br>在一般的浏览器中，web页面通常运行在沙河环境下，这样是不能访问原生资源的，然而，Electron<br>用户，有权利在web页面中调用nodejs API，可以与底层操作系统交互.</p>
-</blockquote>
-<p><strong>主进程与渲染进程的不同</strong></p>
-<blockquote>
-<p>主进程通过创建<code>BrowserWindow</code>实例来创建web页面，每个<code>BrowserWindow</code>实例在它自己的渲染<br>进程中运行web页面，当一个<code>BrowserWindow</code>实例被销毁后，相应的渲染进程也终止了。<br>主进程管理所有的web页面以及他们相应的渲染进程，每个渲染进程是相互隔离的并且只关心运行在<br>自己上的web页面。<br>在web页面中，调用原生GUI相关的API是不允许的，因为在页面中管理原生的GUI资源是非常危险的<br>并且容易泄露资源，如果你想在web页面中执行GUI的的操作，页面的渲染进程必须与主进程通讯去<br>请求主进程执行这些操作.<br>在Electron中，渲染进程与主进程的通讯有多种方式，比如<code>ipcRender</code>和<code>ipcMain</code>模块去发送<br>消息，并且<code>remote</code>模块用于RPC方式通讯，这是一个常见的问题，<a href="https://github.com/zhuxindaba/electron/blob/master/docs/faq/electron-faq.md#how-to-share-data-between-web-pages" target="_blank" rel="external">如何在web页面中共享数据</a></p>
-</blockquote>
-<p><strong>完成第一个Electron应用</strong></p>
-<blockquote>
-<p>通常，一个Electron应用的结构类似下面的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">your-app/</span><br><span class="line">├── package.json</span><br><span class="line">├── main.js</span><br><span class="line">└── index.html</span><br></pre></td></tr></table></figure></p>
-<p><code>package.json</code>的格式和node的模式是一样的，通过<code>main</code>字段指定的脚本文件就是你的应用<br>程序的启动脚本，它将会运行在主进程中，<code>package.json</code>通常是下面的格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;    : &quot;your-app&quot;,</span><br><span class="line">  &quot;version&quot; : &quot;0.1.0&quot;,</span><br><span class="line">  &quot;main&quot;    : &quot;main.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>注意：</strong>如果在<code>package.json</code>中没有声明<code>main</code>字段，Electron会尝试加载<code>index.js</code><br><code>main.js</code>应该用于创建窗口并且处理系统事件，典型的例子如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">const electron = require(&apos;electron&apos;);</span><br><span class="line">// Module to control application life.</span><br><span class="line">const &#123;app&#125; = electron;</span><br><span class="line">// Module to create native browser window.</span><br><span class="line">const &#123;BrowserWindow&#125; = electron;</span><br><span class="line"></span><br><span class="line">// Keep a global reference of the window object, if you don&apos;t, the window will</span><br><span class="line">// be closed automatically when the JavaScript object is garbage collected.</span><br><span class="line">let win;</span><br><span class="line"></span><br><span class="line">function createWindow() &#123;</span><br><span class="line">  // Create the browser window.</span><br><span class="line">  win = new BrowserWindow(&#123;width: 800, height: 600&#125;);</span><br><span class="line"></span><br><span class="line">  // and load the index.html of the app.</span><br><span class="line">  win.loadURL(`file://$&#123;__dirname&#125;/index.html`);</span><br><span class="line"></span><br><span class="line">  // Open the DevTools.</span><br><span class="line">  win.webContents.openDevTools();</span><br><span class="line"></span><br><span class="line">  // Emitted when the window is closed.</span><br><span class="line">  win.on(&apos;closed&apos;, () =&gt; &#123;</span><br><span class="line">    // Dereference the window object, usually you would store windows</span><br><span class="line">    // in an array if your app supports multi windows, this is the time</span><br><span class="line">    // when you should delete the corresponding element.</span><br><span class="line">    win = null;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// This method will be called when Electron has finished</span><br><span class="line">// initialization and is ready to create browser windows.</span><br><span class="line">// Some APIs can only be used after this event occurs.</span><br><span class="line">app.on(&apos;ready&apos;, createWindow);</span><br><span class="line"></span><br><span class="line">// Quit when all windows are closed.</span><br><span class="line">app.on(&apos;window-all-closed&apos;, () =&gt; &#123;</span><br><span class="line">  // On macOS it is common for applications and their menu bar</span><br><span class="line">  // to stay active until the user quits explicitly with Cmd + Q</span><br><span class="line">  if (process.platform !== &apos;darwin&apos;) &#123;</span><br><span class="line">    app.quit();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.on(&apos;activate&apos;, () =&gt; &#123;</span><br><span class="line">  // On macOS it&apos;s common to re-create a window in the app when the</span><br><span class="line">  // dock icon is clicked and there are no other windows open.</span><br><span class="line">  if (win === null) &#123;</span><br><span class="line">    createWindow();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// In this file you can include the rest of your app&apos;s specific main process</span><br><span class="line">// code. You can also put them in separate files and require them here.</span><br></pre></td></tr></table></figure></p>
-<p>最后，你想展示的<code>index.html</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Hello World!&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Hello World!&lt;/h1&gt;</span><br><span class="line">    We are using node &lt;script&gt;document.write(process.versions.node)&lt;/script&gt;,</span><br><span class="line">    Chrome &lt;script&gt;document.write(process.versions.chrome)&lt;/script&gt;,</span><br><span class="line">    and Electron &lt;script&gt;document.write(process.versions.electron)&lt;/script&gt;.</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>运行你的应用</strong></p>
-<blockquote>
-<p>一旦你已经创建了最初的<code>main.js</code>，<code>index.html</code>,<code>package.json</code>，你可能会想尝试在本地<br>运行并测试，看看是不是和期望的那样正常运行。<br><strong>electron-prebuilt</strong><br><code>electron-prebuilt</code>是一个<code>npm</code>模块它包含了所使用的Electron预编译版本，如果你已经全局<br>安装了它，你只需要在你的应用程序目录下执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">electron .</span><br></pre></td></tr></table></figure></p>
-<p>如果你是局部安装的，运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/.bin/electron .</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/04/Electron/quik_start/" data-id="ciw3cidy90009qso00rbuyuyu" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Webpack/style_sheets" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/03/Webpack/style_sheets/" class="article-date">
-  <time datetime="2016-07-03T14:54:44.422Z" itemprop="datePublished">2016-07-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Webpack/">Webpack</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/03/Webpack/style_sheets/">样式脚本</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>嵌入的样式脚本</strong></p>
-<blockquote>
-<p>通过使用<code>style-loader</code>和<code>css-loader</code>，可以webpack打包的javascript文件中嵌入样式脚本.<br>通过这种方式可以是css模块化，这种方式使用很简单<code>require(&quot;./stylesheet.css&quot;)</code>。</p>
-</blockquote>
-<p><strong>通过npm安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install style-loader css-loader --save-dev</span><br></pre></td></tr></table></figure></p>
-<p><strong>配置</strong></p>
-<blockquote>
-<p>通过一下的方式支持<code>require(xxx.css)</code>这种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    // ...</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123; test: /\.css$/, loader: &quot;style-loader!css-loader&quot; &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>对于css预处理语言，可以参照加载器的配置示例，你可以链式的使用它。<br>记住，掌握加载器的执行顺序很难，所以设计好样式让其与顺序无关（但是css文件内的样式顺序<br>还是得依靠的）。<br><strong>使用css</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// in your modules just require the stylesheet</span><br><span class="line">// This has the side effect that a &lt;style&gt;-tag is added to the DOM.</span><br><span class="line">require(&quot;./stylesheet.css&quot;);</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>分离css打包文件</strong></p>
-<blockquote>
-<p>与<code>extract-text-webpack-plugin</code>结合使用，可以生成一个原生的css文件。<br>使用两种方式实现代码分离</p>
-<ul>
-<li>每个初始块创建一个css文件，然后在其余块中引入（推荐）</li>
-<li>每个初始块创建一个 css 文件，其中同时包含了依赖块中的样式<br>推荐第一种方式是因为可以减少页面初始化时间，在小型多入口项目中第二种方式可以利用缓存来减少<br>http消耗</li>
-</ul>
-</blockquote>
-<p><strong>安装<code>extract-text-webpack-plugin</code></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install extract-text-webpack-plugin --save</span><br></pre></td></tr></table></figure></p>
-<p><strong>通用</strong></p>
-<blockquote>
-<p>使用这个插件需要标记加载器<br><strong>把css从初始化块中分离到css文件中</strong><br>这个例子适用于多入口以及单页面应用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// webpack.config.js</span><br><span class="line">var ExtractTextPlugin = require(&quot;extract-text-webpack-plugin&quot;);</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // The standard entry point and output config</span><br><span class="line">    entry: &#123;</span><br><span class="line">        posts: &quot;./posts&quot;,</span><br><span class="line">        post: &quot;./post&quot;,</span><br><span class="line">        about: &quot;./about&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        filename: &quot;[name].js&quot;,</span><br><span class="line">        chunkFilename: &quot;[id].js&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    module: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            // Extract css files</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.css$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader&quot;)</span><br><span class="line">            &#125;,</span><br><span class="line">            // Optionally extract less files</span><br><span class="line">            // or any other compile-to-css language</span><br><span class="line">            &#123;</span><br><span class="line">                test: /\.less$/,</span><br><span class="line">                loader: ExtractTextPlugin.extract(&quot;style-loader&quot;, &quot;css-loader!less-loader&quot;)</span><br><span class="line">            &#125;</span><br><span class="line">            // You could also use other loaders the same way. I. e. the autoprefixer-loader</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    // Use the plugin to specify the resulting filename (and add needed behavior to the compiler)</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你将获得以下文件</p>
-<ul>
-<li>posts.js posts.css</li>
-<li>post.js post.css</li>
-<li>about.js about.css</li>
-</ul>
-</blockquote>
-<p><strong>把所有的样式分离到css文件中</strong></p>
-<blockquote>
-<p>使用第二种方式只需要设置<code>allChunks</code>为<code>true</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new ExtractTextPlugin(&quot;style.css&quot;, &#123;</span><br><span class="line">            allChunks: true</span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你将会得到以下输出文件</p>
-<ul>
-<li>posts.js</li>
-<li>post.js</li>
-<li>about.js</li>
-<li>style.css</li>
-</ul>
-</blockquote>
-<p><strong>公共块的样式</strong></p>
-<blockquote>
-<p>你可以与<code>CommonsChunkPlugin</code>结合使用分离出一个css文件，在这个示例中公共快也会生成一个<br>css文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// ...</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    // ...</span><br><span class="line">    plugins: [</span><br><span class="line">        new webpack.optimize.CommonsChunkPlugin(&quot;commons&quot;, &quot;commons.js&quot;),</span><br><span class="line">        new ExtractTextPlugin(&quot;[name].css&quot;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你会获得以下输出文件</p>
-<ul>
-<li>commons.js commons.css</li>
-<li>posts.js posts.css</li>
-<li>post.js post.css</li>
-<li>about.js about.css</li>
-</ul>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/03/Webpack/style_sheets/" data-id="ciw3cie1h001aqso0upo91gdl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/07/05/Electron/desktop_environment_integration/" data-id="ciw3pes4e0001pco0gnj0h06g" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -730,7 +627,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -742,7 +639,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -754,23 +651,23 @@
       <ul>
         
           <li>
+            <a href="/2016/11/29/vue/event_handle/">事件处理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/list_render/">Vue的列表渲染</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/conditional_render/">条件渲染</a>
+          </li>
+        
+          <li>
             <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
           </li>
         
           <li>
             <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/29/vue/template_syntax/">Vue模板语法</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/28/vue/get_started/">Vue纵览</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/24/phabricator/what_is_docker/">docker</a>
           </li>
         
       </ul>
@@ -784,7 +681,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

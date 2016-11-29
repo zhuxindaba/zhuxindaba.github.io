@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vue的列表渲染 | zhuxin_blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="v-for
+使用v-for指令渲染基于数组的列表，v-for的语法格式为item in items,items是data里的属性，item是每个数组中每个元素的别名。
+
+基本用法123456789101112131415&amp;lt;ul id=&amp;quot;example-1&amp;quot;&amp;gt;  &amp;lt;li v-for=&amp;quot;item in items&amp;quot;&amp;gt;    &amp;#123;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue的列表渲染">
+<meta property="og:url" content="http://yoursite.com/2016/11/29/vue/list_render/index.html">
+<meta property="og:site_name" content="zhuxin_blog">
+<meta property="og:description" content="v-for
+使用v-for指令渲染基于数组的列表，v-for的语法格式为item in items,items是data里的属性，item是每个数组中每个元素的别名。
+
+基本用法123456789101112131415&amp;lt;ul id=&amp;quot;example-1&amp;quot;&amp;gt;  &amp;lt;li v-for=&amp;quot;item in items&amp;quot;&amp;gt;    &amp;#123;&amp;">
+<meta property="og:updated_time" content="2016-11-29T15:36:18.974Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue的列表渲染">
+<meta name="twitter:description" content="v-for
+使用v-for指令渲染基于数组的列表，v-for的语法格式为item in items,items是data里的属性，item是每个数组中每个元素的别名。
+
+基本用法123456789101112131415&amp;lt;ul id=&amp;quot;example-1&amp;quot;&amp;gt;  &amp;lt;li v-for=&amp;quot;item in items&amp;quot;&amp;gt;    &amp;#123;&amp;">
+  
+    <link rel="alternative" href="/atom.xml" title="zhuxin_blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  
+  <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700|Open+Sans:700,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <div id="header-title">
+        <h1 id="logo-wrap">
+          <a href="/" id="logo">
+          
+              <span id="subtitle">每天进步一点点</span>
+          
+          </a>
+        </h1>
+      </div>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">我的文章</a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="outer">
+        <section id="main"><article id="post-vue/list_render" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/29/vue/list_render/" class="article-date">
+  <time datetime="2016-11-29T10:56:17.881Z" itemprop="datePublished">2016-11-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Vue/">Vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vue的列表渲染
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="v-for"><a href="#v-for" class="headerlink" title="v-for"></a>v-for</h3><blockquote>
+<p>使用<code>v-for</code>指令渲染基于数组的列表，<code>v-for</code>的语法格式为<code>item in items</code>,<code>items</code>是data<br>里的属性，<code>item</code>是每个数组中每个元素的别名。</p>
+</blockquote>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=&quot;example-1&quot;&gt;</span><br><span class="line">  &lt;li v-for=&quot;item in items&quot;&gt;</span><br><span class="line">    &#123;&#123; item.message &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">var example1 = new Vue(&#123;</span><br><span class="line">  el: &apos;#example-1&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    items: [</span><br><span class="line">      &#123; message: &apos;Foo&apos; &#125;,</span><br><span class="line">      &#123; message: &apos;Bar&apos; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在<code>v-for</code>块里，有到父属性范围的访问权限，<code>v-for</code>也支持一个可选的第二个参数，用来表示当前<br>元素的索引:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=&quot;example-2&quot;&gt;</span><br><span class="line">  &lt;li v-for=&quot;(item, index) in items&quot;&gt;</span><br><span class="line">    &#123;&#123; parentMessage &#125;&#125; - &#123;&#123; index &#125;&#125; - &#123;&#123; item.message &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">var example2 = new Vue(&#123;</span><br><span class="line">  el: &apos;#example-2&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    parentMessage: &apos;Parent&apos;,</span><br><span class="line">    items: [</span><br><span class="line">      &#123; message: &apos;Foo&apos; &#125;,</span><br><span class="line">      &#123; message: &apos;Bar&apos; &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>也可以使用<code>of</code>代替<code>in</code>作为定界符，这更接近js中迭代器的语法：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-for=&quot;item of items&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="模板v-for"><a href="#模板v-for" class="headerlink" title="模板v-for"></a>模板<code>v-for</code></h3><blockquote>
+<p>和模板<code>v-if</code>相似，可以在<code>&lt;template&gt;</code>中使用<code>v-for</code>用来渲染多个元素的块，比如：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">  &lt;template v-for=&quot;item in items&quot;&gt;</span><br><span class="line">    &lt;li&gt;&#123;&#123; item.msg &#125;&#125;&lt;/li&gt;</span><br><span class="line">    &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;</span><br><span class="line">  &lt;/template&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="对象v-for"><a href="#对象v-for" class="headerlink" title="对象v-for"></a>对象<code>v-for</code></h3><blockquote>
+<p>也可以使用<code>v-for</code>来迭代一个对象的所有属性：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul id=&quot;repeat-object&quot; class=&quot;demo&quot;&gt;</span><br><span class="line">  &lt;li v-for=&quot;value in object&quot;&gt;</span><br><span class="line">    &#123;&#123; value &#125;&#125;</span><br><span class="line">  &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#repeat-object&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    object: &#123;</span><br><span class="line">      FirstName: &apos;John&apos;,</span><br><span class="line">      LastName: &apos;Doe&apos;,</span><br><span class="line">      Age: 30</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>也可以对这个<code>key</code>提供第二个参数：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-for=&quot;(value, key) in object&quot;&gt;</span><br><span class="line">  &#123;&#123; key &#125;&#125; : &#123;&#123; value &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以及相应的索引：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-for=&quot;(value, key, index) in object&quot;&gt;</span><br><span class="line">  &#123;&#123; index &#125;&#125;. &#123;&#123; key &#125;&#125; : &#123;&#123; value &#125;&#125;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="范围性的v-for"><a href="#范围性的v-for" class="headerlink" title="范围性的v-for"></a>范围性的<code>v-for</code></h3><blockquote>
+<p><code>v-for</code>也接收一个整数，在这种场景中，它会重复渲染此模板多次：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;span v-for=&quot;n in 10&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="组件和v-for"><a href="#组件和v-for" class="headerlink" title="组件和v-for"></a>组件和<code>v-for</code></h3><blockquote>
+<p>可以在自定义组件中使用<code>v-for</code>:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-component v-for=&quot;item in items&quot;&gt;&lt;/my-component&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然而这不会将任何数据自动的传递给组件，因为组件有独立的基于它自己的作用域，为了将一个可迭代<br>的数据传递个给组件，需要使用属性：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-component</span><br><span class="line">  v-for=&quot;(item, index) in items&quot;</span><br><span class="line">  v-bind:item=&quot;item&quot;</span><br><span class="line">  v-bind:index=&quot;index&quot;&gt;</span><br><span class="line">&lt;/my-component&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不自动注入<code>item</code>到组件的原因是这会使组件紧耦合于<code>v-for</code>是如何工作的。为了明确data的<br>来源并使组件在其他情况下也可复用，这里有个例子：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;todo-list-example&quot;&gt;</span><br><span class="line">  &lt;input</span><br><span class="line">    v-model=&quot;newTodoText&quot;</span><br><span class="line">    v-on:keyup.enter=&quot;addNewTodo&quot;</span><br><span class="line">    placeholder=&quot;Add a todo&quot;</span><br><span class="line">  &gt;</span><br><span class="line">  &lt;ul&gt;</span><br><span class="line">    &lt;li</span><br><span class="line">      is=&quot;todo-item&quot;</span><br><span class="line">      v-for=&quot;(todo, index) in todos&quot;</span><br><span class="line">      v-bind:title=&quot;todo&quot;</span><br><span class="line">      v-on:remove=&quot;todos.splice(index, 1)&quot;</span><br><span class="line">    &gt;&lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">Vue.component(&apos;todo-item&apos;, &#123;</span><br><span class="line">  template: &apos;\</span><br><span class="line">    &lt;li&gt;\</span><br><span class="line">      &#123;&#123; title &#125;&#125;\</span><br><span class="line">      &lt;button v-on:click=&quot;$emit(\&apos;remove\&apos;)&quot;&gt;X&lt;/button&gt;\</span><br><span class="line">    &lt;/li&gt;\</span><br><span class="line">  &apos;,</span><br><span class="line">  props: [&apos;title&apos;]</span><br><span class="line">&#125;)</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#todo-list-example&apos;,</span><br><span class="line">  data: &#123;</span><br><span class="line">    newTodoText: &apos;&apos;,</span><br><span class="line">    todos: [</span><br><span class="line">      &apos;Do the dishes&apos;,</span><br><span class="line">      &apos;Take out the trash&apos;,</span><br><span class="line">      &apos;Mow the lawn&apos;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    addNewTodo: function () &#123;</span><br><span class="line">      this.todos.push(this.newTodoText)</span><br><span class="line">      this.newTodoText = &apos;&apos;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="key"><a href="#key" class="headerlink" title="key"></a>key</h3><blockquote>
+<p>当Vue更新一个由<code>v-for</code>渲染的列表时，默认情况下使用的是”原地修补”的策略，如果数据列表的<br>顺序改变了，移动DOM元素来匹配最新的顺序，Vue会原地简单的修正每一个元素确保特定索引初应该<br>渲染什么。这种默认方式是有效率的，但是只适用于你的列表渲染不依赖于子组件或临时DOM状态（例<br>如，input输入值）。你需要给每一个节点提供一个唯一的<code>key</code>属性，给Vue一个线索以便可以追踪<br>每个节点的身份，从而复用且重排序存在的节点.你需要使用<code>v-bind</code>来绑定动态的值，在这里使用<br>的是简写形式：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;</span><br><span class="line">  &lt;!-- content --&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>不管是否需要建议给<code>v-for</code>提供一个<code>key</code>,除非迭代的DOM内容很简单，或者你故意依赖默认行为来<br>提高性能增益。由于它是Vue标识节点的通用机制，<code>key</code>还有其它用途不仅仅是很<code>v-for</code>相关联。</p>
+</blockquote>
+<h3 id="数组改变的探测"><a href="#数组改变的探测" class="headerlink" title="数组改变的探测"></a>数组改变的探测</h3><h4 id="突变方法"><a href="#突变方法" class="headerlink" title="突变方法"></a>突变方法</h4><blockquote>
+<p>Vue包装了观察数组突变的方法，所以它们也会触发视图的更新，包装的方法有：</p>
+<ul>
+<li>push()</li>
+<li>pop()</li>
+<li>shift()</li>
+<li>unshift()</li>
+<li>splice()</li>
+<li>sort()</li>
+<li>reverse()<br>可以在浏览器的控制台中调用这些突变方法，比如： <code>example1.items.push({ message: &#39;Baz&#39; })</code></li>
+</ul>
+</blockquote>
+<h4 id="替换数组"><a href="#替换数组" class="headerlink" title="替换数组"></a>替换数组</h4><blockquote>
+<p>突变方法，顾名思义就是调用这些方法之后改变的是原始数组。和不是突变的方法相比较，比如：<br><code>filter()</code>, <code>concat()</code>,他们不改变原始数组而是返回一个新数组，当使用非突变方法时，你需<br>要用新数组替换原始数组：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">example1.items = example1.items.filter(function (item) &#123;</span><br><span class="line">  return item.message.match(/Foo/)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Vue实现了一些智能的启发式技术来最大化的复用DOM元素，所以替换一个数组是一个非常有效的操作。</p>
+</blockquote>
+<h4 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h4><blockquote>
+<p>由于js的限制，Vue不能发现以下数组的改变：</p>
+<ol>
+<li>直接通过索引给数组赋值，比如：<code>vm.items[indexOfItem] = newValue</code></li>
+<li>改变数组的长度。 比如： <code>vm.items.length = newLength</code><br>为了克服警告1，下面的两种方式完成的效果和<code>vm.items[indexOfItem] = newValue</code>是一样的,<br>但是会触发反应系统：</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Vue.set</span><br><span class="line">Vue.set(example1.items, indexOfItem, newValue)</span><br><span class="line"></span><br><span class="line">// Array.prototype.splice`</span><br><span class="line">example1.items.splice(indexOfItem, 1, newValue)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>处理警告2的方式，也使用<code>splice</code>:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example1.items.splice(newLength)</span><br></pre></td></tr></table></figure>
+<h3 id="排序或筛选结果的显示"><a href="#排序或筛选结果的显示" class="headerlink" title="排序或筛选结果的显示"></a>排序或筛选结果的显示</h3><blockquote>
+<p>有时候我们需要显示数字的筛选或排序结果没有必要去重置原始数组，在这种情况下，使用属性的计算<br>来返回筛选的或者排序好的数组：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-for=&quot;n in evenNumbers&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">data: &#123;</span><br><span class="line">  numbers: [ 1, 2, 3, 4, 5 ]</span><br><span class="line">&#125;,</span><br><span class="line">computed: &#123;</span><br><span class="line">  evenNumbers: function () &#123;</span><br><span class="line">    return this.numbers.filter(function (number) &#123;</span><br><span class="line">      return number % 2 === 0</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>或者：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-for=&quot;n in even(numbers)&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">data: &#123;</span><br><span class="line">  numbers: [ 1, 2, 3, 4, 5 ]</span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">  even: function (numbers) &#123;</span><br><span class="line">    return numbers.filter(function (number) &#123;</span><br><span class="line">      return number % 2 === 0</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/29/vue/list_render/" data-id="ciw3pesju003ipco04vzqccg6" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/29/vue/event_handle/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          事件处理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/29/vue/conditional_render/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">条件渲染</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          
+            <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget recents">
+      <ul>
+        
+          <li>
+            <a href="/2016/11/29/vue/event_handle/">事件处理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/list_render/">Vue的列表渲染</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/conditional_render/">条件渲染</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">我的文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+          
+        
+      </div>
+      <!--<div id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a></br>
+      &copy; 2016 zhuxin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</div>-->
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">我的文章</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
