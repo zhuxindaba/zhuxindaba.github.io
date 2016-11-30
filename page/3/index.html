@@ -63,6 +63,155 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-react/explain_applyMiddleware" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/01/react/explain_applyMiddleware/" class="article-date">
+  <time datetime="2016-10-31T16:06:46.313Z" itemprop="datePublished">2016-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="applyMiddleware-…middlewares"><a href="#applyMiddleware-…middlewares" class="headerlink" title="applyMiddleware(…middlewares)"></a>applyMiddleware(…middlewares)</h1><p>使用包含自定义功能的middleware来扩展Redux是一种推荐方式。Middleware可以让你包装store的dispatch方法来达到你想要的目的。<br>同事，middleware还拥有“可组合”这一关键特性。多个middleware可以被组合到一起使用，徐北广场middleware链。其中每个middleward<br>都不需要关心链中它前后的middleware的任何信息</p>
+<p>例如redux-thunk支持dispatch function，以此让action creator控制反转。被dispatch的function会接收dispatch作为参数，并且可以<br>异步调用它们。这类的function就称为thunk</p>
+<p>Middleware并不需要和<code>createStore</code>绑在一起使用。</p>
+<p><strong>参数</strong>    </p>
+<ul>
+<li>…middlewares(arguments):    </li>
+</ul>
+<p>遵循Redux middlewareAPI的函数。每个middleware接收<code>store</code>的dispatch和getState函数作为命名参数，并返回一个函数<br>该函数会被传入称为<code>next</code>的下一个middleware的dispatch方法,并返回一个接收action的新函数，这个函数可以直接调用next(action),<br>或者在其他需要的时刻调用。调用链中最后一个middleware会接收真实的store的<code>dispatch</code>方法作为<code>next</code>参数，并结束调用链</p>
+<p><strong>返回值</strong>    </p>
+<p>(Function)一个应用了middleware后的store enhancer。这个store enhancer就是一个函数，并且需要应用到createStore。它会<br>返回一个应用了middleware的新的<code>createStore</code></p>
+<p><strong>Example：自定义Logger Middleware</strong>    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import todos from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">function logger(&#123;getState&#125;) &#123;</span><br><span class="line">	return (next) =&gt; (action) =&gt; &#123;</span><br><span class="line">		console.log(&apos;will dispatch&apos;, action);</span><br><span class="line"></span><br><span class="line">		//调用middleware链中下一个middleware的dispatch</span><br><span class="line">		let returnValue = next(action);</span><br><span class="line"></span><br><span class="line">		console.log(&apos;state after dispatch&apos;, getState());</span><br><span class="line"></span><br><span class="line">		return returnValue;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let createStoreWithMiddleware = applyMiddleware(logger)(createStore);</span><br><span class="line">let store = createStoreWithMiddleware(todos, [&apos;use redux&apos;]);</span><br><span class="line"></span><br><span class="line">store.dispatch(&#123;type: &apos;ADD_TODO&apos;, text: &apos;understand the middleware&apos;&#125;)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">控制台打印</span><br><span class="line">will dispatch:&#123;type: &apos;ADD_TODO&apos;, text: &apos;use redux&apos;&#125;</span><br><span class="line">state after dispatch[&apos;use redux&apos;, &apos;understand the middleware&apos;]</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p><br><br><strong>Example：使用Thunk Middleware来做异步Action</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, combineReducers, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import thunk from &apos;redux-thunk&apos;;</span><br><span class="line">import * as reducers from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">//调用applyMiddleware,使用middleware增强createStore</span><br><span class="line">let createStoreWithMiddleware = applyMiddleware(thunk)(store);</span><br><span class="line"></span><br><span class="line">let reducer = combineReducers(reducers);</span><br><span class="line">//像原生createStore一样使用</span><br><span class="line">let store = createStoreWithMiddleware(reducer);</span><br><span class="line"></span><br><span class="line">function fetchSecretSauce() &#123;</span><br><span class="line">&#125;	return fetch(&apos;http:xx.xx.xx/xx/xx&apos;);</span><br><span class="line"></span><br><span class="line">//普通的action creator，它们返回的action不需要middleware就能被dispatch</span><br><span class="line">//但是，它们只表达【事实】，并不表达【异步数据流】</span><br><span class="line">function makeASandwich(forPerson, secretSauce) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;MAKE_SANDWICH&apos;,</span><br><span class="line">		forPerson,</span><br><span class="line">		secretSauce</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function apologize(fromPerson, toPerson, error) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;APOLOGIZE&apos;,</span><br><span class="line">		fromPerson,</span><br><span class="line">		toPerson,</span><br><span class="line">		error</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function withdrawMoney(amount) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;WITHDRAW&apos;,</span><br><span class="line">		amount</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//即使不使用middleware，也可以dispatch action：</span><br><span class="line">store.dispatch(withdrawMoney(100))</span><br><span class="line"></span><br><span class="line">//如何处理异步action？如：API调用，或者路由跳转</span><br><span class="line">//用thunk：它是一个返回函数的函数</span><br><span class="line"></span><br><span class="line">function makeASandWichSecretSauce(forPerson) &#123;</span><br><span class="line"></span><br><span class="line">	//控制反转！返回一个接收`dispatch`的函数</span><br><span class="line">	//Thunk middleware知道如何把异步 thunk action 转为普通action</span><br><span class="line">	return function (dispatch) &#123;</span><br><span class="line">		return fetchSecretSauce().then(</span><br><span class="line">			sauce =&gt; dispatch(makeASandwich(forPerson, sauce)),</span><br><span class="line">			error =&gt; dispatch(apologize(&apos;The Sandwich Shop&apos;, forPerson, error))</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Thunk middleware可以让我们像dispatch普通action一样dispatch异步的thunk action</span><br><span class="line">store.dispatch(makeASandWichSecretSauce(&apos;Me&apos;));</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw58i9x1002duko00eqg4ekg" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-react/API_Explain" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/01/react/API_Explain/" class="article-date">
+  <time datetime="2016-10-31T16:06:46.308Z" itemprop="datePublished">2016-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Redux-API和词汇解释-词汇解释-State"><a href="#Redux-API和词汇解释-词汇解释-State" class="headerlink" title="Redux API和词汇解释 ###词汇解释 - State"></a>Redux API和词汇解释 ###词汇解释 - <strong>State</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">顶层state为一个对象,键-值集合，尽可能保证state可序列化。</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Action</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Action是一个用来表示即将改变state的对象。它是将数据放入store的唯一途径。action必须拥有一个`type`域，用来</span><br><span class="line">指明需要执行的action type</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Reducer</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Reducer接收两个参数：之前累计运算的结果和当前被累计的值，返回的是一个新的累计结果。在Redux中，累计对的运算</span><br><span class="line">结果是state对象，而被累计的值是action。Reducer由上次累计的结果state与当前被累积的action计算得到一个新state。</span><br><span class="line">`Reducer必须是纯函数，不要在Reducer中有副作用操作，比如API调用`</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>dispatch函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*dispatch function*是一个接收action或者异步action的函数，该函数要么往store分发一个或多个action，要么不分发</span><br><span class="line">任何action</span><br></pre></td></tr></table></figure>
+<p><br> <strong>一般的dispatch function 和store实例提供的没有middleware的base dispatch function之间的区别：</strong> Base dispatch functionzing是同步地把action与上一次从store返回的state发往reducer，然后重新计算出新的state，它 期望action会是一个可以被reducer消费的普通对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`Middleware`封装了base dispatch function，允许dispatch function处理action之外的异步action。middleware封装了</span><br><span class="line">base dispatch function，允许dispatch function处理action之外的异步action。Middleware可以改变、延迟、忽略action</span><br><span class="line">或异步action，也可以在传递给下一个middleware之前对它们进行解释</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Action Creator</strong><br> Action Creator就是一个创建action的函数，action是一个信息的负载，而action creator是一个创建action的工厂，调用action creator 只会生成action，但不分发，需要调用store的<code>dispatch</code>function才会引起变化，bound action creator，是指一个函数调用action creator并 立即将结果分发给一个特定的store实例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果action creator需要读取当前的state、调用API、或引起诸如路由变化等副作用，那么它应该返回一个异步action而不是action。</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>异步Action</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">异步action是一个发给dispatch函数的值，但是这个值还不能被reducer消费。在发往base dispatch() function之前，middleware会把异步action</span><br><span class="line">转化成一个或一组action。异步action可以有多种type，这取决于你所使用的middleware，比如thunk，虽然不会立即把数据传递给reducer，但是一旦</span><br><span class="line">操作完成就会出发action的分发事件。</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Middleware</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Middleware是一个组合dispatch function的高阶函数，返回一个新的dispatch function，通常将异步actions转换成action。</span><br><span class="line"></span><br><span class="line">Middleware利用复合函数使其可以组合其他函数，可用于记录action日志、产生其他诸如变化路由的操作用，或将异步的API调用</span><br><span class="line">变为一组同步的action</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Store</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Store维持着应用的state tree对象。因为应用的构建发生于reducer，所以一个Redux应用当中应当只有一个store</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Store Creator</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Store Creator是一个创建Redux store的函数。理解由Redux导出的base store creator与从store enhancer返回的store creator</span><br><span class="line">之间的区别</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>Store enhancer</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Store enhancer是一个组合store creator的高阶函数，返回一个新的强化过的store creator。这与middleware相似，它允许你通过符合函数</span><br><span class="line">改变store接口</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<hr>
+<h3 id="API文档-顶级暴露的方法-createStore-reducer-initialState"><a href="#API文档-顶级暴露的方法-createStore-reducer-initialState" class="headerlink" title="API文档 #### 顶级暴露的方法 - createStore(reducer, [initialState])"></a>API文档<br> #### 顶级暴露的方法 - <strong>createStore(reducer, [initialState])</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建一个Redux store来以存放应用中的所有state，应用中有且仅有一个store</span><br></pre></td></tr></table></figure>
+<p><strong>参数</strong></p>
+<ol>
+<li><p><code>reducer(*Function*)</code>:接收两个参数，分别是当前的state树和要处理的action，返回新的state树。</p>
+</li>
+<li><p><code>[initialState](any)</code>:初始时的state，如果你使用combineReducers创建reducer，它必须是一个普通对象，与传入的keys保持同样的结构</p>
+</li>
+</ol>
+<p><strong>返回值</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(Store):保存了应用所有state的对象。**改变state的惟一方法是dispatch action。**你也可以subscribe坚挺state的变化，然后更新UI</span><br></pre></td></tr></table></figure>
+<p><br> - <strong>combineReducers(reducers)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">**state对象的结构由传入的多个reducer的key决定**,通过为传入对象的reducer命名来控制state key的命名。例如</span><br><span class="line">`combineReducers(&#123;todos: todoReducer, counter: counterReducer&#125;)`将state的结构变为`&#123;todos: &apos;xxx&apos;, counter: &apos;xxx&apos;&#125;`</span><br><span class="line">ES6的简写方法`combineReducers(&#123; counter, todos &#125;)`等价于`combineReducers(&#123; counter: counter, todos: todos &#125;)`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong><a href="./explain-applyMiddleware.md">applyMiddleware(…middlewares)</a></strong></p>
+</li>
+<li><p><strong><a href="./explain-bindActionCreators.md">bindActionCreators(actionCreators, dispatch)</a></strong></p>
+</li>
+<li><p><strong>compose(…functions)</strong>待研究</p>
+</li>
+</ul>
+<p>####Store API<br><em> <em>*Store</em></em></p>
+<ul>
+<li><p>getState()</p>
+</li>
+<li><p>dispatch(action)</p>
+</li>
+<li><p>subscribe(listener)</p>
+</li>
+<li><p>getReducer()</p>
+</li>
+<li><p>replaceReducer(nextReducer)</p>
+</li>
+</ul>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw58i9wj001yuko0aep7syqg" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-react/life_cycle" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/01/react/life_cycle/" class="article-date">
@@ -106,7 +255,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw3pesip0033pco0ki1kp553" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/life_cycle/" data-id="ciw58i9x2002fuko0z0rcmzjh" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -206,7 +355,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw3peset0023pco0umar8kly" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/server/" data-id="ciw58i9wb001vuko0o5y4n5dm" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -282,7 +431,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw3pesf30025pco0y6mukzao" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/leanr_tcp_ip/" data-id="ciw58i9w8001tuko00v9jtoby" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -356,7 +505,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw3pesep0020pco0uc2csyca" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/integration/" data-id="ciw58i9w1001ruko0zpeees5f" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -396,7 +545,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw3pesea001ypco0i21973wy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/digestAuthenticate/" data-id="ciw58i9vz001puko0yz5de0hq" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -481,7 +630,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw3pese6001vpco01ot3qaag" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cookie/" data-id="ciw58i9vx001muko07ywrj32n" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -537,7 +686,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw3pescy001tpco09zffe67c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_2/" data-id="ciw58i9vv001kuko08cv9uvkw" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -637,106 +786,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw3pescv001rpco02hi34tvb" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-http/baseauthentication" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/21/http/baseauthentication/" class="article-date">
-  <time datetime="2016-10-20T16:36:41.529Z" itemprop="datePublished">2016-10-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Http/">Http</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/21/http/baseauthentication/">基本认证机制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>认证</strong></p>
-<blockquote>
-<p><strong>HTTP的质询/响应认证框架</strong><br>Web应用程序收到一个HTTP请求报文时，服务器没有按照请求执行动作，而是以一个”认证质询”进行<br>响应，要求用户提供一些保密信息来说明他是谁，从而对其进行质询。用户再次发送请求时，要附上<br>保密证书（用户名和密码）。如果证书不匹配，服务器可以再次质询客户端，或产生一条错误信息。<br>如果证书匹配，就可以完成正常请求了。<br><strong>认证协议与首部</strong><br>HTTP通过一组可定制的控制首部，为不同的认证协议提供了一个可扩展框架，首部格式和内容会随<br>认证协议的不同而发生变化。认证协议也是在HTTP认证首部中指定的。HTTP定义了两个官方的认证<br>协议：基本认证和摘要认证。<br>认证的4个步骤：<br>首部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;描述&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;方法状态</p>
-<ul>
-<li>请求 第一条请求没有认证信息</li>
-<li>质询 WWW-Authenticate 服务器用401状态拒绝请求，说明需要用户提供用户名和密码，服务器<br>可能分为不同的区域，每个区域都有自己的密码，所以服务器会在WWW-Authenticate首部对保护区域<br>进行描述，同样，认证算法也是在WWW-Authenticate首部中指定的。</li>
-<li>授权 Authorization 客户端重新发出请求，但这一次会附加一个Authorization首部，用来<br>说明认证算法，用户名，密码。</li>
-<li>成功 Authentication-Info 如果授权证书是正确的，服务器就将文档返回。有些授权算法会<br>在可选的Authentication-Info首部返回一些与授权会话相关的附加信息。</li>
-</ul>
-</blockquote>
-<p><strong>基本认证的安全缺陷</strong></p>
-<blockquote>
-<ol>
-<li>基本认证会通过网络发送用户名和密码，这些用户名和密码以一种很容易解码的形式表示，不安全</li>
-<li>即使密码是一更难解码的方式加密的，第三方用户仍然可以捕获修改过的用户名和密码，并将<br>修改过的用户名和密码一次一次的重放给原始服务器。</li>
-<li>基本认证没有提供任何针对代理和作为中间人的中间节点防护措施，他们没有修改认证首部，但<br>却修改了报文的其余部分，这样就严重的改变了事务的本质。</li>
-</ol>
-</blockquote>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/21/http/baseauthentication/" data-id="ciw3pescq001opco0xp2q7puf" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Electron/window.openction" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/07/10/Electron/window.openction/" class="article-date">
-  <time datetime="2016-07-10T14:48:00.278Z" itemprop="datePublished">2016-07-10</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Electron/">Electron</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/10/Electron/window.openction/">window.open函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>window.open函数</strong><br>&gt;</p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/07/10/Electron/window.openction/" data-id="ciw3pes6x000gpco0bfcgj0vk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/21/http/cache_1/" data-id="ciw58i9vt001iuko0fqq03jzc" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -760,7 +810,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -770,6 +820,14 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/30/vue/components/">组件</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/30/vue/form_input/">form input绑定</a>
+          </li>
         
           <li>
             <a href="/2016/11/29/vue/event_handle/">事件处理</a>
@@ -783,14 +841,6 @@
             <a href="/2016/11/29/vue/conditional_render/">条件渲染</a>
           </li>
         
-          <li>
-            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -802,7 +852,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

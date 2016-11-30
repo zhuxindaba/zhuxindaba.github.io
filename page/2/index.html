@@ -63,6 +63,157 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-phabricator/eslint" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/21/phabricator/eslint/" class="article-date">
+  <time datetime="2016-11-21T15:42:13.212Z" itemprop="datePublished">2016-11-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/development-tools/">development tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/21/phabricator/eslint/">eslint</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Why-We-Need-Eslint"><a href="#Why-We-Need-Eslint" class="headerlink" title="Why We Need Eslint?"></a>Why We Need Eslint?</h3><blockquote>
+<p>在团队配合中，有的人是Mac开发，有的人是Windows来发，使用Eslint来强制开发人员统一代码<br>格式，比如常见的<code>tab</code>以及空格,以及windows和Mac的回车标识，也可强制开发人员删除无用的<br>垃圾代码，比如<code>alert(1212), console.log(111)</code>等等，或者条件语句中使用<code>if(true){}</code>,<br>总之它就是用来检测开发人员代码书写规范的一个集成工具。so beautiful!</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/21/phabricator/eslint/" data-id="ciw58i9xk002muko0ffx914m0" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-vue/movitation_design" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/17/vue/movitation_design/" class="article-date">
+  <time datetime="2016-11-17T11:43:37.495Z" itemprop="datePublished">2016-11-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Vue/">Vue</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/17/vue/movitation_design/">了解Vue</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><blockquote>
+<p>vue是一个用来构建交互式web界面的库。它的核心集中于视图层，它很容易与其他库或现有的项目集成。<br>另一方面，Vue完全有能力服务员复杂的单页面应用。但是Vue和其它的框架有什么不同呢？</p>
+</blockquote>
+<h3 id="和React的比较"><a href="#和React的比较" class="headerlink" title="和React的比较"></a>和React的比较</h3><blockquote>
+<p>React和Vue有很多相似之处:</p>
+<ul>
+<li>利用虚拟DOM</li>
+<li>提供了reactive(反应性)和可组合的视图组件<br>在代码核心库中，保持对相关库管理的routing，全局state的关注。作用域也很相似。我们想保证的不仅<br>有技术上的准确也要确保技术的平衡，我们找出React哪里优于Vue，比如，React庞大的生态圈以及<br>自定义渲染器的丰富性。</li>
+</ul>
+</blockquote>
+<h5 id="性能（渲染性能）"><a href="#性能（渲染性能）" class="headerlink" title="性能（渲染性能）"></a>性能（渲染性能）</h5><blockquote>
+<p>Vue胜过React，当渲染UI时，DOM的操作通常是非常昂贵的，没有库可以使那些原生的操作更快，我们能做的<br>最好的就是:</p>
+<ol>
+<li>尽量减少必要的DOM变化的数量，React和Vue都使用了虚拟DOM来解决这个问题。</li>
+<li>尽可能在顶层的DOM操作上添加较小的开销(纯js计算)，这里是React和Vue的区别。<br>javascript开销和计算必要的DOM操作机制有直接关系，Vue和React都利用虚拟DOM来达到它，但是Vue的实现更<br>轻量级，因此比React的开销更少。<br>React和Vue都提供了功能组件，他们是stateless，instanceless的因此需要的开销很少。当它们用于性能关键<br>的场景中，Vue更快，为了证明这个，我们渲染1万个item100次，强烈建议自己实践，因为它和软件、浏览器相关。<br>相关比较如下:</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">                  Vue       React</span><br><span class="line">Fatest            23ms      63ms</span><br><span class="line">Mediam            42ms      81ms</span><br><span class="line">Average           51ms      94ms</span><br><span class="line">95thPerc.         73ms      164ms</span><br><span class="line">Slowest           343ms     453ms</span><br></pre></td></tr></table></figure>
+<h5 id="更新性能"><a href="#更新性能" class="headerlink" title="更新性能"></a>更新性能</h5><blockquote>
+<p>在React中，当一个组件的state改变了，它会触发整个组件的sub-tree的重新渲染，为了避免child组件不必要<br>的渲染，你需要在该组件中使用<code>shouldComponentUpdate</code>并定义不变的结构，而在Vue中，在渲染过程中，会自<br>动的追踪组件的依赖项，所以系统会精确的知道哪个组件需要正真的重新渲染。这就意味着未优化的Vue比未优化的<br>React要快。由于Vue的加强了渲染性能，即使React进行了全部的优化操作，通常也比Vue慢。</p>
+</blockquote>
+<h5 id="在开发过程中"><a href="#在开发过程中" class="headerlink" title="在开发过程中"></a>在开发过程中</h5><blockquote>
+<p>虽然在生产环境中的性能指标是非常重要的，因为这和用户体验相关联。但是在开发时的性能仍然重要，因为这与<br>我们开发者相关联.<br>Vue和React在大多数程序中开发可以保持足够快速。但是，在高帧速率的可视化或动画时，Vue每秒处理10帧，而<br>React每秒只有1帧。这是因为在开发环境中React需要检查大量的不变量，这是用来提示一些重要的错误或警告用的。<br>当然在Vue中也是同意这是很重要的，但是当执行这些检查时，我们对性能保持密切关注。</p>
+</blockquote>
+<h5 id="HTML-amp-CSS"><a href="#HTML-amp-CSS" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h5><blockquote>
+<p>在React中，所有的东西是javascript，虽然听起来很简单且高雅但是当你向下挖掘时，在javascript中写HTML和CSS，<br>当解决问题时，会很痛苦。而在Vue中，我们信奉web的技术并将它们，将css写在html顶部。</p>
+<p>####### JSX vs Templates<br>在React中，所有的组件在JSX中来表示他们的UI，下面是个例子:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">render () &#123;</span><br><span class="line">  let &#123; items &#125; = this.props</span><br><span class="line">  let children</span><br><span class="line">  if (items.length &gt; 0) &#123;</span><br><span class="line">    children = (</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &#123;items.map(item =&gt;</span><br><span class="line">          &lt;li key=&#123;item.id&#125;&gt;&#123;item.name&#125;&lt;/li&gt;</span><br><span class="line">        )&#125;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    children = &lt;p&gt;No items found.&lt;/p&gt;</span><br><span class="line">  &#125;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&apos;list-container&apos;&gt;</span><br><span class="line">      &#123;children&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>JSX有以下优点：</p>
+<ul>
+<li>使用编程语言（js）构建你的视图。</li>
+<li>在某些方式下，对JSX的工具支持比vue的模板更先进。<br>在Vue中，我们有<code>render functions</code>甚至还有支持<code>jsx</code>。</li>
+</ul>
+</blockquote>
+<h3 id="HTML-amp-CSS-1"><a href="#HTML-amp-CSS-1" class="headerlink" title="HTML &amp; CSS"></a>HTML &amp; CSS</h3><blockquote>
+<p>在Vue中，有渲染器函数并且支持<code>jsx</code>,默认情况下，我们提供模板作为选择方案:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;list-container&quot;&gt;</span><br><span class="line">    &lt;ul v-if=&quot;items.length&quot;&gt;</span><br><span class="line">      &lt;li v-for=&quot;item in items&quot;&gt;</span><br><span class="line">        &#123;&#123; item.name &#125;&#125;</span><br><span class="line">      &lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;p v-else&gt;No items found.&lt;/p&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>它的优势：</p>
+<ul>
+<li>模板中有少量的实现并且代码风格优雅</li>
+<li>模板一直是称述性质的</li>
+<li>任何有效的HTML在模板中也是有效的</li>
+<li>读起来很像英语</li>
+<li>不需要再高版本的javascript中增加可读性。<br>另外一个好处就是你可以使用预处理器处理<code>HTML-compliant</code>模板，比如Pug书写你的Vue模板:</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">div.list-container</span><br><span class="line">  ul(v-if=&quot;items.length&quot;)</span><br><span class="line">    li(v-for=&quot;item in items&quot;) &#123;&#123; item.name &#125;&#125;</span><br><span class="line">  p(v-else) No items found.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Component-Scoped CSS（组件范围的CSS）</strong><br>除非你的组件分布在多个文件中（比如CSS Modules），范围性的CSS在React中通常是在js中。而在<br>Vue中，你完全可以在单个文件中访问到CSS：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;style scoped&gt;</span><br><span class="line">  @media (min-width: 250px) &#123;</span><br><span class="line">    .list-container:hover &#123;</span><br><span class="line">      background: orange;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>scoped</code>属性自动的对组件范围内的元素通过添加一个唯一的属性来编译。</p>
+</blockquote>
+<h3 id="规模"><a href="#规模" class="headerlink" title="规模"></a>规模</h3><blockquote>
+<p>React社区在状态管理上引入了<code>flux/redux</code>,状态管理方式可以在Vue很容易的集成进来。但是尽管<br>如此，React的生态圈还是要比Vue丰富。Vue提供了一个十分简单生成Vue项目的<a href="https://github.com/vuejs/vue-cli" target="_blank" rel="external">命令行工具</a>。</p>
+</blockquote>
+<h3 id="Scaling-Down"><a href="#Scaling-Down" class="headerlink" title="Scaling Down"></a>Scaling Down</h3><blockquote>
+<p>React的学习曲线比较陡峭，在你学习之前你需要了解JSX以及ES2015.Vue中可以简单的通过在html引入vue库<br>来使用vue，React也行啊！！！</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;https://unpkg.com/vue/dist/vue.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Native-Rendering"><a href="#Native-Rendering" class="headerlink" title="Native Rendering"></a>Native Rendering</h3><blockquote>
+<p>React Native可以已React组件的形式写原生的IOS、Android程序，在这方面，Vue已经与<a href="https://alibaba.github.io/weex/" target="_blank" rel="external">Weex</a>合作了。<br>Weex是由阿里巴巴开发的一个跨平台UI框架，这意味着使用Weex，你可以以Vue的组件语法规则开发出的程序可以在浏览器，IOS，Android运行。<br>额，这点我承认确实比react-native强悍啊。。。。，当然Weex正在活跃的开发，和react-native一样不成熟。但是Vue和Weex合作开发啊，选择<br>React社区还是选择Vue社区呢？如果Weex和Vue成熟稳定的话选择Vue生态圈我觉得还是不错的。</p>
+</blockquote>
+
+      
+    </div>
+   <!-- <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/17/vue/movitation_design/" data-id="ciw58i9z4003vuko0eszy016r" class="article-share-link">Share</a>
+      
+      
+    </footer>-->
+  </div>
+  
+</article>
+
+
+  
     <article id="post-phabricator/install_phabricator" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/11/16/phabricator/install_phabricator/" class="article-date">
@@ -156,7 +307,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="ciw3pesgj002kpco0jq9o8ptl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/phabricator/install_phabricator/" data-id="ciw58i9xt002ruko0dz164v5h" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -227,7 +378,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="ciw3pesi70030pco0cyjkrj1c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/16/react/internal_instance/" data-id="ciw58i9xr002puko0e6334brd" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -285,7 +436,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="ciw3peshj002rpco085c9142r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/15/react/design_principles/" data-id="ciw58i9xd002kuko0zjsnhev3" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -489,7 +640,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw3pesi1002zpco0ymw3txsh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/12/react/implemention_notes/" data-id="ciw58i9wz002auko0cjc95lkj" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -589,7 +740,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw3pesiy0037pco09x1td6tr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/10/react/reconciler_algorithm/" data-id="ciw58i9y70034uko0a38tjg6w" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -761,7 +912,7 @@
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw3peshk002spco0g3ljdrjy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/09/react/codebase_overview/" data-id="ciw58i9wp0023uko0b8fslkcb" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -916,7 +1067,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw3pesiu0034pco0hmhtad6i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/react_redux/" data-id="ciw58i9yb0039uko0vzzvnepw" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -973,156 +1124,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
       
     </div>
    <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw3peshv002wpco038e94pzr" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-react/explain_applyMiddleware" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/01/react/explain_applyMiddleware/" class="article-date">
-  <time datetime="2016-10-31T16:06:46.313Z" itemprop="datePublished">2016-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/react/explain_applyMiddleware/">applyMiddleware</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="applyMiddleware-…middlewares"><a href="#applyMiddleware-…middlewares" class="headerlink" title="applyMiddleware(…middlewares)"></a>applyMiddleware(…middlewares)</h1><p>使用包含自定义功能的middleware来扩展Redux是一种推荐方式。Middleware可以让你包装store的dispatch方法来达到你想要的目的。<br>同事，middleware还拥有“可组合”这一关键特性。多个middleware可以被组合到一起使用，徐北广场middleware链。其中每个middleward<br>都不需要关心链中它前后的middleware的任何信息</p>
-<p>例如redux-thunk支持dispatch function，以此让action creator控制反转。被dispatch的function会接收dispatch作为参数，并且可以<br>异步调用它们。这类的function就称为thunk</p>
-<p>Middleware并不需要和<code>createStore</code>绑在一起使用。</p>
-<p><strong>参数</strong>    </p>
-<ul>
-<li>…middlewares(arguments):    </li>
-</ul>
-<p>遵循Redux middlewareAPI的函数。每个middleware接收<code>store</code>的dispatch和getState函数作为命名参数，并返回一个函数<br>该函数会被传入称为<code>next</code>的下一个middleware的dispatch方法,并返回一个接收action的新函数，这个函数可以直接调用next(action),<br>或者在其他需要的时刻调用。调用链中最后一个middleware会接收真实的store的<code>dispatch</code>方法作为<code>next</code>参数，并结束调用链</p>
-<p><strong>返回值</strong>    </p>
-<p>(Function)一个应用了middleware后的store enhancer。这个store enhancer就是一个函数，并且需要应用到createStore。它会<br>返回一个应用了middleware的新的<code>createStore</code></p>
-<p><strong>Example：自定义Logger Middleware</strong>    </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import todos from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">function logger(&#123;getState&#125;) &#123;</span><br><span class="line">	return (next) =&gt; (action) =&gt; &#123;</span><br><span class="line">		console.log(&apos;will dispatch&apos;, action);</span><br><span class="line"></span><br><span class="line">		//调用middleware链中下一个middleware的dispatch</span><br><span class="line">		let returnValue = next(action);</span><br><span class="line"></span><br><span class="line">		console.log(&apos;state after dispatch&apos;, getState());</span><br><span class="line"></span><br><span class="line">		return returnValue;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let createStoreWithMiddleware = applyMiddleware(logger)(createStore);</span><br><span class="line">let store = createStoreWithMiddleware(todos, [&apos;use redux&apos;]);</span><br><span class="line"></span><br><span class="line">store.dispatch(&#123;type: &apos;ADD_TODO&apos;, text: &apos;understand the middleware&apos;&#125;)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">控制台打印</span><br><span class="line">will dispatch:&#123;type: &apos;ADD_TODO&apos;, text: &apos;use redux&apos;&#125;</span><br><span class="line">state after dispatch[&apos;use redux&apos;, &apos;understand the middleware&apos;]</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-<p><br><br><strong>Example：使用Thunk Middleware来做异步Action</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createStore, combineReducers, applyMiddleware &#125; from &apos;redux&apos;;</span><br><span class="line">import thunk from &apos;redux-thunk&apos;;</span><br><span class="line">import * as reducers from &apos;./reducers&apos;;</span><br><span class="line"></span><br><span class="line">//调用applyMiddleware,使用middleware增强createStore</span><br><span class="line">let createStoreWithMiddleware = applyMiddleware(thunk)(store);</span><br><span class="line"></span><br><span class="line">let reducer = combineReducers(reducers);</span><br><span class="line">//像原生createStore一样使用</span><br><span class="line">let store = createStoreWithMiddleware(reducer);</span><br><span class="line"></span><br><span class="line">function fetchSecretSauce() &#123;</span><br><span class="line">&#125;	return fetch(&apos;http:xx.xx.xx/xx/xx&apos;);</span><br><span class="line"></span><br><span class="line">//普通的action creator，它们返回的action不需要middleware就能被dispatch</span><br><span class="line">//但是，它们只表达【事实】，并不表达【异步数据流】</span><br><span class="line">function makeASandwich(forPerson, secretSauce) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;MAKE_SANDWICH&apos;,</span><br><span class="line">		forPerson,</span><br><span class="line">		secretSauce</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function apologize(fromPerson, toPerson, error) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;APOLOGIZE&apos;,</span><br><span class="line">		fromPerson,</span><br><span class="line">		toPerson,</span><br><span class="line">		error</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function withdrawMoney(amount) &#123;</span><br><span class="line">	return &#123;</span><br><span class="line">		type: &apos;WITHDRAW&apos;,</span><br><span class="line">		amount</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//即使不使用middleware，也可以dispatch action：</span><br><span class="line">store.dispatch(withdrawMoney(100))</span><br><span class="line"></span><br><span class="line">//如何处理异步action？如：API调用，或者路由跳转</span><br><span class="line">//用thunk：它是一个返回函数的函数</span><br><span class="line"></span><br><span class="line">function makeASandWichSecretSauce(forPerson) &#123;</span><br><span class="line"></span><br><span class="line">	//控制反转！返回一个接收`dispatch`的函数</span><br><span class="line">	//Thunk middleware知道如何把异步 thunk action 转为普通action</span><br><span class="line">	return function (dispatch) &#123;</span><br><span class="line">		return fetchSecretSauce().then(</span><br><span class="line">			sauce =&gt; dispatch(makeASandwich(forPerson, sauce)),</span><br><span class="line">			error =&gt; dispatch(apologize(&apos;The Sandwich Shop&apos;, forPerson, error))</span><br><span class="line">		)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Thunk middleware可以让我们像dispatch普通action一样dispatch异步的thunk action</span><br><span class="line">store.dispatch(makeASandWichSecretSauce(&apos;Me&apos;));</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/explain_applyMiddleware/" data-id="ciw3peshs002vpco0k4xz9n6w" class="article-share-link">Share</a>
-      
-      
-    </footer>-->
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-react/API_Explain" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/11/01/react/API_Explain/" class="article-date">
-  <time datetime="2016-10-31T16:06:46.308Z" itemprop="datePublished">2016-11-01</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/React-Redux/">React Redux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/01/react/API_Explain/">Redux API和词汇解释</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Redux-API和词汇解释-词汇解释-State"><a href="#Redux-API和词汇解释-词汇解释-State" class="headerlink" title="Redux API和词汇解释 ###词汇解释 - State"></a>Redux API和词汇解释 ###词汇解释 - <strong>State</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">顶层state为一个对象,键-值集合，尽可能保证state可序列化。</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Action</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Action是一个用来表示即将改变state的对象。它是将数据放入store的唯一途径。action必须拥有一个`type`域，用来</span><br><span class="line">指明需要执行的action type</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Reducer</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Reducer接收两个参数：之前累计运算的结果和当前被累计的值，返回的是一个新的累计结果。在Redux中，累计对的运算</span><br><span class="line">结果是state对象，而被累计的值是action。Reducer由上次累计的结果state与当前被累积的action计算得到一个新state。</span><br><span class="line">`Reducer必须是纯函数，不要在Reducer中有副作用操作，比如API调用`</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>dispatch函数</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">*dispatch function*是一个接收action或者异步action的函数，该函数要么往store分发一个或多个action，要么不分发</span><br><span class="line">任何action</span><br></pre></td></tr></table></figure>
-<p><br> <strong>一般的dispatch function 和store实例提供的没有middleware的base dispatch function之间的区别：</strong> Base dispatch functionzing是同步地把action与上一次从store返回的state发往reducer，然后重新计算出新的state，它 期望action会是一个可以被reducer消费的普通对象。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`Middleware`封装了base dispatch function，允许dispatch function处理action之外的异步action。middleware封装了</span><br><span class="line">base dispatch function，允许dispatch function处理action之外的异步action。Middleware可以改变、延迟、忽略action</span><br><span class="line">或异步action，也可以在传递给下一个middleware之前对它们进行解释</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Action Creator</strong><br> Action Creator就是一个创建action的函数，action是一个信息的负载，而action creator是一个创建action的工厂，调用action creator 只会生成action，但不分发，需要调用store的<code>dispatch</code>function才会引起变化，bound action creator，是指一个函数调用action creator并 立即将结果分发给一个特定的store实例。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">如果action creator需要读取当前的state、调用API、或引起诸如路由变化等副作用，那么它应该返回一个异步action而不是action。</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>异步Action</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">异步action是一个发给dispatch函数的值，但是这个值还不能被reducer消费。在发往base dispatch() function之前，middleware会把异步action</span><br><span class="line">转化成一个或一组action。异步action可以有多种type，这取决于你所使用的middleware，比如thunk，虽然不会立即把数据传递给reducer，但是一旦</span><br><span class="line">操作完成就会出发action的分发事件。</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Middleware</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Middleware是一个组合dispatch function的高阶函数，返回一个新的dispatch function，通常将异步actions转换成action。</span><br><span class="line"></span><br><span class="line">Middleware利用复合函数使其可以组合其他函数，可用于记录action日志、产生其他诸如变化路由的操作用，或将异步的API调用</span><br><span class="line">变为一组同步的action</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Store</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Store维持着应用的state tree对象。因为应用的构建发生于reducer，所以一个Redux应用当中应当只有一个store</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Store Creator</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Store Creator是一个创建Redux store的函数。理解由Redux导出的base store creator与从store enhancer返回的store creator</span><br><span class="line">之间的区别</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>Store enhancer</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Store enhancer是一个组合store creator的高阶函数，返回一个新的强化过的store creator。这与middleware相似，它允许你通过符合函数</span><br><span class="line">改变store接口</span><br></pre></td></tr></table></figure>
-<p><br></p>
-<hr>
-<h3 id="API文档-顶级暴露的方法-createStore-reducer-initialState"><a href="#API文档-顶级暴露的方法-createStore-reducer-initialState" class="headerlink" title="API文档 #### 顶级暴露的方法 - createStore(reducer, [initialState])"></a>API文档<br> #### 顶级暴露的方法 - <strong>createStore(reducer, [initialState])</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建一个Redux store来以存放应用中的所有state，应用中有且仅有一个store</span><br></pre></td></tr></table></figure>
-<p><strong>参数</strong></p>
-<ol>
-<li><p><code>reducer(*Function*)</code>:接收两个参数，分别是当前的state树和要处理的action，返回新的state树。</p>
-</li>
-<li><p><code>[initialState](any)</code>:初始时的state，如果你使用combineReducers创建reducer，它必须是一个普通对象，与传入的keys保持同样的结构</p>
-</li>
-</ol>
-<p><strong>返回值</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(Store):保存了应用所有state的对象。**改变state的惟一方法是dispatch action。**你也可以subscribe坚挺state的变化，然后更新UI</span><br></pre></td></tr></table></figure>
-<p><br> - <strong>combineReducers(reducers)</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">**state对象的结构由传入的多个reducer的key决定**,通过为传入对象的reducer命名来控制state key的命名。例如</span><br><span class="line">`combineReducers(&#123;todos: todoReducer, counter: counterReducer&#125;)`将state的结构变为`&#123;todos: &apos;xxx&apos;, counter: &apos;xxx&apos;&#125;`</span><br><span class="line">ES6的简写方法`combineReducers(&#123; counter, todos &#125;)`等价于`combineReducers(&#123; counter: counter, todos: todos &#125;)`</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><strong><a href="./explain-applyMiddleware.md">applyMiddleware(…middlewares)</a></strong></p>
-</li>
-<li><p><strong><a href="./explain-bindActionCreators.md">bindActionCreators(actionCreators, dispatch)</a></strong></p>
-</li>
-<li><p><strong>compose(…functions)</strong>待研究</p>
-</li>
-</ul>
-<p>####Store API<br><em> <em>*Store</em></em></p>
-<ul>
-<li><p>getState()</p>
-</li>
-<li><p>dispatch(action)</p>
-</li>
-<li><p>subscribe(listener)</p>
-</li>
-<li><p>getReducer()</p>
-</li>
-<li><p>replaceReducer(nextReducer)</p>
-</li>
-</ul>
-
-      
-    </div>
-   <!-- <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/01/react/API_Explain/" data-id="ciw3pesgo002npco09f43pqcg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/11/01/react/explain_bindActionCreators/" data-id="ciw58i9wx0028uko0rtkwygoo" class="article-share-link">Share</a>
       
       
     </footer>-->
@@ -1146,7 +1148,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Canvas/">Canvas</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Electron/">Electron</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Http/">Http</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/JS/">JS</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Native/">React Native</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React-Redux/">React Redux</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Webpack/">Webpack</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/development-tools/">development tools</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1156,6 +1158,14 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
     <h3 class="widget-title">近期文章</h3>
     <div class="widget recents">
       <ul>
+        
+          <li>
+            <a href="/2016/11/30/vue/components/">组件</a>
+          </li>
+        
+          <li>
+            <a href="/2016/11/30/vue/form_input/">form input绑定</a>
+          </li>
         
           <li>
             <a href="/2016/11/29/vue/event_handle/">事件处理</a>
@@ -1169,14 +1179,6 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
             <a href="/2016/11/29/vue/conditional_render/">条件渲染</a>
           </li>
         
-          <li>
-            <a href="/2016/11/29/vue/style_class_binding/">样式绑定</a>
-          </li>
-        
-          <li>
-            <a href="/2016/11/29/vue/computed_properties/">Vue属性的计算及监听器</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1188,7 +1190,7 @@ connect()的唯一参数是selector。此方法可以从Redux store中接收到�
   <div class="widget-wrap">
     <h3 class="widget-title">我的文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">23</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
